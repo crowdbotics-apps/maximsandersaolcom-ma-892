@@ -27,9 +27,10 @@ https://facebook.github.io/react-native/docs/running-on-device
 
 1) Open xcode
 2) click on "open another project"
-3) Browse to the this application folder, then `/ios`, then open `AppName.xcodeproj`
-4) Sign the application with your certificate
-5) Run `react-native run-ios` from project home folder.
+3) Browse to the this application folder, then `/ios`, then open `AppName.xcworkspace`
+4) Should run 'pod install' or 'pod update' to generate Pods for project
+5) Sign the application with your certificate
+6) Run `react-native run-ios` from project home folder.
 
 If you find any compiling problems, try to clean your cache. From the home app folder run:
 
