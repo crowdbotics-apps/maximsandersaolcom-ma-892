@@ -1,27 +1,29 @@
 import {
-  createStackNavigator,
   createDrawerNavigator,
-  createBottomTabNavigator,
   createAppContainer
 } from 'react-navigation';
 
 import Routes from './Routes';
 import {
   IntroScreen,
-  TestScreen
+  TestScreen,
+  LoginScreen,
+  RegisterScreen
 } from './screens';
 
 const DrawerNavigatior = createDrawerNavigator({
-  [Routes.IntroScreen]: { screen: IntroScreen },
-  [Routes.TestScreen]: {
-    screen: TestScreen,
-    navigationOptions: {
-      drawerLabel: () => null
-    }
-  }
+  [Routes.IntroScreen]: {
+    screen: IntroScreen,
+    navigationOptions: ({ navigation }) => ({
+      drawerLockMode: 'locked-closed'
+    }),
+  },
+  [Routes.TestScreen]: { screen: TestScreen },
+  [Routes.LoginScreen]: { screen: LoginScreen },
+  [Routes.RegisterScreen]: { screen: RegisterScreen }
 }, {
   initialRouteName: 'IntroScreen',
-  drawerPosition: 'right'
+  drawerPosition: 'right',
 });
 
 export default MainStack = createAppContainer(DrawerNavigatior)

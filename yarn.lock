@@ -3670,6 +3670,11 @@ jsprim@^1.2.2:
     json-schema "0.2.3"
     verror "1.10.0"
 
+keymirror@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/keymirror/-/keymirror-0.1.1.tgz#918889ea13f8d0a42e7c557250eee713adc95c35"
+  integrity sha1-kYiJ6hP40KQufFVyUO7nE63JXDU=
+
 kind-of@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-1.1.0.tgz#140a3d2d41a36d2efcfa9377b62c24f8495a5c44"
@@ -4898,6 +4903,15 @@ react-native-tab-view@^1.2.0, react-native-tab-view@^1.4.1:
   dependencies:
     prop-types "^15.6.1"
 
+react-native-video@^4.4.3:
+  version "4.4.3"
+  resolved "https://registry.yarnpkg.com/react-native-video/-/react-native-video-4.4.3.tgz#4fb5d05cad9420fa5c4c0d359381995543e03273"
+  integrity sha512-j3r99dygZ8SrO1ImEZ8LzUrO/GhlbfBNZrCP41x4YpDOKymQbqtt4UuBxJggKwu3rWe2TZCHOvytwVD3RMqbNg==
+  dependencies:
+    keymirror "^0.1.1"
+    prop-types "^15.5.10"
+    shaka-player "^2.4.4"
+
 react-native@0.57.3:
   version "0.57.3"
   resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.57.3.tgz#ba395bc139f13430caa41614ac6197f8446e106e"
@@ -5466,6 +5480,11 @@ setprototypeof@1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/setprototypeof/-/setprototypeof-1.1.0.tgz#d0bd85536887b6fe7c0d818cb962d9d91c54e656"
   integrity sha512-BvE/TwpZX4FXExxOxZyRGQQv651MSwmWKZGqvmPcRIjDqWub67kTKuIMx43cZZrS/cBBzwBcNDWoFxt2XEFIpQ==
+
+shaka-player@^2.4.4:
+  version "2.5.3"
+  resolved "https://registry.yarnpkg.com/shaka-player/-/shaka-player-2.5.3.tgz#f32f47024a6aed3dd66d8098e08b1a16546f3683"
+  integrity sha512-9HwdBXiMNglq2IcjTWCMIwv4s1gucyHEOYWc6YX5NcxyiyQfVP+VG3eADWJXgFv3RF3mma1YPKX83q0PbyxoAQ==
 
 shebang-command@^1.2.0:
   version "1.2.0"
