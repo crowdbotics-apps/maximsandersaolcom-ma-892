@@ -1,5 +1,6 @@
 {
   "loginScreen": {
-    "welcome": "This is our application"
+    "login": "Log in",
+    "register": "Register"
   }
 }
