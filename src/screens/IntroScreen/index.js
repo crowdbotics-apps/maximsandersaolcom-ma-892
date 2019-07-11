@@ -15,6 +15,8 @@ import { testAction } from '../../redux/modules/authReducer';
 import { Button } from '../../components/Login';
 import Routes from '../../Routes';
 
+const logoImage = require('../../assets/logoSplashScreen.png');
+
 const mainActions = {
   testAction
 };
@@ -59,7 +61,7 @@ const IntroScreen = ({ navigation: { navigate }, testAction }) => (
     <View style={{ flex: 1 }} />
     <View style={styles.logoContainer}>
       <Image
-        source={{ uri: 'https://homepages.cae.wisc.edu/~ece533/images/arctichare.png' }}
+        source={logoImage}
         style={styles.logo}
       />
     </View>
