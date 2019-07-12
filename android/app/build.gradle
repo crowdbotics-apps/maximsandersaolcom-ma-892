@@ -107,7 +107,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.maximsandersaolcom_ma_892"
+        applicationId "com.crowdbotics.maximfitness5250"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

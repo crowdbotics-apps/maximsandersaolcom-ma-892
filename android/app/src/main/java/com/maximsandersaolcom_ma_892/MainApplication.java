@@ -1,4 +1,4 @@
-package com.maximsandersaolcom_ma_892;
+package com.crowdbotics.maximfitness5250;
 
 import android.app.Application;
 
