@@ -2,7 +2,8 @@ import React from 'react';
 import {
   View,
   StyleSheet,
-  Image
+  Image,
+  Dimensions
 } from 'react-native';
 // Redux
 import { connect } from 'react-redux';
@@ -16,12 +17,14 @@ import { Button } from '../../components/Login';
 import Routes from '../../Routes';
 
 const logoImage = require('../../assets/logoSplashScreen.png');
+const videoFile = require('../../assets/video/SplashScreen.mp4');
 
 const mainActions = {
   testAction
 };
+const { width } = Dimensions.get('window');
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   backgroundVideo: {
     position: 'absolute',
     top: 0,
@@ -35,15 +38,14 @@ var styles = StyleSheet.create({
     flex: 1,
   },
   loginContainer: {
-    flex: 1, 
-    justifyContent: 'flex-start', 
+    flex: 1,
+    justifyContent: 'center',
     alignItems: 'center', 
-    width: '100%'
+    width
   },
   logo: {
-    width: '100%',
+    width,
     height: 150,
-    resizeMode: 'center'
   },
   buttonsContainer: {
     flex: 1,
@@ -52,11 +54,12 @@ var styles = StyleSheet.create({
   }
 });
 
-const IntroScreen = ({ navigation: { navigate }, testAction }) => (
+const IntroScreen = ({ navigation: { navigate } }) => (
   <View style={styles.conteiner}>
-    <Video source={require('../../assets/video/SplashScreen.mp4')}
+    <Video
+      source={videoFile}
       style={styles.backgroundVideo}
-      repeat={true}
+      repeat
       rate={1.0}
       resizeMode="cover"
     />
@@ -65,6 +68,7 @@ const IntroScreen = ({ navigation: { navigate }, testAction }) => (
       <Image
         source={logoImage}
         style={styles.logo}
+        resizeMode="contain"
       />
     </View>
     <View style={styles.buttonsContainer}>

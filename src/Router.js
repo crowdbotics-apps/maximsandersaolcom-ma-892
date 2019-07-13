@@ -1,8 +1,7 @@
 import {
   createDrawerNavigator,
-  createAppContainer
+  createAppContainer,
 } from 'react-navigation';
-
 import Routes from './Routes';
 import {
   IntroScreen,
@@ -14,16 +13,21 @@ import {
 const DrawerNavigatior = createDrawerNavigator({
   [Routes.IntroScreen]: {
     screen: IntroScreen,
-    navigationOptions: ({ navigation }) => ({
+    navigationOptions: () => ({
+      drawerLockMode: 'locked-closed'
+    }),
+  },
+  [Routes.LoginScreen]: {
+    screen: LoginScreen,
+    navigationOptions: () => ({
       drawerLockMode: 'locked-closed'
     }),
   },
   [Routes.TestScreen]: { screen: TestScreen },
-  [Routes.LoginScreen]: { screen: LoginScreen },
   [Routes.RegisterScreen]: { screen: RegisterScreen }
 }, {
   initialRouteName: 'IntroScreen',
   drawerPosition: 'right',
 });
 
-export default MainStack = createAppContainer(DrawerNavigatior)
+export default createAppContainer(DrawerNavigatior);

@@ -7,13 +7,13 @@ import auth from './modules/authReducer';
 
 let middlewares = [thunk];
 
-if (__DEV__) { //Include logger only in dev builds.
+if (__DEV__) { // eslint-disable-line
   const logger = createLogger({
-    collapsed: (getState, action, logEntry) => !logEntry.error //Only show errors as non collapsed logs
+    collapsed: (getState, action, logEntry) => !logEntry.error // Only show errors as non collapsed logs
   });
 
   middlewares.push(logger);
-};
+}
 
 const store = createStore(
   combineReducers({
