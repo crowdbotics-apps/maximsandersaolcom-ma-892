@@ -7,7 +7,8 @@ import {
   IntroScreen,
   TestScreen,
   LoginScreen,
-  RegisterScreen
+  RegisterScreen,
+  ProfileScreen
 } from './screens';
 
 const DrawerNavigatior = createDrawerNavigator({
@@ -17,6 +18,7 @@ const DrawerNavigatior = createDrawerNavigator({
       drawerLockMode: 'locked-closed'
     }),
   },
+  [Routes.ProfileScreen]: { screen: ProfileScreen },
   [Routes.LoginScreen]: {
     screen: LoginScreen,
     navigationOptions: () => ({

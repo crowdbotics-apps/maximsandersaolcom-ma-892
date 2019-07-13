@@ -26,7 +26,10 @@ target 'maximsandersaolcom_ma_892' do
   pod 'FBSDKCoreKit', '~> 5.0.0'
   pod 'FBSDKLoginKit', '~> 5.0.0'
   pod 'FBSDKShareKit', '~> 5.0.0'
+  
+  pod 'GoogleSignIn', '~> 4.4.0'
 
+  pod 'RNGoogleSignin', :path => '../node_modules/react-native-google-signin'
   pod 'react-native-fbsdk', :path => '../node_modules/react-native-fbsdk/'
 
   target 'maximsandersaolcom_ma_892Tests' do

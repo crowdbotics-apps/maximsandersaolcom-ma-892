@@ -9,8 +9,8 @@ import {
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 // Packages
-import i18n from '../../i18n/i18n';
 import Video from 'react-native-video';
+import i18n from '../../i18n/i18n';
 import { testAction } from '../../redux/modules/authReducer';
 // Components
 import { Button } from '../../components/Login';

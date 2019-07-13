@@ -20,6 +20,14 @@
 	<string>1.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleTypeRole</key>
+	<string>Editor</string>
+	<key>CFBundleURLName</key>
+	<string>REVERSED_CLIENT_ID</string>
+	<key>CFBundleURLSchemes</key>
+	<array>
+		<string>com.googleusercontent.apps.122090316140-7bpfde4jepjr1ibmiof1tu2ffr32g4l5</string>
+	</array>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>

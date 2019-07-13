@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "122090316140",
+    "firebase_url": "https://maxim-fitness.firebaseio.com",
+    "project_id": "maxim-fitness",
+    "storage_bucket": "maxim-fitness.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:122090316140:android:0d9a2b0487915cc7",
+        "android_client_info": {
+          "package_name": "com.crowdbotics.maximfitness5250"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "122090316140-er5oevo3ek39e8hvq6egc2f6brrvme1b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBy7-7s4zNRojREH7xlaU75krqx5XlE6Qc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "122090316140-0f1gaiiaam4ue96nuolv6s33qshqdu2r.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "122090316140-7bpfde4jepjr1ibmiof1tu2ffr32g4l5.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.crowdbotics.maximfitness5250"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

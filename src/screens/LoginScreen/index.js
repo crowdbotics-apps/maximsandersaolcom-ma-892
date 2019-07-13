@@ -6,10 +6,14 @@ import {
   SafeAreaView,
   Text,
   TextInput,
-  TouchableOpacity
+  TouchableOpacity,
+  Platform
 } from 'react-native';
 import { LoginManager, AccessToken } from 'react-native-fbsdk';
+import { GoogleSignin, statusCodes } from 'react-native-google-signin';
+import { withNavigation } from 'react-navigation';
 import i18n from '../../i18n/i18n';
+import Routes from '../../Routes';
 
 const logoImage = require('../../assets/logoSplashScreen.png');
 
@@ -35,7 +39,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#3b5998',
   },
   input: {
-    height: 30,
+    height: Platform.select({ ios: 30, android: 40 }),
     borderBottomColor: 'gray',
     borderBottomWidth: 1,
     width: '100%',
@@ -55,7 +59,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   loginContainer: {
-    flex: 1, 
+    flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
     width: '100%'
@@ -73,7 +77,8 @@ const styles = StyleSheet.create({
   },
   buttonLoginTextStyle: {
     color: 'white',
-    fontSize: 15
+    fontSize: 15,
+    fontWeight: '500'
   }
 });
 
@@ -83,29 +88,73 @@ class LoginScreen extends Component {
     this.state = {
       email: '',
       password: ''
-    }
+    };
+  }
+
+  componentDidMount() {
+    GoogleSignin.configure({
+      scopes: ['https://www.googleapis.com/auth/userinfo.profile'],
+      forceConsentPrompt: true,
+      // Repleace with your webClientId generated from Firebase console
+      webClientId: '122090316140-er5oevo3ek39e8hvq6egc2f6brrvme1b.apps.googleusercontent.com',
+    });
   }
 
   handleInputChange = (fieldName, value) => {
     this.setState({
       [fieldName]: value
-    })
+    });
   }
 
   handleLoginViaFacebook = async () => {
+    const { navigation } = this.props;
     try {
-      const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
+      const result = await LoginManager.logInWithPermissions(['email', 'public_profile']);
       if (result.isCancelled) {
         console.log('Login cancelled');
       } else {
-        console.log('Login success with permissions: ' + result.grantedPermissions.toString(), 'result:', result);
+        console.log('Login success with permissions: ', result.grantedPermissions.toString(), 'result:', result);
         const data = await AccessToken.getCurrentAccessToken();
-        console.log("token:",data.accessToken.toString(), "otherData:", data);
+        this.getUserDataFacebook(data.accessToken.toString());
+        navigation.navigate(Routes.ProfileScreen);
       }
     } catch (err) {
       console.log('error on login via facebook', err);
     }
   }
+
+  getUserDataFacebook = (token) => {
+    fetch('https://graph.facebook.com/v2.5/me?fields=email,name,friends,picture&access_token=' + token)
+      .then(response => response.json())
+      .then((json) => {
+        console.log('profile Data facebook:', json);
+      })
+      .catch(() => {
+        console.log('ERROR GETTING DATA FROM FACEBOOK')
+      });
+  }
+
+  signInGoogle = async () => {
+    try {
+      await GoogleSignin.hasPlayServices();
+      const userInfo = await GoogleSignin.signIn();
+      console.log('user info', userInfo);
+    } catch (error) {
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        console.log("SIGN IN CANCEL ", error);
+        // user cancelled the login flow
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        console.log("SIGN IN IN PROGRESS ", error);
+        // operation (f.e. sign in) is in progress already
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        console.log("SIGN IN IN NOT AVAILABLE ", error);
+        // play services not available or outdated
+      } else {
+        console.log("OTHER ERROR ", error);
+        // some other error happened
+      }
+    }
+  };
 
   render() {
     const {
@@ -138,11 +187,12 @@ class LoginScreen extends Component {
             <View style={{ width: '100%' }}>
               <TouchableOpacity
                 style={styles.buttonLoginFb}
+                onPress={() => this.signInGoogle()}
               >
                 <Text
                   style={styles.buttonLoginTextStyle}
                 >
-                  {i18n.t('loginScreen.facebookButton')}
+                  {i18n.t('loginScreen.googleButton')}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -185,4 +235,4 @@ class LoginScreen extends Component {
   }
 }
 
-export default LoginScreen;
+export default withNavigation(LoginScreen);
