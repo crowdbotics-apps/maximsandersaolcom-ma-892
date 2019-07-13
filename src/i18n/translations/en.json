@@ -6,6 +6,7 @@
     "passwordPlaceholder": "Password",
     "loginButton": "Let's start!",
     "or": "OR",
-    "facebookButton": "Log in via Facebook"
+    "facebookButton": "Log in via Facebook",
+    "googleButton": "Log in via Google"
   }
 }

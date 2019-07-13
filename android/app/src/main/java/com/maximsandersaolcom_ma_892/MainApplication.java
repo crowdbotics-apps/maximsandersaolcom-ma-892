@@ -11,6 +11,7 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
+import co.apptailor.googlesignin.RNGoogleSigninPackage;  // <--- import
 
 import java.util.Arrays;
 import java.util.List;
@@ -35,7 +36,8 @@ public class MainApplication extends Application implements ReactApplication {
           new MainReactPackage(),
             new FBSDKPackage(mCallbackManager),
             new ReactVideoPackage(),
-            new RNGestureHandlerPackage()
+            new RNGestureHandlerPackage(),
+            new RNGoogleSigninPackage() // <-- this needs to be in the list
       );
     }
 

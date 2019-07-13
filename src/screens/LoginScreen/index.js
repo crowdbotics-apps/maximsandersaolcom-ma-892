@@ -77,7 +77,8 @@ const styles = StyleSheet.create({
   },
   buttonLoginTextStyle: {
     color: 'white',
-    fontSize: 15
+    fontSize: 15,
+    fontWeight: '500'
   }
 });
 
@@ -93,6 +94,7 @@ class LoginScreen extends Component {
   componentDidMount() {
     GoogleSignin.configure({
       scopes: ['https://www.googleapis.com/auth/userinfo.profile'],
+      forceConsentPrompt: true,
       // Repleace with your webClientId generated from Firebase console
       webClientId: '122090316140-er5oevo3ek39e8hvq6egc2f6brrvme1b.apps.googleusercontent.com',
     });
@@ -107,18 +109,29 @@ class LoginScreen extends Component {
   handleLoginViaFacebook = async () => {
     const { navigation } = this.props;
     try {
-      const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
+      const result = await LoginManager.logInWithPermissions(['email', 'public_profile']);
       if (result.isCancelled) {
         console.log('Login cancelled');
       } else {
-        console.log(`Login success with permissions: ' + ${result.grantedPermissions.toString()} 'result:', ${result}`);
+        console.log('Login success with permissions: ', result.grantedPermissions.toString(), 'result:', result);
         const data = await AccessToken.getCurrentAccessToken();
+        this.getUserDataFacebook(data.accessToken.toString());
         navigation.navigate(Routes.ProfileScreen);
-        console.log(`token:", ${data.accessToken.toString()} "otherData:", ${data}`);
       }
     } catch (err) {
       console.log('error on login via facebook', err);
     }
+  }
+
+  getUserDataFacebook = (token) => {
+    fetch('https://graph.facebook.com/v2.5/me?fields=email,name,friends,picture&access_token=' + token)
+      .then(response => response.json())
+      .then((json) => {
+        console.log('profile Data facebook:', json);
+      })
+      .catch(() => {
+        console.log('ERROR GETTING DATA FROM FACEBOOK')
+      });
   }
 
   signInGoogle = async () => {
@@ -126,15 +139,18 @@ class LoginScreen extends Component {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
       console.log('user info', userInfo);
-      //this.setState({ userInfo });
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        console.log("SIGN IN CANCEL ", error);
         // user cancelled the login flow
       } else if (error.code === statusCodes.IN_PROGRESS) {
+        console.log("SIGN IN IN PROGRESS ", error);
         // operation (f.e. sign in) is in progress already
       } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        console.log("SIGN IN IN NOT AVAILABLE ", error);
         // play services not available or outdated
       } else {
+        console.log("OTHER ERROR ", error);
         // some other error happened
       }
     }
@@ -176,7 +192,7 @@ class LoginScreen extends Component {
                 <Text
                   style={styles.buttonLoginTextStyle}
                 >
-                  Sing in via Google
+                  {i18n.t('loginScreen.googleButton')}
                 </Text>
               </TouchableOpacity>
             </View>

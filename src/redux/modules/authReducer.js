@@ -22,6 +22,7 @@ export default (state = { ...initialAuthState }, { type, payload }) => {
   }
 };
 
-export const testAction = () => (dispatch) => {
+export const loginActionViaSdk = (data) => (dispatch) => {
+  console.log('data', data);
   dispatch({ type: LOGIN_SUCCESS });
 };
