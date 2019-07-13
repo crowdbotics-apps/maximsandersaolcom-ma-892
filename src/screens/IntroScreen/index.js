@@ -75,7 +75,7 @@ const IntroScreen = ({ navigation: { navigate }, testAction }) => (
       />
       <Button
         style={{
-          marginBottom: 35
+          marginBottom: 35,
         }}
         label={i18n.t('loginScreen.register')}
         onPress={() => navigate(Routes.RegisterScreen)}
