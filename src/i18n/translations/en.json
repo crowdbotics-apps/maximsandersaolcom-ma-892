@@ -1,6 +1,11 @@
 {
   "loginScreen": {
     "login": "Log in",
-    "register": "Register"
+    "register": "Register",
+    "emailPlaceholder": "Email",
+    "passwordPlaceholder": "Password",
+    "loginButton": "Let's start!",
+    "or": "OR",
+    "facebookButton": "Log in via Facebook"
   }
 }
