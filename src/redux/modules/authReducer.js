@@ -13,7 +13,7 @@ export default (state = { ...initialAuthState }, { type, payload }) => {
       return {
         ...state,
         authenticated: true,
-      }
+      };
     }
 
     default: {
@@ -22,8 +22,6 @@ export default (state = { ...initialAuthState }, { type, payload }) => {
   }
 };
 
-export const testAction = () => {
-  return dispatch => {
-    dispatch({ type: LOGIN_SUCCESS });
-  }
-}
+export const testAction = () => (dispatch) => {
+  dispatch({ type: LOGIN_SUCCESS });
+};

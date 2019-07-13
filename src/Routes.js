@@ -3,4 +3,4 @@ export default {
   TestScreen: 'TestScreen',
   LoginScreen: 'LoginScreen',
   RegisterScreen: 'RegisterScreen'
-}
+};

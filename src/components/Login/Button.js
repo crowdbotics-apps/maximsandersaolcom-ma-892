@@ -5,7 +5,12 @@ import {
   StyleSheet
 } from 'react-native';
 
-const Button = ({ onPress, style, label, labelStyle }) => (
+const Button = ({
+  onPress,
+  style,
+  label,
+  labelStyle
+}) => (
   <TouchableOpacity
     style={[styles.buttonStyle, style]}
     onPress={onPress}
@@ -30,6 +35,6 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: '500'
   }
-})
+});
 
 export default Button;
