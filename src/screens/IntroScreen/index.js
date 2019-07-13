@@ -34,14 +34,16 @@ var styles = StyleSheet.create({
   conteiner: {
     flex: 1,
   },
-  logoContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
+  loginContainer: {
+    flex: 1, 
+    justifyContent: 'flex-start', 
+    alignItems: 'center', 
+    width: '100%'
   },
   logo: {
-    width: 350,
+    width: '100%',
     height: 150,
+    resizeMode: 'center'
   },
   buttonsContainer: {
     flex: 1,
