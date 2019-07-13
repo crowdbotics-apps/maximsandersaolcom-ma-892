@@ -1,6 +1,8 @@
 import {
   createDrawerNavigator,
-  createAppContainer,
+  createSwitchNavigator,
+  createStackNavigator,
+  createAppContainer
 } from 'react-navigation';
 import Routes from './Routes';
 import {
@@ -12,24 +14,61 @@ import {
 } from './screens';
 
 const DrawerNavigatior = createDrawerNavigator({
-  [Routes.IntroScreen]: {
-    screen: IntroScreen,
-    navigationOptions: () => ({
-      drawerLockMode: 'locked-closed'
-    }),
-  },
   [Routes.ProfileScreen]: { screen: ProfileScreen },
-  [Routes.LoginScreen]: {
-    screen: LoginScreen,
-    navigationOptions: () => ({
-      drawerLockMode: 'locked-closed'
-    }),
-  },
   [Routes.TestScreen]: { screen: TestScreen },
-  [Routes.RegisterScreen]: { screen: RegisterScreen }
 }, {
-  initialRouteName: 'IntroScreen',
+  initialRouteName: 'ProfileScreen',
   drawerPosition: 'right',
 });
 
-export default createAppContainer(DrawerNavigatior);
+const AuthStack = createStackNavigator({
+  [Routes.IntroScreen]: {
+    screen: IntroScreen,
+    navigationOptions: {
+      header: null,
+    }
+  },
+  [Routes.LoginScreen]: {
+    screen: LoginScreen,
+    navigationOptions: {
+      header: null
+    }
+  },
+  [Routes.RegisterScreen]: {
+    screen: RegisterScreen,
+    navigationOptions: {
+      header: null
+    }
+  }
+},
+{
+  initialRouteName: 'IntroScreen',
+  cardStyle: {
+    backgroundColor: 'white',
+  },
+  headerMode: 'none',
+  navigationOptions: {
+    headerVisible: false,
+  }
+});
+
+const ApplicationRouter = createStackNavigator({
+  App: createSwitchNavigator({
+    AuthStack,
+    DrawerStack: DrawerNavigatior
+  }, {
+    navigationOptions: {
+      header: null
+    },
+  })
+},
+{
+  navigationOptions: {
+    header: null
+  },
+  cardStyle: {
+    backgroundColor: 'white',
+  },
+});
+
+export default createAppContainer(ApplicationRouter);
