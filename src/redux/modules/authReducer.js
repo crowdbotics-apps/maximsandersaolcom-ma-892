@@ -13,6 +13,7 @@ export default (state = { ...initialAuthState }, { type, payload }) => {
       return {
         ...state,
         authenticated: true,
+        profile: payload
       };
     }
 
@@ -22,7 +23,22 @@ export default (state = { ...initialAuthState }, { type, payload }) => {
   }
 };
 
-export const loginActionViaSdk = (data) => (dispatch) => {
-  console.log('data', data);
-  dispatch({ type: LOGIN_SUCCESS });
+export const loginActionViaFacebook = data => (dispatch) => {
+  const { email, picture, name } = data;
+  const payload = {
+    email,
+    imageUrl: picture.data.url,
+    name
+  };
+  dispatch({ type: LOGIN_SUCCESS, payload });
+};
+
+export const loginActionViaGmail = data => (dispatch) => {
+  const { user: { email, photo, name } } = data;
+  const payload = {
+    email,
+    imageUrl: photo,
+    name
+  };
+  dispatch({ type: LOGIN_SUCCESS, payload });
 };

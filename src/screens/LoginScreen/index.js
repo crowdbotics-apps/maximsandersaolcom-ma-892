@@ -14,8 +14,16 @@ import {
 import { LoginManager, AccessToken } from 'react-native-fbsdk';
 import { GoogleSignin, statusCodes } from 'react-native-google-signin';
 import { withNavigation } from 'react-navigation';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import i18n from '../../i18n/i18n';
 import Routes from '../../Routes';
+import { loginActionViaFacebook, loginActionViaGmail } from '../../redux/modules/authReducer';
+
+const mainActions = {
+  loginActionViaFacebookAction: loginActionViaFacebook,
+  loginActionViaGmailAction: loginActionViaGmail
+};
 
 const logoImage = require('../../assets/logoSplashScreen.png');
 
@@ -123,25 +131,24 @@ class LoginScreen extends Component {
     }
   }
 
-  getUserDataFacebook = (token) => {
-    fetch('https://graph.facebook.com/v2.5/me?fields=email,name,friends,picture&access_token=' + token)
-      .then(response => response.json())
-      .then((json) => {
-        const { navigation } = this.props;
-        navigation.navigate(Routes.ProfileScreen);
-        console.log('profile Data facebook:', json);
-      })
-      .catch(() => {
-        console.log('ERROR GETTING DATA FROM FACEBOOK')
-      });
+  getUserDataFacebook = async (token) => {
+    const { loginActionViaFacebookAction } = this.props;
+    const response = await fetch('https://graph.facebook.com/v2.5/me?fields=email,name,friends,picture&access_token=' + token);
+    const json = await response.json();
+    if (json) {
+      const { navigation } = this.props;
+      await loginActionViaFacebookAction(json);
+      navigation.navigate(Routes.ProfileScreen);
+      console.log('profile Data facebook:', json);
+    }
   }
 
   signInGoogle = async () => {
-    const { navigation } = this.props;
+    const { navigation, loginActionViaGmailAction } = this.props;
     try {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
-      console.log('user info', userInfo);
+      await loginActionViaGmailAction(userInfo);
       navigation.navigate(Routes.ProfileScreen);
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
@@ -165,6 +172,9 @@ class LoginScreen extends Component {
       email,
       password
     } = this.state;
+    const {
+      navigation
+    } = this.props;
     return (
       <KeyboardAvoidingView
         style={{ flex: 1 }}
@@ -239,7 +249,10 @@ class LoginScreen extends Component {
                 </View>
               </View>
               <View style={styles.containerCenter}>
-                <TouchableOpacity style={styles.letsStartButton}>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate(Routes.ProfileScreen)}
+                  style={styles.letsStartButton}
+                >
                   <Text style={{ fontSize: 15 }}>
                     {i18n.t('loginScreen.loginButton')}
                   </Text>
@@ -253,4 +266,9 @@ class LoginScreen extends Component {
   }
 }
 
-export default withNavigation(LoginScreen);
+export default connect(
+  ({ auth: { authenticated } }) => ({
+    authenticated
+  }),
+  dispatch => bindActionCreators(mainActions, dispatch)
+)(withNavigation(LoginScreen));

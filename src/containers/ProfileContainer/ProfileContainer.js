@@ -1,6 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { View, SafeAreaView, StyleSheet } from 'react-native';
 import ProfileHeader from '../../components/ProfileHeader';
+import ProfileStats from '../../components/ProfileStats';
+import ProfileMenu from '../../components/ProfileMenu';
 
 const styles = StyleSheet.create({
   containerCenter: {
@@ -9,24 +11,16 @@ const styles = StyleSheet.create({
   },
 });
 
-class ProfileContainer extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-    };
-  }
-
-  render() {
-    return (
-      <View style={styles.containerCenter}>
-        <SafeAreaView style={{ backgroundColor: 'white' }} />
-        <ProfileHeader
-          imageUrl="https://picsum.photos/150/150"
-          backgroundUrl="https://picsum.photos/350/150"
-        />
-      </View>
-    );
-  }
-}
+const ProfileContainer = ({ profile: { imageUrl = '' } }) => (
+  <View style={styles.containerCenter}>
+    <SafeAreaView style={{ backgroundColor: 'white' }} />
+    <ProfileHeader
+      imageUrl={imageUrl}
+      backgroundUrl="https://picsum.photos/350/150"
+    />
+    <ProfileStats followers={0} following={0} friends={0} />
+    <ProfileMenu />
+  </View>
+);
 
 export default ProfileContainer;
