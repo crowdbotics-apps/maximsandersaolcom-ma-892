@@ -4,6 +4,8 @@ import {
   StyleSheet,
   Image,
   SafeAreaView,
+  ScrollView,
+  KeyboardAvoidingView,
   Text,
   TextInput,
   TouchableOpacity,
@@ -107,7 +109,6 @@ class LoginScreen extends Component {
   }
 
   handleLoginViaFacebook = async () => {
-    const { navigation } = this.props;
     try {
       const result = await LoginManager.logInWithPermissions(['email', 'public_profile']);
       if (result.isCancelled) {
@@ -116,7 +117,6 @@ class LoginScreen extends Component {
         console.log('Login success with permissions: ', result.grantedPermissions.toString(), 'result:', result);
         const data = await AccessToken.getCurrentAccessToken();
         this.getUserDataFacebook(data.accessToken.toString());
-        navigation.navigate(Routes.ProfileScreen);
       }
     } catch (err) {
       console.log('error on login via facebook', err);
@@ -127,6 +127,8 @@ class LoginScreen extends Component {
     fetch('https://graph.facebook.com/v2.5/me?fields=email,name,friends,picture&access_token=' + token)
       .then(response => response.json())
       .then((json) => {
+        const { navigation } = this.props;
+        navigation.navigate(Routes.ProfileScreen);
         console.log('profile Data facebook:', json);
       })
       .catch(() => {
@@ -135,10 +137,12 @@ class LoginScreen extends Component {
   }
 
   signInGoogle = async () => {
+    const { navigation } = this.props;
     try {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
       console.log('user info', userInfo);
+      navigation.navigate(Routes.ProfileScreen);
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         console.log("SIGN IN CANCEL ", error);
@@ -162,75 +166,89 @@ class LoginScreen extends Component {
       password
     } = this.state;
     return (
-      <View style={styles.containerCenter}>
-        <SafeAreaView style={{ backgroundColor: 'white' }} />
-        <View style={styles.containerCenter}>
-          <View style={styles.imageContainer}>
-            <Image
-              source={logoImage}
-              style={styles.logo}
-            />
-          </View>
-          <View style={[styles.containerCenter, styles.paddingHor]}>
-            <View style={{ width: '100%', marginBottom: 10 }}>
-              <TouchableOpacity
-                style={styles.buttonLoginFb}
-                onPress={this.handleLoginViaFacebook}
-              >
-                <Text
-                  style={styles.buttonLoginTextStyle}
-                >
-                  {i18n.t('loginScreen.facebookButton')}
-                </Text>
-              </TouchableOpacity>
-            </View>
-            <View style={{ width: '100%' }}>
-              <TouchableOpacity
-                style={styles.buttonLoginFb}
-                onPress={() => this.signInGoogle()}
-              >
-                <Text
-                  style={styles.buttonLoginTextStyle}
-                >
-                  {i18n.t('loginScreen.googleButton')}
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-        <View style={styles.loginContainer}>
-          <View style={styles.orContainer}>
-            <View style={styles.containerCenter}>
-              <Text style={styles.orText}>{i18n.t('loginScreen.or')}</Text>
-            </View>
-            <View style={[styles.containerCenter, styles.paddingHor]}>
-              <View style={{ width: '100%', paddingBottom: 15 }}>
-                <TextInput
-                  style={styles.input}
-                  onChangeText={value => this.handleInputChange('email', value)}
-                  value={email}
-                  placeholder={i18n.t('loginScreen.emailPlaceholder')}
-                />
-              </View>
-              <View style={{ width: '100%' }}>
-                <TextInput
-                  style={styles.input}
-                  onChangeText={value => this.handleInputChange('password', value)}
-                  value={password}
-                  placeholder={i18n.t('loginScreen.passwordPlaceholder')}
-                />
-              </View>
-            </View>
-          </View>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.select({ ios: 'padding' })}
+      >
+        <ScrollView
+          style={{ flex: 1 }}
+          contentContainerStyle={{ flexGrow: 1 }}
+          keyboardDismissMode="interactive"
+          keyboardShouldPersistTaps="handled"
+        >
           <View style={styles.containerCenter}>
-            <TouchableOpacity style={styles.letsStartButton}>
-              <Text style={{ fontSize: 15 }}>
-                {i18n.t('loginScreen.loginButton')}
-              </Text>
-            </TouchableOpacity>
+            <SafeAreaView style={{ backgroundColor: 'white' }} />
+            <View style={styles.containerCenter}>
+              <View style={styles.imageContainer}>
+                <Image
+                  source={logoImage}
+                  style={styles.logo}
+                />
+              </View>
+              <View style={[styles.containerCenter, styles.paddingHor]}>
+                <View style={{ width: '100%', marginBottom: 10 }}>
+                  <TouchableOpacity
+                    style={styles.buttonLoginFb}
+                    onPress={this.handleLoginViaFacebook}
+                  >
+                    <Text
+                      style={styles.buttonLoginTextStyle}
+                    >
+                      {i18n.t('loginScreen.facebookButton')}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={{ width: '100%' }}>
+                  <TouchableOpacity
+                    style={styles.buttonLoginFb}
+                    onPress={() => this.signInGoogle()}
+                  >
+                    <Text
+                      style={styles.buttonLoginTextStyle}
+                    >
+                      {i18n.t('loginScreen.googleButton')}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </View>
+            <View style={styles.loginContainer}>
+              <View style={styles.orContainer}>
+                <View style={styles.containerCenter}>
+                  <Text style={styles.orText}>{i18n.t('loginScreen.or')}</Text>
+                </View>
+                <View style={[styles.containerCenter, styles.paddingHor]}>
+                  <View style={{ width: '100%', paddingBottom: 15 }}>
+                    <TextInput
+                      style={styles.input}
+                      keyboardType="email-address"
+                      onChangeText={value => this.handleInputChange('email', value)}
+                      value={email}
+                      placeholder={i18n.t('loginScreen.emailPlaceholder')}
+                    />
+                  </View>
+                  <View style={{ width: '100%' }}>
+                    <TextInput
+                      style={styles.input}
+                      secureTextEntry
+                      onChangeText={value => this.handleInputChange('password', value)}
+                      value={password}
+                      placeholder={i18n.t('loginScreen.passwordPlaceholder')}
+                    />
+                  </View>
+                </View>
+              </View>
+              <View style={styles.containerCenter}>
+                <TouchableOpacity style={styles.letsStartButton}>
+                  <Text style={{ fontSize: 15 }}>
+                    {i18n.t('loginScreen.loginButton')}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
           </View>
-        </View>
-      </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
     );
   }
 }
