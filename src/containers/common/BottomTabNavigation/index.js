@@ -3,7 +3,9 @@ import {
   View,
   Image,
   TouchableOpacity,
+  Text
 } from 'react-native';
+import { withNavigation } from 'react-navigation';
 
 import Routes from '../../../Routes';
 
@@ -13,37 +15,48 @@ const parentListIcon = require('../../../assets/Icon_user.png');
 const parentListSelectedIcon = require('../../../assets/Icon_user.png');
 
 
-export default class BottomTabNavigationContainer extends Component {
+class BottomTabNavigationContainer extends Component {
   state = {
     menuItemList: [
       {
         normal: parentListIcon,
         active: parentListSelectedIcon,
+        text: 'Today',
         onClick: () => {
           const { navigation } = this.props;
-          navigation.replace(Routes.ProParentsListScreen);
+          navigation.navigate(Routes.ProfileScreen);
         }
       }, {
         normal: parentListIcon,
         active: parentListSelectedIcon,
+        text: 'Profile',
         onClick: () => {
           const { navigation } = this.props;
-          navigation.replace(Routes.ProParentsListScreen);
+          navigation.navigate(Routes.ProfileScreen);
         }
       }, {
         normal: parentListIcon,
         active: parentListSelectedIcon,
+        text: 'Feed',
         onClick: () => {
           const { navigation } = this.props;
-          navigation.replace(Routes.ProParentsListScreen);
+          navigation.navigate(Routes.TestScreen);
         },
-        indicator: this.props.unreadMessages // eslint-disable-line
       }, {
         normal: parentListIcon,
         active: parentListSelectedIcon,
+        text: 'Recipes',
         onClick: () => {
           const { navigation } = this.props;
-          navigation.replace(Routes.ProParentsListScreen);
+          navigation.navigate(Routes.TestScreen);
+        }
+      }, {
+        normal: parentListIcon,
+        active: parentListSelectedIcon,
+        text: 'Programs',
+        onClick: () => {
+          const { navigation } = this.props;
+          navigation.navigate(Routes.TestScreen);
         }
       }
     ]
@@ -67,17 +80,23 @@ export default class BottomTabNavigationContainer extends Component {
             flex: 1,
             flexDirection: 'column',
             alignItems: 'center',
-            justifyContent: 'center'
+            justifyContent: 'center',
+            backgroundColor: isActive ? 'gray' : '#fff',
+            height: !isIphoneX() ? 55 : 75
           }}
         >
           <TouchableOpacity
+            style={{ justifyContent: 'center', alignItems: 'center' }}
             activeOpacity={isActive ? 1 : 0.35}
             onPress={isActive ? () => null : menuItem.onClick}
           >
             <Image
-              style={{ width: 35, height: 35 }}
+              style={{ width: 30, height: 30 }}
               source={isActive ? menuItem.active : menuItem.normal}
             />
+            <Text style={{ fontSize: 12 }}>
+              {menuItem.text}
+            </Text>
           </TouchableOpacity>
         </View>
       );
@@ -87,10 +106,12 @@ export default class BottomTabNavigationContainer extends Component {
         style={
           !isIphoneX() ? ({
             flexDirection: 'row',
-            height: 60,
+            height: 55,
             backgroundColor: '#FAFAFA',
             borderColor: '#BFBFBF',
-            borderTopWidth: 1
+            borderTopWidth: 1,
+            alignItems: 'center',
+            justifyContent: 'center'
           }) : ({
             flexDirection: 'row',
             height: 75,
@@ -106,3 +127,5 @@ export default class BottomTabNavigationContainer extends Component {
     );
   }
 }
+
+export default withNavigation(BottomTabNavigationContainer);
