@@ -1,8 +1,9 @@
+import React from 'react';
 import {
   createDrawerNavigator,
   createSwitchNavigator,
   createStackNavigator,
-  createAppContainer
+  createAppContainer,
 } from 'react-navigation';
 import Routes from './Routes';
 import {
@@ -10,15 +11,54 @@ import {
   TestScreen,
   LoginScreen,
   RegisterScreen,
-  ProfileScreen
+  ProfileScreen,
+  EditProfileScreen,
+  NotificationScreen,
+  SavedProgramsScreen
 } from './screens';
+import DrawerContent from './containers/DrawerContent';
+// Packages
+import i18n from './i18n/i18n';
 
-const DrawerNavigatior = createDrawerNavigator({
-  [Routes.ProfileScreen]: { screen: ProfileScreen },
-  [Routes.TestScreen]: { screen: TestScreen },
-}, {
+const drawerConfiguration = {
   initialRouteName: 'ProfileScreen',
   drawerPosition: 'right',
+};
+
+const DrawerNavigatior = createDrawerNavigator({
+  [Routes.ProfileScreen]: {
+    screen: ProfileScreen,
+    navigationOptions: () => ({
+      drawerLabel: () => null,
+    })
+  },
+  [Routes.TestScreen]: {
+    screen: TestScreen,
+    navigationOptions: () => ({
+      drawerLabel: () => null,
+    })
+  },
+  [Routes.EditProfileScreen]: {
+    screen: EditProfileScreen,
+    navigationOptions: () => ({
+      drawerLabel: () => i18n.t('drawerNavigation.editProfile'),
+    })
+  },
+  [Routes.NotificationScreen]: {
+    screen: NotificationScreen,
+    navigationOptions: () => ({
+      drawerLabel: () => i18n.t('drawerNavigation.notificaitons')
+    })
+  },
+  [Routes.SavedProgramsScreen]: {
+    screen: SavedProgramsScreen,
+    navigationOptions: () => ({
+      drawerLabel: () => i18n.t('drawerNavigation.savedPrograms')
+    })
+  },
+}, {
+  ...drawerConfiguration,
+  contentComponent: props => <DrawerContent {...props} />
 });
 
 const AuthStack = createStackNavigator({

@@ -3,9 +3,10 @@ import {
   View,
   Text,
   Image,
-  StyleSheet
+  StyleSheet,
+  TouchableOpacity
 } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import i18n from '../../i18n/i18n';
 
 const iconArrow = require('../../assets/icon_arrow.png');
 
@@ -44,7 +45,7 @@ const styles = StyleSheet.create({
 const ProfileStats = ({ followers = 0, following = 0, friends = 0 }) => (
   <View style={{ width: '100%' }}>
     <View style={styles.myProfileContainer}>
-      <Text>My Profile</Text>
+      <Text>{i18n.t('profileScreen.profileStats.myProfile')}</Text>
       <TouchableOpacity>
         <Image
           style={{ width: 25, height: 25 }}
@@ -62,7 +63,7 @@ const ProfileStats = ({ followers = 0, following = 0, friends = 0 }) => (
           </View>
           <View>
             <Text style={styles.statsText}>
-              Friends
+              {i18n.t('profileScreen.profileStats.friends')}
             </Text>
           </View>
         </View>
@@ -74,7 +75,7 @@ const ProfileStats = ({ followers = 0, following = 0, friends = 0 }) => (
           </View>
           <View>
             <Text style={styles.statsText}>
-              Following
+              {i18n.t('profileScreen.profileStats.following')}
             </Text>
           </View>
         </View>
@@ -86,7 +87,7 @@ const ProfileStats = ({ followers = 0, following = 0, friends = 0 }) => (
           </View>
           <View>
             <Text style={styles.statsText}>
-              Followers
+              {i18n.t('profileScreen.profileStats.followers')}
             </Text>
           </View>
         </View>

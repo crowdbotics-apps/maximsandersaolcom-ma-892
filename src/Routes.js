@@ -3,5 +3,8 @@ export default {
   TestScreen: 'TestScreen',
   LoginScreen: 'LoginScreen',
   RegisterScreen: 'RegisterScreen',
-  ProfileScreen: 'ProfileScreen'
+  ProfileScreen: 'ProfileScreen',
+  EditProfileScreen: 'EditProfileScreen',
+  NotificationScreen: 'NotificationScreen',
+  SavedProgramsScreen: 'SavedProgramsScreen'
 };

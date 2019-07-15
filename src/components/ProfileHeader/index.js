@@ -6,6 +6,9 @@ import {
   TouchableOpacity,
   StyleSheet
 } from 'react-native';
+import i18n from '../../i18n/i18n';
+
+const backgroundImageDefault = require('../../assets/defaultBackgoundOnProfilePage.png');
 
 const styles = StyleSheet.create({
   backgroundImage: {
@@ -51,7 +54,7 @@ const ProfileHeader = ({ imageUrl, backgroundUrl }) => (
     <View style={{ width: '100%', height: 150 }}>
       <Image
         style={styles.backgroundImage}
-        source={{ uri: backgroundUrl }}
+        source={backgroundUrl !== '' ? { uri: backgroundUrl } : backgroundImageDefault}
       />
       <View
         style={styles.changeBackgroundContainer}
@@ -59,7 +62,11 @@ const ProfileHeader = ({ imageUrl, backgroundUrl }) => (
         <TouchableOpacity
           style={styles.changeBackgroundButton}
         >
-          <Text style={styles.changeBackgroundText}>Change Background</Text>
+          <Text
+            style={styles.changeBackgroundText}
+          >
+            {i18n.t('profileScreen.profileHeader.changeBackground')}
+          </Text>
         </TouchableOpacity>
       </View>
     </View>

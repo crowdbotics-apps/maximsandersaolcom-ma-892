@@ -23,6 +23,8 @@ export default (state = { ...initialAuthState }, { type, payload }) => {
   }
 };
 
+export const logOut = () => dispatch => dispatch({ type: LOGOUT_SUCCESS });
+
 export const loginActionViaFacebook = data => (dispatch) => {
   const { email, picture, name } = data;
   const payload = {

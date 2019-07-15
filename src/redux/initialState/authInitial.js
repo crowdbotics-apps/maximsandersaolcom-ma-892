@@ -1,4 +1,8 @@
 export default {
   authenticated: false,
-  profile: null
+  profile: {
+    email: '',
+    imageUrl: '',
+    name: ''
+  }
 };
