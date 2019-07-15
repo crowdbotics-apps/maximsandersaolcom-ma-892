@@ -6,6 +6,7 @@ import {
   StyleSheet,
   ScrollView
 } from 'react-native';
+import PropTypes from 'prop-types';
 import { DrawerItems } from 'react-navigation';
 import i18n from '../../i18n/i18n';
 import Routes from '../../Routes';
@@ -124,6 +125,25 @@ const DrawerContent = (props) => {
       </ScrollView>
     </View>
   );
+};
+
+DrawerContent.defaultProps = {
+  screenProps: {
+    logOutAction: () => {},
+    profile: {
+      name: ''
+    }
+  },
+};
+
+DrawerContent.propTypes = {
+  screenProps: PropTypes.shape({
+    logOutAction: PropTypes.func.isRequired,
+    profile: PropTypes.shape({
+      name: PropTypes.string.isRequired
+    })
+  }),
+  navigation: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default DrawerContent;

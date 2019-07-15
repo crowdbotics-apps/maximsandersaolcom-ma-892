@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity
 } from 'react-native';
+import PropTypes from 'prop-types';
 import i18n from '../../i18n/i18n';
 
 const iconArrow = require('../../assets/icon_arrow.png');
@@ -42,7 +43,11 @@ const styles = StyleSheet.create({
   }
 });
 
-const ProfileStats = ({ followers = 0, following = 0, friends = 0 }) => (
+const ProfileStats = ({
+  followers = 0,
+  following = 0,
+  friends = 0
+}) => (
   <View style={{ width: '100%' }}>
     <View style={styles.myProfileContainer}>
       <Text>{i18n.t('profileScreen.profileStats.myProfile')}</Text>
@@ -95,5 +100,17 @@ const ProfileStats = ({ followers = 0, following = 0, friends = 0 }) => (
     </View>
   </View>
 );
+
+ProfileStats.defaultProps = {
+  followers: 0,
+  following: 0,
+  friends: 0
+};
+
+ProfileStats.propTypes = {
+  followers: PropTypes.number,
+  following: PropTypes.number,
+  friends: PropTypes.number
+};
 
 export default ProfileStats;

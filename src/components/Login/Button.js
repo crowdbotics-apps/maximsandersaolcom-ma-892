@@ -4,6 +4,7 @@ import {
   Text,
   StyleSheet
 } from 'react-native';
+import PropTypes from 'prop-types';
 
 const Button = ({
   onPress,
@@ -36,5 +37,19 @@ const styles = StyleSheet.create({
     fontWeight: '500'
   }
 });
+
+Button.defaultProps = {
+  onPress: () => {},
+  style: {},
+  label: '',
+  labelStyle: {}
+};
+
+Button.propTypes = {
+  onPress: PropTypes.func,
+  style: PropTypes.shape(),
+  label: PropTypes.string,
+  labelStyle: PropTypes.shape()
+};
 
 export default Button;
