@@ -8,5 +8,37 @@
     "or": "OR",
     "facebookButton": "Log in via Facebook",
     "googleButton": "Log in via Google"
+  },
+  "drawerNavigation": {
+    "editProfile": "Edit Profile",
+    "notificaitons": "Notifications",
+    "savedPrograms": "Saved programs",
+    "logOut": "Log Out",
+    "advancedSetting": "Advanced Settings"
+  },
+  "bottomNavigation": {
+    "today": "Today",
+    "profile": "Profile",
+    "feed": "Feed",
+    "nutrition": "Nutrition",
+    "programs": "Programs"
+  },
+  "profileScreen": {
+    "profileMenuItems": {
+      "findMyProgram": "Find My Program",
+      "myFavorites": "My Favorites",
+      "myProgressAndData": "My Progress and Data",
+      "learn": "Learn",
+      "settings": "Settings"
+    },
+    "profileStats": {
+      "friends": "Friends",
+      "following": "Following",
+      "followers": "Followers",
+      "myProfile": "My Profile"
+    },
+    "profileHeader": {
+      "changeBackground": "Change Background"
+    }
   }
 }

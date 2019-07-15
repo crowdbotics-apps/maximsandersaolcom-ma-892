@@ -8,6 +8,7 @@ import {
 import { withNavigation } from 'react-navigation';
 
 import Routes from '../../../Routes';
+import i18n from '../../../i18n/i18n';
 
 import { isIphoneX } from '../../../utils/common';
 
@@ -21,7 +22,7 @@ class BottomTabNavigationContainer extends Component {
       {
         normal: parentListIcon,
         active: parentListSelectedIcon,
-        text: 'Today',
+        text: i18n.t('bottomNavigation.today'),
         onClick: () => {
           const { navigation } = this.props;
           navigation.navigate(Routes.ProfileScreen);
@@ -29,7 +30,7 @@ class BottomTabNavigationContainer extends Component {
       }, {
         normal: parentListIcon,
         active: parentListSelectedIcon,
-        text: 'Profile',
+        text: i18n.t('bottomNavigation.profile'),
         onClick: () => {
           const { navigation } = this.props;
           navigation.navigate(Routes.ProfileScreen);
@@ -37,7 +38,7 @@ class BottomTabNavigationContainer extends Component {
       }, {
         normal: parentListIcon,
         active: parentListSelectedIcon,
-        text: 'Feed',
+        text: i18n.t('bottomNavigation.feed'),
         onClick: () => {
           const { navigation } = this.props;
           navigation.navigate(Routes.TestScreen);
@@ -45,7 +46,7 @@ class BottomTabNavigationContainer extends Component {
       }, {
         normal: parentListIcon,
         active: parentListSelectedIcon,
-        text: 'Recipes',
+        text: i18n.t('bottomNavigation.nutrition'),
         onClick: () => {
           const { navigation } = this.props;
           navigation.navigate(Routes.TestScreen);
@@ -53,7 +54,7 @@ class BottomTabNavigationContainer extends Component {
       }, {
         normal: parentListIcon,
         active: parentListSelectedIcon,
-        text: 'Programs',
+        text: i18n.t('bottomNavigation.programs'),
         onClick: () => {
           const { navigation } = this.props;
           navigation.navigate(Routes.TestScreen);
@@ -81,7 +82,7 @@ class BottomTabNavigationContainer extends Component {
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            backgroundColor: isActive ? 'gray' : '#fff',
+            backgroundColor: isActive ? '#fafafa' : '#fff',
             height: !isIphoneX() ? 55 : 75
           }}
         >
