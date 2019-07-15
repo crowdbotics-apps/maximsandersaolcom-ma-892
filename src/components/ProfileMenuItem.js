@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet
 } from 'react-native';
+import PropTypes from 'prop-types';
 import { withNavigation } from 'react-navigation';
 
 const styles = StyleSheet.create({
@@ -45,5 +46,18 @@ const ProfileMenuItem = ({
     </View>
   </TouchableOpacity>
 );
+
+ProfileMenuItem.defaultProps = {
+  menuIcon: '',
+  route: '',
+  menuText: ''
+};
+
+ProfileMenuItem.propTypes = {
+  menuIcon: PropTypes.string,
+  menuText: PropTypes.string,
+  route: PropTypes.string,
+  navigation: PropTypes.shape().isRequired
+};
 
 export default withNavigation(ProfileMenuItem);

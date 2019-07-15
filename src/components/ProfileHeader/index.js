@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet
 } from 'react-native';
+import PropTypes from 'prop-types';
 import i18n from '../../i18n/i18n';
 
 const backgroundImageDefault = require('../../assets/defaultBackgoundOnProfilePage.png');
@@ -82,5 +83,15 @@ const ProfileHeader = ({ imageUrl, backgroundUrl }) => (
     </View>
   </View>
 );
+
+ProfileHeader.defaultProps = {
+  imageUrl: '',
+  backgroundUrl: '',
+};
+
+ProfileHeader.propTypes = {
+  imageUrl: PropTypes.string,
+  backgroundUrl: PropTypes.string
+};
 
 export default ProfileHeader;

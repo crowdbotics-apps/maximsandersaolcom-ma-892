@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
+import PropTypes from 'prop-types';
 import ProfileHeader from '../../components/ProfileHeader';
 import ProfileStats from '../../components/ProfileStats';
 import ProfileMenu from '../../components/ProfileMenu';
@@ -21,5 +22,17 @@ const ProfileContainer = ({ profile: { imageUrl = '' } }) => (
     <ProfileMenu />
   </View>
 );
+
+ProfileContainer.defaultProps = {
+  profile: {
+    imageUrl: ''
+  }
+};
+
+ProfileContainer.propTypes = {
+  profile: PropTypes.shape({
+    imageUrl: PropTypes.string
+  }),
+};
 
 export default ProfileContainer;
