@@ -12,48 +12,51 @@ import i18n from '../../../i18n/i18n';
 
 import { isIphoneX } from '../../../utils/common';
 
-const parentListIcon = require('../../../assets/Icon_user.png');
-const parentListSelectedIcon = require('../../../assets/Icon_user.png');
+const profileIcon = require('../../../assets/Icon_user.png');
+const todayIcon = require('../../../assets/icon_today.png');
+const feedIcon = require('../../../assets/icon_feed.png');
+const nutrationIcon = require('../../../assets/icon_nutration.png');
+const programsIcon = require('../../../assets/icon_program.png');
 
 
 class BottomTabNavigationContainer extends Component {
   state = {
     menuItemList: [
       {
-        normal: parentListIcon,
-        active: parentListSelectedIcon,
+        normal: todayIcon,
+        active: todayIcon,
         text: i18n.t('bottomNavigation.today'),
         onClick: () => {
           const { navigation } = this.props;
           navigation.navigate(Routes.ProfileScreen);
         }
       }, {
-        normal: parentListIcon,
-        active: parentListSelectedIcon,
+        normal: profileIcon,
+        active: profileIcon,
         text: i18n.t('bottomNavigation.profile'),
         onClick: () => {
           const { navigation } = this.props;
           navigation.navigate(Routes.ProfileScreen);
         }
       }, {
-        normal: parentListIcon,
-        active: parentListSelectedIcon,
+        normal: feedIcon,
+        active: feedIcon,
         text: i18n.t('bottomNavigation.feed'),
         onClick: () => {
           const { navigation } = this.props;
           navigation.navigate(Routes.TestScreen);
         },
       }, {
-        normal: parentListIcon,
-        active: parentListSelectedIcon,
+        normal: nutrationIcon,
+        active: nutrationIcon,
         text: i18n.t('bottomNavigation.nutrition'),
         onClick: () => {
           const { navigation } = this.props;
           navigation.navigate(Routes.TestScreen);
         }
       }, {
-        normal: parentListIcon,
-        active: parentListSelectedIcon,
+        normal: programsIcon,
+        active: programsIcon,
         text: i18n.t('bottomNavigation.programs'),
         onClick: () => {
           const { navigation } = this.props;

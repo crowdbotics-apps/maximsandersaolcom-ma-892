@@ -26,10 +26,20 @@ const ProfileMenuItem = ({
   menuIcon,
   menuText = '',
   route = '',
-  navigation
+  navigation,
+  onPress,
+  openDrawer
 }) => (
   <TouchableOpacity
-    onPress={() => navigation.navigate(route)}
+    onPress={() => {
+      if (openDrawer) {
+        return navigation.openDrawer();
+      }
+      if (route === '') {
+        return onPress();
+      }
+      return navigation.navigate(route);
+    }}
   >
     <View style={styles.menuItemRow}>
       <View style={{ marginRight: 20 }}>
@@ -50,14 +60,18 @@ const ProfileMenuItem = ({
 ProfileMenuItem.defaultProps = {
   menuIcon: '',
   route: '',
-  menuText: ''
+  menuText: '',
+  onPress: () => {},
+  openDrawer: false
 };
 
 ProfileMenuItem.propTypes = {
-  menuIcon: PropTypes.string,
+  menuIcon: PropTypes.number,
   menuText: PropTypes.string,
   route: PropTypes.string,
-  navigation: PropTypes.shape().isRequired
+  navigation: PropTypes.shape().isRequired,
+  onPress: PropTypes.func,
+  openDrawer: PropTypes.bool
 };
 
 export default withNavigation(ProfileMenuItem);
