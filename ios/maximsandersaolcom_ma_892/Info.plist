@@ -81,6 +81,12 @@
 	</dict>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Need to use for login via facebook and google</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Maxim Fitness application need access of camera for Bar code scanner</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Maxim Fitness application need access of photo library for Bar code scanner</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Maxim Fitness application need access of microphone for Bar code scanner</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Need to use for login via facebook and google</string>
 	<key>UILaunchStoryboardName</key>
