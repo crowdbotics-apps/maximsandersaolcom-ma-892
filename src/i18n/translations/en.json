@@ -40,5 +40,9 @@
     "profileHeader": {
       "changeBackground": "Change Background"
     }
+  },
+  "barcodeScanner": {
+    "browseRecipes": "Browse Recipes",
+    "supportYourGoals": "Supports your goals!"
   }
 }

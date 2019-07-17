@@ -6,5 +6,6 @@ export default {
   ProfileScreen: 'ProfileScreen',
   EditProfileScreen: 'EditProfileScreen',
   NotificationScreen: 'NotificationScreen',
-  SavedProgramsScreen: 'SavedProgramsScreen'
+  SavedProgramsScreen: 'SavedProgramsScreen',
+  NutritionScreen: 'NutritionScreen'
 };

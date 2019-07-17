@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   Text
 } from 'react-native';
-import { withNavigation } from 'react-navigation';
+import { withNavigation, NavigationActions, StackActions } from 'react-navigation';
 
 import Routes from '../../../Routes';
 import i18n from '../../../i18n/i18n';
@@ -52,7 +52,9 @@ class BottomTabNavigationContainer extends Component {
         text: i18n.t('bottomNavigation.nutrition'),
         onClick: () => {
           const { navigation } = this.props;
-          navigation.navigate(Routes.TestScreen);
+          console.log('props', this.props);
+          this.resetTo(Routes.NutritionScreen);
+          //navigation.replace(Routes.NutritionScreen);
         }
       }, {
         normal: programsIcon,
@@ -64,6 +66,15 @@ class BottomTabNavigationContainer extends Component {
         }
       }
     ]
+  }
+
+  resetTo = (route) => {
+    const actionToDispatch = StackActions.reset({
+      index: 0,
+      key: null,
+      actions: [NavigationActions.navigate({ routeName: route })],
+    });
+    this.props.navigation.dispatch(actionToDispatch);
   }
 
   render() {
