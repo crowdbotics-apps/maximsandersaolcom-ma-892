@@ -9,7 +9,8 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  Platform
+  Platform,
+  Alert
 } from 'react-native';
 import { LoginManager, AccessToken } from 'react-native-fbsdk';
 import { GoogleSignin, statusCodes } from 'react-native-google-signin';
@@ -18,7 +19,10 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import i18n from '../../i18n/i18n';
 import Routes from '../../Routes';
-import { loginActionViaFacebook, loginActionViaGmail } from '../../redux/modules/authReducer';
+import {
+  loginActionViaFacebook,
+  loginActionViaGmail
+} from '../../redux/modules/authReducer';
 
 const mainActions = {
   loginActionViaFacebookAction: loginActionViaFacebook,
@@ -172,9 +176,6 @@ class LoginScreen extends Component {
       email,
       password
     } = this.state;
-    const {
-      navigation
-    } = this.props;
     return (
       <KeyboardAvoidingView
         style={{ flex: 1 }}
@@ -250,7 +251,7 @@ class LoginScreen extends Component {
               </View>
               <View style={styles.containerCenter}>
                 <TouchableOpacity
-                  onPress={() => navigation.navigate(Routes.ProfileScreen)}
+                  onPress={() => Alert.alert('Inforamtion', 'Waiting for backend')}
                   style={styles.letsStartButton}
                 >
                   <Text style={{ fontSize: 15 }}>
