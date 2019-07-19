@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
   }
 });
 
-class LoginScreen extends Component {
+class RegisterScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -292,4 +292,4 @@ export default connect(
     authenticated
   }),
   dispatch => bindActionCreators(mainActions, dispatch)
-)(withNavigation(LoginScreen));
+)(withNavigation(RegisterScreen));

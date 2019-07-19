@@ -19,7 +19,8 @@ import {
   EditProfileScreen,
   NotificationScreen,
   SavedProgramsScreen,
-  NutritionScreen
+  NutritionScreen,
+  FeedScreen
 } from './screens';
 import DrawerContent from './containers/DrawerContent';
 // Packages
@@ -83,8 +84,8 @@ const NutationTabStack = createStackNavigator({
 });
 
 const FeedTabStack = createStackNavigator({
-  [Routes.TestScreen]: {
-    screen: TestScreen,
+  [Routes.FeedScreen]: {
+    screen: FeedScreen,
     navigationOptions: () => ({
       header: null
     })
