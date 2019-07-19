@@ -8,7 +8,7 @@ const feeds = [
   {
     fullName: 'Test user',
     time: '1 mounth ago',
-    title: 'Exaple test',
+    title: 'Example test',
     likes: 10,
     comments: 20,
     id: 1,
