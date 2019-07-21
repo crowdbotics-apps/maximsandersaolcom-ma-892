@@ -11,7 +11,11 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
-import co.apptailor.googlesignin.RNGoogleSigninPackage;  // <--- import
+import co.apptailor.googlesignin.RNGoogleSigninPackage;
+import org.reactnative.camera.RNCameraPackage;
+import io.invertase.firebase.RNFirebasePackage;  /* react-native-firebase */
+import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;  /* react-native-firebase */
+import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage; /* react-native-firebase */
 
 import java.util.Arrays;
 import java.util.List;
@@ -37,7 +41,11 @@ public class MainApplication extends Application implements ReactApplication {
             new FBSDKPackage(mCallbackManager),
             new ReactVideoPackage(),
             new RNGestureHandlerPackage(),
-            new RNGoogleSigninPackage() // <-- this needs to be in the list
+            new RNGoogleSigninPackage(),
+            new RNCameraPackage(),
+            new RNFirebasePackage(), /* react-native-firebase */
+            new RNFirebaseMessagingPackage(), /* react-native-firebase */
+            new RNFirebaseNotificationsPackage() /* react-native-firebase */
       );
     }
 
