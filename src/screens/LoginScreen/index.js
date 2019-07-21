@@ -21,12 +21,15 @@ import i18n from '../../i18n/i18n';
 import Routes from '../../Routes';
 import {
   loginActionViaFacebook,
-  loginActionViaGmail
+  loginActionViaGmail,
+  regularLogin
 } from '../../redux/modules/authReducer';
+import AuthService from '../../services/AuthService';
 
 const mainActions = {
   loginActionViaFacebookAction: loginActionViaFacebook,
-  loginActionViaGmailAction: loginActionViaGmail
+  loginActionViaGmailAction: loginActionViaGmail,
+  regularLoginAction: regularLogin
 };
 
 const logoImage = require('../../assets/logoSplashScreen.png');
@@ -171,6 +174,20 @@ class LoginScreen extends Component {
     }
   };
 
+  regularLogin = async (email, password) => {
+    const { regularLoginAction, navigation } = this.props;
+    try {
+      const authService = new AuthService();
+      const data = await authService.login({ username: email, password });
+      const { user, token } = data;
+      regularLoginAction(user, token);
+      navigation.navigate(Routes.ProfileScreen);
+    } catch (err) {
+      console.log('err', err);
+      Alert.alert('Error', 'Wrong credentials');
+    }
+  }
+
   render() {
     const {
       email,
@@ -251,7 +268,7 @@ class LoginScreen extends Component {
               </View>
               <View style={styles.containerCenter}>
                 <TouchableOpacity
-                  onPress={() => Alert.alert('Inforamtion', 'Waiting for backend')}
+                  onPress={() => this.regularLogin(email, password)}
                   style={styles.letsStartButton}
                 >
                   <Text style={{ fontSize: 15 }}>

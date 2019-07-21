@@ -22,12 +22,14 @@ import i18n from '../../i18n/i18n';
 import Routes from '../../Routes';
 import {
   loginActionViaFacebook,
-  loginActionViaGmail
+  loginActionViaGmail,
+  register
 } from '../../redux/modules/authReducer';
 
 const mainActions = {
   loginActionViaFacebookAction: loginActionViaFacebook,
-  loginActionViaGmailAction: loginActionViaGmail
+  loginActionViaGmailAction: loginActionViaGmail,
+  registerAction: register
 };
 
 const logoImage = require('../../assets/logoSplashScreen.png');
@@ -270,7 +272,7 @@ class RegisterScreen extends Component {
                 <TouchableOpacity
                   onPress={() => {
                     if (!termsAndConditions) return;
-                    Alert.alert('Inforamtion', 'Waiting for backend');
+                    this.props.registerAction(this.state.email, this.state.password);
                   }}
                   style={styles.letsStartButton}
                 >
