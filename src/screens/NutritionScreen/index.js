@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import ProfileContainer from '../../containers/ProfileContainer';
+import BarcodeScanner from '../../components/BarcodeScanner';
 
 const styles = StyleSheet.create({
   container: {
@@ -8,9 +8,10 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   }
 });
-const ProfileScreen = () => (
+const NutritionScreen = () => (
   <View style={styles.container}>
-    <ProfileContainer />
+    <BarcodeScanner />
   </View>
 );
-export default ProfileScreen;
+
+export default NutritionScreen;

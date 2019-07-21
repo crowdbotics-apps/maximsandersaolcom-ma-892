@@ -6,9 +6,9 @@ import {
 } from 'react-native';
 import { withNavigation } from 'react-navigation';
 
-const EditProfileScreen = ({ navigation }) => (
+const EditScreen = ({ navigation }) => (
   <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-    <Text>Edit Profile Screen</Text>
+    <Text>Edit Screen</Text>
     <TouchableOpacity
       onPress={() => navigation.goBack()}
       style={{ paddingVertical: 10, paddingHorizontal: 15, backgroundColor: 'blue' }}
@@ -18,4 +18,4 @@ const EditProfileScreen = ({ navigation }) => (
   </View>
 );
 
-export default withNavigation(EditProfileScreen);
+export default withNavigation(EditScreen);

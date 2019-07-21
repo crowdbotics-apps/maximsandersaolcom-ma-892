@@ -9,6 +9,16 @@
     "facebookButton": "Log in via Facebook",
     "googleButton": "Log in via Google"
   },
+  "registerScreen": {
+    "login": "Log in",
+    "register": "Register",
+    "emailPlaceholder": "Email",
+    "passwordPlaceholder": "Password",
+    "registerButton": "Let's start!",
+    "or": "OR",
+    "facebookButton": "Register via Facebook",
+    "googleButton": "Register via Google Account"
+  },
   "drawerNavigation": {
     "editProfile": "Edit Profile",
     "notificaitons": "Notifications",
@@ -40,5 +50,9 @@
     "profileHeader": {
       "changeBackground": "Change Background"
     }
+  },
+  "barcodeScanner": {
+    "browseRecipes": "Browse Recipes",
+    "supportYourGoals": "Supports your goals!"
   }
 }
