@@ -1,7 +1,8 @@
 import React from 'react';
 import {
   TouchableOpacity,
-  Image
+  Image,
+  Platform
 } from 'react-native';
 import {
   createDrawerNavigator,
@@ -23,6 +24,7 @@ import {
   FeedScreen
 } from './screens';
 import DrawerContent from './containers/DrawerContent';
+import regularHeaderStyle from './components/regularHeaderStyle';
 // Packages
 import i18n from './i18n/i18n';
 
@@ -160,13 +162,15 @@ const AuthStack = createStackNavigator({
   [Routes.LoginScreen]: {
     screen: LoginScreen,
     navigationOptions: {
-      header: null
+      header: Platform.select({ ios: undefined, android: null }),
+      headerStyle: regularHeaderStyle,
     }
   },
   [Routes.RegisterScreen]: {
     screen: RegisterScreen,
     navigationOptions: {
-      header: null
+      header: Platform.select({ ios: undefined, android: null }),
+      headerStyle: regularHeaderStyle,
     }
   }
 },
@@ -175,10 +179,10 @@ const AuthStack = createStackNavigator({
   cardStyle: {
     backgroundColor: 'white',
   },
-  headerMode: 'none',
-  navigationOptions: {
-    headerVisible: false,
-  }
+  // headerMode: 'none',
+  // navigationOptions: {
+  //   headerVisible: false,
+  // }
 });
 
 export default createStackNavigator({

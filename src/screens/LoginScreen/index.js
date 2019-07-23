@@ -10,7 +10,6 @@ import {
   TextInput,
   TouchableOpacity,
   Platform,
-  Alert
 } from 'react-native';
 import { LoginManager, AccessToken } from 'react-native-fbsdk';
 import { GoogleSignin, statusCodes } from 'react-native-google-signin';
@@ -18,18 +17,23 @@ import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import i18n from '../../i18n/i18n';
+import Input from '../../components/Input';
 import Routes from '../../Routes';
 import {
   loginActionViaFacebook,
   loginActionViaGmail,
-  regularLogin
+  regularLogin,
+  resetErrors,
+  setError
 } from '../../redux/modules/authReducer';
 import AuthService from '../../services/AuthService';
 
 const mainActions = {
   loginActionViaFacebookAction: loginActionViaFacebook,
   loginActionViaGmailAction: loginActionViaGmail,
-  regularLoginAction: regularLogin
+  regularLoginAction: regularLogin,
+  resetErrorsAction: resetErrors,
+  setErrorAction: setError
 };
 
 const logoImage = require('../../assets/logoSplashScreen.png');
@@ -57,8 +61,6 @@ const styles = StyleSheet.create({
   },
   input: {
     height: Platform.select({ ios: 30, android: 40 }),
-    borderBottomColor: 'gray',
-    borderBottomWidth: 1,
     width: '100%',
     paddingLeft: 5
   },
@@ -109,6 +111,8 @@ class LoginScreen extends Component {
   }
 
   componentDidMount() {
+    const { resetErrorsAction } = this.props;
+    resetErrorsAction();
     GoogleSignin.configure({
       scopes: ['https://www.googleapis.com/auth/userinfo.profile'],
       forceConsentPrompt: true,
@@ -175,7 +179,12 @@ class LoginScreen extends Component {
   };
 
   regularLogin = async (email, password) => {
-    const { regularLoginAction, navigation } = this.props;
+    const {
+      regularLoginAction,
+      navigation,
+      resetErrorsAction,
+      setErrorAction
+    } = this.props;
     try {
       const authService = new AuthService();
       const data = await authService.login({ username: email, password });
@@ -183,8 +192,13 @@ class LoginScreen extends Component {
       regularLoginAction(user, token);
       navigation.navigate(Routes.ProfileScreen);
     } catch (err) {
-      console.log('err', err);
-      Alert.alert('Error', 'Wrong credentials');
+      resetErrorsAction();
+      const arrayErrors = Object.entries(err.data);
+      const arrayWithMessages = arrayErrors.map(item => ({
+        field: `${item[0]}`,
+        message: item[1].toString(),
+      }));
+      arrayWithMessages.map(item => setErrorAction({ field: item.field, message: item.message }));
     }
   }
 
@@ -193,6 +207,10 @@ class LoginScreen extends Component {
       email,
       password
     } = this.state;
+    const {
+      usernameErrorText,
+      passwordErrorText
+    } = this.props;
     return (
       <KeyboardAvoidingView
         style={{ flex: 1 }}
@@ -247,20 +265,22 @@ class LoginScreen extends Component {
                 </View>
                 <View style={[styles.containerCenter, styles.paddingHor]}>
                   <View style={{ width: '100%', paddingBottom: 15 }}>
-                    <TextInput
-                      style={styles.input}
+                    <Input
+                      inputStyle={styles.input}
                       keyboardType="email-address"
                       onChangeText={value => this.handleInputChange('email', value)}
                       value={email}
+                      error={usernameErrorText}
                       placeholder={i18n.t('loginScreen.emailPlaceholder')}
                     />
                   </View>
                   <View style={{ width: '100%' }}>
-                    <TextInput
-                      style={styles.input}
+                    <Input
+                      inputStyle={styles.input}
                       secureTextEntry
                       onChangeText={value => this.handleInputChange('password', value)}
                       value={password}
+                      error={passwordErrorText}
                       placeholder={i18n.t('loginScreen.passwordPlaceholder')}
                     />
                   </View>
@@ -285,8 +305,10 @@ class LoginScreen extends Component {
 }
 
 export default connect(
-  ({ auth: { authenticated } }) => ({
-    authenticated
+  ({ auth: { authenticated, usernameErrorText, passwordErrorText } }) => ({
+    authenticated,
+    usernameErrorText,
+    passwordErrorText
   }),
   dispatch => bindActionCreators(mainActions, dispatch)
 )(withNavigation(LoginScreen));
