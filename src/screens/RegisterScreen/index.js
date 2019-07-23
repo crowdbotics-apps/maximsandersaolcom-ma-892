@@ -7,10 +7,8 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Text,
-  TextInput,
   TouchableOpacity,
   Platform,
-  Alert
 } from 'react-native';
 import { LoginManager, AccessToken } from 'react-native-fbsdk';
 import { GoogleSignin, statusCodes } from 'react-native-google-signin';
@@ -20,16 +18,19 @@ import { bindActionCreators } from 'redux';
 import CheckBox from 'react-native-check-box';
 import i18n from '../../i18n/i18n';
 import Routes from '../../Routes';
+import Input from '../../components/Input';
 import {
   loginActionViaFacebook,
   loginActionViaGmail,
-  register
+  register,
+  resetErrors,
 } from '../../redux/modules/authReducer';
 
 const mainActions = {
   loginActionViaFacebookAction: loginActionViaFacebook,
   loginActionViaGmailAction: loginActionViaGmail,
-  registerAction: register
+  registerAction: register,
+  resetErrorsAction: resetErrors
 };
 
 const logoImage = require('../../assets/logoSplashScreen.png');
@@ -56,9 +57,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#3b5998',
   },
   input: {
-    height: Platform.select({ ios: 30, android: 40 }),
-    borderBottomColor: 'gray',
-    borderBottomWidth: 1,
+    //height: Platform.select({ ios: 30, android: 40 }),
+    // borderBottomColor: 'gray',
+    // borderBottomWidth: 1,
     width: '100%',
     paddingLeft: 5
   },
@@ -110,6 +111,8 @@ class RegisterScreen extends Component {
   }
 
   componentDidMount() {
+    const { resetErrorsAction } = this.props;
+    resetErrorsAction();
     GoogleSignin.configure({
       scopes: ['https://www.googleapis.com/auth/userinfo.profile'],
       forceConsentPrompt: true,
@@ -185,6 +188,12 @@ class RegisterScreen extends Component {
       password,
       termsAndConditions
     } = this.state;
+    const {
+      registerAction,
+      emailErrorText,
+      passwordErrorText,
+    } = this.props;
+    console.log('rpops',this.props);
     return (
       <KeyboardAvoidingView
         style={{ flex: 1 }}
@@ -239,20 +248,22 @@ class RegisterScreen extends Component {
                 </View>
                 <View style={[styles.containerCenter, styles.paddingHor]}>
                   <View style={{ width: '100%', paddingBottom: 15 }}>
-                    <TextInput
-                      style={styles.input}
+                    <Input
+                      inputStyle={styles.input}
                       keyboardType="email-address"
                       onChangeText={value => this.handleInputChange('email', value)}
                       value={email}
+                      error={emailErrorText}
                       placeholder={i18n.t('registerScreen.emailPlaceholder')}
                     />
                   </View>
                   <View style={{ width: '100%' }}>
-                    <TextInput
-                      style={styles.input}
+                    <Input
+                      inputStyle={styles.input}
                       secureTextEntry
                       onChangeText={value => this.handleInputChange('password', value)}
                       value={password}
+                      error={passwordErrorText}
                       placeholder={i18n.t('registerScreen.passwordPlaceholder')}
                     />
                   </View>
@@ -272,7 +283,7 @@ class RegisterScreen extends Component {
                 <TouchableOpacity
                   onPress={() => {
                     if (!termsAndConditions) return;
-                    this.props.registerAction(this.state.email, this.state.password);
+                    registerAction(email, password);
                   }}
                   style={styles.letsStartButton}
                 >
@@ -290,8 +301,10 @@ class RegisterScreen extends Component {
 }
 
 export default connect(
-  ({ auth: { authenticated } }) => ({
-    authenticated
+  ({ auth: { authenticated, emailErrorText, passwordErrorText } }) => ({
+    authenticated,
+    emailErrorText,
+    passwordErrorText
   }),
   dispatch => bindActionCreators(mainActions, dispatch)
 )(withNavigation(RegisterScreen));

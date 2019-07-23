@@ -53,6 +53,7 @@
   },
   "barcodeScanner": {
     "browseRecipes": "Browse Recipes",
-    "supportYourGoals": "Supports your goals!"
+    "supportYourGoals": "Supports your goals!",
+    "notSupportYourGoals": "Not supports your goals!"
   }
 }

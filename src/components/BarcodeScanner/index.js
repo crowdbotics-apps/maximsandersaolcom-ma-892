@@ -9,30 +9,47 @@ import {
 
 import { RNCamera } from 'react-native-camera';
 import i18n from '../../i18n/i18n';
+import NutritionService from '../../services/NutritionService';
 
+const nutritionsService = new NutritionService();
 
 export default class BarcodeScanner extends Component {
   constructor(props) {
     super(props);
     this.state = {
       barcodes: [],
+      isExist: false
     };
     this.camera = React.createRef();
   }
 
-  onBarCodeRead = (e) => {
-    if (e.barcodes.length) {
-      this.setState(prevState => ({
-        barcodes: [
-          ...prevState.barcodes,
-          ...e.barcodes
-        ]
-      }), () => Alert.alert('Barcode', `${e.barcodes[0].data}`));
+  onBarCodeRead = async (e) => {
+    const { barcodes } = e;
+    if (barcodes.length) {
+      const [first] = barcodes;
+      try {
+        const result = await nutritionsService.getProductWithBarcode(first.data);
+        this.setState(prevState => ({
+          barcodes: [
+            ...prevState.barcodes,
+            ...barcodes
+          ],
+          isExist: true,
+        }), () => Alert.alert('Barcode', `Product - name: ${result.name}, code: ${result.code}`));
+      } catch (err) {
+        this.setState(prevState => ({
+          barcodes: [
+            ...prevState.barcodes,
+            ...barcodes
+          ],
+          isExist: false
+        }));
+      }
     }
   }
 
   render() {
-    const { barcodes } = this.state;
+    const { barcodes, isExist } = this.state;
     return (
       <View
         style={styles.container}
@@ -40,7 +57,7 @@ export default class BarcodeScanner extends Component {
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
           {
             barcodes.length ? (
-              <Text style={{ color: 'green', fontSize: 18 }}>{i18n.t('barcodeScanner.supportYourGoals')}</Text>
+              <Text style={{ color: isExist ? 'green' : 'red', fontSize: 18 }}>{isExist ? i18n.t('barcodeScanner.supportYourGoals') : i18n.t('barcodeScanner.notSupportYourGoals')}</Text>
             ) : null
           }
         </View>
