@@ -247,7 +247,7 @@ class RegisterScreen extends Component {
                   <Text style={styles.orText}>{i18n.t('registerScreen.or')}</Text>
                 </View>
                 <View style={[styles.containerCenter, styles.paddingHor]}>
-                  <View style={{ width: '100%', paddingBottom: 15 }}>
+                  <View style={{ width: '100%' }}>
                     <Input
                       inputStyle={styles.input}
                       keyboardType="email-address"
@@ -268,14 +268,14 @@ class RegisterScreen extends Component {
                     />
                   </View>
                   <CheckBox
-                    style={{ width: '100%', height: 50, marginTop: 10 }}
+                    style={{ width: '100%', height: 50, marginTop: 25 }}
                     onClick={() => {
                       this.setState(prevState => ({
                         termsAndConditions: !prevState.termsAndConditions
                       }));
                     }}
                     isChecked={termsAndConditions}
-                    rightText="I accept T&C"
+                    rightText={i18n.t('registerScreen.termsAndCond')}
                   />
                 </View>
               </View>

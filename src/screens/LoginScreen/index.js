@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#3b5998',
   },
   input: {
-    height: Platform.select({ ios: 30, android: 40 }),
+    //height: Platform.select({ ios: 30, android: 40 }),
     width: '100%',
     paddingLeft: 5
   },
@@ -264,7 +264,7 @@ class LoginScreen extends Component {
                   <Text style={styles.orText}>{i18n.t('loginScreen.or')}</Text>
                 </View>
                 <View style={[styles.containerCenter, styles.paddingHor]}>
-                  <View style={{ width: '100%', paddingBottom: 15 }}>
+                  <View style={{ width: '100%' }}>
                     <Input
                       inputStyle={styles.input}
                       keyboardType="email-address"

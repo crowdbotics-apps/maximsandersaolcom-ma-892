@@ -16,6 +16,7 @@ import org.reactnative.camera.RNCameraPackage;
 import io.invertase.firebase.RNFirebasePackage;  /* react-native-firebase */
 import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;  /* react-native-firebase */
 import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage; /* react-native-firebase */
+import com.cmcewen.blurview.BlurViewPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -45,7 +46,8 @@ public class MainApplication extends Application implements ReactApplication {
             new RNCameraPackage(),
             new RNFirebasePackage(), /* react-native-firebase */
             new RNFirebaseMessagingPackage(), /* react-native-firebase */
-            new RNFirebaseNotificationsPackage() /* react-native-firebase */
+            new RNFirebaseNotificationsPackage(), /* react-native-firebase */
+            new BlurViewPackage()
       );
     }
 
