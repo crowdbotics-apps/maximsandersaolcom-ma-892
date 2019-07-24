@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import { Platform } from 'react-native';
 import PropTypes from 'prop-types';
 import { TextField } from 'react-native-material-textfield';
 
@@ -45,6 +44,10 @@ class Input extends PureComponent {
         inputContainerStyle={{
           borderBottomColor: tintColor,
           borderBottomWidth: 1,
+        }}
+        containerStyle={{
+          paddingTop: 0,
+          height: 64
         }}
       />
     );

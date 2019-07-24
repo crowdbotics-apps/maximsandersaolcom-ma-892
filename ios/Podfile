@@ -31,6 +31,7 @@ target 'maximsandersaolcom_ma_892' do
 
   pod 'RNGoogleSignin', :path => '../node_modules/react-native-google-signin'
   pod 'react-native-fbsdk', :path => '../node_modules/react-native-fbsdk/'
+  pod 'react-native-blur', :path => '../node_modules/react-native-blur/'
   pod 'react-native-camera', path: '../node_modules/react-native-camera', subspecs: [
     'BarcodeDetectorMLKit'
   ]

@@ -4,10 +4,11 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
-  Alert
+  Alert,
 } from 'react-native';
 
 import { RNCamera } from 'react-native-camera';
+import { BlurView } from 'react-native-blur';
 import i18n from '../../i18n/i18n';
 import NutritionService from '../../services/NutritionService';
 
@@ -51,25 +52,33 @@ export default class BarcodeScanner extends Component {
   render() {
     const { barcodes, isExist } = this.state;
     return (
-      <View
-        style={styles.container}
+      <RNCamera
+        style={styles.camera}
+        ref={this.camera}
+        autoFocus="on"
+        defaultOnFocusComponent
+        barCodeTypes={[RNCamera.Constants.BarCodeType.qr]}
+        onGoogleVisionBarcodesDetected={this.onBarCodeRead}
       >
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <BlurView
+          style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+          viewRef={null}
+          blurType="light"
+          blurAmount={10}
+        >
           {
             barcodes.length ? (
               <Text style={{ color: isExist ? 'green' : 'red', fontSize: 18 }}>{isExist ? i18n.t('barcodeScanner.supportYourGoals') : i18n.t('barcodeScanner.notSupportYourGoals')}</Text>
             ) : null
           }
-        </View>
-        <RNCamera
-          style={styles.camera}
-          ref={this.camera}
-          autoFocus="on"
-          defaultOnFocusComponent
-          barCodeTypes={[RNCamera.Constants.BarCodeType.qr]}
-          onGoogleVisionBarcodesDetected={this.onBarCodeRead}
-        />
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        </BlurView>
+        <View style={{ flex: 1, backgroundColor: 'transparent' }} />
+        <BlurView
+          style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+          viewRef={null}
+          blurType="light"
+          blurAmount={10}
+        >
           {
           barcodes.length
             ? (
@@ -81,8 +90,8 @@ export default class BarcodeScanner extends Component {
             )
             : null
           }
-        </View>
-      </View>
+        </BlurView>
+      </RNCamera>
     );
   }
 }
@@ -96,8 +105,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   camera: {
-    width: 300,
-    height: 150,
+    flex: 1,
   },
   buttonBrowseRecipes: {
     width: 200,
