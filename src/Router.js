@@ -76,7 +76,7 @@ const TodayTabStack = createStackNavigator({
   },
 });
 
-const NutationTabStack = createStackNavigator({
+const NutritionTabStack = createStackNavigator({
   [Routes.NutritionScreen]: {
     screen: NutritionScreen,
     navigationOptions: () => ({
@@ -108,7 +108,7 @@ const BottomAppStack = createBottomTabNavigator(
     Today: TodayTabStack,
     Profile: ProfileTabStack,
     Feed: FeedTabStack,
-    Nutration: NutationTabStack,
+    Nutrition: NutritionTabStack,
     Programs: ProgramsTabStack,
   },
   {

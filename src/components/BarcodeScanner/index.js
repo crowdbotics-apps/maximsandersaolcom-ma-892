@@ -19,7 +19,8 @@ export default class BarcodeScanner extends Component {
     super(props);
     this.state = {
       barcodes: [],
-      isExist: false
+      isExist: false,
+      result: {},
     };
     this.camera = React.createRef();
   }
@@ -33,10 +34,11 @@ export default class BarcodeScanner extends Component {
         this.setState(prevState => ({
           barcodes: [
             ...prevState.barcodes,
-            ...barcodes
+            ...barcodes,
+            result
           ],
           isExist: true,
-        }), () => Alert.alert('Barcode', `Product - name: ${result.name}, code: ${result.code}`));
+        }));
       } catch (err) {
         this.setState(prevState => ({
           barcodes: [
@@ -46,6 +48,13 @@ export default class BarcodeScanner extends Component {
           isExist: false
         }));
       }
+    }
+  }
+
+  showAlert = () => {
+    const { result, isExist } = this.state;
+    if (isExist) {
+      Alert.alert('Barcode', `Product - name: ${result.name}, code: ${result.code}`);
     }
   }
 
@@ -84,6 +93,7 @@ export default class BarcodeScanner extends Component {
             ? (
               <TouchableOpacity
                 style={styles.buttonBrowseRecipes}
+                onPress={() => this.showAlert()}
               >
                 <Text style={{ color: 'white', fontSize: 20 }}>{i18n.t('barcodeScanner.browseRecipes')}</Text>
               </TouchableOpacity>

@@ -11,8 +11,8 @@ export const drawerConfiguration = {
 
 export const TAB_ICONS_ENUM = {
   Today: { true: todayIcon, false: todayIcon },
-  Nutration: { true: nutrationIcon, false: nutrationIcon },
+  Nutrition: { true: nutrationIcon, false: nutrationIcon },
   Profile: { true: profileIcon, false: profileIcon },
   Feed: { true: feedIcon, false: feedIcon },
   Programs: { true: programsIcon, false: programsIcon }
-}
+};
