@@ -3,7 +3,8 @@ export default {
   profile: {
     email: '',
     imageUrl: '',
-    name: ''
+    name: '',
+    id: 0
   },
   emailError: false,
   passwordError: false,

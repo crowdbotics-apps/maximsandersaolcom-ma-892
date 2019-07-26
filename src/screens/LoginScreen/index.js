@@ -7,7 +7,6 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Text,
-  TextInput,
   TouchableOpacity,
   Platform,
 } from 'react-native';
@@ -116,7 +115,6 @@ class LoginScreen extends Component {
     GoogleSignin.configure({
       scopes: ['https://www.googleapis.com/auth/userinfo.profile'],
       forceConsentPrompt: true,
-      // Repleace with your webClientId generated from Firebase console
       webClientId: '122090316140-er5oevo3ek39e8hvq6egc2f6brrvme1b.apps.googleusercontent.com',
     });
   }
@@ -128,29 +126,19 @@ class LoginScreen extends Component {
   }
 
   handleLoginViaFacebook = async () => {
+    const { loginActionViaFacebookAction, navigation } = this.props;
     try {
       const result = await LoginManager.logInWithPermissions(['email', 'public_profile']);
       if (result.isCancelled) {
         console.log('Login cancelled');
       } else {
-        console.log('Login success with permissions: ', result.grantedPermissions.toString(), 'result:', result);
         const data = await AccessToken.getCurrentAccessToken();
-        this.getUserDataFacebook(data.accessToken.toString());
+        await loginActionViaFacebookAction(data.accessToken.toString());
+        navigation.navigate(Routes.ProfileScreen);
       }
     } catch (err) {
       console.log('error on login via facebook', err);
-    }
-  }
-
-  getUserDataFacebook = async (token) => {
-    const { loginActionViaFacebookAction } = this.props;
-    const response = await fetch('https://graph.facebook.com/v2.5/me?fields=email,name,friends,picture&access_token=' + token);
-    const json = await response.json();
-    if (json) {
-      const { navigation } = this.props;
-      await loginActionViaFacebookAction(json);
-      navigation.navigate(Routes.ProfileScreen);
-      console.log('profile Data facebook:', json);
+      throw err;
     }
   }
 
@@ -158,8 +146,9 @@ class LoginScreen extends Component {
     const { navigation, loginActionViaGmailAction } = this.props;
     try {
       await GoogleSignin.hasPlayServices();
-      const userInfo = await GoogleSignin.signIn();
-      await loginActionViaGmailAction(userInfo);
+      await GoogleSignin.signIn();
+      const { accessToken } = await GoogleSignin.getTokens(); // to get tokens
+      await loginActionViaGmailAction(accessToken);
       navigation.navigate(Routes.ProfileScreen);
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
@@ -175,6 +164,7 @@ class LoginScreen extends Component {
         console.log("OTHER ERROR ", error);
         // some other error happened
       }
+      throw error;
     }
   };
 

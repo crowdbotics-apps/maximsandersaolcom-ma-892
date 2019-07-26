@@ -3,7 +3,6 @@ import { AsyncStorage } from 'react-native';
 /* Packages */
 import axios from 'axios';
 import i18n from 'i18n-js';
-//import Config from 'react-native-config';
 
 // import { reduxStore } from '../Root';
 
@@ -80,7 +79,7 @@ class Api {
     }
 
     addToken(token, refreshToken) {
-      this.token = token;
+      this.token = `Token ${token}`;
       this.refreshToken = refreshToken;
     }
 
