@@ -3,43 +3,68 @@ import SearchablePaginatedList from '../../components/SearchablePaginatedList/Se
 import FeedItem from '../../components/FeedItem';
 
 const logo = require('../../assets/logo.png');
+const waterPicture = require('../../assets/water_picture.jpg');
+const stuffedPicture = require('../../assets/stuffed-peppers.jpg');
+const womanFitnessPicture = require('../../assets/woman-fitness-workout.jpeg');
+const lauraTransformation = require('../../assets/before-and-after.png');
+const cookingVideo = require('../../assets/video/Cooking.mp4');
 
 const feeds = [
   {
-    fullName: 'Test user',
+    fullName: 'Demo user',
     time: '1 mounth ago',
-    title: 'Example test',
+    title: 'How Much Water Are You Consuming?',
     likes: 10,
     comments: 20,
     id: 1,
-    image: ''
+    image: waterPicture,
+    profileImage: logo,
+    video: false
   },
   {
     fullName: 'Maxim Fitnes',
     time: '2 mounth ago',
-    title: 'My feed',
+    title: 'Low Carb Stuffed Peppers',
     likes: 42,
     comments: 12,
     id: 2,
-    image: logo
+    image: stuffedPicture,
+    profileImage: logo,
+    video: false
   },
   {
     fullName: 'John Doe',
     time: '4 mounth ago',
-    title: 'This is my first, mock data',
+    title: '10 Dynamic Stretches Before a Workout',
     likes: 33,
     comments: 7,
     id: 3,
-    image: ''
+    image: womanFitnessPicture,
+    profileImage: logo,
+    video: false
   },
   {
     fullName: 'Pera Peric',
     time: '8 mounth ago',
-    title: 'I will make whatever you want',
+    title: 'How To Food Prep',
     likes: 2,
     comments: 6,
     id: 4,
-    image: ''
+    image: '',
+    profileImage: logo,
+    video: true,
+    videoFile: cookingVideo
+  },
+  {
+    fullName: 'Nick Peric',
+    time: '8 mounth ago',
+    title: "Laura's Transformation",
+    likes: 97,
+    comments: 41,
+    id: 5,
+    image: lauraTransformation,
+    profileImage: logo,
+    video: false
   },
 ];
 
@@ -52,7 +77,10 @@ export default class FeedContainer extends Component {
       likes,
       comments,
       id,
-      image
+      image,
+      profileImage,
+      video,
+      videoFile
     },
     index
   }) => (
@@ -63,6 +91,9 @@ export default class FeedContainer extends Component {
       likes={likes}
       comments={comments}
       image={image}
+      profileImage={profileImage}
+      video={video}
+      videoFile={videoFile}
       id={id}
       index={index}
     />

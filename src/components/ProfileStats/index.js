@@ -2,23 +2,12 @@ import React from 'react';
 import {
   View,
   Text,
-  Image,
   StyleSheet,
-  TouchableOpacity
 } from 'react-native';
 import PropTypes from 'prop-types';
 import i18n from '../../i18n/i18n';
 
-const iconArrow = require('../../assets/icon_arrow.png');
-
 const styles = StyleSheet.create({
-  myProfileContainer: {
-    width: '100%',
-    marginLeft: 15,
-    flexDirection: 'row',
-    marginTop: 15,
-    alignItems: 'center'
-  },
   statsRowContainer: {
     width: '100%',
     justifyContent: 'center',
@@ -26,10 +15,11 @@ const styles = StyleSheet.create({
     marginTop: 10
   },
   statsRowInner: {
-    width: '85%',
+    width: '100%',
     alignItems: 'center',
     justifyContent: 'space-between',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    paddingHorizontal: 15,
   },
   statsNum: {
     paddingRight: 5,
@@ -49,15 +39,6 @@ const ProfileStats = ({
   friends = 0
 }) => (
   <View style={{ width: '100%' }}>
-    <View style={styles.myProfileContainer}>
-      <Text>{i18n.t('profileScreen.profileStats.myProfile')}</Text>
-      <TouchableOpacity>
-        <Image
-          style={{ width: 25, height: 25 }}
-          source={iconArrow}
-        />
-      </TouchableOpacity>
-    </View>
     <View style={styles.statsRowContainer}>
       <View style={styles.statsRowInner}>
         <View style={{ flexDirection: 'row' }}>

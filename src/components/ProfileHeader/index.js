@@ -4,7 +4,8 @@ import {
   Image,
   Text,
   TouchableOpacity,
-  StyleSheet
+  StyleSheet,
+  TextInput
 } from 'react-native';
 import PropTypes from 'prop-types';
 import i18n from '../../i18n/i18n';
@@ -47,10 +48,27 @@ const styles = StyleSheet.create({
     borderRadius: 100 / 2,
     width: 100,
     height: 100
+  },
+  inputStyle: {
+    marginLeft: 15,
+    marginTop: 50,
+    fontSize: 18,
+    fontWeight: 'bold'
+  },
+  profileWrapper: {
+    marginTop: -30,
+    marginLeft: 10,
+    alignItems: 'center',
+    flexDirection: 'row'
   }
 });
 
-const ProfileHeader = ({ imageUrl, backgroundUrl }) => (
+const ProfileHeader = ({
+  imageUrl,
+  backgroundUrl,
+  fullName,
+  changeFullNameFuc
+}) => (
   <View style={{ width: '100%' }}>
     <View style={{ width: '100%', height: 150 }}>
       <Image
@@ -71,7 +89,9 @@ const ProfileHeader = ({ imageUrl, backgroundUrl }) => (
         </TouchableOpacity>
       </View>
     </View>
-    <View style={{ marginTop: -30, marginLeft: 10 }}>
+    <View
+      style={styles.profileWrapper}
+    >
       <View
         style={styles.profileImageContainer}
       >
@@ -80,6 +100,11 @@ const ProfileHeader = ({ imageUrl, backgroundUrl }) => (
           source={{ uri: imageUrl }}
         />
       </View>
+      <TextInput
+        style={styles.inputStyle}
+        value={fullName}
+        onChangeText={changeFullNameFuc}
+      />
     </View>
   </View>
 );
@@ -87,11 +112,15 @@ const ProfileHeader = ({ imageUrl, backgroundUrl }) => (
 ProfileHeader.defaultProps = {
   imageUrl: '',
   backgroundUrl: '',
+  fullName: '',
+  changeFullNameFuc: () => {}
 };
 
 ProfileHeader.propTypes = {
   imageUrl: PropTypes.string,
-  backgroundUrl: PropTypes.string
+  backgroundUrl: PropTypes.string,
+  fullName: PropTypes.string,
+  changeFullNameFuc: PropTypes.func
 };
 
 export default ProfileHeader;

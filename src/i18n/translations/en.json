@@ -36,6 +36,7 @@
   },
   "profileScreen": {
     "profileMenuItems": {
+      "costco": "Costco Health and Wellness",
       "findMyProgram": "Find My Program",
       "myFavorites": "My Favorites",
       "myProgressAndData": "My Progress and Data",
