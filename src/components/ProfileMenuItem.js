@@ -11,7 +11,7 @@ import { withNavigation } from 'react-navigation';
 
 const styles = StyleSheet.create({
   menuItemRow: {
-    marginLeft: 10,
+    marginLeft: 15,
     paddingVertical: 12,
     flexDirection: 'row',
     alignItems: 'center'

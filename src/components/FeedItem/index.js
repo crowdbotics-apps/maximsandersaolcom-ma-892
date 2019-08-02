@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity
 } from 'react-native';
+import Video from 'react-native-video';
 import PropTypes from 'prop-types';
 
 const FeedItem = ({
@@ -15,8 +16,11 @@ const FeedItem = ({
   likes = 10,
   comments = 20,
   image = '',
+  profileImage = '',
   id = 1,
-  index = 1
+  index = 1,
+  video = false,
+  videoFile = ''
 }) => (
   <TouchableOpacity
     style={styles.container}
@@ -25,8 +29,8 @@ const FeedItem = ({
   >
     <View style={styles.headerWrapper}>
       <Image
-        source={image === '' ? { uri: 'https://picsum.photos/200/300' } : image}
-        style={image === '' ? styles.profileImage : [styles.profileImage, { backgroundColor: 'white' }]}
+        source={profileImage === '' ? { uri: 'https://picsum.photos/100/100' } : profileImage}
+        style={profileImage === '' ? styles.profileImage : [styles.profileImage, { backgroundColor: 'white' }]}
         resizeMode="center"
       />
       <Text
@@ -38,11 +42,24 @@ const FeedItem = ({
       </Text>
     </View>
     <View style={styles.imageWrapper}>
-      <Image
-        source={{ uri: 'https://picsum.photos/200/300' }}
-        style={styles.image}
-        resizeMode="cover"
-      />
+      {
+        video
+          ? (
+            <Video
+              source={videoFile}
+              style={styles.image}
+              repeat
+              rate={1.0}
+              resizeMode="cover"
+            />
+          ) : (
+            <Image
+              source={image === '' ? { uri: 'https://picsum.photos/200/300' } : image}
+              style={styles.image}
+              resizeMode="cover"
+            />
+          )
+      }
     </View>
     <View style={styles.bottomWrapper}>
       <View style={styles.title}>
@@ -127,6 +144,9 @@ FeedItem.defaultProps = {
   id: 1,
   index: 1,
   image: '',
+  profileImage: '',
+  video: false,
+  videoFile: '',
 };
 
 FeedItem.propTypes = {
@@ -137,7 +157,10 @@ FeedItem.propTypes = {
   comments: PropTypes.number,
   id: PropTypes.number,
   index: PropTypes.number,
-  image: PropTypes.string
+  image: PropTypes.string,
+  profileImage: PropTypes.string,
+  video: PropTypes.bool,
+  videoFile: PropTypes.string
 };
 
 export default FeedItem;

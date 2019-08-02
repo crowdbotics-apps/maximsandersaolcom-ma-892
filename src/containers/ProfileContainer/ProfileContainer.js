@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { View, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 import ProfileHeader from '../../components/ProfileHeader';
@@ -12,16 +12,40 @@ const styles = StyleSheet.create({
   },
 });
 
-const ProfileContainer = ({ profile: { imageUrl = '' } }) => (
-  <View style={styles.containerCenter}>
-    <ProfileHeader
-      imageUrl={imageUrl}
-      backgroundUrl="" // empty string set default image
-    />
-    <ProfileStats followers={0} following={0} friends={0} />
-    <ProfileMenu />
-  </View>
-);
+class ProfileContainer extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      fullName: '',
+    };
+  }
+
+  componentDidMount() {
+    const { profile: { name: fullName } } = this.props;
+    this.setState({
+      fullName
+    });
+  }
+
+  changeFullName = value => this.setState({ fullName: value })
+
+  render() {
+    const { fullName } = this.state;
+    const { profile: { imageUrl } } = this.props;
+    return (
+      <View style={styles.containerCenter}>
+        <ProfileHeader
+          imageUrl={imageUrl}
+          backgroundUrl="" // empty string set default image
+          fullName={fullName}
+          changeFullNameFuc={this.changeFullName}
+        />
+        <ProfileStats followers={0} following={0} friends={0} />
+        <ProfileMenu />
+      </View>
+    );
+  }
+}
 
 ProfileContainer.defaultProps = {
   profile: {

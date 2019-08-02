@@ -77,12 +77,14 @@ export const loginActionViaFacebook = token => (dispatch) => {
         email,
         first_name: firstName,
         profile_url: photo,
-        last_name: lastName
+        last_name: lastName,
+        id
       } = first;
       const payload = {
         email,
         imageUrl: photo,
         name: `${firstName} ${lastName}`,
+        id
       };
       return dispatch({ type: LOGIN_SUCCESS, payload });
     })
@@ -100,12 +102,14 @@ export const loginActionViaGmail = token => (dispatch) => {
         email,
         first_name: firstName,
         profile_url: photo,
-        last_name: lastName
+        last_name: lastName,
+        id
       } = first;
       const payload = {
         email,
         imageUrl: photo,
         name: `${firstName} ${lastName}`,
+        id
       };
       return dispatch({ type: LOGIN_SUCCESS, payload });
     })
