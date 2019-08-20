@@ -2,7 +2,9 @@ import React from 'react';
 import {
   TouchableOpacity,
   Image,
-  Platform
+  Platform,
+  Text,
+  View
 } from 'react-native';
 import {
   createDrawerNavigator,
@@ -21,7 +23,9 @@ import {
   NotificationScreen,
   SavedProgramsScreen,
   NutritionScreen,
-  FeedScreen
+  FeedScreen,
+  BarCodeScreen,
+  FindFoodAndRecipesScreen
 } from './screens';
 import DrawerContent from './containers/DrawerContent';
 import regularHeaderStyle from './components/regularHeaderStyle';
@@ -29,6 +33,7 @@ import regularHeaderStyle from './components/regularHeaderStyle';
 import i18n from './i18n/i18n';
 
 import { drawerConfiguration, TAB_ICONS_ENUM } from './routerConfig';
+import Fonts from './assets/fonts';
 
 
 const ProfileTabStack = createDrawerNavigator({
@@ -83,6 +88,55 @@ const NutritionTabStack = createStackNavigator({
       header: null
     })
   },
+  [Routes.BarCodeScreen]: {
+    screen: BarCodeScreen,
+    navigationOptions: () => ({
+      headerStyle: Platform.select({
+        ios: {
+          borderBottomWidth: 0,
+          shadowOpacity: 0,
+        },
+        android: {
+          elevation: 0,
+          backgroundColor: '#fff',
+        }
+      }),
+    })
+  },
+  [Routes.FindFoodAndRecipesScreen]: {
+    screen: FindFoodAndRecipesScreen,
+    navigationOptions: () => ({
+      headerTitle: (
+        <Text
+          style={{
+            fontFamily: Fonts.NOTE_NORMAL,
+            fontSize: 28,
+            textShadowColor: 'rgba(0, 0, 0, 0.50)',
+            textShadowOffset: { width: 1, height: 1 },
+            textShadowRadius: 4,
+            textAlignVertical: 'center'
+          }}
+        >
+          Recipes
+        </Text>
+      ),
+      headerStyle: Platform.select({
+        ios: {
+          borderBottomWidth: 0,
+          shadowOpacity: 0,
+        },
+        android: {
+          elevation: 0,
+          backgroundColor: '#fff',
+        }
+      }),
+    })
+  }
+},
+{
+  cardStyle: {
+    backgroundColor: 'white',
+  }
 });
 
 const FeedTabStack = createStackNavigator({

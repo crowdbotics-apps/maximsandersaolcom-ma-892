@@ -80,7 +80,7 @@
 		</dict>
 	</dict>
 	<key>ITSAppUsesNonExemptEncryption</key>
-    <false/>
+	<false/>
 	<key>NSCameraUsageDescription</key>
 	<string>Maxim Fitness application need access of camera for Bar code scanner</string>
 	<key>NSLocationAlwaysUsageDescription</key>
@@ -103,5 +103,10 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>UIAppFonts</key>
+	<array>
+		<string>NoteworthyLt.ttf</string>
+		<string>NoteworthyBold.ttf</string>
+	</array>
 </dict>
 </plist>
