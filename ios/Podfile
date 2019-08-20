@@ -35,6 +35,7 @@ target 'maximsandersaolcom_ma_892' do
   pod 'react-native-camera', path: '../node_modules/react-native-camera', subspecs: [
     'BarcodeDetectorMLKit'
   ]
+  pod 'RNSVG', :path => '../node_modules/react-native-svg'
 
   target 'maximsandersaolcom_ma_892Tests' do
     inherit! :search_paths

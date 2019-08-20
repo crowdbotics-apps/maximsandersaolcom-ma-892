@@ -8,5 +8,7 @@ export default {
   NotificationScreen: 'NotificationScreen',
   SavedProgramsScreen: 'SavedProgramsScreen',
   NutritionScreen: 'NutritionScreen',
-  FeedScreen: 'FeedScreen'
+  FeedScreen: 'FeedScreen',
+  BarCodeScreen: 'BarCodeScreen',
+  FindFoodAndRecipesScreen: 'FindFoodAndRecipesScreen'
 };
