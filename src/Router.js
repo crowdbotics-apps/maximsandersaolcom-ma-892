@@ -25,7 +25,8 @@ import {
   NutritionScreen,
   FeedScreen,
   BarCodeScreen,
-  FindFoodAndRecipesScreen
+  FindFoodAndRecipesScreen,
+  IndividualRecipeScreen
 } from './screens';
 import DrawerContent from './containers/DrawerContent';
 import regularHeaderStyle from './components/regularHeaderStyle';
@@ -130,6 +131,12 @@ const NutritionTabStack = createStackNavigator({
           backgroundColor: '#fff',
         }
       }),
+    })
+  },
+  [Routes.IndividualRecipeScreen]: {
+    screen: IndividualRecipeScreen,
+    navigationOptions: () => ({
+      header: null
     })
   }
 },

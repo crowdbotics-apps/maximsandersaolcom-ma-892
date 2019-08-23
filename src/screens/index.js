@@ -10,3 +10,4 @@ export { default as NutritionScreen } from './NutritionScreen';
 export { default as FeedScreen } from './FeedScreen';
 export { default as BarCodeScreen } from './BarCodeScreen';
 export { default as FindFoodAndRecipesScreen } from './FindFoodAndRecipesScreen';
+export { default as IndividualRecipeScreen } from './IndividualRecipeScreen';

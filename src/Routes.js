@@ -10,5 +10,6 @@ export default {
   NutritionScreen: 'NutritionScreen',
   FeedScreen: 'FeedScreen',
   BarCodeScreen: 'BarCodeScreen',
-  FindFoodAndRecipesScreen: 'FindFoodAndRecipesScreen'
+  FindFoodAndRecipesScreen: 'FindFoodAndRecipesScreen',
+  IndividualRecipeScreen: 'IndividualRecipeScreen',
 };
