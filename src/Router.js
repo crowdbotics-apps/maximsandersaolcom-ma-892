@@ -4,7 +4,6 @@ import {
   Image,
   Platform,
   Text,
-  View
 } from 'react-native';
 import {
   createDrawerNavigator,
@@ -26,7 +25,9 @@ import {
   FeedScreen,
   BarCodeScreen,
   FindFoodAndRecipesScreen,
-  IndividualRecipeScreen
+  IndividualRecipeScreen,
+  IngredientScreen,
+  IngredientRecipeScreen
 } from './screens';
 import DrawerContent from './containers/DrawerContent';
 import regularHeaderStyle from './components/regularHeaderStyle';
@@ -133,8 +134,43 @@ const NutritionTabStack = createStackNavigator({
       }),
     })
   },
+  [Routes.IngredientRecipeScreen]: {
+    screen: IngredientRecipeScreen,
+    navigationOptions: () => ({
+      headerTitle: (
+        <Text
+          style={{
+            fontFamily: Fonts.NOTE_NORMAL,
+            fontSize: 28,
+            textShadowColor: 'rgba(0, 0, 0, 0.50)',
+            textShadowOffset: { width: 1, height: 1 },
+            textShadowRadius: 4,
+            textAlignVertical: 'center'
+          }}
+        >
+          Recipes
+        </Text>
+      ),
+      headerStyle: Platform.select({
+        ios: {
+          borderBottomWidth: 0,
+          shadowOpacity: 0,
+        },
+        android: {
+          elevation: 0,
+          backgroundColor: '#fff',
+        }
+      }),
+    })
+  },
   [Routes.IndividualRecipeScreen]: {
     screen: IndividualRecipeScreen,
+    navigationOptions: () => ({
+      header: null
+    })
+  },
+  [Routes.IngredientScreen]: {
+    screen: IngredientScreen,
     navigationOptions: () => ({
       header: null
     })

@@ -6,7 +6,11 @@ import {
   StyleSheet
 } from 'react-native';
 
-const TagButton = ({ buttonContainerStyleProp, buttonContainerText, buttonContainerTextStyle }) => (
+const TagButton = ({
+  buttonContainerStyleProp,
+  buttonContainerText,
+  buttonContainerTextStyle,
+}) => (
   <TouchableOpacity>
     <View
       style={[styles.buttonContainerStyle, buttonContainerStyleProp]}

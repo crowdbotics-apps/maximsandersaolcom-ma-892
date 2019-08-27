@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, SafeAreaView } from 'react-native';
-import { FindFoodAndRecipesContainer } from '../../containers/FindFoodAndRecipesContainer';
+import IngredientContainer from '../../containers/IngredientContainer';
 
 const styles = StyleSheet.create({
   container: {
@@ -9,10 +9,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   }
 });
-const FindFoodAndRecipesScreen = props => (
+const IngredientScren = props => (
   <SafeAreaView style={styles.container}>
-    <FindFoodAndRecipesContainer {...props} />
+    <IngredientContainer {...props} />
   </SafeAreaView>
 );
 
-export default FindFoodAndRecipesScreen;
+export default IngredientScren;

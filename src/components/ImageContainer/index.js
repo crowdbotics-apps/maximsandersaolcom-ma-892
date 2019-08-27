@@ -11,7 +11,7 @@ import {
 const screenWidth = Dimensions.get('screen').width;
 const screenHeight = Dimensions.get('screen').height / 3;
 
-const backArrowIcon = require('../../assets/icon_arrow.png');
+const backArrowIcon = require('../../assets/arrow-back.png');
 
 const ImageContainer = ({
   imageBackgroundUri,
@@ -22,16 +22,20 @@ const ImageContainer = ({
   rightIconStyleProp,
   leftIcon,
   rightIcon,
-  iconContainerStyleProp
+  iconContainerStyleProp,
+  goBack,
+  navigation: { goBack: goBackAction }
 }) => (
   <ImageBackground
     source={{ uri: imageBackgroundUri }}
     style={[styles.imageBackgroundStyle, imageBackgroundStyleProp]}
   >
     <View>
-      <TouchableOpacity>
-        <Image source={backArrowIcon} style={{ width: 30, height: 30 }} />
-      </TouchableOpacity>
+      { goBack && (
+        <TouchableOpacity onPress={() => goBackAction()}>
+          <Image source={backArrowIcon} style={{ width: 30, height: 30 }} />
+        </TouchableOpacity>
+      )}
     </View>
     <View style={[styles.iconContainerStyle, iconContainerStyleProp]}>
       {
