@@ -11,3 +11,5 @@ export { default as FeedScreen } from './FeedScreen';
 export { default as BarCodeScreen } from './BarCodeScreen';
 export { default as FindFoodAndRecipesScreen } from './FindFoodAndRecipesScreen';
 export { default as IndividualRecipeScreen } from './IndividualRecipeScreen';
+export { default as IngredientScreen } from './IngredientScreen';
+export { default as IngredientRecipeScreen } from './IngredientRecipeScreen';

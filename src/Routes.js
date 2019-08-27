@@ -12,4 +12,6 @@ export default {
   BarCodeScreen: 'BarCodeScreen',
   FindFoodAndRecipesScreen: 'FindFoodAndRecipesScreen',
   IndividualRecipeScreen: 'IndividualRecipeScreen',
+  IngredientScreen: 'IngredientScreen',
+  IngredientRecipeScreen: 'IngredientRecipeScreen'
 };

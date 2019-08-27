@@ -9,10 +9,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   }
 });
-const FindFoodAndRecipesScreen = props => (
+const IndividualRecipeScreen = props => (
   <SafeAreaView style={styles.container}>
     <IndividualRecipeContainer {...props} />
   </SafeAreaView>
 );
 
-export default FindFoodAndRecipesScreen;
+export default IndividualRecipeScreen;

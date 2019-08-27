@@ -18,6 +18,8 @@ import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;  /* react-nat
 import io.invertase.firebase.notifications.RNFirebaseNotificationsPackage; /* react-native-firebase */
 import com.cmcewen.blurview.BlurViewPackage;
 import com.horcrux.svg.SvgPackage;
+import cl.json.RNSharePackage;
+import cl.json.ShareApplication;
 
 import java.util.Arrays;
 import java.util.List;
@@ -49,7 +51,8 @@ public class MainApplication extends Application implements ReactApplication {
             new RNFirebaseMessagingPackage(), /* react-native-firebase */
             new RNFirebaseNotificationsPackage(), /* react-native-firebase */
             new BlurViewPackage(),
-            new SvgPackage()
+            new SvgPackage(),
+            new RNSharePackage()
       );
     }
 

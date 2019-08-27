@@ -36,6 +36,7 @@ target 'maximsandersaolcom_ma_892' do
     'BarcodeDetectorMLKit'
   ]
   pod 'RNSVG', :path => '../node_modules/react-native-svg'
+  pod 'RNShare', :path => '../node_modules/react-native-share'
 
   target 'maximsandersaolcom_ma_892Tests' do
     inherit! :search_paths

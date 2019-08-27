@@ -7,11 +7,15 @@ import {
   Image,
   StyleSheet
 } from 'react-native';
+import Routes from '../../Routes';
 
 const addToFav = require('../../assets/icon_my_favorites.png')
 
-const HorizontalSliderItem = ({ addToFavorites, item }) => (
-  <TouchableOpacity style={{ paddingHorizontal: 5 }}>
+const HorizontalSliderItem = ({ addToFavorites, item, navigation: { navigate } }) => (
+  <TouchableOpacity
+    onPress={() => navigate(Routes.IndividualRecipeScreen)}
+    style={{ paddingHorizontal: 5 }}
+  >
     <View style={styles.containerMain}>
       <ImageBackground
         source={{ uri: item.imageUrl }}

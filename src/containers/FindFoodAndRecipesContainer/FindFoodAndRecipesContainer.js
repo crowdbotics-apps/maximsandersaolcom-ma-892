@@ -17,7 +17,9 @@ const mealObject = {
   imageUrl: 'http://lorempixel.com/output/food-q-c-200-150-2.jpg'
 };
 
-const mealImageCarouselPlaceholder = [mealObject, mealObject, mealObject, mealObject, mealObject, mealObject, mealObject];
+const mealImageCarouselPlaceholder = [
+  mealObject, mealObject, mealObject, mealObject, mealObject, mealObject, mealObject
+];
 
 
 class FindFoodAndRecipesContainer extends Component {
@@ -30,6 +32,7 @@ class FindFoodAndRecipesContainer extends Component {
 
   render() {
     const { searchString } = this.state;
+    const { navigation } = this.props;
     return (
       <View style={{ flex: 1 }}>
         <View>
@@ -53,6 +56,7 @@ class FindFoodAndRecipesContainer extends Component {
         </View>
         <ScrollView>
           <CategoryHorizontalSlider
+            navigation={navigation}
             containerStyle={{ paddingTop: 15 }}
             data={mealImageCarouselPlaceholder}
             addToFavorites={() => {}}
@@ -60,6 +64,7 @@ class FindFoodAndRecipesContainer extends Component {
             buttonContainerStyleProp={{ backgroundColor: 'rgb(68, 161, 248)', marginLeft: 10 }}
           />
           <CategoryHorizontalSlider
+            navigation={navigation}
             containerStyle={{ marginTop: 20 }}
             data={mealImageCarouselPlaceholder}
             addToFavorites={() => {}}
@@ -67,6 +72,7 @@ class FindFoodAndRecipesContainer extends Component {
             buttonContainerStyleProp={{ backgroundColor: 'rgb(247, 225, 87)', marginLeft: 10 }}
           />
           <CategoryHorizontalSlider
+            navigation={navigation}
             containerStyle={{ marginTop: 20 }}
             data={mealImageCarouselPlaceholder}
             addToFavorites={() => {}}
