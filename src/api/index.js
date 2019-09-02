@@ -39,42 +39,37 @@ class Api {
           }
           return response.data;
         })
-        .catch((response) => {
-          if (__DEV__ && console && typeof console.groupCollapsed === 'function' && !url.includes('/!url')) { // eslint-disable-line
+        .catch((error) => { // eslint-disable-line
+          if (process.env.NODE_ENV === 'development' && console && typeof console.groupCollapsed === 'function' && !url.includes('/!url')) {
             console.groupCollapsed(`%c API --> ${url}`, 'color: red');
             console.log('data: ', data);
-            console.log('response: ', response.message, response.data);
+            console.log('response: ', error.response.status, error.response.data);
             console.groupEnd();
           }
-          if (response.message === 'Network Error') {
-            throw new Error({
+          if (error && error.response && error.response.message === 'Network Error') {
+            const errorObj = {
               status: null,
               data: {
                 code: 'network_error',
-                message: response.message
-              }
-            });
-          }
-
-          if (typeof response.data === 'undefined') {
-            if (response.response.status === 401) {
-              return this._refreshToken(this.refreshToken, { method, url, options });
-            }
-
-            throw {
-              status: response.response.status,
-              data: response.response.data,
-              headers: response.response.headers
-            };
-          } else {
-            throw {
-              status: null,
-              data: {
-                code: 'internal_error',
-                message: i18n.t('api.error.somethingWentWrong')
+                message: error.response.message
               }
             };
+            throw errorObj;
           }
+          if (error.response.status === 401) {
+            return this.refreshToken(this.refreshToken, { method, url, options });
+          }
+          if (error.response.status > 401
+              || error.response.status === 400
+              || error.response.status === 500) {
+            const errorObj = {
+              status: error.response.status,
+              data: error.response.data,
+              headers: error.response.headers
+            };
+            throw errorObj;
+          }
+        // this.store.dispatch(logout());
         });
     }
 

@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 
 const FeedItem = ({
   fullName = 'Stefan Bakmaz',
-  time = '2 mounth ago',
+  time = '2 Month ago',
   title = 'Test title',
   likes = 10,
   comments = 20,

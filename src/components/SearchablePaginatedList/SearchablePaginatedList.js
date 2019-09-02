@@ -146,7 +146,7 @@ SearchablePaginatedList.defaultProps = {
 
 SearchablePaginatedList.propTypes = {
   list: PropType.arrayOf(PropType.shape({
-    id: PropType.string.isRequired
+    id: PropType.number.isRequired
   })),
   renderItem: PropType.func.isRequired,
   fetchListAction: PropType.func.isRequired,

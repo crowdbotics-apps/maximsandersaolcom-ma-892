@@ -30,6 +30,11 @@ class FindFoodAndRecipesContainer extends Component {
     };
   }
 
+  componentWillMount() {
+    const { getRecipesAction } = this.props;
+    getRecipesAction();
+  }
+
   render() {
     const { searchString } = this.state;
     const { navigation } = this.props;

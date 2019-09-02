@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Dimensions
 } from 'react-native';
+import { connect } from 'react-redux';
 import TagButton from '../../components/TagButton';
 import ImageContainer from '../../components/ImageContainer';
 import NutritionInfo from '../../components/NutritionInfo';
@@ -36,24 +37,34 @@ class IngredientContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      recipeTitle: 'Beef Fajita with Sweet Bell Peppers'
+      recipeTitle: ''
     };
   }
 
   render() {
     const { recipeTitle } = this.state;
+    const { navigation, scannedProduct } = this.props;
+    const {
+      name,
+      thumb,
+      calories,
+      carbohydrate,
+      fat,
+      proteins
+    } = scannedProduct;
     return (
       <View style={{ flex: 1, backgroundColor: 'white' }}>
         <ScrollView>
           <View>
             <ImageContainer
               imageBackgroundStyleProp={{ height: screenHeight }}
-              imageBackgroundUri="http://lorempixel.com/output/food-q-c-200-150-2.jpg"
+              imageBackgroundUri={thumb || 'http://lorempixel.com/output/food-q-c-200-150-2.jpg'}
+              navigation={navigation}
             />
             <ImageTitle
               mainContainerStyle={{ paddingBottom: 7 }}
-              title={recipeTitle}
-              firstItem="320 calories per serving"
+              title={name || recipeTitle}
+              firstItem={`${calories} calories per serving`}
             />
           </View>
           <View style={styles.buttonWrapper}>
@@ -157,4 +168,11 @@ const styles = StyleSheet.create({
   }
 });
 
-export default IngredientContainer;
+
+const mapState = state => ({
+  scannedProduct: state.nutrition && state.nutrition.scannedProduct,
+});
+
+export default connect(
+  mapState
+)(IngredientContainer);

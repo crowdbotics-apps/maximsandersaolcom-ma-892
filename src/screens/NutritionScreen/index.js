@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 // import BarcodeScanner from '../../components/BarcodeScanner';
-import { NutrationContainer } from '../../containers/NutrationContainer';
+import NutrationContainer from '../../containers/NutrationContainer';
 
 const styles = StyleSheet.create({
   container: {

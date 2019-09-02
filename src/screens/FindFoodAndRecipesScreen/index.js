@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, SafeAreaView } from 'react-native';
-import { FindFoodAndRecipesContainer } from '../../containers/FindFoodAndRecipesContainer';
+import FindFoodAndRecipesContainer from '../../containers/FindFoodAndRecipesContainer';
 
 const styles = StyleSheet.create({
   container: {
