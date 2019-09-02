@@ -12,7 +12,7 @@ const cookingVideo = require('../../assets/video/Cooking.mp4');
 const feeds = [
   {
     fullName: 'Demo user',
-    time: '1 mounth ago',
+    time: '1 month ago',
     title: 'How Much Water Are You Consuming?',
     likes: 10,
     comments: 20,
@@ -23,7 +23,7 @@ const feeds = [
   },
   {
     fullName: 'Maxim Fitnes',
-    time: '2 mounth ago',
+    time: '2 month ago',
     title: 'Low Carb Stuffed Peppers',
     likes: 42,
     comments: 12,
@@ -34,7 +34,7 @@ const feeds = [
   },
   {
     fullName: 'John Doe',
-    time: '4 mounth ago',
+    time: '4 month ago',
     title: '10 Dynamic Stretches Before a Workout',
     likes: 33,
     comments: 7,
@@ -45,7 +45,7 @@ const feeds = [
   },
   {
     fullName: 'Pera Peric',
-    time: '8 mounth ago',
+    time: '8 month ago',
     title: 'How To Food Prep',
     likes: 2,
     comments: 6,
@@ -57,7 +57,7 @@ const feeds = [
   },
   {
     fullName: 'Nick Peric',
-    time: '8 mounth ago',
+    time: '8 month ago',
     title: "Laura's Transformation",
     likes: 97,
     comments: 41,

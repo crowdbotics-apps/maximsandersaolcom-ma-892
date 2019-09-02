@@ -1,17 +1,17 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getRecipesAction } from '../../redux/modules/nutritionReducer';
-import FindFoodAndRecipesContainer from './FindFoodAndRecipesContainer';
+import { getProductWithBarcodeAction } from '../../redux/modules/nutritionReducer';
+import BarcodeScanner from '../../components/BarcodeScanner';
 
 const mapState = state => ({
   scannedProduct: state.nutrition && state.nutrition.scannedProduct,
 });
 
 const mainActions = {
-  getRecipesAction,
+  getProductWithBarcodeAction,
 };
 
 export default connect(
   mapState,
   dispatch => bindActionCreators(mainActions, dispatch)
-)(FindFoodAndRecipesContainer);
+)(BarcodeScanner);

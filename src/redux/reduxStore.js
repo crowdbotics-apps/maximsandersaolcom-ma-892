@@ -4,6 +4,7 @@ import { createLogger } from 'redux-logger';
 
 // Reducers
 import auth from './modules/authReducer';
+import nutrition from './modules/nutritionReducer';
 
 let middlewares = [thunk];
 
@@ -18,6 +19,7 @@ if (__DEV__) { // eslint-disable-line
 const store = createStore(
   combineReducers({
     auth,
+    nutrition
   }),
   applyMiddleware(...middlewares)
 );

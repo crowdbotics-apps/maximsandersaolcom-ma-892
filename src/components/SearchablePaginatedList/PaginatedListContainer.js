@@ -52,7 +52,7 @@ const PaginatedListContainer = ({
 
 PaginatedListContainer.propTypes = {
   list: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
   })).isRequired,
   handleRefreshFunc: PropTypes.func.isRequired,
   renderItem: PropTypes.func.isRequired,

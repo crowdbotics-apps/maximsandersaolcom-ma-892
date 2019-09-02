@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import {
   PieChart,
 } from 'react-native-chart-kit';
+import moment from 'moment';
 import ProteinBar from '../ProteinBar';
 import IngredientsItem from '../IngredientsItem';
 
@@ -48,7 +49,7 @@ const MealItem = ({
       >
         <View style={styles.proteinBarContainer}>
           <View style={{ paddingLeft: 3, paddingTop: 3 }}>
-            <Text style={styles.clockContainer}>{clock}</Text>
+            <Text style={styles.clockContainer}>{moment(clock).format('h:mm a')}</Text>
           </View>
           <View style={{ paddingHorizontal: 5 }}>
             <ProteinBar
@@ -76,9 +77,9 @@ const MealItem = ({
         {
           mealItems.length ? mealItems.map(item => (
             <IngredientsItem
-              ingredientName={item.title}
-              ingredientSize={item.size}
-              ingredientImage={mockMilkImage}
+              ingredientName={item.food.name}
+              ingredientSize={item.portion}
+              ingredientImage={item.food.thumb}
             />
           )) : null
         }

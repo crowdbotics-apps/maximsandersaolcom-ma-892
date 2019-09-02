@@ -51,14 +51,21 @@ const mealList = [
 ];
 
 class NutrationContainer extends Component {
+  componentWillMount() {
+    const { getMealsByDateAction } = this.props;
+    const dateTime = new Date();
+    const formatedDate = moment(dateTime).format('YYYY-MM-DD');
+    getMealsByDateAction(formatedDate);
+  }
+
   renderItem = ({
     item: {
       title,
-      clock,
-      mealItems,
-      numberOfProtein,
-      numberOfCarbs,
-      numberOfFat
+      date_time: clock,
+      food_items: mealItems,
+      carbohydrate: numberOfCarbs,
+      protein: numberOfProtein,
+      fat: numberOfFat
     }
   }) => (
     <MealItem
@@ -71,15 +78,28 @@ class NutrationContainer extends Component {
     />
   );
 
+  emptyList = () => (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>
+        Meal and/or Food not found for date:
+        {` ${moment().format('MMM DD')}`}
+      </Text>
+    </View>
+  )
+
   render() {
-    const { navigation } = this.props;
+    const { navigation, meals = [] } = this.props;
     return (
       <View style={{ flex: 1 }}>
         <View style={styles.proteinBarWrapper}>
           <View style={{ flex: 1 }}>
             <Text style={{ fontSize: 32, fontWeight: 'bold', fontFamily: Fonts.HELVETICA_BOLD }}>{moment().format('MMM DD')}</Text>
           </View>
-          <ProteinBar />
+          <ProteinBar
+            numberOfCarbs={meals.reduce((total, current) => total + current.carbohydrate, 0)}
+            numberOfFat={meals.reduce((total, current) => total + current.fat, 0)}
+            numberOfProtein={meals.reduce((total, current) => total + current.protein, 0)}
+          />
         </View>
         <View style={{ flex: 2, marginTop: 5 }}>
           <NutritionMenuContainer navigation={navigation} />
@@ -87,8 +107,9 @@ class NutrationContainer extends Component {
         <View style={styles.lastContainer}>
           <SearchablePaginatedList
             style={{ flex: 1 }}
+            ListEmptyComponent={this.emptyList}
             contentContainerStyle={{ flexGrow: 1, paddingHorizontal: 10, paddingVertical: 0 }}
-            list={mealList}
+            list={meals}
             fetchListAction={() => {}}
             renderItem={item => this.renderItem(item)}
             search={''}
