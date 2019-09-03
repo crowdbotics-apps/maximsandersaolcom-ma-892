@@ -17,7 +17,8 @@ const CategoryHorizontalSlider = ({
   buttonContainerText,
   isButtonThere = true,
   addToFavorites,
-  navigation
+  navigation,
+  onSelectItem
 }) => (
   <View style={containerStyle}>
     {
@@ -35,6 +36,7 @@ const CategoryHorizontalSlider = ({
       data={data}
       renderItem={({ item }) => (
         <HorizontalSliderItem
+          onClick={() => onSelectItem(item)}
           navigation={navigation}
           item={item}
           addToFavorites={() => addToFavorites()}

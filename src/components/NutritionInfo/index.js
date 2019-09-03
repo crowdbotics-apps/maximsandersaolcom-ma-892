@@ -55,7 +55,10 @@ const NutritionInfo = ({
   nutritionTitleStyleProp,
   nutritionInfoArray = [],
   isCollapsed,
-  collapseList
+  collapseList,
+  fat,
+  protein,
+  carbohydrate
 }) => (
   <View style={[styles.nutritionInfo, nutritionContainerStyleProp]}>
     <View style={[styles.nutritionTitleContainer, titleContainerStyleProp]}>
@@ -76,7 +79,22 @@ const NutritionInfo = ({
     </View>
     <View style={styles.infoItemsIngredients}>
       <View style={styles.infoItemsIngredientsSub}>
-        {
+        <NutritionInfoItem
+          itemQuantity={fat}
+          itemTitle="Fat"
+          infoItemsContainerStyle={{ flexBasis: '33%' }}
+        />
+        <NutritionInfoItem
+          itemQuantity={carbohydrate}
+          itemTitle="Carbohydrates"
+          infoItemsContainerStyle={{ flexBasis: '33%' }}
+        />
+        <NutritionInfoItem
+          itemQuantity={protein}
+          itemTitle="Protein"
+          infoItemsContainerStyle={{ flexBasis: '33%' }}
+        />
+        {/* {
           nutritionInfoArray && nutritionInfoArray.slice(0, 3).map(item => (
             <NutritionInfoItem
               itemQuantity={item.itemQuantity}
@@ -107,7 +125,7 @@ const NutritionInfo = ({
               }
             </Collapsible>
           )
-        }
+        } */}
       </View>
     </View>
   </View>

@@ -11,14 +11,24 @@ import Routes from '../../Routes';
 
 const addToFav = require('../../assets/icon_my_favorites.png')
 
-const HorizontalSliderItem = ({ addToFavorites, item, navigation: { navigate } }) => (
+const HorizontalSliderItem = ({ 
+  addToFavorites,
+  item,
+  navigation: {
+    navigate
+  },
+  onClick
+}) => (
   <TouchableOpacity
-    onPress={() => navigate(Routes.IndividualRecipeScreen)}
+    onPress={() => {
+      navigate(Routes.IndividualRecipeScreen)
+      onClick();
+    }}
     style={{ paddingHorizontal: 5 }}
   >
     <View style={styles.containerMain}>
       <ImageBackground
-        source={{ uri: item.imageUrl }}
+        source={{ uri: item.image_url }}
         style={styles.backgroundImageStyle}
       >
         <TouchableOpacity onPress={addToFavorites}>
@@ -28,10 +38,10 @@ const HorizontalSliderItem = ({ addToFavorites, item, navigation: { navigate } }
     </View>
     <View style={styles.textContainer}>
       <View>
-        <Text style={styles.itemTitleStyle}>{item.title}</Text>
+        <Text style={styles.itemTitleStyle}>{item.name}</Text>
       </View>
       <View style={{ paddingRight: 5 }}>
-        <Text>{item.time}</Text>
+        <Text>{`${item.time_to_prepare} min`}</Text>
       </View>
     </View>
   </TouchableOpacity>

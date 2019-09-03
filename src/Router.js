@@ -200,6 +200,10 @@ const ProgramsTabStack = createStackNavigator({
   },
 });
 
+NutritionTabStack.navigationOptions = ({ navigation }) => ({
+  tabBarVisible: true
+});
+
 const BottomAppStack = createBottomTabNavigator(
   {
     Today: TodayTabStack,
