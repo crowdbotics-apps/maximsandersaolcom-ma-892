@@ -10,7 +10,7 @@ import {
 const IngredientsItem = ({ ingredientSize, ingredientImage, ingredientName }) => (
   <View style={styles.mainContainer}>
     <View style={styles.imageContainer}>
-      <Image source={ingredientImage} style={styles.imageStyle} />
+      <Image source={{ uri: ingredientImage }} style={styles.imageStyle} />
     </View>
     <View style={styles.textContainer}>
       <Text style={styles.textStyle}>{ingredientName}</Text>
@@ -26,7 +26,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     flexDirection: 'row',
-    paddingHorizontal: 20
+    paddingHorizontal: 20,
+    paddingBottom: 3
   },
   textStyle: {
     color: 'rgb(94, 94, 94)',

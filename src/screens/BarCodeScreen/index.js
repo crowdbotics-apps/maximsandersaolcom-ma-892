@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import BarcodeScanner from '../../components/BarcodeScanner';
+import BarcodeScanner from '../../containers/BarcodeContainer';
 
 const styles = StyleSheet.create({
   container: {
@@ -8,9 +8,9 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   }
 });
-const BarCodeScreen = () => (
+const BarCodeScreen = ({ navigation }) => (
   <View style={styles.container}>
-    <BarcodeScanner />
+    <BarcodeScanner navigation={navigation} />
   </View>
 );
 

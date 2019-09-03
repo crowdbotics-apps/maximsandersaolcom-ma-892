@@ -5,6 +5,7 @@ import { createLogger } from 'redux-logger';
 // Reducers
 import auth from './modules/authReducer';
 import recipes from './modules/recipesReducer';
+import nutrition from './modules/nutritionReducer';
 
 let middlewares = [thunk];
 
@@ -20,6 +21,7 @@ const store = createStore(
   combineReducers({
     auth,
     recipes,
+    nutrition
   }),
   applyMiddleware(...middlewares)
 );
