@@ -13,3 +13,4 @@ export { default as FindFoodAndRecipesScreen } from './FindFoodAndRecipesScreen'
 export { default as IndividualRecipeScreen } from './IndividualRecipeScreen';
 export { default as IngredientScreen } from './IngredientScreen';
 export { default as IngredientRecipeScreen } from './IngredientRecipeScreen';
+export { default as TodayScreen } from './TodayScreen';

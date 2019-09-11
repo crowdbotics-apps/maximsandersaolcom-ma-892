@@ -13,5 +13,6 @@ export default {
   FindFoodAndRecipesScreen: 'FindFoodAndRecipesScreen',
   IndividualRecipeScreen: 'IndividualRecipeScreen',
   IngredientScreen: 'IngredientScreen',
-  IngredientRecipeScreen: 'IngredientRecipeScreen'
+  IngredientRecipeScreen: 'IngredientRecipeScreen',
+  TodayScreen: 'TodayScreen'
 };

@@ -1,16 +1,14 @@
-import IndividualRecipeContainer from './IndividualRecipeContainer';
-import { bindActionCreators } from 'redux'
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withNavigation } from 'react-navigation';
-import { 
-  getRecipes,
+import {
   selectOneRecipe
 } from '../../redux/modules/recipesReducer';
+import IndividualRecipeContainer from './IndividualRecipeContainer';
 
 const mainActions = {
-  getRecipesAction: getRecipes,
   selectOneRecipeAction: selectOneRecipe
-}
+};
 
 const mapState = state => ({
   recipeSelected: state.recipes && state.recipes.recipeSelected,

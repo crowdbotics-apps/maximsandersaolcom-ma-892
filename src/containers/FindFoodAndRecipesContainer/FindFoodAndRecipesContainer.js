@@ -1,45 +1,48 @@
-import React, { Component, useEffect, useState } from 'react';
-import {
-  View,
-  ScrollView
-} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View } from 'react-native';
 import Search from '../../components/Search';
 import Loading from '../../components/Loading';
 import HorizontalScrollView from '../../components/HorizontalScrollView';
 import CategoryTagItem from '../../components/CategoryTagItem';
-import CategoryHorizontalSlider from '../../components/CategoryHorizontalSlider';
+import HorizontalSliderFindFood from './HorizontalSliderFindFood';
+import VerticalSliderFindFood from './VerticalSliderFindFood';
 
-const mealCategoryPlaceholder = ['Meal Prep', 'Vegan', 'Vegeterian', 'Gluten Free', 'Keto', 'Sushi', 'Gourman', 'Flat'];
-
-const mealObject = {
-  title: 'Beef Fajita',
-  time: '20 min',
-  liked: false,
-  imageUrl: 'http://lorempixel.com/output/food-q-c-200-150-2.jpg'
-};
-
-const mealImageCarouselPlaceholder = [
-  mealObject, mealObject, mealObject, mealObject, mealObject, mealObject, mealObject
-];
-
-
-const FindFoodAndRecipesContainer = ({ navigation, getRecipesAction, allRecipes = [], loading, selectOneRecipeAction }) => {
-  
-
-  const [searchString, setSearchString] = useState("");
+const FindFoodAndRecipesContainer = ({
+  navigation,
+  allRecipes = [],
+  loading,
+  selectOneRecipeAction,
+  getCategoriesAction,
+  allCategories,
+  getRecipesByCategoryAction,
+  recipesByCategory,
+  getRecipeByNameOrCategoryAction
+}) => {
+  const [searchString, setSearchString] = useState('');
+  const [selectedCategoryProp, setSelectedCategoryProp] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState([]);
 
   useEffect(() => {
-    getRecipesAction()
-  },[]);
+    if (selectedCategoryProp || searchString.length) {
+      getRecipeByNameOrCategoryAction({
+        name: searchString,
+        category: (selectedCategoryProp && selectedCategoryProp.slug) || ''
+      });
+    }
+  }, [searchString, selectedCategory, selectedCategoryProp]);
 
-  if (loading) {
-    return (
-      <Loading />
-    )
-  }
+  useEffect(() => {
+    if (allCategories.length) {
+      getRecipesByCategoryAction(allCategories);
+    }
+  }, [allCategories]);
+
+  useEffect(() => {
+    getCategoriesAction();
+  }, []);
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, paddingBottom: 100 }}>
       <View>
         <Search
           placeHolderText="Find Recipes"
@@ -49,47 +52,49 @@ const FindFoodAndRecipesContainer = ({ navigation, getRecipesAction, allRecipes 
       </View>
       <View style={{ marginTop: 15, marginBottom: 10 }}>
         <HorizontalScrollView containerStyle={{ marginHorizontal: 10 }}>
-          {mealCategoryPlaceholder.map((item, key) => (
+          {allCategories.map((item, key) => (
             <CategoryTagItem
-              onPresFunc={() => {}}
+              onPresFunc={() => {
+                if (!selectedCategoryProp || selectedCategoryProp.id !== item.id) {
+                  setSelectedCategoryProp(item);
+                  return setSelectedCategory([item]);
+                }
+                setSelectedCategoryProp(null);
+                return setSelectedCategory([]);
+              }}
+              selectedCategory={selectedCategory}
               key={key} // eslint-disable-line
-              tagText={item}
-              tagTextContainerStyle={{ paddingHorizontal: 10 }}
+              tagText={item.name}
+              tagTextContainerStyle={[
+                {
+                  paddingHorizontal: 10
+                },
+                selectedCategoryProp && selectedCategoryProp.id === item.id ? { backgroundColor: 'gray' } : null
+              ]}
             />
           ))}
         </HorizontalScrollView>
       </View>
-      <ScrollView style={{ paddingBottom: 15 }}>
-        <CategoryHorizontalSlider
-          onSelectItem={selectOneRecipeAction}
-          navigation={navigation}
-          containerStyle={{ paddingTop: 15 }}
-          data={allRecipes}
-          addToFavorites={() => {}}
-          buttonContainerText="Proteins"
-          buttonContainerStyleProp={{ backgroundColor: 'rgb(68, 161, 248)', marginLeft: 10 }}
-        />
-        <CategoryHorizontalSlider
-          onSelectItem={selectOneRecipeAction}
-          navigation={navigation}
-          containerStyle={{ marginTop: 20 }}
-          data={allRecipes}
-          addToFavorites={() => {}}
-          buttonContainerText="Carbohydrate"
-          buttonContainerStyleProp={{ backgroundColor: 'rgb(247, 225, 87)', marginLeft: 10 }}
-        />
-        <CategoryHorizontalSlider
-          onSelectItem={selectOneRecipeAction}
-          navigation={navigation}
-          containerStyle={{ marginTop: 20 }}
-          data={allRecipes}
-          addToFavorites={() => {}}
-          buttonContainerText="Fibrous Foods"
-          buttonContainerStyleProp={{ backgroundColor: 'rgb(129, 212, 83)', marginLeft: 10 }}
-        />
-      </ScrollView>
+      { loading ? <Loading /> : (
+        <View>
+          { !searchString.length && !selectedCategory.length ? (
+            <HorizontalSliderFindFood
+              navigation={navigation}
+              selectOneRecipeAction={selectOneRecipeAction}
+              recipesByCategory={recipesByCategory}
+            />
+          ) : <View />}
+          {(searchString.length || selectedCategory.length) ? (
+            <VerticalSliderFindFood
+              allRecipes={allRecipes}
+              navigation={navigation}
+              selectOneRecipeAction={selectOneRecipeAction}
+            />
+          ) : <View />}
+        </View>
+      )}
     </View>
   );
-}
+};
 
 export default FindFoodAndRecipesContainer;

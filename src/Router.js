@@ -27,7 +27,8 @@ import {
   FindFoodAndRecipesScreen,
   IndividualRecipeScreen,
   IngredientScreen,
-  IngredientRecipeScreen
+  IngredientRecipeScreen,
+  TodayScreen
 } from './screens';
 import DrawerContent from './containers/DrawerContent';
 import regularHeaderStyle from './components/regularHeaderStyle';
@@ -75,8 +76,8 @@ const ProfileTabStack = createDrawerNavigator({
 });
 
 const TodayTabStack = createStackNavigator({
-  [Routes.TestScreen]: {
-    screen: TestScreen,
+  [Routes.TodayScreen]: {
+    screen: TodayScreen,
     navigationOptions: () => ({
       header: null
     })
@@ -200,9 +201,17 @@ const ProgramsTabStack = createStackNavigator({
   },
 });
 
-NutritionTabStack.navigationOptions = ({ navigation }) => ({
-  tabBarVisible: true
-});
+NutritionTabStack.navigationOptions = ({ navigation }) => {
+  if (navigation.state.routes.length
+    && navigation.state.routes[navigation.state.routes.length - 1].routeName === 'BarCodeScreen') {
+    return ({
+      tabBarVisible: false
+    });
+  }
+  return ({
+    tabBarVisible: true
+  });
+};
 
 const BottomAppStack = createBottomTabNavigator(
   {

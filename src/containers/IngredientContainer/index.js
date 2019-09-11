@@ -6,10 +6,19 @@ import {
   Dimensions
 } from 'react-native';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { getRecipeByCode } from '../../redux/modules/recipesReducer';
 import TagButton from '../../components/TagButton';
 import ImageContainer from '../../components/ImageContainer';
 import NutritionInfo from '../../components/NutritionInfo';
 import ImageTitle from '../../components/ImageTitle';
+import Routes from '../../Routes';
+import GradientButton from '../../components/GradientButton';
+import Fonts from '../../assets/fonts';
+
+const mainActions = {
+  getRecipeByCodeAction: getRecipeByCode,
+};
 
 const categoriesNames = ['HIGH PROTEIN', 'LOW CARB'];
 const screenHeight = Dimensions.get('screen').height / 2.5;
@@ -43,14 +52,15 @@ class IngredientContainer extends Component {
 
   render() {
     const { recipeTitle } = this.state;
-    const { navigation, scannedProduct } = this.props;
+    const { navigation, scannedProduct, getRecipeByCodeAction } = this.props;
     const {
       name,
       thumb,
       calories,
       carbohydrate,
       fat,
-      proteins
+      proteins,
+      code
     } = scannedProduct;
     return (
       <View style={{ flex: 1, backgroundColor: 'white' }}>
@@ -60,6 +70,7 @@ class IngredientContainer extends Component {
               imageBackgroundStyleProp={{ height: screenHeight }}
               imageBackgroundUri={thumb || 'http://lorempixel.com/output/food-q-c-200-150-2.jpg'}
               navigation={navigation}
+              goBack
             />
             <ImageTitle
               mainContainerStyle={{ paddingBottom: 7 }}
@@ -72,22 +83,38 @@ class IngredientContainer extends Component {
               <TagButton
                 buttonContainerText={categoriesNames[0]}
                 buttonContainerStyleProp={{ marginRight: 5, marginBottom: 0, marginTop: 0 }}
+                buttonContainerTextStyle={{
+                  color: 'black',
+                  fontFamily: Fonts.HELVETICA_MEDIUM
+                }}
               />
               <TagButton
                 buttonContainerText={categoriesNames[1]}
                 buttonContainerStyleProp={{ marginBottom: 0, marginTop: 0, marginRight: 0 }}
+                buttonContainerTextStyle={{
+                  color: 'black',
+                  fontFamily: Fonts.HELVETICA_MEDIUM
+                }}
               />
             </View>
             <View style={styles.findRecipesButtonContainer}>
-              <TagButton
+              <GradientButton
+                onPress={() => {
+                  getRecipeByCodeAction(code);
+                  navigation.navigate(Routes.IngredientRecipeScreen);
+                }}
                 buttonContainerText="Find Recipes"
                 buttonContainerStyleProp={styles.findRecipesButton}
+                colorsGradient={['#3180BD', '#6EC2FA']}
               />
             </View>
           </View>
           <View>
             <NutritionInfo
               expanded
+              fat={fat}
+              carbohydrate={carbohydrate}
+              protein={proteins}
               nutritionInfoTitle="Nutrition Information"
               nutritionInfoArray={SECTIONS}
             />
@@ -174,5 +201,6 @@ const mapState = state => ({
 });
 
 export default connect(
-  mapState
+  mapState,
+  dispatch => bindActionCreators(mainActions, dispatch)
 )(IngredientContainer);

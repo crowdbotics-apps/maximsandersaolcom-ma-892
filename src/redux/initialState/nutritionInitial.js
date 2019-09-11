@@ -3,4 +3,5 @@ export default {
   meals: [],
   recipes: [],
   error: [],
+  categories: [],
 };
