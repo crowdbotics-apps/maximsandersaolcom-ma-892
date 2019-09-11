@@ -1,10 +1,7 @@
 import React from 'react';
 import {
   View,
-  TouchableOpacity,
   FlatList,
-  Text,
-  StyleSheet,
 } from 'react-native';
 import HorizontalSliderItem from '../HorizontalSliderItem';
 import TagButton from '../TagButton';

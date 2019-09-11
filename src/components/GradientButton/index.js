@@ -5,23 +5,29 @@ import {
   Text,
   StyleSheet
 } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 
-const TagButton = ({
+const GradientButton = ({
   buttonContainerStyleProp,
   buttonContainerText,
   buttonContainerTextStyle,
-  onPress
+  onPress,
+  colorsGradient = []
 }) => (
   <TouchableOpacity
     onPress={onPress}
+    style={[styles.buttonContainerStyle, buttonContainerStyleProp]}
   >
-    <View
+    <LinearGradient
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 0 }}
+      colors={colorsGradient}
       style={[styles.buttonContainerStyle, buttonContainerStyleProp]}
     >
       <Text style={[styles.buttonTextStyle, buttonContainerTextStyle]}>
         {buttonContainerText}
       </Text>
-    </View>
+    </LinearGradient>
   </TouchableOpacity>
 );
 
@@ -43,4 +49,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default TagButton;
+export default GradientButton;

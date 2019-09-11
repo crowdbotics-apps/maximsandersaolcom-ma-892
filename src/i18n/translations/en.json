@@ -57,5 +57,8 @@
     "browseRecipes": "Browse Recipes",
     "supportYourGoals": "Supports your goals!",
     "notSupportYourGoals": "Not supports your goals!"
+  },
+  "nutritionContainer": {
+    "emptyMeals": "Meal and/or Food not found for date:"
   }
 }

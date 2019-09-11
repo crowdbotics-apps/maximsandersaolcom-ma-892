@@ -11,7 +11,7 @@ const CategoryTagItem = ({
   tagText,
   tagTextStyle = {},
   tagTextContainerStyle = {},
-  touchableContainerStyle
+  touchableContainerStyle,
 }) => (
   <TouchableOpacity
     key={key}

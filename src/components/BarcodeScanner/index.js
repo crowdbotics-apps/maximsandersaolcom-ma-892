@@ -7,6 +7,7 @@ import {
 
 import { RNCamera } from 'react-native-camera';
 import { BlurView } from 'react-native-blur';
+import Routes from '../../Routes';
 
 const DESIRED_RATIO = '16:9';
 
@@ -26,7 +27,7 @@ export default class BarcodeScanner extends Component {
       const [first] = barcodes;
       try {
         await getProductWithBarcodeAction(first.data);
-        navigation.navigate('IngredientScreen');
+        navigation.navigate(Routes.IngredientScreen);
       } catch (err) { throw err; }
     }
   }
@@ -66,7 +67,12 @@ export default class BarcodeScanner extends Component {
         />
         <View style={{ flex: 1, backgroundColor: 'transparent' }} />
         <BlurView
-          style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'rgba(255, 255, 255, 0.2)'
+          }}
           viewRef={null}
           blurType="light"
           blurAmount={10}

@@ -1,20 +1,26 @@
-import FindFoodAndRecipesContainer from './FindFoodAndRecipesContainer';
-import { bindActionCreators } from 'redux'
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withNavigation } from 'react-navigation';
-import { 
-  getRecipes,
-  selectOneRecipe
+import {
+  selectOneRecipe,
+  getRecipesByCategory,
+  getRecipeByNameOrCategory
 } from '../../redux/modules/recipesReducer';
+import { getCategories } from '../../redux/modules/nutritionReducer';
+import FindFoodAndRecipesContainer from './FindFoodAndRecipesContainer';
 
 const mainActions = {
-  getRecipesAction: getRecipes,
-  selectOneRecipeAction: selectOneRecipe
-}
+  selectOneRecipeAction: selectOneRecipe,
+  getCategoriesAction: getCategories,
+  getRecipesByCategoryAction: getRecipesByCategory,
+  getRecipeByNameOrCategoryAction: getRecipeByNameOrCategory
+};
 
 const mapState = state => ({
   allRecipes: state.recipes && state.recipes.allRecipes,
-  loading: state.recipes && state.recipes.loading
+  loading: state.recipes && state.recipes.loading,
+  allCategories: state.nutrition.categories,
+  recipesByCategory: state.recipes && state.recipes.recipesByCategory
 });
 
 const mapActions = dispatch => bindActionCreators(mainActions, dispatch);

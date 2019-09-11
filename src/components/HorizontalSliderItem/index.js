@@ -9,9 +9,10 @@ import {
 } from 'react-native';
 import Routes from '../../Routes';
 
-const addToFav = require('../../assets/icon_my_favorites.png')
+const imagePlaceholder = 'https://via.placeholder.com/300x150.png?text=MAXIM+FITNESS';
+const addToFav = require('../../assets/icon_my_favorites.png');
 
-const HorizontalSliderItem = ({ 
+const HorizontalSliderItem = ({
   addToFavorites,
   item,
   navigation: {
@@ -21,14 +22,14 @@ const HorizontalSliderItem = ({
 }) => (
   <TouchableOpacity
     onPress={() => {
-      navigate(Routes.IndividualRecipeScreen)
+      navigate(Routes.IndividualRecipeScreen);
       onClick();
     }}
     style={{ paddingHorizontal: 5 }}
   >
     <View style={styles.containerMain}>
       <ImageBackground
-        source={{ uri: item.image_url }}
+        source={{ uri: item.image_url || imagePlaceholder }}
         style={styles.backgroundImageStyle}
       >
         <TouchableOpacity onPress={addToFavorites}>

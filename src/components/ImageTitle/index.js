@@ -11,7 +11,7 @@ const ImageTitle = ({
 }) => (
   <View style={[{ padding: 15 }, mainContainerStyle]}>
     <View style={titleContainerStyle}>
-      <Text style={{ fontSize: 23 }}>{title}</Text>
+      <Text style={{ fontSize: 23, color: 'black' }}>{title}</Text>
     </View>
     <View style={[styles.subtitleContainer, subtitleContainerStyle]}>
       { firstItem && <Text style={styles.subtitleText}>{firstItem}</Text> }

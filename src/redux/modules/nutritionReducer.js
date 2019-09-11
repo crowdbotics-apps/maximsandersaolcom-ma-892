@@ -10,6 +10,7 @@ export const SET_ERROR = 'nutrition/SET_ERROR';
 export const RESET_ERRORS = 'nutrition/RESET_ERRORS';
 export const GET_MEALS_BY_DATE = 'nutrition/GET_MEALS_BY_DATE';
 export const GET_MEALS_BY_DATE_FAILED = 'nutrition/GET_MEALS_BY_DATE_FAILED';
+export const GET_CATEGORIES = 'nutrition/GET_CATEGORIES';
 
 export default (state = { ...initialNutrition }, { type, payload }) => {
   switch (type) {
@@ -23,6 +24,12 @@ export default (state = { ...initialNutrition }, { type, payload }) => {
       return {
         ...state,
         meals: payload
+      };
+    }
+    case GET_CATEGORIES: {
+      return {
+        ...state,
+        categories: payload
       };
     }
     case GET_MEALS_BY_DATE_FAILED: {
@@ -45,20 +52,34 @@ export const getProductWithBarcodeAction = barCode => dispatch => nutritionsServ
     return true;
   })
   .catch((err) => {
-    console.log('error', err);
+    console.error('error', err);
     throw err;
   });
 
 export const getMealsByDateAction = date => dispatch => nutritionsService
   .getMealsByDate(date)
   .then((payload) => {
-    dispatch({ type: GET_MEALS_BY_DATE, payload });
+    const arrayWithProcentage = payload.map((item) => {
+      const sum = item.calories + item.carbohydrate + item.fat;
+      const arrayOfProcentages = [
+        { name: 'protein', procentage: (item.protein * 100) / sum, color: 'rgb(68,161,248)' },
+        { name: 'carbohydrate', procentage: (item.carbohydrate * 100) / sum, color: 'rgb(240,187,64)' },
+        { name: 'fat', procentage: (item.fat * 100) / sum, color: 'rgb(220,58,38)' },
+      ];
+      return {
+        ...item,
+        pieArray: arrayOfProcentages
+      };
+    });
+    dispatch({ type: GET_MEALS_BY_DATE, payload: arrayWithProcentage });
   })
   .catch((err) => {
     dispatch({ type: GET_MEALS_BY_DATE_FAILED, payload: err });
   });
 
-export const getRecipesAction = () => () => nutritionsService
-  .getRecipes()
-  .then(res => console.log('res', res))
-  .catch((err) => { throw err; });
+export const getCategories = () => dispatch => nutritionsService
+  .getCategories()
+  .then((payload) => {
+    const { results } = payload;
+    dispatch({ type: GET_CATEGORIES, payload: results });
+  });

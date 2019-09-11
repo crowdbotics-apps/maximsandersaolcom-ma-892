@@ -137,6 +137,9 @@ android {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
+        debug {
+            minifyEnabled false
+        }
     }
     // applicationVariants are e.g. debug, release
     applicationVariants.all { variant ->
@@ -162,6 +165,7 @@ dependencies {
     implementation(project(":react-native-blur"))
     implementation project(':react-native-svg')
     implementation project(':react-native-share')
+    implementation project(':react-native-linear-gradient')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'com.android.support:multidex:1.0.3'
     implementation "com.android.support:appcompat-v7:28.0.3"

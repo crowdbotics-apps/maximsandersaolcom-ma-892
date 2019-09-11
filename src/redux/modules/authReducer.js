@@ -70,9 +70,9 @@ export const loginActionViaFacebook = token => (dispatch) => {
   const authService = new AuthService();
   return authService.loginOrRegisterViaSocialFacebook(token)
     .then(() => authService.getProfile())
-    .then((response) => {
-      const { data } = response;
-      const [first] = data;
+    .then(({ data }) => {
+      const { results } = data;
+      const [first] = results;
       const {
         email,
         first_name: firstName,
@@ -88,16 +88,18 @@ export const loginActionViaFacebook = token => (dispatch) => {
       };
       return dispatch({ type: LOGIN_SUCCESS, payload });
     })
-    .catch((err) => { throw err; });
+    .catch((err) => {
+      throw err;
+    });
 };
 
 export const loginActionViaGmail = token => (dispatch) => {
   const authService = new AuthService();
   return authService.loginOrRegisterViaSocialGoogle(token)
     .then(() => authService.getProfile())
-    .then((response) => {
-      const { data } = response;
-      const [first] = data;
+    .then(({ data }) => {
+      const { results } = data;
+      const [first] = results;
       const {
         email,
         first_name: firstName,

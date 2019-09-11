@@ -5,13 +5,14 @@ import {
   Text,
   StyleSheet,
 } from 'react-native';
-// import Share from 'react-native-share';
+import Share from 'react-native-share';
 import HorizontalScrollView from '../../components/HorizontalScrollView';
 import TagButton from '../../components/TagButton';
 import ImageContainer from '../../components/ImageContainer';
 import NutritionInfo from '../../components/NutritionInfo';
 import ImageTitle from '../../components/ImageTitle';
 
+const imagePlaceholder = 'https://via.placeholder.com/300x150.png?text=MAXIM+FITNESS';
 const iconMyFav = require('../../assets/icon_favorites_white.png');
 const iconShare = require('../../assets/icon_share.png');
 
@@ -49,14 +50,28 @@ class IndividualRecipeContainer extends Component {
     this.setState({ isCollapsed: !isCollapsed });
   }
 
+  shareOnSocialMedia = async (title, message, url) => {
+    const options = {
+      title: `Maxim Fitness Application - ${title}`,
+      message: `Maxim Fitness Application - ${message}`,
+      url,
+    };
+    try {
+      await Share.open(options);
+    } catch (err) {
+      console.log('err on sharing', err);
+    }
+  }
+
   render() {
     const { isCollapsed } = this.state;
     const { navigation, recipeSelected } = this.props;
     const {
       calories,
-      image_url,
+      image_url: imageUrl,
+      image,
       name,
-      time_to_prepare,
+      time_to_prepare: timeToPrepare,
       directions,
       protein,
       fat,
@@ -68,17 +83,19 @@ class IndividualRecipeContainer extends Component {
         <ScrollView>
           <View>
             <ImageContainer
-              imageBackgroundUri={image_url}
+              imageBackgroundUri={(image && imageUrl) || imagePlaceholder}
               leftIcon={iconMyFav}
               rightIcon={iconShare}
-              rightIconFunc={() => {}}
+              rightIconFunc={() => {
+                this.shareOnSocialMedia(name, name, imageUrl);
+              }}
               leftIconFunc={() => {}}
               goBack
               navigation={navigation}
             />
             <ImageTitle
               title={name}
-              firstItem={`${time_to_prepare} Minutes`}
+              firstItem={`${timeToPrepare} Minutes`}
               secondItem={`${calories} calories per serving`}
             />
             <HorizontalScrollView containerStyle={{ marginTop: 5, marginHorizontal: 15 }}>

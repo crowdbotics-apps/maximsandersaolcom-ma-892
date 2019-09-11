@@ -20,6 +20,7 @@ import com.cmcewen.blurview.BlurViewPackage;
 import com.horcrux.svg.SvgPackage;
 import cl.json.RNSharePackage;
 import cl.json.ShareApplication;
+import com.BV.LinearGradient.LinearGradientPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -52,7 +53,8 @@ public class MainApplication extends Application implements ReactApplication {
             new RNFirebaseNotificationsPackage(), /* react-native-firebase */
             new BlurViewPackage(),
             new SvgPackage(),
-            new RNSharePackage()
+            new RNSharePackage(),
+            new LinearGradientPackage()
       );
     }
 
