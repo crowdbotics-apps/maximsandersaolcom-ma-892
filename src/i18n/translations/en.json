@@ -60,5 +60,12 @@
   },
   "nutritionContainer": {
     "emptyMeals": "Meal and/or Food not found for date:"
+  },
+  "programScreen": {
+    "customTab": {
+      "overview": "Overview",
+      "details": "Details"
+    },
+    "startWorkoutButton": "Start Workout"
   }
 }

@@ -31,7 +31,7 @@ const IngredientRecipesListItem = ({ recipe, onPressRecipe, navigation }) => (
       mainContainerStyle={{ padding: 0, paddingHorizontal: 15 }}
       titleContainerStyle={{ display: 'none' }}
       firstItem={`${recipe.time_to_prepare} min`}
-      secondItem={recipe.calories}
+      secondItem={`${recipe.calories}`}
     />
   </TouchableOpacity>
 );

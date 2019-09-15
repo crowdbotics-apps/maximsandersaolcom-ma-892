@@ -26,11 +26,13 @@ const MealItem = ({
   numberOfProtein,
   numberOfCarbs,
   numberOfFat,
-  pieArray
+  pieArray,
+  key,
+  titleContainerStyle
 }) => (
   <View>
-    <View style={{ paddingVertical: 10 }}>
-      <Text style={styles.mealText}>{title}</Text>
+    <View style={[styles.titleWrapper, titleContainerStyle]}>
+      <Text style={styles.mealText}>{`Meal ${key + 1}`}</Text>
     </View>
     <View
       style={styles.itemContainer}
@@ -120,6 +122,9 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  titleWrapper: {
+    paddingVertical: 10
   }
 });
 
@@ -130,6 +135,7 @@ MealItem.defaultProps = {
   numberOfProtein: 0,
   numberOfCarbs: 0,
   numberOfFat: 0,
+  key: 0,
 };
 
 MealItem.propTypes = {
@@ -138,7 +144,8 @@ MealItem.propTypes = {
   mealItems: PropTypes.arrayOf(PropTypes.shape({})),
   numberOfProtein: PropTypes.number,
   numberOfCarbs: PropTypes.number,
-  numberOfFat: PropTypes.number
+  numberOfFat: PropTypes.number,
+  key: PropTypes.number
 };
 
 export default MealItem;

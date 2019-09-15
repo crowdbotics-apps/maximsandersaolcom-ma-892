@@ -9,6 +9,16 @@ export const drawerConfiguration = {
   drawerPosition: 'right',
 };
 
+export const drawerConfigurationForToday = {
+  initialRouteName: 'TodayScreen',
+  drawerPosition: 'right',
+};
+
+export const drawerConfigurationForProgram = {
+  initialRouteName: 'ProgramScreen',
+  drawerPosition: 'right',
+};
+
 export const TAB_ICONS_ENUM = {
   Today: { true: todayIcon, false: todayIcon },
   Nutrition: { true: nutrationIcon, false: nutrationIcon },

@@ -7,10 +7,10 @@ import {
 } from 'react-native';
 
 const iconBurger = require('../../assets/hamburger.png');
-const logoMaxim = require('../../assets/logo.png');
+const logoMaxim = require('../../assets/logoSplashScreen.png');
 
-const HeaderForDrawer = ({ onDrawerButtonPress }) => (
-  <View style={styles.headerNav}>
+const HeaderForDrawer = ({ onDrawerButtonPress, headerNavProp }) => (
+  <View style={[styles.headerNav, headerNavProp]}>
     <View style={{ flex: 1 }}>
       <TouchableOpacity
         onPress={() => onDrawerButtonPress()}
@@ -23,8 +23,9 @@ const HeaderForDrawer = ({ onDrawerButtonPress }) => (
     </View>
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Image
-        style={{ width: 70, height: 30 }}
+        style={{ width: 100, height: 30 }}
         source={logoMaxim}
+        resizeMode="cover"
       />
     </View>
     <View style={{ flex: 1 }} />

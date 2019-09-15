@@ -6,7 +6,8 @@ const TodayContainerHorizontal = ({
   navigation,
   data,
   onSelectItem,
-  sliderTitle
+  sliderTitle,
+  routeName
 }) => (
   <View>
     <View style={{ paddingHorizontal: 5 }}>
@@ -17,6 +18,7 @@ const TodayContainerHorizontal = ({
         navigation={navigation}
         onSelectItem={onSelectItem}
         data={data}
+        routeName={routeName}
       />
     </View>
   </View>

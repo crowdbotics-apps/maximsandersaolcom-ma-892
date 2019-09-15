@@ -24,7 +24,8 @@ const TodayHorizontalSlider = ({
   data = [],
   containerStyle = {},
   onSelectItem,
-  navigation
+  navigation,
+  routeName
 }) => (
   <View style={[{ backgroundColor: 'white' }, containerStyle]}>
     <FlatList
@@ -36,7 +37,7 @@ const TodayHorizontalSlider = ({
           item={item}
           index={index}
           onClick={() => {
-            navigation.navigate();
+            navigation.navigate(routeName);
             onSelectItem();
           }}
         />

@@ -31,6 +31,7 @@ class NutrationContainer extends Component {
       fat: numberOfFat,
       pieArray
     },
+    key
   }) => (
     <MealItem
       title={title}
@@ -40,6 +41,7 @@ class NutrationContainer extends Component {
       numberOfCarbs={numberOfCarbs}
       numberOfFat={numberOfFat}
       pieArray={pieArray}
+      key={key}
     />
   );
 
@@ -75,7 +77,7 @@ class NutrationContainer extends Component {
             contentContainerStyle={{ flexGrow: 1, paddingHorizontal: 10, paddingVertical: 0 }}
             list={meals}
             fetchListAction={() => getMealsByDateAction(formatedDate)}
-            renderItem={item => this.renderItem(item)}
+            renderItem={(item, key) => this.renderItem(item, key)}
             search={''}
             filter={''}
           />
