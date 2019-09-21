@@ -31,7 +31,7 @@ const TodayHorizontalSlider = ({
     <FlatList
       horizontal
       showsHorizontalScrollIndicator={false}
-      data={sportsArr || data}
+      data={data}
       renderItem={({ item, index }) => (
         <TodayHorizontalSliderItem
           item={item}

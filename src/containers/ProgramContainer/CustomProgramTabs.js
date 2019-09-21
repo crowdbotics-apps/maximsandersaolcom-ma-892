@@ -14,10 +14,12 @@ const iconOverview = require('../../assets/icon_overview.png');
 const iconDetails = require('../../assets/icon_details.png');
 const iconDoneProgram = require('../../assets/icon_program_done.png');
 
-const renderItem = (item, index, navigation) => (
+const renderItem = (item, index, navigation, pickSession, overviewData) => (
   <TouchableOpacity
     style={item.done ? styles.itemTouchableDone : styles.itemTouchable}
+    disabled={item.done}
     onPress={() => {
+      pickSession(item, overviewData);
       navigation.navigate(Routes.ExerciseScreen);
     }}
   >
@@ -25,7 +27,10 @@ const renderItem = (item, index, navigation) => (
       style={styles.itemWrapper}
     >
       <View style={styles.imageItemWrapper}>
-        <Image source={{ uri: item.image_url }} style={{ width: 55, height: 50 }} />
+        <Image
+          source={{ uri: item.exercise.pictures[0].image_url }}
+          style={{ width: 55, height: 50 }}
+        />
       </View>
       <View style={styles.textItemWrapper}>
         <Text
@@ -33,7 +38,7 @@ const renderItem = (item, index, navigation) => (
           ellipsizeMode="tail"
           style={styles.textItem}
         >
-          {`${index + 1}. ${item.title}`}
+          {`${index + 1}. ${item.exercise.name}`}
         </Text>
       </View>
       {
@@ -58,7 +63,12 @@ const emptyList = () => (
   </View>
 );
 
-const CustomProgramTabs = ({ overviewData, detailsData, navigation }) => {
+const CustomProgramTabs = ({
+  overviewData = {},
+  detailsData = {},
+  navigation,
+  pickSession
+}) => {
   const [activeTab, setActiveTab] = useState(1);
   return (
     <View style={{ flex: 1 }}>
@@ -113,13 +123,9 @@ const CustomProgramTabs = ({ overviewData, detailsData, navigation }) => {
           style={{ flex: 1 }}
           ListEmptyComponent={emptyList}
           contentContainerStyle={styles.searchableContent}
-          list={[
-            { id: 1, title: 'Barbell Bicep Curl', image_url: 'http://lorempixel.com/output/sports-q-c-480-480-3.jpg', done: true, },
-            { id: 2, title: 'Dumbell Bicep Curl', image_url: 'http://lorempixel.com/output/sports-q-c-480-480-3.jpg', done: false },
-            { id: 3, title: 'Overhead Tricep Extension', image_url: 'http://lorempixel.com/output/sports-q-c-480-480-3.jpg', done: false }
-          ]}
+          list={overviewData}
           fetchListAction={() => {}}
-          renderItem={({ item, index }) => renderItem(item, index, navigation)}
+          renderItem={({ item, index }) => renderItem(item, index, navigation, pickSession, overviewData)}
           search={''}
           filter={''}
           numColumns={2}

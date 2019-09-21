@@ -16,3 +16,4 @@ export { default as IngredientRecipeScreen } from './IngredientRecipeScreen';
 export { default as TodayScreen } from './TodayScreen';
 export { default as ProgramScreen } from './ProgramScreen';
 export { default as ExerciseScreen } from './ExerciseScreen';
+export { default as SwapExerciseScreen } from './SwapExerciseScreen';

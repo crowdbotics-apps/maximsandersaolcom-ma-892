@@ -36,3 +36,20 @@ export function getNumberOfDayByString(dateString) {
     default: return 0;
   }
 }
+
+export function sortSessionBySets(arraySession) {
+  const newSessionsSorted = arraySession.map((item) => {
+    const workouts = item.workouts.map((itemWorkout) => {
+      const sortedSets = itemWorkout.sets.sort((a, b) => a.set_no - b.set_no);
+      return {
+        ...itemWorkout,
+        sets: sortedSets,
+      };
+    });
+    return {
+      ...item,
+      workouts
+    };
+  });
+  return newSessionsSorted;
+}

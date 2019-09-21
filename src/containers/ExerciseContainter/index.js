@@ -1,46 +1,22 @@
-import React from 'react';
-import {
-  SafeAreaView,
-  View,
-  Text
-} from 'react-native';
-import ScrollableTabView from 'react-native-scrollable-tab-view';
-import HeaderForDrawer from '../../components/HeaderForDrawer';
-import ExerciseTabHeader from '../../components/ExerciseTabHeader';
+import { connect } from 'react-redux';
+import { withNavigation } from 'react-navigation';
+import { bindActionCreators } from 'redux';
+import { markSetAsDoneAction, findAndMarkAsDoneSet, pickSession } from '../../redux/modules/sessionReducer';
+import ExerciseContainer from './ExerciseContainer';
 
-const data = [
-  { id: 1, title: 'Barbell Bicep Curl', image_url: 'http://lorempixel.com/output/sports-q-c-480-480-3.jpg', done: true, },
-  { id: 2, title: 'Dumbell Bicep Curl', image_url: 'http://lorempixel.com/output/sports-q-c-480-480-3.jpg', done: false },
-  { id: 3, title: 'Overhead Tricep Extension', image_url: 'http://lorempixel.com/output/sports-q-c-480-480-3.jpg', done: false }
-];
+const mapState = state => ({
+  exercisesObj: state.sessions && state.sessions.exercisesObj,
+  selectedSession: state.sessions && state.sessions.selectedSession
+});
 
-const ExerciseContainer = ({ navigation, navigation: { toggleDrawer } }) => (
-  <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
-    <HeaderForDrawer
-      navigation={navigation}
-      headerNavProp={{ paddingBottom: 50 }}
-      onDrawerButtonPress={() => {
-        toggleDrawer();
-      }}
-    />
-    <ScrollableTabView
-      style={{ backgroundColor: 'white', flex: 1 }}
-      renderTabBar={props => (
-        <ExerciseTabHeader {...props} />
-      )}
-    >
-      {
-        data.map(item => (
-          <View
-            tabLabel={item}
-            style={{ flex: 1 }}
-          >
-            <Text>{`Test ${item.title}`}</Text>
-          </View>
-        ))
-      }
-    </ScrollableTabView>
-  </SafeAreaView>
-);
+const mainActions = {
+  markSetAsDoneAction,
+  findAndMarkAsDoneSetAction: findAndMarkAsDoneSet,
+  pickSessionAction: pickSession
+};
 
-export default ExerciseContainer;
+
+export default connect(
+  mapState,
+  dispatch => bindActionCreators(mainActions, dispatch)
+)(withNavigation(ExerciseContainer));

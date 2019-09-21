@@ -29,7 +29,7 @@
     "react-native-scrollable-tab-view": "^0.10.0",
     "react-native-share": "1.2.1",
     "react-native-svg": "9.6.4",
-    "react-native-video": "^4.4.3",
+    "react-native-video": "^5.0.2",
     "react-navigation": "^2.18.0",
     "react-redux": "5.1.1",
     "redux": "^4.0.4",

@@ -16,5 +16,6 @@ export default {
   IngredientRecipeScreen: 'IngredientRecipeScreen',
   TodayScreen: 'TodayScreen',
   ProgramScreen: 'ProgramScreen',
-  ExerciseScreen: 'ExerciseScreen'
+  ExerciseScreen: 'ExerciseScreen',
+  SwapExerciseScreen: 'SwapExerciseScreen'
 };

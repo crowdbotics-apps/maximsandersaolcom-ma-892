@@ -18,6 +18,8 @@ import Routes from '../../Routes';
 
 const dateTime = new Date();
 const formatedDate = moment(dateTime).format('YYYY-MM-DD');
+const todayDayString = moment(dateTime).format('dddd');
+const todayDayNumber = getNumberOfDayByString(todayDayString);
 
 const emptyList = () => (
   <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -63,8 +65,6 @@ const IngredientRecipeContainer = ({
   todaySession
 }) => {
   useEffect(() => {
-    const todayDayString = moment(dateTime).format('dddd');
-    const todayDayNumber = getNumberOfDayByString(todayDayString);
     console.log('today', navigation);
     getSessionByDayAction(todayDayNumber);
   }, []);
@@ -79,13 +79,13 @@ const IngredientRecipeContainer = ({
         />
         <TodayInfo
           description="Strength and Cardio"
-          dayNumber="1"
-          weekNumber="1"
+          dayNumber={todayDayNumber}
+          weekNumber="1" // need to implement
         />
         <TodayContainerHorizontal
           sliderTitle="Biceps and Triceps"
           navigation={navigation}
-          data={[]}
+          data={todaySession.workouts}
           routeName={Routes.TestScreen}
           onSelectItem={() => {}}
         />

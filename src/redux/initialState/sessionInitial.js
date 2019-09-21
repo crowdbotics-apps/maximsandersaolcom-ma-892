@@ -1,6 +1,11 @@
 const initialSession = {
   todaySession: {},
-  exercisesObj: {}
+  exercisesObj: {},
+  selectedSession: {},
+  allSessions: [],
+  allExercises: {
+    results: []
+  }
 };
 
 export default initialSession;

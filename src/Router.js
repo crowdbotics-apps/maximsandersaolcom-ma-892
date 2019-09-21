@@ -30,7 +30,8 @@ import {
   IngredientRecipeScreen,
   TodayScreen,
   ProgramScreen,
-  ExerciseScreen
+  ExerciseScreen,
+  SwapExerciseScreen
 } from './screens';
 import DrawerContent from './containers/DrawerContent';
 import regularHeaderStyle from './components/regularHeaderStyle';
@@ -249,6 +250,13 @@ const ProgramsTabStack = createDrawerNavigator({
   },
   [Routes.ExerciseScreen]: {
     screen: ExerciseScreen,
+    navigationOptions: () => ({
+      header: null,
+      drawerLabel: () => null,
+    })
+  },
+  [Routes.SwapExerciseScreen]: {
+    screen: SwapExerciseScreen,
     navigationOptions: () => ({
       header: null,
       drawerLabel: () => null,

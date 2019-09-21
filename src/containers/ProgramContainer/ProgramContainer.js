@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   View,
   SafeAreaView,
@@ -11,48 +11,58 @@ import ProgramTabHeader from '../../components/ProgramTabHeader';
 import CustomProgramTabs from './CustomProgramTabs';
 import i18n from '../../i18n/i18n';
 
-const ProgramContainer = ({ navigation, navigation: { toggleDrawer } }) => (
-  <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
-    <HeaderForDrawer
-      navigation={navigation}
-      headerNavProp={{ paddingBottom: 50 }}
-      onDrawerButtonPress={() => {
-        toggleDrawer();
-      }}
-    />
-    <ScrollableTabView
-      style={{ backgroundColor: 'white', flex: 1 }}
-      renderTabBar={props => <ProgramTabHeader {...props} />}
-    >
-      <View style={{ flex: 1 }}>
-        <View
-          style={styles.buttonContainer}
-        >
-          <GradientButton
-            buttonContainerText={i18n.t('programScreen.startWorkoutButton')}
-            buttonContainerStyleProp={styles.findRecipesButtonContainer}
-            buttonContainerTextStyle={styles.buttonContainerTextStyle}
-            buttonContentContainerProp={{ paddingBottom: 0 }}
-            colorsGradient={['#3180BD', '#6EC2FA']}
-          />
+const ProgramContainer = ({
+  navigation,
+  navigation: {
+    toggleDrawer
+  },
+  allSessions,
+  getAllSessionsAction,
+  pickSessionAction
+}) => {
+  useEffect(() => {
+    getAllSessionsAction();
+  }, []);
+  return (
+    <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+      <HeaderForDrawer
+        navigation={navigation}
+        headerNavProp={{ paddingBottom: 50 }}
+        onDrawerButtonPress={() => {
+          toggleDrawer();
+        }}
+      />
+      <ScrollableTabView
+        style={{ backgroundColor: 'white', flex: 1 }}
+        renderTabBar={props => <ProgramTabHeader {...props} />}
+      >
+        <View style={{ flex: 1 }}>
+          <View
+            style={styles.buttonContainer}
+          >
+            <GradientButton
+              buttonContainerText={i18n.t('programScreen.startWorkoutButton')}
+              buttonContainerStyleProp={styles.findRecipesButtonContainer}
+              buttonContainerTextStyle={styles.buttonContainerTextStyle}
+              buttonContentContainerProp={{ paddingBottom: 0 }}
+              colorsGradient={['#3180BD', '#6EC2FA']}
+            />
+          </View>
+          {
+            allSessions && allSessions.map((item, index) => (
+              <View
+                tabLabel={index}
+                style={{ flex: 1 }}
+              >
+                <CustomProgramTabs navigation={navigation} overviewData={item.workouts} pickSession={pickSessionAction} />
+              </View>
+            ))
+          }
         </View>
-        <CustomProgramTabs navigation={navigation} />
-      </View>
-      <View
-        tabLabel="Redux"
-        style={{ flex: 1 }}
-      >
-        <CustomProgramTabs navigation={navigation} />
-      </View>
-      <View
-        tabLabel="GQL"
-        style={{ flex: 1 }}
-      >
-        <CustomProgramTabs navigation={navigation} />
-      </View>
-    </ScrollableTabView>
-  </SafeAreaView>
-);
+      </ScrollableTabView>
+    </SafeAreaView>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {

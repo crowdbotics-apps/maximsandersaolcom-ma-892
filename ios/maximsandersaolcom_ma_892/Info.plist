@@ -86,6 +86,8 @@
 	<string>Need to use for login via facebook and google</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Need to use for login via facebook and google</string>
+	<key>NSMainNibFile</key>
+	<string>LaunchScreen</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Maxim Fitness application need access of microphone for Bar code scanner</string>
 	<key>NSPhotoLibraryUsageDescription</key>

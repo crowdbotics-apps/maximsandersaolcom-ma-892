@@ -2,14 +2,15 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withNavigation } from 'react-navigation';
 import ProgramContainer from './ProgramContainer';
-import { getMealsByDateAction } from '../../redux/modules/nutritionReducer';
+import { getAllSessions, pickSession } from '../../redux/modules/sessionReducer';
 
 const mapState = state => ({
-  meals: state.nutrition && state.nutrition.meals,
+  allSessions: state.sessions && state.sessions.allSessions,
 });
 
 const mainActions = {
-  getMealsByDateAction,
+  getAllSessionsAction: getAllSessions,
+  pickSessionAction: pickSession
 };
 
 const mapActions = dispatch => bindActionCreators(mainActions, dispatch);

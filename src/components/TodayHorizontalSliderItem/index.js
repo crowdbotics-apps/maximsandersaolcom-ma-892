@@ -6,7 +6,6 @@ import {
   Image,
   StyleSheet
 } from 'react-native';
-import Routes from '../../Routes';
 
 const imagePlaceholder = 'https://via.placeholder.com/300x150.png?text=MAXIM+FITNESS';
 
@@ -23,13 +22,13 @@ const TodayHorizontalSliderItem = ({
   >
     <View style={styles.containerMain}>
       <Image
-        source={{ uri: item.image_url || imagePlaceholder }}
+        source={{ uri: item.exercise.pictures[0].image_url || imagePlaceholder }}
         style={styles.backgroundImageStyle}
       />
     </View>
     <View style={styles.textContainer}>
       <View>
-        <Text style={styles.itemTitleStyle}>{`${index + 1}. ${item.title}`}</Text>
+        <Text style={styles.itemTitleStyle}>{`${index + 1}. ${item.name}`}</Text>
       </View>
     </View>
   </TouchableOpacity>
