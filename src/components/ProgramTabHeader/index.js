@@ -10,6 +10,7 @@ const ProgramTabHeader = ({ tabs, goToPage, activeTab }) => {
   const [scrolled, setScrolled] = useState(false);
   const [elementsFromScrollView, setElementsFromScrollView] = useState([]);
   function setElementForScrollHelp(element) {
+    console.log('elementsfromscrollview', elementsFromScrollView, tabs);
     const scrollViewRemoveCurrent = elementsFromScrollView
       .filter(elementItem => elementItem.item.id !== element.item.id);
     const sortedElements = [...scrollViewRemoveCurrent, element]
@@ -28,11 +29,12 @@ const ProgramTabHeader = ({ tabs, goToPage, activeTab }) => {
     }
   }, [elementsFromScrollView]);
   return (
-    <View style={{
-      flexDirection: 'row',
-      backgroundColor: 'rgb(214,214,214)',
-      height: 75
-    }}
+    <View
+      style={{
+        flexDirection: 'row',
+        backgroundColor: 'rgb(214,214,214)',
+        height: 75
+      }}
     >
       <ScrollView
         ref={scrollViewRef}

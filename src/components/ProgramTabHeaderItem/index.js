@@ -16,7 +16,8 @@ const ProgramTabHeader = ({
   goToPage,
   activeTab,
   index,
-  setElementForScrollHelp
+  setElementForScrollHelp,
+  item
 }) => {
   const viewRef = useRef(null);
   const [element, setElement] = useState(null);
@@ -33,6 +34,7 @@ const ProgramTabHeader = ({
       x,
       y,
       index,
+      item
     });
   }
   return (
@@ -41,8 +43,9 @@ const ProgramTabHeader = ({
       style={{
         backgroundColor: 'white',
         marginTop: activeTab !== index ? 5 : 0,
-        borderTopLeftRadius: activeTab === index ? 10 : 0,
-        borderTopRightRadius: activeTab === index ? 10 : 0,
+        borderTopLeftRadius: activeTab === index ? 10 : 4,
+        borderTopRightRadius: activeTab === index ? 10 : 4,
+        paddingHorizontal: 5
       }}
       onLayout={onLayoutHelper}
     >

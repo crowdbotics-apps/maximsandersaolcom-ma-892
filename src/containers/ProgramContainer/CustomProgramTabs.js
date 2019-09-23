@@ -19,8 +19,8 @@ const renderItem = (item, index, navigation, pickSession, overviewData) => (
     style={item.done ? styles.itemTouchableDone : styles.itemTouchable}
     disabled={item.done}
     onPress={() => {
-      pickSession(item, overviewData);
-      navigation.navigate(Routes.ExerciseScreen);
+      // pickSession(item, overviewData);
+      // navigation.navigate(Routes.ExerciseScreen);
     }}
   >
     <View

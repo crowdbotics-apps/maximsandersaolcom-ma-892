@@ -10,6 +10,7 @@ import GradientButton from '../../components/GradientButton';
 import ProgramTabHeader from '../../components/ProgramTabHeader';
 import CustomProgramTabs from './CustomProgramTabs';
 import i18n from '../../i18n/i18n';
+import Routes from '../../Routes';
 
 const ProgramContainer = ({
   navigation,
@@ -18,7 +19,7 @@ const ProgramContainer = ({
   },
   allSessions,
   getAllSessionsAction,
-  pickSessionAction
+  pickSessionAction,
 }) => {
   useEffect(() => {
     getAllSessionsAction();
@@ -34,31 +35,47 @@ const ProgramContainer = ({
       />
       <ScrollableTabView
         style={{ backgroundColor: 'white', flex: 1 }}
-        renderTabBar={props => <ProgramTabHeader {...props} />}
+        renderTabBar={props => <ProgramTabHeader {...props} allSessions={allSessions} />}
       >
-        <View style={{ flex: 1 }}>
-          <View
-            style={styles.buttonContainer}
-          >
-            <GradientButton
-              buttonContainerText={i18n.t('programScreen.startWorkoutButton')}
-              buttonContainerStyleProp={styles.findRecipesButtonContainer}
-              buttonContainerTextStyle={styles.buttonContainerTextStyle}
-              buttonContentContainerProp={{ paddingBottom: 0 }}
-              colorsGradient={['#3180BD', '#6EC2FA']}
-            />
-          </View>
-          {
-            allSessions && allSessions.map((item, index) => (
-              <View
-                tabLabel={index}
-                style={{ flex: 1 }}
-              >
-                <CustomProgramTabs navigation={navigation} overviewData={item.workouts} pickSession={pickSessionAction} />
+        {
+          allSessions && allSessions.map((item, index) => {
+            const [itemWorkoutUndone, nextWorkout] = item.workouts
+              .filter(workoutItem => !workoutItem.done);
+            return (
+              <View tabLabel={item} style={{ flex: 1 }}>
+                <View
+                  style={styles.buttonContainer}
+                >
+                  <GradientButton
+                    isDone={!itemWorkoutUndone}
+                    buttonContainerText={i18n.t('programScreen.startWorkoutButton')}
+                    buttonContainerStyleProp={styles.findRecipesButtonContainer}
+                    buttonContainerTextStyle={styles.buttonContainerTextStyle}
+                    buttonContentContainerProp={{ paddingBottom: 0 }}
+                    colorsGradient={['#3180BD', '#6EC2FA']}
+                    colorsGradientDisable={['#d3d3d3', '#838383']}
+                    onPress={() => {
+                      if (itemWorkoutUndone) {
+                        pickSessionAction(itemWorkoutUndone, item.workouts, nextWorkout);
+                        navigation.navigate(Routes.ExerciseScreen);
+                      }
+                    }}
+                  />
+                </View>
+                <View
+                  tabLabel={index}
+                  style={{ flex: 1 }}
+                >
+                  <CustomProgramTabs
+                    navigation={navigation}
+                    overviewData={item.workouts}
+                    pickSession={pickSessionAction}
+                  />
+                </View>
               </View>
-            ))
-          }
-        </View>
+            );
+          })
+        }
       </ScrollableTabView>
     </SafeAreaView>
   );

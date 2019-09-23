@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
   itemTitleStyle: {
-    fontWeight: '200',
+    fontWeight: '400',
     fontSize: 10,
     color: 'black',
     textAlign: 'center',

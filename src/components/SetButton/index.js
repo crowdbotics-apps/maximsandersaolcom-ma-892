@@ -10,7 +10,11 @@ import {
 const iconDoneProgram = require('../../assets/icon_program_done.png');
 
 const SetButton = ({ setItem, onClick }) => (
-  <TouchableOpacity style={styles.buttonContainer} onPress={() => onClick()}>
+  <TouchableOpacity
+    disabled
+    style={styles.buttonContainer}
+    onPress={() => onClick()}
+  >
     {setItem.done && (
       <View style={styles.iconContainer}>
         <Image source={iconDoneProgram} style={styles.iconStyle} />

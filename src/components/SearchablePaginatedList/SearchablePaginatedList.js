@@ -5,7 +5,7 @@ import PaginatedListContainer from './PaginatedListContainer';
 import Loading from '../Loading';
 
 const initialState = {
-  offset: 0,
+  page: 1,
   limit: 10,
   appending: false,
   loading: true,
@@ -53,9 +53,9 @@ class SearchablePaginatedList extends Component {
       filter
     } = this.props;
 
-    const { offset, limit } = this.state;
+    const { page, limit } = this.state;
 
-    const hasMore = await fetchListAction(offset, limit, search, filter);
+    const hasMore = await fetchListAction(search, filter, page, limit);
     if (!this.unmounted) {
       this.setState({
         loading: false,
@@ -72,9 +72,9 @@ class SearchablePaginatedList extends Component {
       filter,
     // list
     } = this.props;
-    const { offset, limit } = this.state;
+    const { page, limit } = this.state;
 
-    const hasMore = await fetchListAction(offset, limit, search, filter);
+    const hasMore = await fetchListAction(search, filter, page, limit);
 
     if (!this.unmounted) {
       this.setState({
@@ -90,7 +90,7 @@ class SearchablePaginatedList extends Component {
     if (appending || !hasMore) return;
     if (!this.unmounted) {
       this.setState(prevState => ({
-        offset: prevState.offset + prevState.limit,
+        page: prevState.page + 1,
         appending: true,
       }), () => {
         this.fetchRequest();

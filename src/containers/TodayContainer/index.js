@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withNavigation } from 'react-navigation';
 import TodayContainer from './TodayContainer';
 import { getMealsByDateAction } from '../../redux/modules/nutritionReducer';
-import { getSessionByDay } from '../../redux/modules/sessionReducer';
+import { getSessionByDay, pickSession } from '../../redux/modules/sessionReducer';
 
 const mapState = state => ({
   meals: state.nutrition && state.nutrition.meals,
@@ -12,7 +12,8 @@ const mapState = state => ({
 
 const mainActions = {
   getMealsByDateAction,
-  getSessionByDayAction: getSessionByDay
+  getSessionByDayAction: getSessionByDay,
+  pickSessionAction: pickSession
 };
 
 const mapActions = dispatch => bindActionCreators(mainActions, dispatch);

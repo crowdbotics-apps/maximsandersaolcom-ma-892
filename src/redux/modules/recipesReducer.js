@@ -65,12 +65,16 @@ export const getRecipesByCategory = (categoriesWithSlugs = []) => {
   };
 };
 
-export const getRecipeByNameOrCategory = ({ name = '', category = '' }) => {
+export const getRecipeByNameOrCategory = ({ name = '', category = '', page = 1, limit = 5 }) => {
   const recipesService = new RecipesService();
   return (dispatch) => {
     dispatch({ type: START_FETCH_RECIPES });
-    return recipesService.getRecipeByNameOrCategory(name, category)
-      .then(payload => dispatch({ type: GET_RECIPES_ALL, payload }));
+    return recipesService.getRecipeByNameOrCategory(name, category, page, limit)
+      .then((payload) => {
+        dispatch({ type: GET_RECIPES_ALL, payload });
+        // has more
+        return payload.recipesObj.next !== null;
+      });
   };
 };
 

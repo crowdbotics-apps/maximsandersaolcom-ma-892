@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   SafeAreaView,
   View,
@@ -16,6 +16,10 @@ import FatGradientIconButton from '../../components/FatGradientIconButton';
 import RestContainer from '../../components/RestContainer';
 import Routes from '../../Routes';
 
+const iconDetails = require('../../assets/icon_details_ex.png');
+const iconSwap = require('../../assets/icon_swap.png');
+const iconDoneStartRest = require('../../assets/icon_done_start_rest.png');
+
 const ExerciseContainer = ({
   navigation,
   navigation: {
@@ -23,71 +27,136 @@ const ExerciseContainer = ({
   },
   exercisesObj,
   selectedSession,
-  markSetAsDoneAction,
   findAndMarkAsDoneSetAction,
-  pickSessionAction
-}) => (
-  <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
-    <HeaderForDrawer
-      navigation={navigation}
-      headerNavProp={{ paddingBottom: 50 }}
-      onDrawerButtonPress={() => {
-        toggleDrawer();
-      }}
-    />
-    <ScrollableTabView
-      style={{ backgroundColor: 'white', flex: 1 }}
-      renderTabBar={props => (
-        <ExerciseTabHeader
-          {...props}
-          exercisePicked={exercisesObj.id}
-          selectedSession={selectedSession}
-          pickSessionAction={pickSessionAction}
-        />
-      )}
-    >
-      {
-        selectedSession.map(item => (
-          <View tabLabel={item} style={{ flex: 1 }}>
-            <VideoExercise videoUrl={exercisesObj.exercise.video_url} />
-            <View style={styles.scrollWrapper}>
-              <ScrollView
-                contentContainerStyle={styles.scrollContainer}
-                horizontal
-              >
-                { item.sets.map(setItem => (
-                  <SetButton onClick={() => markSetAsDoneAction(setItem.id, item.id)} setItem={setItem} />
-                ))
-                }
-              </ScrollView>
-            </View>
-            <ScrollView>
-              <View style={styles.buttonWrapper}>
-                <FatExerciseButton buttonLabel="Reps" buttonText="12" onClick={() => null} />
-                <FatExerciseButton buttonLabel="Weight" buttonText="32" onClick={() => null} />
-              </View>
-              <View style={styles.buttonWrapper}>
-                <FatExerciseIconButton buttonText="Details" onClick={() => null} />
-                <FatExerciseIconButton buttonText="Swap Exercises" onClick={() => navigation.navigate(Routes.SwapExerciseScreen)} />
-                <FatGradientIconButton
-                  buttonText="Done"
-                  colorsGradient={['#3180BD', '#6EC2FA']}
-                  onClick={() => findAndMarkAsDoneSetAction()}
-                />
-              </View>
-              <View>
-                <RestContainer
-                  // startCount
-                  secondsRest={90}
-                />
-              </View>
-            </ScrollView>
-          </View>
-        ))
+  pickSessionAction,
+  nextWorkout
+}) => {
+  const [activeSet, setActiveSet] = useState({});
+  const [isClickedOnActive, setIsClickedOnActive] = useState(false);
+  const [startCount, setStartCount] = useState(false);
+  const [firstDoneTimer, setFirstDoneTimer] = useState(null);
+  const [allDone, setAllDone] = useState(false);
+  const [freeToGoToNext, setFreeToGoToNext] = useState(false);
+
+  useEffect(() => {
+    const [activeSetFind] = exercisesObj.sets && exercisesObj.sets.filter(item => !item.done);
+    setAllDone(!activeSetFind);
+    if (activeSetFind) {
+      if (!firstDoneTimer) {
+        setFirstDoneTimer(activeSetFind.timer);
       }
-    </ScrollableTabView>
-  </SafeAreaView>
-);
+      setActiveSet(activeSetFind);
+    }
+  },
+  [exercisesObj, activeSet]);
+
+  useEffect(() => {
+    if (isClickedOnActive) {
+      setStartCount(true);
+    }
+  }, [isClickedOnActive]);
+
+  return (
+    <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+      <HeaderForDrawer
+        navigation={navigation}
+        headerNavProp={{ paddingBottom: 50 }}
+        onDrawerButtonPress={() => {
+          toggleDrawer();
+        }}
+      />
+      <ScrollableTabView
+        style={{ backgroundColor: 'white', flex: 1 }}
+        renderTabBar={props => (
+          <ExerciseTabHeader
+            {...props}
+            navigation={navigation}
+            goToNext={freeToGoToNext}
+            exercisePicked={exercisesObj.id}
+            selectedSession={selectedSession}
+            pickSessionAction={pickSessionAction}
+            setFreeToGoToNext={setFreeToGoToNext}
+            setFirstDoneTimer={setFirstDoneTimer}
+          />
+        )}
+      >
+        {
+          selectedSession.map(item => (
+            <View tabLabel={item} style={{ flex: 1 }}>
+              <VideoExercise videoUrl={exercisesObj.exercise.video_url} />
+              <View style={styles.scrollWrapper}>
+                <ScrollView
+                  contentContainerStyle={styles.scrollContainer}
+                  horizontal
+                >
+                  { item.sets.map(setItem => (
+                    <SetButton
+                      onClick={() => {
+                        // markSetAsDoneAction(setItem.id, item.id);
+                        // setIsClickedOnActive(true);
+                      }}
+                      setItem={setItem}
+                    />
+                  ))
+                  }
+                </ScrollView>
+              </View>
+              {
+                activeSet && (
+                  <ScrollView>
+                    <View style={styles.buttonWrapper}>
+                      <FatExerciseButton buttonLabel="Reps" buttonText={activeSet.reps} onClick={() => null} />
+                      <FatExerciseButton buttonLabel="Weight" buttonText={activeSet.weight} onClick={() => null} />
+                    </View>
+                    <View style={styles.buttonWrapper}>
+                      <FatExerciseIconButton
+                        buttonText="Details"
+                        onClick={() => null}
+                        buttonIcon={iconDetails}
+                      />
+                      <FatExerciseIconButton
+                        buttonText="Swap Exercises"
+                        onClick={() => navigation.navigate(Routes.SwapExerciseScreen)}
+                        buttonIcon={iconSwap}
+                      />
+                      <FatGradientIconButton
+                        buttonText={item.done ? 'Done' : 'Done, Start Rest'}
+                        buttonIcon={iconDoneStartRest}
+                        colorsGradient={['#3180BD', '#6EC2FA']}
+                        colorsGradientDisable={['#d3d3d3', '#838383']}
+                        disabled={startCount || item.done}
+                        onClick={() => {
+                          findAndMarkAsDoneSetAction();
+                          setIsClickedOnActive(true);
+                        }}
+                      />
+                    </View>
+                    <View>
+                      <RestContainer
+                        upNext={nextWorkout ? nextWorkout.name : '-'}
+                        activeSet={activeSet}
+                        startCount={startCount}
+                        secondsRest={firstDoneTimer}
+                        stopCountFunc={(setSeconds) => {
+                          if (allDone) {
+                            setFreeToGoToNext(true);
+                          }
+                          setSeconds(activeSet.timer);
+                          setStartCount(false);
+                          setIsClickedOnActive(false);
+                        }}
+                      />
+                    </View>
+                  </ScrollView>
+                )
+              }
+            </View>
+          ))
+        }
+      </ScrollableTabView>
+    </SafeAreaView>
+  );
+};
 
 const styles = StyleSheet.create({
   scrollContainer: {

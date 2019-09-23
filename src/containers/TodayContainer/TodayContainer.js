@@ -62,7 +62,8 @@ const IngredientRecipeContainer = ({
   navigation: {
     toggleDrawer
   },
-  todaySession
+  todaySession,
+  pickSessionAction
 }) => {
   useEffect(() => {
     console.log('today', navigation);
@@ -78,16 +79,19 @@ const IngredientRecipeContainer = ({
           }}
         />
         <TodayInfo
-          description="Strength and Cardio"
+          description={todaySession.name || ''}
           dayNumber={todayDayNumber}
           weekNumber="1" // need to implement
         />
         <TodayContainerHorizontal
-          sliderTitle="Biceps and Triceps"
+          sliderTitle={todaySession.name || ''}
           navigation={navigation}
           data={todaySession.workouts}
-          routeName={Routes.TestScreen}
-          onSelectItem={() => {}}
+          routeName={Routes.ExerciseScreen}
+          onSelectItem={(item) => {
+            pickSessionAction(item, todaySession.workouts);
+            console.log('navigation', navigation);
+          }}
         />
         <View
           style={styles.buttonContainer}
@@ -97,7 +101,11 @@ const IngredientRecipeContainer = ({
             buttonContainerStyleProp={styles.findRecipesButtonContainer}
             buttonContainerTextStyle={styles.buttonContainerTextStyle}
             colorsGradient={['#3180BD', '#6EC2FA']}
-            onPress={() => navigation.navigate(Routes.TestScreen)}
+            onPress={() => {
+              const [firstUnDone, nextWorkout] = todaySession.workouts.filter(item => !item.done);
+              pickSessionAction(firstUnDone, todaySession.workouts, nextWorkout);
+              navigation.navigate(Routes.ExerciseScreen);
+            }}
           />
         </View>
         <View style={styles.lastContainer}>

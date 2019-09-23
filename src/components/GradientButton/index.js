@@ -12,16 +12,19 @@ const GradientButton = ({
   buttonContainerText,
   buttonContainerTextStyle,
   onPress,
-  colorsGradient = []
+  colorsGradient = [],
+  isDone,
+  colorsGradientDisable
 }) => (
   <TouchableOpacity
     onPress={onPress}
+    disabled={isDone}
     style={[styles.buttonContainerStyle, buttonContainerStyleProp, buttonContentContainerProp]}
   >
     <LinearGradient
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 0 }}
-      colors={colorsGradient}
+      colors={isDone ? colorsGradientDisable : colorsGradient}
       style={[styles.buttonContainerStyle, buttonContainerStyleProp]}
     >
       <Text style={[styles.buttonTextStyle, buttonContainerTextStyle]}>

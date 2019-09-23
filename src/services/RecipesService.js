@@ -25,8 +25,8 @@ export default class NutritionService {
       .catch((err) => { throw err; });
   }
 
-  getRecipeByNameOrCategory(name = '', category = '') {
-    return this.api.fetch('GET', `/recipe/search?category=${category}&name=${name}`, { })
+  getRecipeByNameOrCategory(name = '', category = '', page = 1, limit = 5) {
+    return this.api.fetch('GET', `/recipe/search?category=${category}&name=${name}&page=${page}&limit=${limit}`, { })
       .then(response => ({
         recipes: response.data.results,
         recipesObj: response.data

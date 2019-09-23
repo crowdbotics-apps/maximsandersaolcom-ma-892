@@ -45,7 +45,7 @@ export function sortSessionBySets(arraySession) {
         ...itemWorkout,
         sets: sortedSets,
       };
-    });
+    }).sort((a, b) => a.order - b.order); // eslint-disable-line;
     return {
       ...item,
       workouts

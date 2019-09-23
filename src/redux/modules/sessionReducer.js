@@ -7,6 +7,10 @@ export const GET_SESSIONS_ALL = 'sessions/GET_SESSIONS_ALL';
 export const PICK_SESSION = 'sessions/PICK_SESSION';
 export const GET_EXERCISES_ALL = 'sessions/GET_EXERCISES_ALL';
 export const MARK_SET_AS_DONE = 'sessions/MARK_SET_AS_DONE';
+export const START_COUNT = 'sessions/START_COUNT';
+export const ACTIVE_SET = 'sessions/ACTIVE_SET';
+export const SWAP_EXERCISE = 'sessions/SWAP_EXERCISE';
+export const SWAP_EXERCISE_ERROR = 'sessions/SWAP_EXERCISE_ERROR';
 
 export default (state = { ...initialStateSession }, { type, payload }) => {
   switch (type) {
@@ -14,13 +18,17 @@ export default (state = { ...initialStateSession }, { type, payload }) => {
       return {
         ...state,
         allSessions: payload,
+        exerciseSwapped: false,
       };
     }
     case PICK_SESSION: {
       return {
         ...state,
         exercisesObj: payload.exercisesObj,
-        selectedSession: payload.selectedSession
+        selectedSession: payload.selectedSession,
+        nextWorkout: payload.nextWorkout,
+        startCount: false,
+        activeSet: payload.activeSet
       };
     }
     case GET_SESSION_BY_DAY: {
@@ -39,20 +47,69 @@ export default (state = { ...initialStateSession }, { type, payload }) => {
       return {
         ...state,
         selectedSession: payload.newSelectedSession,
-        exercisesObj: payload.newExercisesObj
+        exercisesObj: payload.newExercisesObj,
+        startCount: true,
+        activeSet: payload.activeSet
+      };
+    }
+    case START_COUNT: {
+      return {
+        ...state,
+        startCount: payload
+      };
+    }
+    case SWAP_EXERCISE: {
+      return {
+        ...state,
+        exerciseSwapped: true,
+      };
+    }
+    case SWAP_EXERCISE_ERROR: {
+      return {
+        ...state,
+        exerciseSwapError: true
       };
     }
     default: return state;
   }
 };
 
-export const pickSession = (exercisesObj, selectedSession) => ({
+export const setStartCount = payload => ({
+  type: START_COUNT,
+  payload
+});
+
+export const pickSession = (exercisesObj, selectedSession, nextWorkout) => ({
+  type: PICK_SESSION,
+  payload: {
+    selectedSession,
+    exercisesObj,
+    nextWorkout
+  }
+});
+
+export const pickExerciseObject = (exercisesObj, selectedSession) => ({
   type: PICK_SESSION,
   payload: {
     selectedSession,
     exercisesObj
   }
 });
+
+export const swapExercises = (workoutId, exerciseId) => (dispatch) => {
+  const sessionService = new SessionService();
+  return sessionService.swapExercises(workoutId, exerciseId)
+    .then((payload) => {
+      if (payload.data === 'Exercise swapped' && payload.status === 200) {
+        return dispatch({
+          type: SWAP_EXERCISE
+        });
+      }
+      return dispatch({
+        type: SWAP_EXERCISE_ERROR
+      });
+    });
+};
 
 export const getAllSessions = () => (dispatch) => {
   const sessionService = new SessionService();

@@ -4,11 +4,24 @@ import {
   ScrollView,
 } from 'react-native';
 import ExcerciseTabHeaderItem from '../ExcerciseTabHeaderItem';
+import Routes from '../../Routes';
 
-const ExerciseTabHeader = ({ tabs, goToPage, activeTab, pickSessionAction, selectedSession }) => {
+const ExerciseTabHeader = ({
+  tabs,
+  goToPage,
+  activeTab,
+  pickSessionAction,
+  selectedSession,
+  exercisePicked,
+  goToNext,
+  setFreeToGoToNext,
+  setFirstDoneTimer,
+  navigation
+}) => {
   const scrollViewRef = useRef(null);
   const [scrolled, setScrolled] = useState(false);
   const [elementsFromScrollView, setElementsFromScrollView] = useState([]);
+
   function setElementForScrollHelp(element) {
     const scrollViewRemoveCurrent = elementsFromScrollView
       .filter(elementItem => elementItem.item.id !== element.item.id);
@@ -18,8 +31,35 @@ const ExerciseTabHeader = ({ tabs, goToPage, activeTab, pickSessionAction, selec
   }
 
   useEffect(() => {
+    const [findFirstUndone, nextWorkout] = selectedSession.filter(item => !item.done);
+    if (goToNext) {
+      if (findFirstUndone) {
+        pickSessionAction(findFirstUndone, selectedSession, nextWorkout);
+        setFreeToGoToNext(false);
+        setFirstDoneTimer(null);
+        setTimeout(() => {
+          goToPage(activeTab + 1);
+        }, 300);
+      } else {
+        navigation.navigate(Routes.ProgramScreen);
+      }
+    }
+  }, [goToNext]);
+
+  useEffect(() => {
+    if (exercisePicked && !scrolled) {
+      const [getPicked] = elementsFromScrollView
+        .filter(exerciseItem => exerciseItem.item.id === exercisePicked);
+      if (getPicked && !scrolled) {
+        goToPage(getPicked.index);
+        setScrolled(true);
+      }
+    }
+  }, [exercisePicked, elementsFromScrollView]);
+
+  useEffect(() => {
     const [findFirstUndone] = elementsFromScrollView.filter(item => !item.done);
-    if (elementsFromScrollView.length === tabs.length && !scrolled && findFirstUndone) {
+    if (elementsFromScrollView.length === tabs.length && !exercisePicked && !scrolled && findFirstUndone) {  // eslint-disable-line
       scrollViewRef.current.scrollTo({
         x: findFirstUndone.x,
         y: findFirstUndone.y

@@ -15,15 +15,21 @@ const FatGradientIconButton = ({
   buttonText,
   onClick,
   colorsGradient,
-  buttonContainerStyleProp
+  colorsGradientDisable,
+  buttonContainerStyleProp,
+  disabled
 }) => (
   <LinearGradient
     start={{ x: 0, y: 0 }}
     end={{ x: 1, y: 0 }}
-    colors={colorsGradient}
+    colors={!disabled ? colorsGradient : colorsGradientDisable}
     style={[styles.buttonContainer, buttonContainerStyleProp]}
   >
-    <TouchableOpacity style={styles.buttonContainer} onPress={() => onClick()}>
+    <TouchableOpacity
+      style={styles.buttonContainer}
+      onPress={() => onClick()}
+      disabled={disabled}
+    >
       <View style={styles.iconContainer}>
         <Image source={buttonIcon || iconPlaceholder} style={styles.iconStyle} />
       </View>

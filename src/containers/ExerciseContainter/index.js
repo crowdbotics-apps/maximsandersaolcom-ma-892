@@ -6,13 +6,14 @@ import ExerciseContainer from './ExerciseContainer';
 
 const mapState = state => ({
   exercisesObj: state.sessions && state.sessions.exercisesObj,
-  selectedSession: state.sessions && state.sessions.selectedSession
+  selectedSession: state.sessions && state.sessions.selectedSession,
+  nextWorkout: state.sessions && state.sessions.nextWorkout
 });
 
 const mainActions = {
   markSetAsDoneAction,
   findAndMarkAsDoneSetAction: findAndMarkAsDoneSet,
-  pickSessionAction: pickSession
+  pickSessionAction: pickSession,
 };
 
 
