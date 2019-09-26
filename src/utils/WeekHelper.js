@@ -17,7 +17,6 @@ export default class WeekHelper {
 
   handleAppStateChange = (nextAppState) => {
     if (this.appState.match(/inactive|background/) && nextAppState === 'active') {
-      console.log('this.id', this.id);
       this.checkIsExisting(this.id)
         .then((isExisting) => {
           this.callback(isExisting);
@@ -28,7 +27,6 @@ export default class WeekHelper {
 
   checkIsExisting = async (id) => {
     const isExisting = await AsyncStorage.getItem(`@id:${id}`);
-    console.log('is', isExisting);
     if (isExisting !== null) {
       const parseData = JSON.parse(isExisting);
       return parseData;
@@ -38,7 +36,6 @@ export default class WeekHelper {
 
   addToStorage = async (id, userEmail, date) => {
     const jsonStringify = JSON.stringify({ id, userEmail, date: moment(new Date(date)) });
-    console.log(' ideee', jsonStringify);
     return AsyncStorage.setItem(`@id:${id}`, jsonStringify);
   }
 
@@ -47,7 +44,6 @@ export default class WeekHelper {
     this.userEmal = '';
     this.appState = '';
     AppState.removeEventListener('change', this.handleAppStateChange);
-    console.log('removed all!');
   }
 }
 
