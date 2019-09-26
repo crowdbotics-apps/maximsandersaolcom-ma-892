@@ -13,25 +13,46 @@ export function isIphoneX() {
 export function getNumberOfDayByString(dateString) {
   switch (dateString) {
     case 'Monday': {
-      return 2;
+      return {
+        numberOfDayForBackend: 2,
+        numberOfDayForFrontend: 1,
+      };
     }
     case 'Tuesday': {
-      return 3;
+      return {
+        numberOfDayForBackend: 3,
+        numberOfDayForFrontend: 2,
+      };
     }
     case 'Wednesday': {
-      return 4;
+      return {
+        numberOfDayForBackend: 4,
+        numberOfDayForFrontend: 3,
+      };
     }
     case 'Thursday': {
-      return 5;
+      return {
+        numberOfDayForBackend: 5,
+        numberOfDayForFrontend: 4,
+      };
     }
     case 'Friday': {
-      return 6;
+      return {
+        numberOfDayForBackend: 6,
+        numberOfDayForFrontend: 5,
+      };
     }
     case 'Saturday': {
-      return 7;
+      return {
+        numberOfDayForBackend: 7,
+        numberOfDayForFrontend: 6,
+      };
     }
     case 'Sunday': {
-      return 1;
+      return {
+        numberOfDayForBackend: 1,
+        numberOfDayForFrontend: 7,
+      };
     }
     default: return 0;
   }

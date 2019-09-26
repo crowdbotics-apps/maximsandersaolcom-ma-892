@@ -10,7 +10,6 @@ const ProgramTabHeader = ({ tabs, goToPage, activeTab }) => {
   const [scrolled, setScrolled] = useState(false);
   const [elementsFromScrollView, setElementsFromScrollView] = useState([]);
   function setElementForScrollHelp(element) {
-    console.log('elementsfromscrollview', elementsFromScrollView, tabs);
     const scrollViewRemoveCurrent = elementsFromScrollView
       .filter(elementItem => elementItem.item.id !== element.item.id);
     const sortedElements = [...scrollViewRemoveCurrent, element]

@@ -19,7 +19,8 @@ import Routes from '../../Routes';
 const dateTime = new Date();
 const formatedDate = moment(dateTime).format('YYYY-MM-DD');
 const todayDayString = moment(dateTime).format('dddd');
-const todayDayNumber = getNumberOfDayByString(todayDayString);
+const { numberOfDayForBackend, numberOfDayForFrontend } = getNumberOfDayByString(todayDayString);
+
 
 const emptyList = () => (
   <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -63,11 +64,11 @@ const IngredientRecipeContainer = ({
     toggleDrawer
   },
   todaySession,
-  pickSessionAction
+  pickSessionAction,
+  numberOfWeek
 }) => {
   useEffect(() => {
-    console.log('today', navigation);
-    getSessionByDayAction(todayDayNumber);
+    getSessionByDayAction(numberOfDayForBackend);
   }, []);
   console.log('stigao je today session', todaySession);
   return (
@@ -80,8 +81,8 @@ const IngredientRecipeContainer = ({
         />
         <TodayInfo
           description={todaySession.name || ''}
-          dayNumber={todayDayNumber}
-          weekNumber="1" // need to implement
+          dayNumber={numberOfDayForFrontend}
+          weekNumber={numberOfWeek}
         />
         <TodayContainerHorizontal
           sliderTitle={todaySession.name || ''}
@@ -90,7 +91,6 @@ const IngredientRecipeContainer = ({
           routeName={Routes.ExerciseScreen}
           onSelectItem={(item) => {
             pickSessionAction(item, todaySession.workouts);
-            console.log('navigation', navigation);
           }}
         />
         <View

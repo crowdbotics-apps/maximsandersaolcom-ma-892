@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import ProfileHeader from '../../components/ProfileHeader';
 import ProfileStats from '../../components/ProfileStats';
 import ProfileMenu from '../../components/ProfileMenu';
+import SessionService from '../../services/SessionService';
+import WeekHelper from '../../utils/WeekHelper';
 
 const styles = StyleSheet.create({
   containerCenter: {
@@ -18,13 +20,41 @@ class ProfileContainer extends Component {
     this.state = {
       fullName: '',
     };
+    const { profile: { email, id } } = props;
+    this.weekHelper = new WeekHelper(id, email, this.onAppChangeCheckWeekNumber);
   }
 
   componentDidMount() {
-    const { profile: { name: fullName } } = this.props;
+    const { profile: { name: fullName, id, email }, calculateWeekNumberAction } = this.props;
+    this.weekHelper.checkIsExisting(id)
+      .then((isExisting) => {
+        if (!isExisting) {
+          this.weekHelper.addToStorage(id, email, new Date());
+          return calculateWeekNumberAction({ id, userEmail: email, date: new Date() });
+        }
+        return calculateWeekNumberAction(isExisting);
+      });
     this.setState({
       fullName
     });
+  }
+
+  componentWillUnmount() {
+    this.weekHelper.removeAll();
+  }
+
+  onAppChangeCheckWeekNumber = (objFromStorage) => {
+    const { profile: { id, email }, calculateWeekNumberAction } = this.props;
+    if (objFromStorage) {
+      this.weekHelper.checkIsExisting(id)
+        .then((isExisting) => {
+          if (!isExisting) {
+            this.weekHelper.addToStorage(id, email, new Date());
+            return calculateWeekNumberAction({ id, userEmail: email, date: new Date() });
+          }
+          return calculateWeekNumberAction(isExisting);
+        });
+    }
   }
 
   changeFullName = value => this.setState({ fullName: value })

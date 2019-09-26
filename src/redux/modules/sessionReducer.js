@@ -1,6 +1,8 @@
+import moment from 'moment';
 import initialStateSession from '../initialState/sessionInitial';
 import SessionService from '../../services/SessionService';
-import { sortSessionBySets } from '../../utils/common';
+import { sortSessionBySets, getNumberOfDayByString } from '../../utils/common';
+import WeekHelper from '../../utils/WeekHelper';
 
 export const GET_SESSION_BY_DAY = 'sessions/GET_SESSION_BY_DAY';
 export const GET_SESSIONS_ALL = 'sessions/GET_SESSIONS_ALL';
@@ -11,6 +13,7 @@ export const START_COUNT = 'sessions/START_COUNT';
 export const ACTIVE_SET = 'sessions/ACTIVE_SET';
 export const SWAP_EXERCISE = 'sessions/SWAP_EXERCISE';
 export const SWAP_EXERCISE_ERROR = 'sessions/SWAP_EXERCISE_ERROR';
+export const NUMBER_OF_WEEK = 'sessions/NUMBER_OF_WEEK';
 
 export default (state = { ...initialStateSession }, { type, payload }) => {
   switch (type) {
@@ -68,6 +71,12 @@ export default (state = { ...initialStateSession }, { type, payload }) => {
       return {
         ...state,
         exerciseSwapError: true
+      };
+    }
+    case NUMBER_OF_WEEK: {
+      return {
+        ...state,
+        numberOfWeek: payload
       };
     }
     default: return state;
@@ -230,4 +239,34 @@ export const findAndMarkAsDoneSet = () => (dispatch, getState) => {
       dispatch({ type: MARK_SET_AS_DONE, payload: { newSelectedSession, newExercisesObj } });
     })
     .catch((err) => { throw err; });
+};
+
+export const resetSession = numberOfDayForBackend => (dispatch) => {
+  const sessionService = new SessionService();
+  return sessionService.resetSession()
+    .then(() => sessionService.getReportForDay(numberOfDayForBackend))
+    .then((result) => {
+      const { data } = result;
+      dispatch({ type: NUMBER_OF_WEEK, payload: data.length + 1 });
+    })
+    .catch((err) => { throw err; });
+};
+
+export const calculateWeekNumberAction = isExisting => (dispatch) => {
+  const sessionService = new SessionService();
+  const dateTime = moment(new Date());
+  const todayDayString = moment(dateTime).format('dddd');
+  const { numberOfDayForBackend } = getNumberOfDayByString(todayDayString);
+  const { date: lastUpdatedDate } = isExisting;
+  const diffDays = dateTime.diff(moment(lastUpdatedDate), 'days');
+  if (diffDays >= 7) {
+    const weekHelper = new WeekHelper();
+    weekHelper.addToStorage(isExisting.id, isExisting.userEmail, new Date());
+    return dispatch(resetSession(numberOfDayForBackend));
+  }
+  return sessionService.getReportForDay(numberOfDayForBackend)
+    .then((result) => {
+      const { data } = result;
+      dispatch({ type: NUMBER_OF_WEEK, payload: data.length + 1 });
+    });
 };

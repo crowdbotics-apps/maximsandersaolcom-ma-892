@@ -7,7 +7,8 @@ import { getSessionByDay, pickSession } from '../../redux/modules/sessionReducer
 
 const mapState = state => ({
   meals: state.nutrition && state.nutrition.meals,
-  todaySession: state.sessions && state.sessions.todaySession
+  todaySession: state.sessions && state.sessions.todaySession,
+  numberOfWeek: state.sessions && state.sessions.numberOfWeek
 });
 
 const mainActions = {

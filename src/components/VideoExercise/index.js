@@ -2,8 +2,8 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import Video from 'react-native-video';
 
-const VideoExercise = ({ videoUrl }) => (
-  <View style={styles.videoContainer}>
+const VideoExercise = ({ videoUrl, containterStyle }) => (
+  <View style={[styles.videoContainer, containterStyle]}>
     <Video
       source={{ uri: videoUrl }}
       paused

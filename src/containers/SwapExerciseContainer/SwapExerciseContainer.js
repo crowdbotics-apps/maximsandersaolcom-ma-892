@@ -43,7 +43,10 @@ const SwapExerciseContainer = ({
         }}
       />
       <View style={{ flex: 1 }}>
-        <VideoExercise videoUrl={exercisesObj.exercise.video_url} />
+        <VideoExercise
+          videoUrl={exercisesObj.exercise.video_url}
+          containterStyle={{ paddingHorizontal: 5 }}
+        />
         <ScrollView contentContainerStyle={{ paddingHorizontal: 10, paddingTop: 10 }}>
           <FlatList
             data={(allExercises && allExercises.results) || []}

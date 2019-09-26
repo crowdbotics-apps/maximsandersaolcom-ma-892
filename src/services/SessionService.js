@@ -35,4 +35,16 @@ export default class SessionService {
       }))
       .catch((err) => { throw err; });
   }
+
+  getReportForDay(dayNumber) {
+    return this.api.fetch('GET', `/report/get_by_day/?day=${dayNumber}`, {})
+      .then(res => res)
+      .catch((err) => { throw err; });
+  }
+
+  resetSession() {
+    return this.api.fetch('GET', '/session/?reset=true', {})
+      .then(res => res)
+      .catch((err) => { throw err; });
+  }
 }
