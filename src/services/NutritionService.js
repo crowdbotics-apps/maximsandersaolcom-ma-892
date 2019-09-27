@@ -4,7 +4,7 @@ export default class NutritionService {
   api = Api.getInstance();
 
   getProductWithBarcode(barcode) {
-    return this.api.fetch('GET', `/products/code/?code=${49000036756}`, { }) // handle this 49000036756
+    return this.api.fetch('GET', `/products/code/?code=${barcode}`, { }) // handle this 49000036756
       .then(response => response.data)
       .catch((err) => { throw err; });
   }
@@ -21,8 +21,8 @@ export default class NutritionService {
       .catch((err) => { throw err; });
   }
 
-  getCategories() {
-    return this.api.fetch('GET', '/category/', { })
+  getCategories(page = 1, limit = 5, offset = 0) {
+    return this.api.fetch('GET', `/category/?page=${page}&limit=${limit}&offset=${offset}`, { })
       .then(response => response.data)
       .catch((err) => { throw err; });
   }

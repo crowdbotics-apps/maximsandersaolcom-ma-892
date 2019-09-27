@@ -20,19 +20,18 @@ const chartConfig = {
 };
 
 const MealItem = ({
-  title,
   clock,
   mealItems,
   numberOfProtein,
   numberOfCarbs,
   numberOfFat,
   pieArray,
-  key,
+  index,
   titleContainerStyle
 }) => (
-  <View>
+  <View key={index}>
     <View style={[styles.titleWrapper, titleContainerStyle]}>
-      <Text style={styles.mealText}>{`Meal ${key + 1}`}</Text>
+      <Text style={styles.mealText}>{`Meal ${index + 1}`}</Text>
     </View>
     <View
       style={styles.itemContainer}
@@ -129,7 +128,6 @@ const styles = StyleSheet.create({
 });
 
 MealItem.defaultProps = {
-  title: '',
   clock: '',
   mealItems: [],
   numberOfProtein: 0,
@@ -139,7 +137,6 @@ MealItem.defaultProps = {
 };
 
 MealItem.propTypes = {
-  title: PropTypes.string,
   clock: PropTypes.string,
   mealItems: PropTypes.arrayOf(PropTypes.shape({})),
   numberOfProtein: PropTypes.number,

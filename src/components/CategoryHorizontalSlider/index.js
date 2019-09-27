@@ -1,10 +1,11 @@
 import React from 'react';
 import {
   View,
-  FlatList,
+  Text
 } from 'react-native';
 import HorizontalSliderItem from '../HorizontalSliderItem';
 import TagButton from '../TagButton';
+import SearchablePaginatedList from '../SearchablePaginatedList/SearchablePaginatedList';
 
 const CategoryHorizontalSlider = ({
   data = [],
@@ -15,7 +16,8 @@ const CategoryHorizontalSlider = ({
   isButtonThere = true,
   addToFavorites,
   navigation,
-  onSelectItem
+  onSelectItem,
+  slug
 }) => (
   <View style={containerStyle}>
     {
@@ -27,10 +29,14 @@ const CategoryHorizontalSlider = ({
         />
       )
     }
-    <FlatList
+    <SearchablePaginatedList
       horizontal
       showsHorizontalScrollIndicator={false}
-      data={data}
+      style={{ flex: 1 }}
+      ListEmptyComponent={() => <View><Text>Empty list</Text></View>} // to do!
+      contentContainerStyle={{ flexGrow: 1, paddingHorizontal: 2, paddingVertical: 0 }}
+      list={data}
+      fetchListAction={(search, categorySlug, page, limit, offset) => console.log('aa', categorySlug, page, limit, offset)}
       renderItem={({ item }) => (
         <HorizontalSliderItem
           onClick={() => onSelectItem(item)}
@@ -39,6 +45,8 @@ const CategoryHorizontalSlider = ({
           addToFavorites={() => addToFavorites()}
         />
       )}
+      search={''}
+      filter={slug}
     />
   </View>
 );

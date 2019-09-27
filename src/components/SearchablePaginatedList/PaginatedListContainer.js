@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   FlatList,
   View,
@@ -25,7 +25,9 @@ const PaginatedListContainer = ({
   contentContainerStyle,
   ListEmptyComponent,
   keyboardDismissMode,
-  keyboardShouldPersistTaps
+  keyboardShouldPersistTaps,
+  horizontal,
+  showsHorizontalScrollIndicator
 }) => (
   <FlatList
     keyboardDismissMode={keyboardDismissMode}
@@ -47,6 +49,8 @@ const PaginatedListContainer = ({
     keyExtractor={item => item.id}
     onEndReachedThreshold={0.5}
     ListEmptyComponent={ListEmptyComponent}
+    horizontal={horizontal}
+    showsHorizontalScrollIndicator={showsHorizontalScrollIndicator}
   />
 );
 
@@ -59,13 +63,17 @@ PaginatedListContainer.propTypes = {
   refreshing: PropTypes.bool,
   numColumns: PropTypes.number.isRequired,
   refreshingTop: PropTypes.bool,
-  refreshListToInitial: PropTypes.func
+  refreshListToInitial: PropTypes.func,
+  horizontal: PropTypes.bool,
+  showsHorizontalScrollIndicator: PropTypes.bool,
 };
 
 PaginatedListContainer.defaultProps = {
   refreshing: false,
   refreshingTop: false,
   refreshListToInitial: () => {},
+  horizontal: false,
+  showsHorizontalScrollIndicator: false
 };
 
 export default PaginatedListContainer;

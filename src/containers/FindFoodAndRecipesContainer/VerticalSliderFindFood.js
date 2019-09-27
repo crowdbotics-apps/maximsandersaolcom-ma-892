@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  ScrollView,
   View,
   Text
 } from 'react-native';
@@ -20,11 +19,12 @@ const VerticalSliderFindFood = ({
     ListEmptyComponent={() => <View><Text>Empty list</Text></View>} // to do!
     contentContainerStyle={{ flexGrow: 1, paddingHorizontal: 10, paddingVertical: 0 }}
     list={allRecipes}
-    fetchListAction={(search, categorySlug, page, limit) => getRecipeByNameOrCategoryAction({
+    fetchListAction={(search, categorySlug, page, limit, offset) => getRecipeByNameOrCategoryAction({
       name: search,
       category: categorySlug,
       page,
-      limit
+      limit,
+      offset
     })}
     renderItem={({ item, key }) => (
       <IngredientRecipesListItem

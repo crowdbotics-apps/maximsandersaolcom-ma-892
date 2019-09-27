@@ -31,18 +31,14 @@ const emptyList = () => (
 );
 
 const renderItem = ({
-  item: {
-    title,
-    date_time: clock,
-    food_items: mealItems,
-    carbohydrate: numberOfCarbs,
-    protein: numberOfProtein,
-    fat: numberOfFat,
-    pieArray
-  },
-}) => (
+  date_time: clock,
+  food_items: mealItems,
+  carbohydrate: numberOfCarbs,
+  protein: numberOfProtein,
+  fat: numberOfFat,
+  pieArray
+}, index) => (
   <MealItem
-    title={title}
     clock={clock}
     mealItems={mealItems}
     numberOfProtein={numberOfProtein}
@@ -52,6 +48,7 @@ const renderItem = ({
     titleContainerStyle={{
       paddingTop: 0
     }}
+    index={index}
   />
 );
 
@@ -115,7 +112,7 @@ const IngredientRecipeContainer = ({
             contentContainerStyle={{ flexGrow: 1, paddingHorizontal: 10, paddingVertical: 0 }}
             list={meals}
             fetchListAction={() => getMealsByDateAction(formatedDate)}
-            renderItem={item => renderItem(item)}
+            renderItem={({ item, index }) => renderItem(item, index)}
             search=""
             filter=""
           />

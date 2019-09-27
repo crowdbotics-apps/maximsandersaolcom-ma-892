@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import Search from '../../components/Search';
-import Loading from '../../components/Loading';
 import HorizontalScrollView from '../../components/HorizontalScrollView';
 import CategoryTagItem from '../../components/CategoryTagItem';
 import HorizontalSliderFindFood from './HorizontalSliderFindFood';
@@ -10,7 +9,6 @@ import VerticalSliderFindFood from './VerticalSliderFindFood';
 const FindFoodAndRecipesContainer = ({
   navigation,
   allRecipes = [],
-  loading,
   selectOneRecipeAction,
   getCategoriesAction,
   allCategories,
@@ -21,15 +19,6 @@ const FindFoodAndRecipesContainer = ({
   const [searchString, setSearchString] = useState('');
   const [selectedCategoryProp, setSelectedCategoryProp] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState([]);
-
-  // useEffect(() => {
-  //   if (selectedCategoryProp || searchString.length) {
-  //     getRecipeByNameOrCategoryAction({
-  //       name: searchString,
-  //       category: (selectedCategoryProp && selectedCategoryProp.slug) || ''
-  //     });
-  //   }
-  // }, [searchString, selectedCategory, selectedCategoryProp]);
 
   useEffect(() => {
     if (allCategories.length) {
@@ -80,6 +69,7 @@ const FindFoodAndRecipesContainer = ({
           navigation={navigation}
           selectOneRecipeAction={selectOneRecipeAction}
           recipesByCategory={recipesByCategory}
+          getCategoriesAction={getCategoriesAction}
         />
       ) : <View />}
       {(searchString.length || selectedCategory.length) ? (
