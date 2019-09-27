@@ -21,9 +21,8 @@ class NutrationContainer extends Component {
     getMealsByDateAction(formatedDate);
   }
 
-  renderItem = ({
-    item: {
-      title,
+  renderItem = (
+    {
       date_time: clock,
       food_items: mealItems,
       carbohydrate: numberOfCarbs,
@@ -31,15 +30,16 @@ class NutrationContainer extends Component {
       fat: numberOfFat,
       pieArray
     },
-  }) => (
+    index
+  ) => (
     <MealItem
-      title={title}
       clock={clock}
       mealItems={mealItems}
       numberOfProtein={numberOfProtein}
       numberOfCarbs={numberOfCarbs}
       numberOfFat={numberOfFat}
       pieArray={pieArray}
+      index={index}
     />
   );
 
@@ -75,7 +75,7 @@ class NutrationContainer extends Component {
             contentContainerStyle={{ flexGrow: 1, paddingHorizontal: 10, paddingVertical: 0 }}
             list={meals}
             fetchListAction={() => getMealsByDateAction(formatedDate)}
-            renderItem={item => this.renderItem(item)}
+            renderItem={({ item, index }) => this.renderItem(item, index)}
             search={''}
             filter={''}
           />

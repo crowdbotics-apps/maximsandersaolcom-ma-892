@@ -5,6 +5,7 @@ import PaginatedListContainer from './PaginatedListContainer';
 import Loading from '../Loading';
 
 const initialState = {
+  page: 1,
   offset: 0,
   limit: 10,
   appending: false,
@@ -53,9 +54,9 @@ class SearchablePaginatedList extends Component {
       filter
     } = this.props;
 
-    const { offset, limit } = this.state;
+    const { offset, limit, page } = this.state;
 
-    const hasMore = await fetchListAction(offset, limit, search, filter);
+    const hasMore = await fetchListAction(search, filter, page, limit, offset);
     if (!this.unmounted) {
       this.setState({
         loading: false,
@@ -72,9 +73,9 @@ class SearchablePaginatedList extends Component {
       filter,
     // list
     } = this.props;
-    const { offset, limit } = this.state;
+    const { offset, limit, page } = this.state;
 
-    const hasMore = await fetchListAction(offset, limit, search, filter);
+    const hasMore = await fetchListAction(search, filter, page, limit, offset);
 
     if (!this.unmounted) {
       this.setState({
@@ -100,7 +101,16 @@ class SearchablePaginatedList extends Component {
 
   render() {
     const {
-      list, renderItem, numColumns, listStyle, contentContainerStyle, ListEmptyComponent, keyboardDismissMode, keyboardShouldPersistTaps
+      list,
+      renderItem,
+      numColumns,
+      listStyle,
+      contentContainerStyle,
+      ListEmptyComponent,
+      keyboardDismissMode,
+      keyboardShouldPersistTaps,
+      horizontal,
+      showsHorizontalScrollIndicator
     } = this.props;
     const {
       appending,
@@ -132,6 +142,8 @@ class SearchablePaginatedList extends Component {
           style={listStyle}
           contentContainerStyle={contentContainerStyle}
           ListEmptyComponent={ListEmptyComponent}
+          horizontal={horizontal}
+          showsHorizontalScrollIndicator={showsHorizontalScrollIndicator}
         />
       </View>
     );
@@ -140,18 +152,24 @@ class SearchablePaginatedList extends Component {
 
 SearchablePaginatedList.defaultProps = {
   search: '',
-  list: null,
+  list: [
+    { id: 0 }
+  ],
   numColumns: 1,
+  horizontal: false,
+  showsHorizontalScrollIndicator: false
 };
 
 SearchablePaginatedList.propTypes = {
   list: PropType.arrayOf(PropType.shape({
-    id: PropType.number.isRequired
+    id: PropType.number
   })),
   renderItem: PropType.func.isRequired,
   fetchListAction: PropType.func.isRequired,
   search: PropType.string,
   numColumns: PropType.number,
+  horizontal: PropType.bool,
+  showsHorizontalScrollIndicator: PropType.bool
 };
 
 export default SearchablePaginatedList;

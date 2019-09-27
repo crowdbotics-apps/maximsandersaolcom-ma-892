@@ -1,17 +1,22 @@
-// import { bindActionCreators } from 'redux';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withNavigation } from 'react-navigation';
 import TodayContainer from './TodayContainer';
-
-// const mainActions = {
-//   selectOneRecipeAction: selectOneRecipe,
-//   getCategoriesAction: getCategories,
-// };
+import { getMealsByDateAction } from '../../redux/modules/nutritionReducer';
+import { getSessionByDay, pickSession } from '../../redux/modules/sessionReducer';
 
 const mapState = state => ({
-  recipesByIngredient: state.recipes && state.recipes.recipesByIngredient,
+  meals: state.nutrition && state.nutrition.meals,
+  todaySession: state.sessions && state.sessions.todaySession,
+  numberOfWeek: state.sessions && state.sessions.numberOfWeek
 });
 
-// const mapActions = dispatch => bindActionCreators(mainActions, dispatch);
+const mainActions = {
+  getMealsByDateAction,
+  getSessionByDayAction: getSessionByDay,
+  pickSessionAction: pickSession
+};
 
-export default connect(mapState)(withNavigation(TodayContainer));
+const mapActions = dispatch => bindActionCreators(mainActions, dispatch);
+
+export default connect(mapState, mapActions)(withNavigation(TodayContainer));

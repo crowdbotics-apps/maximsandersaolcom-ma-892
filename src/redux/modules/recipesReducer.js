@@ -1,11 +1,13 @@
 import initialRecipesState from '../initialState/recipesInitial';
 import RecipesService from '../../services/RecipesService';
+import uniq from '../../utils/removeDuplicateInArray';
 
 export const GET_RECIPES_ALL = 'recipes/GET_RECIPES_ALL';
 export const GET_ONE_RECIPE = 'recipes/GET_ONE_RECIPE';
 export const START_FETCH_RECIPES = 'recipes/START_FETCH_RECIPES';
 export const FETCH_RECIPES_BY_CATEGORIE = 'recipes/FETCH_RECIPES_BY_CATEGORIE';
 export const GET_RECIPES_BY_INGREDIENT = 'recipes/GET_RECIPES_BY_INGREDIENT';
+export const APPEND_RECIPES = 'recipes/APPEND_RECIPES';
 
 export default (state = { ...initialRecipesState }, { type, payload }) => {
   switch (type) {
@@ -42,6 +44,14 @@ export default (state = { ...initialRecipesState }, { type, payload }) => {
         recipesByIngredient: payload
       };
     }
+    case APPEND_RECIPES: {
+      return {
+        ...state,
+        allRecipes: payload.recipes,
+        recipesObj: payload.recipes,
+        loading: false
+      };
+    }
     default: {
       return state;
     }
@@ -65,12 +75,37 @@ export const getRecipesByCategory = (categoriesWithSlugs = []) => {
   };
 };
 
-export const getRecipeByNameOrCategory = ({ name = '', category = '' }) => {
+export const getRecipeByNameOrCategory = ({
+  name = '',
+  category = '',
+  page = 1,
+  limit = 5,
+  offset = 0
+}) => {
   const recipesService = new RecipesService();
-  return (dispatch) => {
+  return (dispatch, getState) => {
     dispatch({ type: START_FETCH_RECIPES });
-    return recipesService.getRecipeByNameOrCategory(name, category)
-      .then(payload => dispatch({ type: GET_RECIPES_ALL, payload }));
+    return recipesService.getRecipeByNameOrCategory(name, category, page, limit, offset)
+      .then((payload) => {
+        const { recipes, recipesObj } = payload;
+        if (offset !== 0) {
+          if (recipes.length > 0) {
+            const { recipes: { allRecipes: existingRecipes } } = getState();
+            const withoutDuplicate = uniq([...existingRecipes, ...recipes], 'id');
+            dispatch({
+              type: APPEND_RECIPES,
+              payload: {
+                recipes: withoutDuplicate,
+                recipesObj
+              }
+            });
+          }
+        } else {
+          dispatch({ type: GET_RECIPES_ALL, payload });
+        }
+        // has more
+        return recipes.length === limit;
+      });
   };
 };
 

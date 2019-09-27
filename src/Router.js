@@ -28,14 +28,22 @@ import {
   IndividualRecipeScreen,
   IngredientScreen,
   IngredientRecipeScreen,
-  TodayScreen
+  TodayScreen,
+  ProgramScreen,
+  ExerciseScreen,
+  SwapExerciseScreen
 } from './screens';
 import DrawerContent from './containers/DrawerContent';
 import regularHeaderStyle from './components/regularHeaderStyle';
 // Packages
 import i18n from './i18n/i18n';
 
-import { drawerConfiguration, TAB_ICONS_ENUM } from './routerConfig';
+import {
+  drawerConfiguration,
+  TAB_ICONS_ENUM,
+  drawerConfigurationForToday,
+  drawerConfigurationForProgram
+} from './routerConfig';
 import Fonts from './assets/fonts';
 
 
@@ -75,13 +83,35 @@ const ProfileTabStack = createDrawerNavigator({
   contentComponent: props => <DrawerContent {...props} />
 });
 
-const TodayTabStack = createStackNavigator({
+const TodayTabStack = createDrawerNavigator({
   [Routes.TodayScreen]: {
     screen: TodayScreen,
     navigationOptions: () => ({
-      header: null
+      header: null,
+      drawerLabel: () => null,
     })
   },
+  [Routes.EditProfileScreen]: {
+    screen: EditProfileScreen,
+    navigationOptions: () => ({
+      drawerLabel: () => i18n.t('drawerNavigation.editProfile'),
+    })
+  },
+  [Routes.NotificationScreen]: {
+    screen: NotificationScreen,
+    navigationOptions: () => ({
+      drawerLabel: () => i18n.t('drawerNavigation.notificaitons')
+    })
+  },
+  [Routes.SavedProgramsScreen]: {
+    screen: SavedProgramsScreen,
+    navigationOptions: () => ({
+      drawerLabel: () => i18n.t('drawerNavigation.savedPrograms')
+    })
+  },
+}, {
+  ...drawerConfigurationForToday,
+  contentComponent: props => <DrawerContent {...props} />
 });
 
 const NutritionTabStack = createStackNavigator({
@@ -192,13 +222,53 @@ const FeedTabStack = createStackNavigator({
   },
 });
 
-const ProgramsTabStack = createStackNavigator({
-  [Routes.TestScreen]: {
-    screen: TestScreen,
+const ProgramsTabStack = createDrawerNavigator({
+  [Routes.ProgramScreen]: {
+    screen: ProgramScreen,
     navigationOptions: () => ({
-      header: null
+      header: null,
+      drawerLabel: () => null,
     })
   },
+  [Routes.EditProfileScreen]: {
+    screen: EditProfileScreen,
+    navigationOptions: () => ({
+      drawerLabel: () => i18n.t('drawerNavigation.editProfile'),
+    })
+  },
+  [Routes.NotificationScreen]: {
+    screen: NotificationScreen,
+    navigationOptions: () => ({
+      drawerLabel: () => i18n.t('drawerNavigation.notificaitons')
+    })
+  },
+  [Routes.SavedProgramsScreen]: {
+    screen: SavedProgramsScreen,
+    navigationOptions: () => ({
+      drawerLabel: () => i18n.t('drawerNavigation.savedPrograms')
+    })
+  },
+  [Routes.ExerciseScreen]: {
+    screen: ExerciseScreen,
+    navigationOptions: () => ({
+      header: null,
+      drawerLabel: () => null,
+    })
+  },
+  [Routes.SwapExerciseScreen]: {
+    screen: SwapExerciseScreen,
+    navigationOptions: () => ({
+      header: null,
+      drawerLabel: () => null,
+    })
+  }
+}, {
+  ...drawerConfigurationForProgram,
+  contentComponent: props => <DrawerContent {...props} />
+});
+
+ProgramsTabStack.navigationOptions = () => ({
+  tabBarVisible: true
 });
 
 NutritionTabStack.navigationOptions = ({ navigation }) => {

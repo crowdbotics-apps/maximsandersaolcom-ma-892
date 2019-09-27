@@ -1,6 +1,7 @@
 
 import initialNutrition from '../initialState/nutritionInitial';
 import NutritionService from '../../services/NutritionService';
+import uniq from '../../utils/removeDuplicateInArray';
 
 const nutritionsService = new NutritionService();
 
@@ -11,6 +12,7 @@ export const RESET_ERRORS = 'nutrition/RESET_ERRORS';
 export const GET_MEALS_BY_DATE = 'nutrition/GET_MEALS_BY_DATE';
 export const GET_MEALS_BY_DATE_FAILED = 'nutrition/GET_MEALS_BY_DATE_FAILED';
 export const GET_CATEGORIES = 'nutrition/GET_CATEGORIES';
+export const APPEND_CATEGORIES = 'nutrition/APPEND_CATEGORIES';
 
 export default (state = { ...initialNutrition }, { type, payload }) => {
   switch (type) {
@@ -37,6 +39,12 @@ export default (state = { ...initialNutrition }, { type, payload }) => {
         ...state,
         meals: [],
         error: payload
+      };
+    }
+    case APPEND_CATEGORIES: {
+      return {
+        ...state,
+        categories: payload
       };
     }
     default: {
@@ -77,9 +85,23 @@ export const getMealsByDateAction = date => dispatch => nutritionsService
     dispatch({ type: GET_MEALS_BY_DATE_FAILED, payload: err });
   });
 
-export const getCategories = () => dispatch => nutritionsService
-  .getCategories()
+export const getCategories = (page, limit, offset) => (dispatch, getState) => nutritionsService
+  .getCategories(page, limit, offset)
   .then((payload) => {
     const { results } = payload;
-    dispatch({ type: GET_CATEGORIES, payload: results });
+    // dispatch({ type: GET_CATEGORIES, payload: results });
+    if (offset !== 0) {
+      if (results.length > 0) {
+        const { nutrition: { categories: existingCategories } } = getState();
+        const withoutDuplicate = uniq([...existingCategories, ...results], 'id');
+        dispatch({
+          type: APPEND_CATEGORIES,
+          payload: withoutDuplicate
+        });
+      }
+    } else {
+      dispatch({ type: GET_CATEGORIES, payload: results });
+    }
+    // has more
+    return results.length === limit;
   });

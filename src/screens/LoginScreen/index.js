@@ -130,7 +130,7 @@ class LoginScreen extends Component {
     try {
       const result = await LoginManager.logInWithPermissions(['email', 'public_profile']);
       if (result.isCancelled) {
-        console.log('Login cancelled');
+        console.log('Login cancelled', result);
       } else {
         const data = await AccessToken.getCurrentAccessToken();
         await loginActionViaFacebookAction(data.accessToken.toString());

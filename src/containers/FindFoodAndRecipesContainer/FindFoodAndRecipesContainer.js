@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import Search from '../../components/Search';
-import Loading from '../../components/Loading';
 import HorizontalScrollView from '../../components/HorizontalScrollView';
 import CategoryTagItem from '../../components/CategoryTagItem';
 import HorizontalSliderFindFood from './HorizontalSliderFindFood';
@@ -10,7 +9,6 @@ import VerticalSliderFindFood from './VerticalSliderFindFood';
 const FindFoodAndRecipesContainer = ({
   navigation,
   allRecipes = [],
-  loading,
   selectOneRecipeAction,
   getCategoriesAction,
   allCategories,
@@ -23,15 +21,6 @@ const FindFoodAndRecipesContainer = ({
   const [selectedCategory, setSelectedCategory] = useState([]);
 
   useEffect(() => {
-    if (selectedCategoryProp || searchString.length) {
-      getRecipeByNameOrCategoryAction({
-        name: searchString,
-        category: (selectedCategoryProp && selectedCategoryProp.slug) || ''
-      });
-    }
-  }, [searchString, selectedCategory, selectedCategoryProp]);
-
-  useEffect(() => {
     if (allCategories.length) {
       getRecipesByCategoryAction(allCategories);
     }
@@ -42,7 +31,7 @@ const FindFoodAndRecipesContainer = ({
   }, []);
 
   return (
-    <View style={{ flex: 1, paddingBottom: 100 }}>
+    <View style={{ flex: 1 }}>
       <View>
         <Search
           placeHolderText="Find Recipes"
@@ -75,24 +64,24 @@ const FindFoodAndRecipesContainer = ({
           ))}
         </HorizontalScrollView>
       </View>
-      { loading ? <Loading /> : (
-        <View>
-          { !searchString.length && !selectedCategory.length ? (
-            <HorizontalSliderFindFood
-              navigation={navigation}
-              selectOneRecipeAction={selectOneRecipeAction}
-              recipesByCategory={recipesByCategory}
-            />
-          ) : <View />}
-          {(searchString.length || selectedCategory.length) ? (
-            <VerticalSliderFindFood
-              allRecipes={allRecipes}
-              navigation={navigation}
-              selectOneRecipeAction={selectOneRecipeAction}
-            />
-          ) : <View />}
-        </View>
-      )}
+      { !searchString.length && !selectedCategory.length ? (
+        <HorizontalSliderFindFood
+          navigation={navigation}
+          selectOneRecipeAction={selectOneRecipeAction}
+          recipesByCategory={recipesByCategory}
+          getCategoriesAction={getCategoriesAction}
+        />
+      ) : <View />}
+      {(searchString.length || selectedCategory.length) ? (
+        <VerticalSliderFindFood
+          searchString={searchString}
+          getRecipeByNameOrCategoryAction={getRecipeByNameOrCategoryAction}
+          category={(selectedCategoryProp && selectedCategoryProp.slug) || ''}
+          allRecipes={allRecipes}
+          navigation={navigation}
+          selectOneRecipeAction={selectOneRecipeAction}
+        />
+      ) : <View />}
     </View>
   );
 };

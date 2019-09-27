@@ -1,32 +1,94 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   View,
   SafeAreaView,
   StyleSheet,
+  Text
 } from 'react-native';
+import moment from 'moment';
+import i18n from '../../i18n/i18n';
 import HeaderForDrawer from '../../components/HeaderForDrawer';
 import TodayContainerHorizontal from './TodayContainerHorizontal';
 import TodayInfo from '../../components/TodayInfo';
 import GradientButton from '../../components/GradientButton';
+import SearchablePaginatedList from '../../components/SearchablePaginatedList/SearchablePaginatedList';
 import MealItem from '../../components/MealItem';
+import { getNumberOfDayByString } from '../../utils/common';
+import Routes from '../../Routes';
 
-const IngredientRecipeContainer = ({ navigation }) => {
+const dateTime = new Date();
+const formatedDate = moment(dateTime).format('YYYY-MM-DD');
+const todayDayString = moment(dateTime).format('dddd');
+const { numberOfDayForBackend, numberOfDayForFrontend } = getNumberOfDayByString(todayDayString);
+
+
+const emptyList = () => (
+  <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <Text style={styles.emptyListLabel}>
+      {`${i18n.t('nutritionContainer.emptyMeals')} ${moment().format('MMM DD')}`}
+    </Text>
+  </View>
+);
+
+const renderItem = ({
+  date_time: clock,
+  food_items: mealItems,
+  carbohydrate: numberOfCarbs,
+  protein: numberOfProtein,
+  fat: numberOfFat,
+  pieArray
+}, index) => (
+  <MealItem
+    clock={clock}
+    mealItems={mealItems}
+    numberOfProtein={numberOfProtein}
+    numberOfCarbs={numberOfCarbs}
+    numberOfFat={numberOfFat}
+    pieArray={pieArray}
+    titleContainerStyle={{
+      paddingTop: 0
+    }}
+    index={index}
+  />
+);
+
+const IngredientRecipeContainer = ({
+  navigation,
+  getMealsByDateAction,
+  meals = [],
+  getSessionByDayAction,
+  navigation: {
+    toggleDrawer
+  },
+  todaySession,
+  pickSessionAction,
+  numberOfWeek
+}) => {
+  useEffect(() => {
+    getSessionByDayAction(numberOfDayForBackend);
+  }, []);
+  console.log('stigao je today session', todaySession);
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{ width: '100%' }}>
+      <View style={{ width: '100%', flex: 1 }}>
         <HeaderForDrawer
-          onDrawerButtonPress={() => {}}
+          onDrawerButtonPress={() => {
+            toggleDrawer();
+          }}
         />
         <TodayInfo
-          description="Strength and Cardio"
-          dayNumber="1"
-          weekNumber="1"
+          description={todaySession.name || ''}
+          dayNumber={numberOfDayForFrontend}
+          weekNumber={numberOfWeek}
         />
         <TodayContainerHorizontal
-          sliderTitle="Biceps and Triceps"
+          sliderTitle={todaySession.name || ''}
           navigation={navigation}
-          data={[]}
-          onSelectItem={() => {}}
+          data={todaySession.workouts}
+          routeName={Routes.ExerciseScreen}
+          onSelectItem={(item) => {
+            pickSessionAction(item, todaySession.workouts);
+          }}
         />
         <View
           style={styles.buttonContainer}
@@ -36,6 +98,23 @@ const IngredientRecipeContainer = ({ navigation }) => {
             buttonContainerStyleProp={styles.findRecipesButtonContainer}
             buttonContainerTextStyle={styles.buttonContainerTextStyle}
             colorsGradient={['#3180BD', '#6EC2FA']}
+            onPress={() => {
+              const [firstUnDone, nextWorkout] = todaySession.workouts.filter(item => !item.done);
+              pickSessionAction(firstUnDone, todaySession.workouts, nextWorkout);
+              navigation.navigate(Routes.ExerciseScreen);
+            }}
+          />
+        </View>
+        <View style={styles.lastContainer}>
+          <SearchablePaginatedList
+            style={{ flex: 1 }}
+            ListEmptyComponent={emptyList}
+            contentContainerStyle={{ flexGrow: 1, paddingHorizontal: 10, paddingVertical: 0 }}
+            list={meals}
+            fetchListAction={() => getMealsByDateAction(formatedDate)}
+            renderItem={({ item, index }) => renderItem(item, index)}
+            search=""
+            filter=""
           />
         </View>
       </View>
@@ -66,14 +145,20 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0,
     paddingBottom: 18,
     borderRadius: 10,
-    marginRight: 0
+    marginRight: 0,
+    marginBottom: 0
   },
   buttonContainerTextStyle: {
     fontSize: 21,
     fontWeight: 'normal',
     textAlign: 'center',
     textAlignVertical: 'center'
-  }
+  },
+  lastContainer: {
+    borderTopColor: 'gray',
+    flex: 1,
+    width: '100%'
+  },
 });
 
 export default IngredientRecipeContainer;
