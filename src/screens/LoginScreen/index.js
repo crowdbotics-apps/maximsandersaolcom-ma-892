@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
   logo: {
     width: 300,
     height: 100,
+    resizeMode: 'contain'
   },
   containerCenter: {
     flex: 1,
@@ -59,7 +60,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#3b5998',
   },
   input: {
-    //height: Platform.select({ ios: 30, android: 40 }),
     width: '100%',
     paddingLeft: 5
   },
