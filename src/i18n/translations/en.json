@@ -7,7 +7,18 @@
     "loginButton": "Let's start!",
     "or": "OR",
     "facebookButton": "Log in via Facebook",
-    "googleButton": "Log in via Google"
+    "googleButton": "Log in via Google",
+  },
+  "introScreen": {
+    "getStarted": "Get Started",
+    "signUp": "Sign Up",
+    "login": "Log in",
+    "secondSlideTitle": "Advanced\nNutrition\nTracking",
+    "secondSlideText": "Log over 600,000 foods and 20,000 restaurants, all commanded by Voice.",
+    "thirdSlideTitle": "Customized\nExercise\nPrograms",
+    "thirdSlideText": "Powered by Artificial Intelligence, our software creates a custom training program, unique to your health goals.",
+    "fourthSlideTitle": "Certified\nEducators",
+    "fourthSlideText": "We value a scientifically based approach. We surround you with a team of educators to teach true methods of living a healthy lifestyle."
   },
   "registerScreen": {
     "login": "Log in",
