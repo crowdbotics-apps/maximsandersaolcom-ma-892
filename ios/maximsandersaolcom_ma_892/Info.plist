@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>Maxim Fitness</string>
+	<string>Orum Training</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -81,7 +81,7 @@
 		</dict>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>Maxim Fitness application need access of camera for Bar code scanner</string>
+	<string>Orum Training application need access of camera for Bar code scanner</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Need to use for login via facebook and google</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
@@ -89,9 +89,9 @@
 	<key>NSMainNibFile</key>
 	<string>LaunchScreen</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Maxim Fitness application need access of microphone for Bar code scanner</string>
+	<string>Orum Training application need access of microphone for Bar code scanner</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Maxim Fitness application need access of photo library for Bar code scanner</string>
+	<string>Orum Training application need access of photo library for Bar code scanner</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>NoteworthyLt.ttf</string>
