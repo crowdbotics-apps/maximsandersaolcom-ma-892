@@ -99,9 +99,11 @@ const IngredientRecipeContainer = ({
             buttonContainerTextStyle={styles.buttonContainerTextStyle}
             colorsGradient={['#3180BD', '#6EC2FA']}
             onPress={() => {
-              const [firstUnDone, nextWorkout] = todaySession.workouts.filter(item => !item.done);
-              pickSessionAction(firstUnDone, todaySession.workouts, nextWorkout);
-              navigation.navigate(Routes.ExerciseScreen);
+              if (typeof todaySession.workouts !== 'undefined') {
+                const [firstUnDone, nextWorkout] = todaySession.workouts.filter(item => !item.done);
+                pickSessionAction(firstUnDone, todaySession.workouts, nextWorkout);
+                navigation.navigate(Routes.ExerciseScreen);
+              }
             }}
           />
         </View>

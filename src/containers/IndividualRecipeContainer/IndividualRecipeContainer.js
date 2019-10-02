@@ -52,8 +52,8 @@ class IndividualRecipeContainer extends Component {
 
   shareOnSocialMedia = async (title, message, url) => {
     const options = {
-      title: `Maxim Fitness Application - ${title}`,
-      message: `Maxim Fitness Application - ${message}`,
+      title: `Orum Training Application - ${title}`,
+      message: `Orum Training Application - ${message}`,
       url,
     };
     try {
