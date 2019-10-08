@@ -17,5 +17,7 @@ export default {
   TodayScreen: 'TodayScreen',
   ProgramScreen: 'ProgramScreen',
   ExerciseScreen: 'ExerciseScreen',
-  SwapExerciseScreen: 'SwapExerciseScreen'
+  SwapExerciseScreen: 'SwapExerciseScreen',
+  MealRegulatorScreen: 'MealRegulatorScreen',
+  LogFoodsScreen: 'LogFoodsScreen'
 };

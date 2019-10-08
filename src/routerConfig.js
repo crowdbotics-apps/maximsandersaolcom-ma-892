@@ -9,11 +9,6 @@ export const drawerConfiguration = {
   drawerPosition: 'right',
 };
 
-export const drawerConfigurationForToday = {
-  initialRouteName: 'TodayScreen',
-  drawerPosition: 'right',
-};
-
 export const drawerConfigurationForProgram = {
   initialRouteName: 'ProgramScreen',
   drawerPosition: 'right',

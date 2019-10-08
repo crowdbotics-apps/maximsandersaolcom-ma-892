@@ -78,5 +78,22 @@
       "details": "Details"
     },
     "startWorkoutButton": "Start Workout"
+  },
+  "todayScreen": {
+    "modal": {
+      "replaceTitle": "Replace Exercise",
+      "buttons": {
+        "thisDayOnly": "This day only",
+        "restOfProgram": "The rest of the program",
+        "details": "Details",
+        "swapExercise": "Swap Exercise"
+      }
+    }
+  },
+  "freeForm": {
+    "title": "How does Freeform work?\n",
+    "descriptionPart1": "Type or speak freeform text in the box above.",
+    "descriptionPart2": "Freeform is fueled by our state-of-the-art Natural\nLanguage Processing technology to accurately\ndetermine what you ate",
+    "descriptionPart3": "After you add foods or products, you will have a\nchance to review the foods, change the time you\nate them, and change serving sizes before adding\nto your log"
   }
 }

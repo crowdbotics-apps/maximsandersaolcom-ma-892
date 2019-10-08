@@ -6,6 +6,7 @@ import { getAllSessions, pickSession } from '../../redux/modules/sessionReducer'
 
 const mapState = state => ({
   allSessions: state.sessions && state.sessions.allSessions,
+  exerciseSwapped: state.sessions && state.sessions.exerciseSwapped,
 });
 
 const mainActions = {

@@ -17,7 +17,7 @@ const SwapExerciseContainer = ({
   navigation: {
     toggleDrawer
   },
-  exercisesObj,
+  selectedSwapObj,
   allExercises,
   swapExercisesAction,
   getAllExercisesAction,
@@ -30,7 +30,12 @@ const SwapExerciseContainer = ({
   }, [allExercises]);
   useEffect(() => {
     if (exerciseSwapped) {
-      navigation.navigate(Routes.ProgramScreen);
+      const { state: { params } } = navigation;
+      if (typeof params.prevScreen !== 'undefined' && params.prevScreen === 'TodayScreen') {
+        navigation.navigate(Routes.TodayScreen);
+        return;
+      }
+      navigation.goBack();
     }
   }, [exerciseSwapped]);
   return (
@@ -44,7 +49,7 @@ const SwapExerciseContainer = ({
       />
       <View style={{ flex: 1 }}>
         <VideoExercise
-          videoUrl={exercisesObj.exercise.video_url}
+          videoUrl={selectedSwapObj.exercise.video_url}
           containterStyle={{ paddingHorizontal: 5 }}
         />
         <ScrollView contentContainerStyle={{ paddingHorizontal: 10, paddingTop: 10 }}>
@@ -54,7 +59,7 @@ const SwapExerciseContainer = ({
             renderItem={({ item }) => (
               <TouchableOpacity
                 onPress={() => {
-                  swapExercisesAction(exercisesObj.id, item.id);
+                  swapExercisesAction(selectedSwapObj.id, item.id);
                 }}
                 style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
               >

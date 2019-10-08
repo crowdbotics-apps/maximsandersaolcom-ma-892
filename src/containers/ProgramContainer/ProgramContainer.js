@@ -20,10 +20,11 @@ const ProgramContainer = ({
   allSessions,
   getAllSessionsAction,
   pickSessionAction,
+  exerciseSwapped
 }) => {
   useEffect(() => {
     getAllSessionsAction();
-  }, []);
+  }, [exerciseSwapped]);
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
       <HeaderForDrawer

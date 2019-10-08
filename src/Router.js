@@ -6,11 +6,13 @@ import {
   Text,
 } from 'react-native';
 import {
-  createDrawerNavigator,
   createSwitchNavigator,
-  createStackNavigator,
-  createBottomTabNavigator
+  createAppContainer,
 } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
+import { createDrawerNavigator } from 'react-navigation-drawer';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
+
 import Routes from './Routes';
 import {
   IntroScreen,
@@ -31,7 +33,9 @@ import {
   TodayScreen,
   ProgramScreen,
   ExerciseScreen,
-  SwapExerciseScreen
+  SwapExerciseScreen,
+  MealRegulatorScreen,
+  LogFoodsScreen
 } from './screens';
 import DrawerContent from './containers/DrawerContent';
 import regularHeaderStyle from './components/regularHeaderStyle';
@@ -41,7 +45,6 @@ import i18n from './i18n/i18n';
 import {
   drawerConfiguration,
   TAB_ICONS_ENUM,
-  drawerConfigurationForToday,
   drawerConfigurationForProgram
 } from './routerConfig';
 import Fonts from './assets/fonts';
@@ -83,7 +86,7 @@ const ProfileTabStack = createDrawerNavigator({
   contentComponent: props => <DrawerContent {...props} />
 });
 
-const TodayTabStack = createDrawerNavigator({
+const TodayTabStack = createStackNavigator({
   [Routes.TodayScreen]: {
     screen: TodayScreen,
     navigationOptions: () => ({
@@ -91,27 +94,24 @@ const TodayTabStack = createDrawerNavigator({
       drawerLabel: () => null,
     })
   },
-  [Routes.EditProfileScreen]: {
-    screen: EditProfileScreen,
+  [Routes.MealRegulatorScreen]: {
+    screen: MealRegulatorScreen,
     navigationOptions: () => ({
-      drawerLabel: () => i18n.t('drawerNavigation.editProfile'),
+      header: null,
+      drawerLabel: () => null,
     })
   },
-  [Routes.NotificationScreen]: {
-    screen: NotificationScreen,
+  [Routes.LogFoodsScreen]: {
+    screen: LogFoodsScreen,
     navigationOptions: () => ({
-      drawerLabel: () => i18n.t('drawerNavigation.notificaitons')
-    })
-  },
-  [Routes.SavedProgramsScreen]: {
-    screen: SavedProgramsScreen,
-    navigationOptions: () => ({
-      drawerLabel: () => i18n.t('drawerNavigation.savedPrograms')
+      header: null,
+      drawerLabel: () => null,
     })
   },
 }, {
-  ...drawerConfigurationForToday,
-  contentComponent: props => <DrawerContent {...props} />
+  cardStyle: {
+    backgroundColor: 'white',
+  }
 });
 
 const NutritionTabStack = createStackNavigator({
@@ -264,7 +264,8 @@ const ProgramsTabStack = createDrawerNavigator({
   }
 }, {
   ...drawerConfigurationForProgram,
-  contentComponent: props => <DrawerContent {...props} />
+  contentComponent: props => <DrawerContent {...props} />,
+  unmountInactiveRoutes: true
 });
 
 ProgramsTabStack.navigationOptions = () => ({
@@ -307,17 +308,19 @@ const BottomAppStack = createBottomTabNavigator(
             }
           }
         },
-        tabBarIcon: (props) => {
-          const { focused } = props;
-          const { routeName } = navigation.state;
-          const source = TAB_ICONS_ENUM[routeName][focused];
-          return <Image source={source} style={{ width: 30, height: 30 }} />;
-        },
-        tabBarOnPress: () => {
-          navigation.navigate(navigation.state.routeName);
-        }
       };
     },
+    defaultNavigationOptions: ({ navigation }) => ({
+      tabBarIcon: (props) => {
+        const { focused } = props;
+        const { routeName } = navigation.state;
+        const source = TAB_ICONS_ENUM[routeName][focused];
+        return <Image source={source} style={{ width: 30, height: 30 }} />;
+      },
+      tabBarOnPress: ({ navigation: navigationOnPress }) => {
+        navigationOnPress.navigate(navigationOnPress.state.routeName);
+      }
+    }),
     tabBarOptions: {
       style: {
         backgroundColor: 'white'
@@ -329,7 +332,8 @@ const BottomAppStack = createBottomTabNavigator(
       inactiveTintColor: 'black',
       activeBackgroundColor: 'lightgray'
     },
-  }
+    resetOnBlur: true,
+  },
 );
 
 const AuthStack = createStackNavigator({
@@ -359,34 +363,22 @@ const AuthStack = createStackNavigator({
   cardStyle: {
     backgroundColor: 'white',
   },
-  // headerMode: 'none',
-  // navigationOptions: {
-  //   headerVisible: false,
-  // }
 });
 
-export default createStackNavigator({
-  App: createSwitchNavigator({
-    AuthStack,
-    BottomAppStack
-  },
-  {
-    navigationOptions: () => ({
-      cardStyle: {
-        backgroundColor: 'white',
-      },
-      headerMode: 'none',
-      navigationOptions: {
-        headerVisible: false,
-      }
-    })
-  })
-}, {
-  cardStyle: {
-    backgroundColor: 'white',
-  },
-  headerMode: 'none',
-  navigationOptions: {
-    headerVisible: false,
-  }
-});
+export default createAppContainer(createSwitchNavigator({
+  [Routes.IntroScreen]: IntroScreen,
+  AuthStack,
+  BottomAppStack
+},
+{
+  navigationOptions: () => ({
+    cardStyle: {
+      backgroundColor: 'white',
+    },
+    headerMode: 'none',
+    navigationOptions: {
+      headerVisible: false,
+    }
+  }),
+  initialRouteName: 'IntroScreen',
+}));

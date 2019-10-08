@@ -4,4 +4,8 @@ export default {
   recipes: [],
   error: [],
   categories: [],
+  products: [],
+  selectedProducts: [],
+  searchActive: false,
+  searchStringState: ''
 };

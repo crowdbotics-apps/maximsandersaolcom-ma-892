@@ -39,6 +39,8 @@ target 'maximsandersaolcom_ma_892' do
   pod 'RNShare', :path => '../node_modules/react-native-share'
   pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
 
+  pod 'RNReanimated', :path => '../node_modules/react-native-reanimated'
+
   target 'maximsandersaolcom_ma_892Tests' do
     inherit! :search_paths
     # Pods for testing

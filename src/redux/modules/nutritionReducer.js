@@ -13,6 +13,10 @@ export const GET_MEALS_BY_DATE = 'nutrition/GET_MEALS_BY_DATE';
 export const GET_MEALS_BY_DATE_FAILED = 'nutrition/GET_MEALS_BY_DATE_FAILED';
 export const GET_CATEGORIES = 'nutrition/GET_CATEGORIES';
 export const APPEND_CATEGORIES = 'nutrition/APPEND_CATEGORIES';
+export const PRODUCTS_WITH_SEARCH = 'nutrition/PRODUCTS_WITH_SEARCH';
+export const SET_SELECTED_PRODUCT = 'nutrition/SET_SELECTED_PRODUCT';
+export const UNSET_SEARCH_ACTIVE = 'nutrition/UNSET_SEARCH_ACTIVE';
+export const SET_SEARCH_STRING = 'nutrition/SET_SEARCH_STRING';
 
 export default (state = { ...initialNutrition }, { type, payload }) => {
   switch (type) {
@@ -20,6 +24,33 @@ export default (state = { ...initialNutrition }, { type, payload }) => {
       return {
         ...state,
         scannedProduct: payload
+      };
+    }
+    case SET_SEARCH_STRING: {
+      return {
+        ...state,
+        searchStringState: payload,
+      };
+    }
+    case PRODUCTS_WITH_SEARCH: {
+      return {
+        ...state,
+        products: payload.results,
+        searchActive: true,
+      };
+    }
+    case SET_SELECTED_PRODUCT: {
+      return {
+        ...state,
+        selectedProducts: [...state.selectedProducts, payload],
+        searchStringState: '',
+        searchActive: false,
+      };
+    }
+    case UNSET_SEARCH_ACTIVE: {
+      return {
+        ...state,
+        searchActive: false,
       };
     }
     case GET_MEALS_BY_DATE: {
@@ -53,6 +84,13 @@ export default (state = { ...initialNutrition }, { type, payload }) => {
   }
 };
 
+export const setSelectedProducts = selectedItem => ({
+  type: SET_SELECTED_PRODUCT,
+  payload: selectedItem
+});
+
+export const unsetSearchActive = () => ({ type: UNSET_SEARCH_ACTIVE });
+
 export const getProductWithBarcodeAction = barCode => dispatch => nutritionsService
   .getProductWithBarcode(barCode)
   .then((payload) => {
@@ -63,6 +101,21 @@ export const getProductWithBarcodeAction = barCode => dispatch => nutritionsServ
     console.error('error', err);
     throw err;
   });
+
+
+export const getProductsBySearchString = searchString => (dispatch) => {
+  dispatch({ type: SET_SEARCH_STRING, payload: searchString });
+  return nutritionsService
+    .getProductsBySearchString(searchString)
+    .then((payload) => {
+      dispatch({ type: PRODUCTS_WITH_SEARCH, payload: { results: payload.results, searchString } });
+      return true;
+    })
+    .catch((err) => {
+      console.error('error', err);
+      throw err;
+    });
+};
 
 export const getMealsByDateAction = date => dispatch => nutritionsService
   .getMealsByDate(date)

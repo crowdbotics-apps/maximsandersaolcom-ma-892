@@ -1314,23 +1314,19 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-maximsandersaolcom_ma_892/Pods-maximsandersaolcom_ma_892-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-maximsandersaolcom_ma_892/Pods-maximsandersaolcom_ma_892-resources.sh",
 				"${PODS_ROOT}/FBSDKCoreKit/FacebookSDKStrings.bundle",
 				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FacebookSDKStrings.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-maximsandersaolcom_ma_892/Pods-maximsandersaolcom_ma_892-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-maximsandersaolcom_ma_892/Pods-maximsandersaolcom_ma_892-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		9125CEA8E60841B7456E4682 /* [CP] Check Pods Manifest.lock */ = {

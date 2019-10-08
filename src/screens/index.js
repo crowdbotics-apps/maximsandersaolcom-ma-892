@@ -17,3 +17,5 @@ export { default as TodayScreen } from './TodayScreen';
 export { default as ProgramScreen } from './ProgramScreen';
 export { default as ExerciseScreen } from './ExerciseScreen';
 export { default as SwapExerciseScreen } from './SwapExerciseScreen';
+export { default as MealRegulatorScreen } from './MealRegulatorScreen';
+export { default as LogFoodsScreen } from './LogFoodsScreen';
