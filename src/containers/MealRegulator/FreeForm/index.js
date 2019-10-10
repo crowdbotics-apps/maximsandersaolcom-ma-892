@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   TextInput,
@@ -8,6 +8,7 @@ import {
   StyleSheet
 } from 'react-native';
 import { withNavigation } from 'react-navigation';
+import Voice from 'react-native-voice';
 import Routes from '../../../Routes';
 import GradientButton from '../../../components/GradientButton';
 import Fonts from '../../../assets/fonts';
@@ -15,10 +16,72 @@ import i18n from '../../../i18n/i18n';
 
 const imageMicrophone = require('../../../assets/voice_microphone.png');
 
+Voice.onSpeechStart = onSpeechStart;
+Voice.onSpeechRecognized = onSpeechRecognized;
+Voice.onSpeechEnd = onSpeechEnd;
+Voice.onSpeechError = onSpeechError;
+Voice.onSpeechResults = onSpeechResults;
+Voice.onSpeechPartialResults = onSpeechPartialResults;
+Voice.onSpeechVolumeChanged = onSpeechVolumeChanged;
+
+const onSpeechStart = e => {
+  // eslint-disable-next-line
+  console.log('onSpeechStart: ', e);
+};
+
+const onSpeechRecognized = e => {
+  // eslint-disable-next-line
+  console.log('onSpeechRecognized: ', e);
+};
+
+const onSpeechEnd = e => {
+  // eslint-disable-next-line
+  console.log('onSpeechEnd: ', e);
+};
+
+const onSpeechError = e => {
+  // eslint-disable-next-line
+  console.log('onSpeechError: ', e);
+  console.log('eer meesage', JSON.stringify(e.error));
+};
+
+const onSpeechResults = e => {
+  // eslint-disable-next-line
+  console.log('onSpeechResults: ', e, e.value);
+};
+
+const onSpeechPartialResults = e => {
+  // eslint-disable-next-line
+  console.log('onSpeechPartialResults: ', e, e.value);
+};
+
+const onSpeechVolumeChanged = e => {
+  // eslint-disable-next-line
+  console.log('onSpeechVolumeChanged: ', e, e.value);
+};
+
+const startRecognizing = async () => {
+  try {
+    await Voice.start('en-US');
+    console.log('start');
+  } catch (e) {
+    //eslint-disable-next-line
+    console.error(e);
+  }
+};
+
 const FreeFormContainer = ({
   navigation
 }) => {
   const [freeFormText, setFreeFormText] = useState('');
+
+  // eslint-disable-next-line arrow-body-style
+  useEffect(() => {
+    return () => {
+      Voice.destroy().then(Voice.removeAllListeners);
+    };
+  }, []);
+
   return (
     <View style={styles.mainContainer}>
       <View style={styles.inputContainer}>
@@ -31,7 +94,10 @@ const FreeFormContainer = ({
         />
       </View>
       <View style={{ width: '100%' }}>
-        <TouchableOpacity style={styles.microphoneButton}>
+        <TouchableOpacity
+          style={styles.microphoneButton}
+          onPress={() => startRecognizing()}
+        >
           <View>
             <Image style={styles.micImg} source={imageMicrophone} />
           </View>

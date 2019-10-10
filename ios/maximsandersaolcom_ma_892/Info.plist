@@ -89,7 +89,9 @@
 	<key>NSMainNibFile</key>
 	<string>LaunchScreen</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Orum Training application need access of microphone for Bar code scanner</string>
+	<string>Orum Training application need access of microphone for Bar code scanner or Speech Recognition</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+  <string>Orum Training application need access of the speech recognition for adding meals</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Orum Training application need access of photo library for Bar code scanner</string>
 	<key>UIAppFonts</key>
