@@ -15,8 +15,11 @@ export const GET_CATEGORIES = 'nutrition/GET_CATEGORIES';
 export const APPEND_CATEGORIES = 'nutrition/APPEND_CATEGORIES';
 export const PRODUCTS_WITH_SEARCH = 'nutrition/PRODUCTS_WITH_SEARCH';
 export const SET_SELECTED_PRODUCT = 'nutrition/SET_SELECTED_PRODUCT';
+export const REMOVE_SELECTED_PRODUCT = 'nutrition/REMOVE_SELECTED_PRODUCT';
+export const REMOVE_ALL_SELECTED_PRODUCTS = 'nutrition/REMOVE_ALL_SELECTED_PRODUCTS';
 export const UNSET_SEARCH_ACTIVE = 'nutrition/UNSET_SEARCH_ACTIVE';
 export const SET_SEARCH_STRING = 'nutrition/SET_SEARCH_STRING';
+export const EDIT_SELECTED_PRODUCT = 'nutrition/EDIT_SELECTED_PRODUCT';
 
 export default (state = { ...initialNutrition }, { type, payload }) => {
   switch (type) {
@@ -42,10 +45,38 @@ export default (state = { ...initialNutrition }, { type, payload }) => {
     case SET_SELECTED_PRODUCT: {
       return {
         ...state,
-        selectedProducts: [...state.selectedProducts, payload],
+        selectedProducts: payload,
         searchStringState: '',
         searchActive: false,
       };
+    }
+    case EDIT_SELECTED_PRODUCT: {
+      return {
+        ...state,
+        selectedProducts: payload.selectedProducts,
+        selectedProductsStats: payload.selectedProductsStats
+      }
+    }
+    case REMOVE_ALL_SELECTED_PRODUCTS: {
+      return {
+        ...state,
+        selectedProducts: initialNutrition.selectedProducts,
+        selectedProductsStats: initialNutrition.selectedProductsStats
+      }
+    }
+    case REMOVE_SELECTED_PRODUCT: {
+      return {
+        ...state,
+        searchStringState: '',
+        searchActive: false,
+        selectedProducts: state.selectedProducts.filter(item => item.id !== payload.id),
+        selectedProductsStats: {
+          calories: state.selectedProductsStats.calories - (payload.calories * payload.quantity),
+          proteins: state.selectedProductsStats.proteins - (payload.proteins * payload.quantity),
+          carbohydrate: state.selectedProductsStats.carbohydrate - (payload.carbohydrate * payload.quantity),
+          fat: state.selectedProductsStats.fat - (payload.fat * payload.quantity)
+        },
+      }
     }
     case UNSET_SEARCH_ACTIVE: {
       return {
@@ -84,10 +115,50 @@ export default (state = { ...initialNutrition }, { type, payload }) => {
   }
 };
 
-export const setSelectedProducts = selectedItem => ({
-  type: SET_SELECTED_PRODUCT,
-  payload: selectedItem
+export const setSelectedProducts = selectedItem => (dispatch, getState) => {
+  const { nutrition: { selectedProducts } } = getState();
+  const findSelectedItem = selectedProducts.find(item => item.id === selectedItem.id);
+  return dispatch({
+    type: SET_SELECTED_PRODUCT,
+    payload: !findSelectedItem && [...selectedProducts, { ...selectedItem, measure: null, quantity: 0 }] || selectedProducts,
+  });
+};
+
+export const removeSelectedProducts = itemForRemove => ({
+  type: REMOVE_SELECTED_PRODUCT,
+  payload: itemForRemove
 });
+
+export const removeAllSelectedProducts = () => ({
+  type: REMOVE_ALL_SELECTED_PRODUCTS
+})
+
+export const editSelectedProducts = (itemForEdit, fieldForEdit, value) => (dispatch, getState) => {
+  const { nutrition: { selectedProducts, selectedProductsStats } } = getState();
+  const initForReduce = { calories: 0, proteins: 0, fat: 0, carbohydrate: 0 };
+  let selectedProductsClone = JSON.parse(JSON.stringify(selectedProducts));
+  const itemForEditIndex = selectedProductsClone.findIndex(item => item.id === itemForEdit.id);
+
+  selectedProductsClone[itemForEditIndex] = {
+    ...selectedProductsClone[itemForEditIndex],
+    [fieldForEdit]: parseFloat(value).toFixed(1),
+  };
+  
+  const selectedStatsChanged = selectedProductsClone.reduce((prevVal, currVal) => ({
+    calories: (prevVal.calories) + (currVal.calories * currVal.quantity),
+    proteins: prevVal.proteins + (currVal.proteins * currVal.quantity),
+    fat: prevVal.fat + (currVal.fat * currVal.quantity),
+    carbohydrate: prevVal.carbohydrate + (currVal.carbohydrate * currVal.quantity),
+  }), initForReduce);
+
+  return dispatch({
+    type: EDIT_SELECTED_PRODUCT,
+    payload: {
+      selectedProducts: selectedProductsClone,
+      selectedProductsStats: selectedStatsChanged
+    },
+  });
+};
 
 export const unsetSearchActive = () => ({ type: UNSET_SEARCH_ACTIVE });
 

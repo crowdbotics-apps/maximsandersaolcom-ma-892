@@ -80,6 +80,8 @@
     "startWorkoutButton": "Start Workout"
   },
   "todayScreen": {
+    "logFoods": "Log Foods",
+    "deleteAllItems": "Delete All Items",
     "modal": {
       "replaceTitle": "Replace Exercise",
       "buttons": {

@@ -16,72 +16,81 @@ import i18n from '../../../i18n/i18n';
 
 const imageMicrophone = require('../../../assets/voice_microphone.png');
 
-Voice.onSpeechStart = onSpeechStart;
-Voice.onSpeechRecognized = onSpeechRecognized;
-Voice.onSpeechEnd = onSpeechEnd;
-Voice.onSpeechError = onSpeechError;
-Voice.onSpeechResults = onSpeechResults;
-Voice.onSpeechPartialResults = onSpeechPartialResults;
-Voice.onSpeechVolumeChanged = onSpeechVolumeChanged;
-
-const onSpeechStart = e => {
-  // eslint-disable-next-line
-  console.log('onSpeechStart: ', e);
-};
-
-const onSpeechRecognized = e => {
-  // eslint-disable-next-line
-  console.log('onSpeechRecognized: ', e);
-};
-
-const onSpeechEnd = e => {
-  // eslint-disable-next-line
-  console.log('onSpeechEnd: ', e);
-};
-
-const onSpeechError = e => {
-  // eslint-disable-next-line
-  console.log('onSpeechError: ', e);
-  console.log('eer meesage', JSON.stringify(e.error));
-};
-
-const onSpeechResults = e => {
-  // eslint-disable-next-line
-  console.log('onSpeechResults: ', e, e.value);
-};
-
-const onSpeechPartialResults = e => {
-  // eslint-disable-next-line
-  console.log('onSpeechPartialResults: ', e, e.value);
-};
-
-const onSpeechVolumeChanged = e => {
-  // eslint-disable-next-line
-  console.log('onSpeechVolumeChanged: ', e, e.value);
-};
-
-const startRecognizing = async () => {
-  try {
-    await Voice.start('en-US');
-    console.log('start');
-  } catch (e) {
-    //eslint-disable-next-line
-    console.error(e);
-  }
-};
-
 const FreeFormContainer = ({
   navigation
 }) => {
   const [freeFormText, setFreeFormText] = useState('');
+  const [voiceStart, setVoiceStart] = useState(false);
+  const onSpeechStart = e => {
+    // eslint-disable-next-line
+    setVoiceStart(true);
+    console.log('onSpeechStart: ', e);
+  };
 
+  const onSpeechRecognized = (e) => {
+    // eslint-disable-next-line
+    console.log('onSpeechRecognized: ', e);
+    const { isFinale } = e;
+    if (isFinale) {
+      setVoiceStart(!isFinale);
+    }
+  };
+
+  const onSpeechEnd = e => {
+    // eslint-disable-next-line
+    console.log('onSpeechEnd: ', e);
+  };
+
+  const onSpeechError = (e) => {
+    // eslint-disable-next-line
+    console.log('onSpeechError: ', e);
+    console.log('eer meesage', JSON.stringify(e.error));
+  };
+
+  const onSpeechResults = e => {
+    // eslint-disable-next-line
+    console.log('onSpeechResults: ', e, e.value);
+    const [first] = e.value;
+    setFreeFormText(first)
+  };
+
+  const onSpeechPartialResults = e => {
+    // eslint-disable-next-line
+    console.log('onSpeechPartialResults: ', e, e.value);
+  };
+
+  const onSpeechVolumeChanged = e => {
+    // eslint-disable-next-line
+    console.log('onSpeechVolumeChanged: ', e, e.value);
+  };
+
+  const startRecognizing = async () => {
+    try {
+      await Voice.start('en-US');
+      setVoiceStart(true);
+      console.log('start');
+    } catch (e) {
+      //eslint-disable-next-line
+      console.error(e);
+    }
+  };
+  const stopRecognizing = async () => {
+    try {
+      await Voice.stop();
+      console.log('stop');
+      setVoiceStart(false)
+    } catch (e) {
+      console.error(e);
+    }
+  };
+  Voice.onSpeechStart = onSpeechStart;
+  Voice.onSpeechRecognized = onSpeechRecognized;
+  Voice.onSpeechEnd = onSpeechEnd;
+  Voice.onSpeechError = onSpeechError;
+  Voice.onSpeechResults = onSpeechResults;
+  Voice.onSpeechPartialResults = onSpeechPartialResults;
+  Voice.onSpeechVolumeChanged = onSpeechVolumeChanged;
   // eslint-disable-next-line arrow-body-style
-  useEffect(() => {
-    return () => {
-      Voice.destroy().then(Voice.removeAllListeners);
-    };
-  }, []);
-
   return (
     <View style={styles.mainContainer}>
       <View style={styles.inputContainer}>
@@ -96,13 +105,18 @@ const FreeFormContainer = ({
       <View style={{ width: '100%' }}>
         <TouchableOpacity
           style={styles.microphoneButton}
-          onPress={() => startRecognizing()}
+          onPress={() => {
+            if (!voiceStart) {
+              return startRecognizing();
+            }
+            return stopRecognizing();
+          }}
         >
           <View>
             <Image style={styles.micImg} source={imageMicrophone} />
           </View>
           <View>
-            <Text style={{ textAlignVertical: 'center' }}>Start</Text>
+            <Text style={{ textAlignVertical: 'center' }}>{!voiceStart ? "Start" : "Finish"}</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -134,7 +148,6 @@ const FreeFormContainer = ({
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   micImg: {
     width: 25,
