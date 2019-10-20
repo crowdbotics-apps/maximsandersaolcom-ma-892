@@ -205,7 +205,21 @@ const NutritionTabStack = createStackNavigator({
     navigationOptions: () => ({
       header: null
     })
-  }
+  },
+  [Routes.MealRegulatorNutritionScreen]: {
+    screen: MealRegulatorScreen,
+    navigationOptions: () => ({
+      header: null,
+      drawerLabel: () => null,
+    })
+  },
+  [Routes.LogFoodsNutritionScreen]: {
+    screen: LogFoodsScreen,
+    navigationOptions: () => ({
+      header: null,
+      drawerLabel: () => null,
+    })
+  },
 },
 {
   cardStyle: {

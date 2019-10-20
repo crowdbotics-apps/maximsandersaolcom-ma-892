@@ -41,6 +41,7 @@ const HeaderWithSearch = ({
           setSelectedItems={item => setSelectedItems(item)}
           unsetSearchActive={unsetSearchActive}
           resetValue={resetValue}
+          navigation={navigation}
         />
       </View>
     </View>

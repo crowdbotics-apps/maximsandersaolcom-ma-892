@@ -27,14 +27,17 @@ export default class BarcodeScanner extends Component {
       const [first] = barcodes;
       try {
         await getProductWithBarcodeAction(first.data);
-        navigation.navigate(Routes.IngredientScreen);
+        if (navigation.getParam('logFood', false)) {
+          return navigation.navigate(Routes.LogFoodsScreen);
+        }
+        return navigation.navigate(Routes.IngredientScreen);
       } catch (err) { throw err; }
     }
   }
 
   prepareRatio = async () => {
     if (Platform.OS === 'android' && this.camera) {
-      const ratios = await this.cam.getSupportedRatiosAsync();
+      const ratios = await this.camera.getSupportedRatiosAsync();
       const ratiosed = ratios.find(ratio => ratio === DESIRED_RATIO) || ratios[ratios.length - 1];
       this.setState({ ratio: ratiosed });
     }

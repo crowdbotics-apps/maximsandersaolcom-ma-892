@@ -19,5 +19,7 @@ export default {
   ExerciseScreen: 'ExerciseScreen',
   SwapExerciseScreen: 'SwapExerciseScreen',
   MealRegulatorScreen: 'MealRegulatorScreen',
-  LogFoodsScreen: 'LogFoodsScreen'
+  LogFoodsScreen: 'LogFoodsScreen',
+  MealRegulatorNutritionScreen: 'MealRegulatorNutritionScreen',
+  LogFoodsNutritionScreen: 'LogFoodsNutritionScreen'
 };

@@ -15,12 +15,14 @@ const MealRegultorSearchWithIcon = ({
   productItems,
   unsetSearchActive,
   resetValue,
-  searchStringState
+  searchStringState,
+  navigation
 }) => (
   <SearchableDropdown
     searchStringState={searchStringState}
     resetValue={resetValue}
     selectedItems={selectedItems}
+    navigation={navigation}
     onItemSelect={(item) => {
       setSelectedItems(item);
     }}

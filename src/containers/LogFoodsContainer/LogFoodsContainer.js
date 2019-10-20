@@ -2,10 +2,7 @@ import React from 'react';
 import {
   View,
   SafeAreaView,
-  TouchableOpacity,
   Text,
-  Image,
-  TextInput,
   StyleSheet,
   ListView
 } from 'react-native';
@@ -42,69 +39,69 @@ const LogFoodsContainer = ({
 }) => {
   const dataSource = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
   return (
-  <SafeAreaView style={styles.safeArea}>
-    <View style={{ zIndex: 1 }}>
-      <HeaderWithSearch
-        searchStringState={searchStringState}
-        productItems={products}
-        setSearchString={getProductsBySearchStringAction}
-        setSelectedItems={setSelectedProductsAction}
-        resetValue={searchActive}
-        unsetSearchActive={unsetSearchActiveAction}
-      />
-    </View>
-    <View style={styles.mainSwipeContainer}>
-      <View style={styles.swipeHeaderContainer}>
-        <Text style={styles.swipeHeaderText}> Swipe left to delete </Text>
+    <SafeAreaView style={styles.safeArea}>
+      <View style={{ zIndex: 1 }}>
+        <HeaderWithSearch
+          searchStringState={searchStringState}
+          productItems={products}
+          setSearchString={getProductsBySearchStringAction}
+          setSelectedItems={setSelectedProductsAction}
+          resetValue={searchActive}
+          unsetSearchActive={unsetSearchActiveAction}
+        />
       </View>
-      <SwipeListView
-        data={selectedProducts}
-        keyExtractor={(item, index) => index.toString()}
-        disableRightSwipe
-        closeOnScroll
-        closeOnRowOpen
-        renderItem={({ item, index }, rowMap) => (
-          <SwipeListItem item={item} editSelectedProductsAction={editSelectedProductsAction} index={index} />
-        )}
-        renderHiddenItem={(data, rowMap) => {
-          return (
-          <SwipeDeleteButton data={data} rowMap={rowMap} onDeleteClicked={removeSelectedProductsAction} />
-        )}}
-        leftOpenValue={0}
-        rightOpenValue={-75}
-        ListEmptyComponent={() => (<EmptyListComponent />)}
-      />
-    </View>
-    <View style={{ width: '100%' }}>
-      <View style={styles.tableCaloriesTotal}>
-        <View style={styles.tableHeadSub}>
-          <Text style={styles.tableHeadLeft}>
-            Total calories
-          </Text>
+      <View style={styles.mainSwipeContainer}>
+        <View style={styles.swipeHeaderContainer}>
+          <Text style={styles.swipeHeaderText}> Swipe left to delete </Text>
         </View>
-        <View style={styles.tableHeadSub}>
-          <Text style={styles.tableHeadRightText}>{calories || 0}</Text>
+        <SwipeListView
+          data={selectedProducts}
+          keyExtractor={(item, index) => index.toString()}
+          disableRightSwipe
+          closeOnScroll
+          closeOnRowOpen
+          renderItem={({ item, index }) => (
+            <SwipeListItem item={item} editSelectedProductsAction={editSelectedProductsAction} index={index} />
+          )}
+          renderHiddenItem={(data, rowMap) => (
+            <SwipeDeleteButton data={data} rowMap={rowMap} onDeleteClicked={removeSelectedProductsAction} />
+          )}
+          leftOpenValue={0}
+          rightOpenValue={-75}
+          ListEmptyComponent={() => (<EmptyListComponent />)}
+        />
+      </View>
+      <View style={{ width: '100%' }}>
+        <View style={styles.tableCaloriesTotal}>
+          <View style={styles.tableHeadSub}>
+            <Text style={styles.tableHeadLeft}>
+              Total calories
+            </Text>
+          </View>
+          <View style={styles.tableHeadSub}>
+            <Text style={styles.tableHeadRightText}>{calories || 0}</Text>
+          </View>
+        </View>
+        <View style={styles.tableColumnContainer}>
+          <TableColumn name="Proteins" value={proteins} />
+          <TableColumn name="Carbs" value={carbohydrate} middle />
+          <TableColumn name="Fat" value={fat} />
         </View>
       </View>
-      <View style={styles.tableColumnContainer}>
-        <TableColumn name="Proteins" value={proteins} />
-        <TableColumn name="Carbs" value={carbohydrate} middle />
-        <TableColumn name="Fat" value={fat} />
+      <View style={styles.gradientButtonContainer}>
+        <GradientButton
+          buttonContainerText={i18n.t('todayScreen.logFoods')}
+          buttonContainerStyleProp={styles.findRecipesButtonContainer}
+          buttonContainerTextStyle={styles.buttonContainerTextStyle}
+          buttonContentContainerProp={{ paddingBottom: 0 }}
+          colorsGradient={['#3180BD', '#6EC2FA']}
+          onPress={() => {}}
+        />
       </View>
-    </View>
-    <View style={styles.gradientButtonContainer}>
-      <GradientButton
-        buttonContainerText={i18n.t('todayScreen.logFoods')}
-        buttonContainerStyleProp={styles.findRecipesButtonContainer}
-        buttonContainerTextStyle={styles.buttonContainerTextStyle}
-        buttonContentContainerProp={{ paddingBottom: 0 }}
-        colorsGradient={['#3180BD', '#6EC2FA']}
-        onPress={() => {}}
-      />
-    </View>
-    <TouchableDeleteAll removeAllSelectedProductsAction={removeAllSelectedProductsAction} />
-  </SafeAreaView>
-)};
+      <TouchableDeleteAll removeAllSelectedProductsAction={removeAllSelectedProductsAction} />
+    </SafeAreaView>
+  );
+};
 
 const styles = StyleSheet.create({
   gradientButtonContainer: {

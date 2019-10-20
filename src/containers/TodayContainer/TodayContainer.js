@@ -19,6 +19,7 @@ import { getNumberOfDayByString } from '../../utils/common';
 import Routes from '../../Routes';
 import ModalButton from '../../components/ModalButton';
 import Fonts from '../../assets/fonts';
+import MealEmptyItem from '../../components/MealEmptyItem';
 
 const dateTime = new Date();
 const formatedDate = moment(dateTime).format('YYYY-MM-DD');
@@ -34,14 +35,34 @@ const emptyList = () => (
   </View>
 );
 
-const renderItem = ({
-  date_time: clock,
-  food_items: mealItems,
-  carbohydrate: numberOfCarbs,
-  protein: numberOfProtein,
-  fat: numberOfFat,
-  pieArray,
-}, index, navigation) => (
+const renderItem = (
+  {
+    date_time: clock,
+    food_items: mealItems,
+    carbohydrate: numberOfCarbs,
+    protein: numberOfProtein,
+    fat: numberOfFat,
+    pieArray,
+  },
+  index,
+  navigation,
+  setSelectedMealAction
+) => (mealItems.length === 0 ? (
+  <MealEmptyItem
+    clock={clock}
+    mealItems={mealItems}
+    numberOfProtein={numberOfProtein}
+    numberOfCarbs={numberOfCarbs}
+    numberOfFat={numberOfFat}
+    pieArray={pieArray}
+    titleContainerStyle={{
+      paddingTop: 0
+    }}
+    index={index}
+    navigation={navigation}
+    setSelectedMealAction={setSelectedMealAction}
+  />
+) : (
   <MealItemNew
     clock={clock}
     mealItems={mealItems}
@@ -54,8 +75,9 @@ const renderItem = ({
     }}
     index={index}
     navigation={navigation}
+    setSelectedMealAction={setSelectedMealAction}
   />
-);
+));
 
 const renderModalContent = showSwipeModal => (
   <View style={styles.content}>
@@ -137,7 +159,8 @@ const IngredientRecipeContainer = ({
   selectSwapObjectAction,
   navigation: {
     navigate
-  }
+  },
+  setSelectedMealAction
 }) => {
   const [selectedObject, setSelectedObject] = useState({
     isModalVisble: false,
@@ -199,7 +222,7 @@ const IngredientRecipeContainer = ({
             contentContainerStyle={{ flexGrow: 1, paddingHorizontal: 10, paddingVertical: 0 }}
             list={meals}
             fetchListAction={() => getMealsByDateAction(formatedDate)}
-            renderItem={({ item, index }) => renderItem(item, index, navigation)}
+            renderItem={({ item, index }) => renderItem(item, index, navigation, setSelectedMealAction)}
             search=""
             filter=""
           />

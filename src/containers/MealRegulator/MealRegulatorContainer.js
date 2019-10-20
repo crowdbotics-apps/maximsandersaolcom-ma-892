@@ -33,7 +33,8 @@ const MealRegulatorContainer = ({
   searchStringState,
   searchActive,
   setSelectedProductsAction,
-  unsetSearchActiveAction
+  unsetSearchActiveAction,
+  navigation
 }) => {
   const mapSceneObject = {
     freeForm: FreeForm,
@@ -53,6 +54,7 @@ const MealRegulatorContainer = ({
           setSelectedItems={setSelectedProductsAction}
           resetValue={searchActive}
           unsetSearchActive={unsetSearchActiveAction}
+          navigation={navigation}
         />
       </View>
       <View style={{ flex: 1, zIndex: 0 }}>

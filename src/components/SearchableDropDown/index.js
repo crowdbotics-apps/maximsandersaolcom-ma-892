@@ -8,6 +8,7 @@ import {
   Keyboard,
   Image
 } from 'react-native';
+import Routes from '../../Routes';
 
 const defaultItemValue = {
   name: '',
@@ -177,7 +178,8 @@ export default class SearchableDropDown extends Component {
       textInputStyle,
       placeholderTextColor,
       placeholder,
-      searchStringState
+      searchStringState,
+      navigation
     } = this.props;
     const { item } = this.state;
     const oldSupport = [
@@ -243,8 +245,13 @@ export default class SearchableDropDown extends Component {
     return (
       <View style={{ flexDirection: 'row' }}>
         <TextInput {...textInputProps} />
-        <TouchableOpacity onPress={() => {}}>
-          <Image style={{ marginLeft: -40, width: 35, height: 35 }} source={barcodeIcon} />
+        <TouchableOpacity
+          style={{ width: 35, height: 35, marginLeft: -40 }}
+          onPress={() => {
+            navigation.navigate(Routes.BarCodeScreen, { logFood: true });
+          }}
+        >
+          <Image style={{ width: 35, height: 35 }} source={barcodeIcon} />
         </TouchableOpacity>
       </View>
     );

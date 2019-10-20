@@ -8,19 +8,16 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import ProteinBar from '../ProteinBar';
-import IngredientsItem from '../IngredientsItem';
 import Routes from '../../Routes';
 
 const addIcon = require('../../assets/add_icon_meal.png');
 
-const MealItem = ({
+const MealEmptyItem = ({
   clock,
   mealItems,
-  numberOfProtein,
   numberOfCarbs,
+  numberOfProtein,
   numberOfFat,
-  // pieArray,
   index,
   titleContainerStyle,
   navigation,
@@ -38,17 +35,7 @@ const MealItem = ({
         style={styles.innerContainer}
       >
         <View style={styles.proteinBarContainer}>
-          <View style={{ paddingLeft: 3, paddingTop: 3 }}>
-            <Text style={styles.clockContainer}>{moment(clock).format('h:mm a')}</Text>
-          </View>
-          <View style={{ paddingHorizontal: 5 }}>
-            <ProteinBar
-              styleProps={{ justifyContent: 'space-between' }}
-              numberOfProtein={numberOfProtein}
-              numberOfCarbs={numberOfCarbs}
-              numberOfFat={numberOfFat}
-            />
-          </View>
+          <Text style={styles.clockContainer}>{moment(clock).format('h:mm a')}</Text>
         </View>
         <View style={styles.chartMainContainer}>
           <TouchableOpacity
@@ -69,19 +56,6 @@ const MealItem = ({
             <Image style={{ width: 35, height: 35 }} source={addIcon} />
           </TouchableOpacity>
         </View>
-      </View>
-      <View style={{ padding: 5 }}>
-        {
-          mealItems.length ? mealItems.map((item, key) => (
-            <IngredientsItem
-              // eslint-disable-next-line react/no-array-index-key
-              key={key}
-              ingredientName={item.food.name}
-              ingredientSize={item.portion}
-              ingredientImage={item.food.thumb}
-            />
-          )) : null
-        }
       </View>
     </View>
   </View>
@@ -110,15 +84,15 @@ const styles = StyleSheet.create({
   },
   innerContainer: {
     flexDirection: 'row',
-    borderBottomColor: 'rgb(214,213,213);',
-    borderBottomWidth: 1,
+    // borderBottomColor: 'rgb(214,213,213);',
+    // borderBottomWidth: 1,
     paddingLeft: 15,
     paddingVertical: 15,
   },
   proteinBarContainer: {
     flexDirection: 'column',
     flex: 1,
-    justifyContent: 'space-between'
+    justifyContent: 'center'
   },
   clockContainer: {
     fontSize: 18,
@@ -135,7 +109,7 @@ const styles = StyleSheet.create({
   }
 });
 
-MealItem.defaultProps = {
+MealEmptyItem.defaultProps = {
   clock: '',
   mealItems: [],
   numberOfProtein: 0,
@@ -144,7 +118,7 @@ MealItem.defaultProps = {
   index: 0,
 };
 
-MealItem.propTypes = {
+MealEmptyItem.propTypes = {
   clock: PropTypes.string,
   mealItems: PropTypes.arrayOf(PropTypes.shape({})),
   numberOfProtein: PropTypes.number,
@@ -153,4 +127,4 @@ MealItem.propTypes = {
   index: PropTypes.number
 };
 
-export default MealItem;
+export default MealEmptyItem;

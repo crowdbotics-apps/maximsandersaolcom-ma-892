@@ -2,12 +2,12 @@ import React from 'react'
 import { View, Text, StyleSheet, Image, TextInput } from 'react-native'
 import Font from '../../assets/fonts';
 import Dropdown from './SubComponents/Dropdown';
+
 const infoOtlineIcon = require('../../assets/infoOutlineIcon.png');
 
 const SwipeListItem = ({ item, editSelectedProductsAction, index }) => {
   const parseValToFixed = e => parseFloat(e).toFixed(1);
   const isEventValueNum = e => !isNaN(parseValToFixed(e)) && parseValToFixed(e) || 0;
-
   return (
     <View style={styles.containerSwipeItem} key={index}>
       <View style={styles.imageSwipeItem}>
@@ -19,9 +19,10 @@ const SwipeListItem = ({ item, editSelectedProductsAction, index }) => {
             <TextInput
               keyboardType="numeric"
               maxLength={3}
-              placeholder={"0"}
+              value={item.portion === 0 ? '' : item.portion.toString()}
+              placeholder="0"
               style={styles.inputStyle}
-              onChangeText={(e) => editSelectedProductsAction(item, 'quantity', isEventValueNum(e))}
+              onChangeText={(e) => editSelectedProductsAction(item, 'portion', isEventValueNum(e))}
             />
           </View>
           <View>
@@ -46,8 +47,8 @@ const SwipeListItem = ({ item, editSelectedProductsAction, index }) => {
         </View>
       </View>
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   infoIconStyle: {
@@ -108,9 +109,12 @@ const styles = StyleSheet.create({
   },
   inputStyle: {
     height: 20,
+    width: 30,
     justifyContent: 'center',
     alignContent: 'center',
-    alignSelf: 'center'
+    alignSelf: 'center',
+    textAlignVertical: 'center',
+    textAlign: 'center'
   },
   inputWrapperContainer: {
     width: 40,

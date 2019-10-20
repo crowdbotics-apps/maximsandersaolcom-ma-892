@@ -12,16 +12,10 @@ const myFavoritesIcon = require('../../assets/icon_my_favorites.png');
 const myProgressAndDataIcon = require('../../assets/icon_my_progress.png');
 const learnIcon = require('../../assets/icon_learn.png');
 const settingsIcon = require('../../assets/icon_settings.png');
-const costcoIcon = require('../../assets/costco.jpg');
 
 const ProfileMenu = () => (
   <View style={{ width: '100%', marginTop: 20, marginBottom: 300 }}>
     <ScrollView>
-      <ProfileMenuItem
-        menuIcon={costcoIcon}
-        menuText={i18n.t('profileScreen.profileMenuItems.costco')}
-        route={Routes.TestScreen}
-      />
       <ProfileMenuItem
         menuIcon={findMyProgramIcon}
         menuText={i18n.t('profileScreen.profileMenuItems.findMyProgram')}

@@ -127,7 +127,11 @@ const FreeFormContainer = ({
           buttonContainerTextStyle={styles.buttonContainerTextStyle}
           colorsGradient={['#3180BD', '#6EC2FA']}
           onPress={() => {
-            navigation.navigate(Routes.LogFoodsScreen);
+            const prevScreen = navigation.getParam('prevScreen', false);
+            if (prevScreen === Routes.MealRegulatorNutritionScreen) {
+              return navigation.navigate(Routes.LogFoodsNutritionScreen);
+            }
+            return navigation.navigate(Routes.LogFoodsScreen);
           }}
         />
       </View>
