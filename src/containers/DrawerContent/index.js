@@ -7,7 +7,7 @@ import {
   ScrollView
 } from 'react-native';
 import PropTypes from 'prop-types';
-import { DrawerItems } from 'react-navigation';
+import { DrawerNavigatorItems } from 'react-navigation-drawer';
 import i18n from '../../i18n/i18n';
 import Routes from '../../Routes';
 
@@ -82,7 +82,7 @@ const DrawerContent = (props) => {
         contentContainerStyle={styles.contentContainerStyle}
       >
         <View>
-          <DrawerItems
+          <DrawerNavigatorItems
             activeTintColor="#2196f3"
             activeBackgroundColor="rgba(0, 0, 0, .04)"
             inactiveTintColor="rgba(0, 0, 0, .87)"

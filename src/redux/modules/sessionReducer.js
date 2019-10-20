@@ -14,6 +14,7 @@ export const ACTIVE_SET = 'sessions/ACTIVE_SET';
 export const SWAP_EXERCISE = 'sessions/SWAP_EXERCISE';
 export const SWAP_EXERCISE_ERROR = 'sessions/SWAP_EXERCISE_ERROR';
 export const NUMBER_OF_WEEK = 'sessions/NUMBER_OF_WEEK';
+export const SELECT_OBJECT_FOR_SWAP = 'sessions/SELECT_OBJECT_FOR_SWAP';
 
 export default (state = { ...initialStateSession }, { type, payload }) => {
   switch (type) {
@@ -31,7 +32,8 @@ export default (state = { ...initialStateSession }, { type, payload }) => {
         selectedSession: payload.selectedSession,
         nextWorkout: payload.nextWorkout,
         startCount: false,
-        activeSet: payload.activeSet
+        activeSet: payload.activeSet,
+        selectedSwapObj: payload.exercisesObj,
       };
     }
     case GET_SESSION_BY_DAY: {
@@ -79,6 +81,12 @@ export default (state = { ...initialStateSession }, { type, payload }) => {
         numberOfWeek: payload
       };
     }
+    case SELECT_OBJECT_FOR_SWAP: {
+      return {
+        ...state,
+        selectedSwapObj: payload
+      };
+    }
     default: return state;
   }
 };
@@ -117,8 +125,16 @@ export const swapExercises = (workoutId, exerciseId) => (dispatch) => {
       return dispatch({
         type: SWAP_EXERCISE_ERROR
       });
-    });
+    })
+    .catch(() => dispatch({
+      type: SWAP_EXERCISE_ERROR
+    }));
 };
+
+export const selectSwapObject = swapObj => ({
+  type: SELECT_OBJECT_FOR_SWAP,
+  payload: swapObj
+});
 
 export const getAllSessions = () => (dispatch) => {
   const sessionService = new SessionService();

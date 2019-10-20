@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getMealsByDateAction } from '../../redux/modules/nutritionReducer';
+import { getMealsByDateAction, setSelectedMeal } from '../../redux/modules/nutritionReducer';
 import NutrationContainer from './NutrationContainer';
 
 const mapState = state => ({
@@ -9,6 +9,7 @@ const mapState = state => ({
 
 const mainActions = {
   getMealsByDateAction,
+  setSelectedMealAction: setSelectedMeal
 };
 
 export default connect(

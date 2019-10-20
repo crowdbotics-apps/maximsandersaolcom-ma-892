@@ -157,6 +157,8 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-voice')
+    implementation project(':react-native-reanimated')
     implementation project(':react-native-camera')
     implementation project(':react-native-fbsdk')
     implementation project(':react-native-video')

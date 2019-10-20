@@ -28,7 +28,7 @@ const TodayHorizontalSliderItem = ({
     </View>
     <View style={styles.textContainer}>
       <View>
-        <Text style={styles.itemTitleStyle}>{`${index + 1}. ${item.name}`}</Text>
+        <Text style={styles.itemTitleStyle}>{`${index + 1}. ${item.exercise.name}`}</Text>
       </View>
     </View>
   </TouchableOpacity>

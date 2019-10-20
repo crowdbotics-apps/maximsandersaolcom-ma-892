@@ -22,7 +22,8 @@ export default (state = { ...initialAuthState }, { type, payload }) => {
       return {
         ...state,
         authenticated: true,
-        profile: payload
+        profile: payload,
+        token: payload.token
       };
     }
 
@@ -68,8 +69,12 @@ export const resetErrors = () => dispatch => dispatch({ type: RESET_ERRORS });
 
 export const loginActionViaFacebook = token => (dispatch) => {
   const authService = new AuthService();
+  let tokenForLogin = '';
   return authService.loginOrRegisterViaSocialFacebook(token)
-    .then(() => authService.getProfile())
+    .then(({ key }) => {
+      tokenForLogin = key;
+      return authService.getProfile();
+    })
     .then(({ data }) => {
       const { results } = data;
       const [first] = results;
@@ -84,7 +89,8 @@ export const loginActionViaFacebook = token => (dispatch) => {
         email,
         imageUrl: photo,
         name: `${firstName} ${lastName}`,
-        id
+        id,
+        token: tokenForLogin
       };
       return dispatch({ type: LOGIN_SUCCESS, payload });
     })
@@ -95,8 +101,12 @@ export const loginActionViaFacebook = token => (dispatch) => {
 
 export const loginActionViaGmail = token => (dispatch) => {
   const authService = new AuthService();
+  let tokenForLogin = '';
   return authService.loginOrRegisterViaSocialGoogle(token)
-    .then(() => authService.getProfile())
+    .then(({ key }) => {
+      tokenForLogin = key;
+      return authService.getProfile();
+    })
     .then(({ data }) => {
       const { results } = data;
       const [first] = results;
@@ -111,7 +121,8 @@ export const loginActionViaGmail = token => (dispatch) => {
         email,
         imageUrl: photo,
         name: `${firstName} ${lastName}`,
-        id
+        id,
+        token: tokenForLogin
       };
       return dispatch({ type: LOGIN_SUCCESS, payload });
     })

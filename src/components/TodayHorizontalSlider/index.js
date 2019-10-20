@@ -26,7 +26,7 @@ const TodayHorizontalSlider = ({
           index={index}
           onClick={() => {
             onSelectItem(item);
-            navigate(routeName);
+            // navigate(routeName);
           }}
         />
       )}

@@ -116,7 +116,7 @@ const ExerciseContainer = ({
                       />
                       <FatExerciseIconButton
                         buttonText="Swap Exercises"
-                        onClick={() => navigation.navigate(Routes.SwapExerciseScreen)}
+                        onClick={() => navigation.navigate(Routes.SwapExerciseScreen, { prevScreen: Routes.ExerciseScreen })}
                         buttonIcon={iconSwap}
                       />
                       <FatGradientIconButton

@@ -9,6 +9,7 @@ import Routes from '../../Routes';
 
 const imagePlaceholder = 'https://via.placeholder.com/300x150.png?text=MAXIM+FITNESS';
 const screenHeight = Dimensions.get('screen').height / 3.5;
+const screenWidth = Dimensions.get('screen').width;
 
 const IngredientRecipesListItem = ({ recipe, onPressRecipe, navigation }) => (
   <TouchableOpacity
@@ -23,7 +24,7 @@ const IngredientRecipesListItem = ({ recipe, onPressRecipe, navigation }) => (
       mainContainerStyle={{ padding: 0, paddingHorizontal: 15 }}
     />
     <ImageContainer
-      imageBackgroundStyleProp={{ height: screenHeight }}
+      imageBackgroundStyleProp={{ height: screenHeight, width: screenWidth - 20 }}
       imageBackgroundUri={(recipe.image && recipe.image_url) || imagePlaceholder}
       navigation={navigation}
     />

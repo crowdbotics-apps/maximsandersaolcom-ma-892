@@ -9,17 +9,21 @@ import {
 const iconBurger = require('../../assets/hamburger.png');
 const logoMaxim = require('../../assets/logoSplashScreen.png');
 
-const HeaderForDrawer = ({ onDrawerButtonPress, headerNavProp }) => (
+const HeaderForDrawer = ({ onDrawerButtonPress, headerNavProp, hideHamburger = false }) => (
   <View style={[styles.headerNav, headerNavProp]}>
     <View style={{ flex: 1 }}>
-      <TouchableOpacity
-        onPress={() => onDrawerButtonPress()}
-      >
-        <Image
-          style={{ width: 30, height: 30 }}
-          source={iconBurger}
-        />
-      </TouchableOpacity>
+      {
+        !hideHamburger ? (
+          <TouchableOpacity
+            onPress={() => onDrawerButtonPress()}
+          >
+            <Image
+              style={{ width: 30, height: 30 }}
+              source={iconBurger}
+            />
+          </TouchableOpacity>
+        ) : null
+      }
     </View>
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Image

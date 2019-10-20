@@ -9,6 +9,12 @@ export default class NutritionService {
       .catch((err) => { throw err; });
   }
 
+  getProductsBySearchString(searchString) {
+    return this.api.fetch('GET', `/products/?name=${searchString}`, { })
+      .then(response => response.data)
+      .catch((err) => { throw err; });
+  }
+
   getMealsByDate(date) {
     return this.api.fetch('GET', `/meal/get_by_date/?date=${date}`, { })
       .then(response => response.data)

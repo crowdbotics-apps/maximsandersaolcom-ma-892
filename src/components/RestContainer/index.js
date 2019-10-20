@@ -44,7 +44,9 @@ const RestContainer = ({
             <Text style={{ color: 'white', fontSize: 14 }}>Rest</Text>
           </View>
           <View>
-            <Text style={{ color: 'white', fontSize: 14 }}>{notMyTurn ? '-' : `${seconds} seconds`}</Text>
+            <Text style={{ color: 'white', fontSize: 14 }}>
+              {notMyTurn ? '-' : `${typeof seconds !== 'undefined' ? seconds : 'n/a'} seconds`}
+            </Text>
           </View>
         </LinearGradient>
       </View>

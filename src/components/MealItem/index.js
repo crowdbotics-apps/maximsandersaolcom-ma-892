@@ -133,7 +133,7 @@ MealItem.defaultProps = {
   numberOfProtein: 0,
   numberOfCarbs: 0,
   numberOfFat: 0,
-  key: 0,
+  index: 0,
 };
 
 MealItem.propTypes = {
@@ -142,7 +142,7 @@ MealItem.propTypes = {
   numberOfProtein: PropTypes.number,
   numberOfCarbs: PropTypes.number,
   numberOfFat: PropTypes.number,
-  key: PropTypes.number
+  index: PropTypes.number
 };
 
 export default MealItem;

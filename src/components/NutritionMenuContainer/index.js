@@ -8,7 +8,6 @@ import Routes from '../../Routes';
 
 const findFoodIcon = require('../../assets/findFoodIcon.png');
 const barcodeIcon = require('../../assets/barcode.png');
-const mealIcon = require('../../assets/mealIcon.png');
 
 const NutritionMenuContainer = ({ navigation: { navigate } }) => (
   <View style={{ flex: 1, justifyContent: 'space-between' }}>
@@ -21,11 +20,6 @@ const NutritionMenuContainer = ({ navigation: { navigate } }) => (
       onPress={() => navigate(Routes.BarCodeScreen)}
       linkText="Scan Barcode"
       icon={barcodeIcon}
-    />
-    <MenuItemButton
-      onPress={() => {}}
-      linkText="Create New Meal Plan"
-      icon={mealIcon}
     />
   </View>
 );
@@ -41,4 +35,5 @@ MenuItemButton.propTypes = {
     navigate: PropTypes.func
   })
 };
+
 export default NutritionMenuContainer;

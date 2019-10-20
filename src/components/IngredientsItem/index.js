@@ -7,7 +7,11 @@ import {
   StyleSheet
 } from 'react-native';
 
-const IngredientsItem = ({ ingredientSize, ingredientImage, ingredientName }) => (
+const IngredientsItem = ({
+  ingredientSize,
+  ingredientImage,
+  ingredientName,
+}) => (
   <View style={styles.mainContainer}>
     <View style={styles.imageContainer}>
       <Image source={{ uri: ingredientImage }} style={styles.imageStyle} />

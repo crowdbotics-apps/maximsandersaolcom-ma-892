@@ -52,7 +52,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>23</string>
+	<string>27</string>
 	<key>FacebookAppID</key>
 	<string>2330406860512882</string>
 	<key>FacebookDisplayName</key>
@@ -89,9 +89,11 @@
 	<key>NSMainNibFile</key>
 	<string>LaunchScreen</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Orum Training application need access of microphone for Bar code scanner</string>
+	<string>Orum Training application need access of microphone for Bar code scanner or Speech Recognition</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Orum Training application need access of photo library for Bar code scanner</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Orum Training application need access of the speech recognition for adding meals</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>NoteworthyLt.ttf</string>

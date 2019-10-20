@@ -23,6 +23,8 @@ const MenuItemButton = ({ icon, onPress, linkText }) => (
 
 const styles = StyleSheet.create({
   mainView: {
+    paddingTop: 5,
+    paddingBottom: 5,
     paddingLeft: 20,
     flexDirection: 'row',
     alignItems: 'center'

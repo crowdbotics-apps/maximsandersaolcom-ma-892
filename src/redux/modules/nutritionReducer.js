@@ -1,4 +1,3 @@
-
 import initialNutrition from '../initialState/nutritionInitial';
 import NutritionService from '../../services/NutritionService';
 import uniq from '../../utils/removeDuplicateInArray';
@@ -13,6 +12,14 @@ export const GET_MEALS_BY_DATE = 'nutrition/GET_MEALS_BY_DATE';
 export const GET_MEALS_BY_DATE_FAILED = 'nutrition/GET_MEALS_BY_DATE_FAILED';
 export const GET_CATEGORIES = 'nutrition/GET_CATEGORIES';
 export const APPEND_CATEGORIES = 'nutrition/APPEND_CATEGORIES';
+export const PRODUCTS_WITH_SEARCH = 'nutrition/PRODUCTS_WITH_SEARCH';
+export const SET_SELECTED_PRODUCT = 'nutrition/SET_SELECTED_PRODUCT';
+export const REMOVE_SELECTED_PRODUCT = 'nutrition/REMOVE_SELECTED_PRODUCT';
+export const REMOVE_ALL_SELECTED_PRODUCTS = 'nutrition/REMOVE_ALL_SELECTED_PRODUCTS';
+export const UNSET_SEARCH_ACTIVE = 'nutrition/UNSET_SEARCH_ACTIVE';
+export const SET_SEARCH_STRING = 'nutrition/SET_SEARCH_STRING';
+export const EDIT_SELECTED_PRODUCT = 'nutrition/EDIT_SELECTED_PRODUCT';
+export const SET_SELECTED_MEAL = 'nutration/SET_SELECTED_MEAL';
 
 export default (state = { ...initialNutrition }, { type, payload }) => {
   switch (type) {
@@ -20,6 +27,61 @@ export default (state = { ...initialNutrition }, { type, payload }) => {
       return {
         ...state,
         scannedProduct: payload
+      };
+    }
+    case SET_SEARCH_STRING: {
+      return {
+        ...state,
+        searchStringState: payload,
+      };
+    }
+    case PRODUCTS_WITH_SEARCH: {
+      return {
+        ...state,
+        products: payload.results,
+        searchActive: true,
+      };
+    }
+    case SET_SELECTED_PRODUCT: {
+      return {
+        ...state,
+        selectedProducts: payload,
+        searchStringState: '',
+        searchActive: false,
+      };
+    }
+    case EDIT_SELECTED_PRODUCT: {
+      return {
+        ...state,
+        selectedProducts: payload.selectedProducts,
+        selectedProductsStats: payload.selectedProductsStats
+      };
+    }
+    case REMOVE_ALL_SELECTED_PRODUCTS: {
+      return {
+        ...state,
+        selectedProducts: initialNutrition.selectedProducts,
+        selectedProductsStats: initialNutrition.selectedProductsStats
+      };
+    }
+    case REMOVE_SELECTED_PRODUCT: {
+      return {
+        ...state,
+        searchStringState: '',
+        searchActive: false,
+        selectedProducts: state.selectedProducts.filter(item => item.id !== payload.id),
+        selectedProductsStats: {
+          calories: state.selectedProductsStats.calories - (payload.calories * payload.portion),
+          proteins: state.selectedProductsStats.proteins - (payload.proteins * payload.portion),
+          carbohydrate: state.selectedProductsStats.carbohydrate - (payload.carbohydrate * payload.portion),
+          fat: state.selectedProductsStats.fat - (payload.fat * payload.portion)
+        },
+      };
+    }
+    case UNSET_SEARCH_ACTIVE: {
+      return {
+        ...state,
+        searchActive: false,
       };
     }
     case GET_MEALS_BY_DATE: {
@@ -37,7 +99,6 @@ export default (state = { ...initialNutrition }, { type, payload }) => {
     case GET_MEALS_BY_DATE_FAILED: {
       return {
         ...state,
-        meals: [],
         error: payload
       };
     }
@@ -47,11 +108,87 @@ export default (state = { ...initialNutrition }, { type, payload }) => {
         categories: payload
       };
     }
+    case SET_SELECTED_MEAL: {
+      return {
+        ...state,
+        selectedMeal: payload.selectedMeal,
+        selectedProducts: payload.selectedProducts,
+        selectedProductsStats: payload.selectedProductsStats
+      };
+    }
     default: {
       return state;
     }
   }
 };
+
+export const setSelectedMeal = selectedMeal => (dispatch) => {
+  const { food_items: foodItems } = selectedMeal;
+  const getProductsFromMeal = foodItems.map(item => ({
+    portion: item.portion, ...item.food, measure: null
+  }));
+  dispatch({
+    type: SET_SELECTED_MEAL,
+    payload: {
+      selectedMeal,
+      selectedProducts: getProductsFromMeal,
+      selectedProductsStats: {
+        calories: selectedMeal.calories,
+        carbohydrate: selectedMeal.carbohydrate,
+        fat: selectedMeal.fat,
+        proteins: selectedMeal.protein
+      }
+    }
+  });
+};
+
+export const setSelectedProducts = selectedItem => (dispatch, getState) => {
+  const { nutrition: { selectedProducts } } = getState();
+  const findSelectedItem = selectedProducts.find(item => item.id === selectedItem.id);
+  return dispatch({
+    type: SET_SELECTED_PRODUCT,
+    payload: !findSelectedItem && [...selectedProducts, { ...selectedItem, measure: null, portion: 0 }] || selectedProducts,
+  });
+};
+
+export const removeSelectedProducts = itemForRemove => ({
+  type: REMOVE_SELECTED_PRODUCT,
+  payload: itemForRemove
+});
+
+export const removeAllSelectedProducts = () => ({
+  type: REMOVE_ALL_SELECTED_PRODUCTS
+});
+
+export const editSelectedProducts = (itemForEdit, fieldForEdit, value) => (dispatch, getState) => {
+  const { nutrition: { selectedProducts, selectedProductsStats } } = getState();
+  const initForReduce = { calories: 0, proteins: 0, fat: 0, carbohydrate: 0 };
+  let selectedProductsClone = JSON.parse(JSON.stringify(selectedProducts));
+  const itemForEditIndex = selectedProductsClone.findIndex(item => item.id === itemForEdit.id);
+
+  selectedProductsClone[itemForEditIndex] = {
+    ...selectedProductsClone[itemForEditIndex],
+    // eslint-disable-next-line radix
+    [fieldForEdit]: fieldForEdit === 'portion' ? parseInt(value) : value,
+  };
+  
+  const selectedStatsChanged = selectedProductsClone.reduce((prevVal, currVal) => ({
+    calories: (prevVal.calories) + (currVal.calories * currVal.portion),
+    proteins: prevVal.proteins + (currVal.proteins * currVal.portion),
+    fat: prevVal.fat + (currVal.fat * currVal.portion),
+    carbohydrate: prevVal.carbohydrate + (currVal.carbohydrate * currVal.portion),
+  }), initForReduce);
+
+  return dispatch({
+    type: EDIT_SELECTED_PRODUCT,
+    payload: {
+      selectedProducts: selectedProductsClone,
+      selectedProductsStats: selectedStatsChanged
+    },
+  });
+};
+
+export const unsetSearchActive = () => ({ type: UNSET_SEARCH_ACTIVE });
 
 export const getProductWithBarcodeAction = barCode => dispatch => nutritionsService
   .getProductWithBarcode(barCode)
@@ -64,7 +201,21 @@ export const getProductWithBarcodeAction = barCode => dispatch => nutritionsServ
     throw err;
   });
 
-export const getMealsByDateAction = date => dispatch => nutritionsService
+export const getProductsBySearchString = searchString => (dispatch) => {
+  dispatch({ type: SET_SEARCH_STRING, payload: searchString });
+  return nutritionsService
+    .getProductsBySearchString(searchString)
+    .then((payload) => {
+      dispatch({ type: PRODUCTS_WITH_SEARCH, payload: { results: payload.results, searchString } });
+      return true;
+    })
+    .catch((err) => {
+      console.error('error', err);
+      throw err;
+    });
+};
+
+export const getMealsByDateAction = date => (dispatch, getState) => nutritionsService
   .getMealsByDate(date)
   .then((payload) => {
     const arrayWithProcentage = payload.map((item) => {
@@ -76,10 +227,13 @@ export const getMealsByDateAction = date => dispatch => nutritionsService
       ];
       return {
         ...item,
-        pieArray: arrayOfProcentages
+        pieArray: arrayOfProcentages,
       };
     });
-    dispatch({ type: GET_MEALS_BY_DATE, payload: arrayWithProcentage });
+    const { nutrition: { meals: mealsFromStore } } = getState();
+    console.log('meals', mealsFromStore);
+    const withoutDuplicateMeals = uniq([...arrayWithProcentage, ...mealsFromStore], 'date_time');
+    dispatch({ type: GET_MEALS_BY_DATE, payload: withoutDuplicateMeals });
   })
   .catch((err) => {
     dispatch({ type: GET_MEALS_BY_DATE_FAILED, payload: err });

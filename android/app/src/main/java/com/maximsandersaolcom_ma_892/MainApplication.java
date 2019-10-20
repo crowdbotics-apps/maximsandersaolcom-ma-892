@@ -6,6 +6,7 @@ import com.facebook.react.ReactApplication;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import com.facebook.CallbackManager;
 import com.brentvatne.react.ReactVideoPackage;
+import com.swmansion.reanimated.ReanimatedPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -21,6 +22,7 @@ import com.horcrux.svg.SvgPackage;
 import cl.json.RNSharePackage;
 import cl.json.ShareApplication;
 import com.BV.LinearGradient.LinearGradientPackage;
+import com.wenkesj.voice.VoicePackage; // <------ Add this!
 
 import java.util.Arrays;
 import java.util.List;
@@ -54,7 +56,9 @@ public class MainApplication extends Application implements ReactApplication {
             new BlurViewPackage(),
             new SvgPackage(),
             new RNSharePackage(),
-            new LinearGradientPackage()
+            new LinearGradientPackage(),
+            new VoicePackage(),
+            new ReanimatedPackage()
       );
     }
 

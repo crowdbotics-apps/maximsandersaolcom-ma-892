@@ -8,7 +8,8 @@ const mapState = state => ({
   exercisesObj: state.sessions && state.sessions.exercisesObj,
   selectedSession: state.sessions && state.sessions.selectedSession,
   allExercises: state.sessions && state.sessions.allExercises,
-  exerciseSwapped: state.sessions && state.sessions.exerciseSwapped
+  exerciseSwapped: state.sessions && state.sessions.exerciseSwapped,
+  selectedSwapObj: state.sessions && state.sessions.selectedSwapObj
 });
 
 const mainActions = {

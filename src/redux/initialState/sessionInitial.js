@@ -13,7 +13,8 @@ const initialSession = {
   nextWorkout: null,
   exerciseSwapped: false,
   exerciseSwapError: false,
-  numberOfWeek: 0
+  numberOfWeek: 0,
+  selectedSwapObj: {}
 };
 
 export default initialSession;
