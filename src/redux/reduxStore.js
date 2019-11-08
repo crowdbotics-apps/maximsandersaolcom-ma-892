@@ -7,6 +7,7 @@ import auth from './modules/authReducer';
 import recipes from './modules/recipesReducer';
 import nutrition from './modules/nutritionReducer';
 import sessions from './modules/sessionReducer';
+import feeds from './modules/feedReducer';
 
 let middlewares = [thunk];
 
@@ -23,7 +24,8 @@ const store = createStore(
     auth,
     recipes,
     nutrition,
-    sessions
+    sessions,
+    feeds
   }),
   applyMiddleware(...middlewares)
 );

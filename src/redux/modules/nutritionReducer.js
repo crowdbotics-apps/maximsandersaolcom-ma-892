@@ -20,6 +20,8 @@ export const UNSET_SEARCH_ACTIVE = 'nutrition/UNSET_SEARCH_ACTIVE';
 export const SET_SEARCH_STRING = 'nutrition/SET_SEARCH_STRING';
 export const EDIT_SELECTED_PRODUCT = 'nutrition/EDIT_SELECTED_PRODUCT';
 export const SET_SELECTED_MEAL = 'nutration/SET_SELECTED_MEAL';
+export const CREATED_NEW_MEAL = 'nutration/CREATED_NEW_MEAL';
+export const NEW_MEALS = 'nutrition/NEW_MEALS';
 
 export default (state = { ...initialNutrition }, { type, payload }) => {
   switch (type) {
@@ -113,7 +115,21 @@ export default (state = { ...initialNutrition }, { type, payload }) => {
         ...state,
         selectedMeal: payload.selectedMeal,
         selectedProducts: payload.selectedProducts,
-        selectedProductsStats: payload.selectedProductsStats
+        selectedProductsStats: payload.selectedProductsStats,
+      };
+    }
+    case CREATED_NEW_MEAL: {
+      return {
+        ...state,
+        selectedMeal: payload.selectedMeal,
+        selectedProducts: payload.selectedProducts,
+        selectedProductsStats: payload.selectedProductsStats,
+      };
+    }
+    case NEW_MEALS: {
+      return {
+        ...state,
+        meals: payload
       };
     }
     default: {
@@ -125,19 +141,22 @@ export default (state = { ...initialNutrition }, { type, payload }) => {
 export const setSelectedMeal = selectedMeal => (dispatch) => {
   const { food_items: foodItems } = selectedMeal;
   const getProductsFromMeal = foodItems.map(item => ({
-    portion: item.portion, ...item.food, measure: null
+    portion: item.portion, ...item.food, measure: null, foodId: item.id
   }));
   dispatch({
     type: SET_SELECTED_MEAL,
     payload: {
-      selectedMeal,
-      selectedProducts: getProductsFromMeal,
+      selectedMeal: {
+        ...selectedMeal,
+        isEmpty: !!foodItems.length,
+      },
+      selectedProducts: getProductsFromMeal.map(item => ({ ...item, onServer: true })),
       selectedProductsStats: {
         calories: selectedMeal.calories,
         carbohydrate: selectedMeal.carbohydrate,
         fat: selectedMeal.fat,
         proteins: selectedMeal.protein
-      }
+      },
     }
   });
 };
@@ -147,18 +166,60 @@ export const setSelectedProducts = selectedItem => (dispatch, getState) => {
   const findSelectedItem = selectedProducts.find(item => item.id === selectedItem.id);
   return dispatch({
     type: SET_SELECTED_PRODUCT,
-    payload: !findSelectedItem && [...selectedProducts, { ...selectedItem, measure: null, portion: 0 }] || selectedProducts,
+    payload: !findSelectedItem && [...selectedProducts, { ...selectedItem, measure: null, portion: 0, onServer: false }] || selectedProducts,
   });
 };
 
-export const removeSelectedProducts = itemForRemove => ({
-  type: REMOVE_SELECTED_PRODUCT,
-  payload: itemForRemove
-});
+export const removeSelectedProducts = itemForRemove => (dispatch, getState) => {
+  const { nutrition: { selectedMeal, meals } } = getState();
+  if (itemForRemove.onServer) {
+    return nutritionsService.deleteFood(itemForRemove.foodId, selectedMeal.id)
+      .then(() => dispatch({
+        type: REMOVE_SELECTED_PRODUCT,
+        payload: itemForRemove
+      }))
+      .then(() => nutritionsService.getMeal(selectedMeal.id))
+      .then((getMealResult) => {
+        const newMealArray = meals.map((item2) => {
+          if (item2.date_time === getMealResult.date_time) {
+            return getMealResult;
+          }
+          return item2;
+        });
+        dispatch({ type: NEW_MEALS, payload: newMealArray });
+      })
+      .catch((err) => { throw err; });
+  }
+  return dispatch({
+    type: REMOVE_SELECTED_PRODUCT,
+    payload: itemForRemove
+  });
+}
 
-export const removeAllSelectedProducts = () => ({
-  type: REMOVE_ALL_SELECTED_PRODUCTS
-});
+
+export const removeAllSelectedProducts = () => (dispatch, getState) => {
+  const { nutrition: { selectedMeal, selectedProducts, meals } } = getState();
+  const itemsForRemove = selectedProducts.filter(item => item.onServer);
+  if (itemsForRemove.length) {
+    return Promise.all(itemsForRemove.map(item => nutritionsService.deleteFood(item.foodId, selectedMeal.id)))
+      .then(() => dispatch({ type: REMOVE_ALL_SELECTED_PRODUCTS }))
+      .then(() => nutritionsService.getMeal(selectedMeal.id))
+      .then((getMealResult) => {
+        const newMealArray = meals.map((item2) => {
+          if (item2.date_time === getMealResult.date_time) {
+            return getMealResult;
+          }
+          return item2;
+        });
+        dispatch({ type: NEW_MEALS, payload: newMealArray });
+      })
+      .catch(err => console.log('err', err));
+  }
+  if (itemsForRemove.length !== selectedProducts.length) {
+    return dispatch({ type: REMOVE_ALL_SELECTED_PRODUCTS });
+  }
+  return dispatch({ type: REMOVE_ALL_SELECTED_PRODUCTS });
+};
 
 export const editSelectedProducts = (itemForEdit, fieldForEdit, value) => (dispatch, getState) => {
   const { nutrition: { selectedProducts, selectedProductsStats } } = getState();
@@ -218,7 +279,8 @@ export const getProductsBySearchString = searchString => (dispatch) => {
 export const getMealsByDateAction = date => (dispatch, getState) => nutritionsService
   .getMealsByDate(date)
   .then((payload) => {
-    const arrayWithProcentage = payload.map((item) => {
+    const removeEmptyMeal = payload.filter(mealItem => mealItem.food_items.length); 
+    const arrayWithProcentage = removeEmptyMeal.map((item) => {
       const sum = item.calories + item.carbohydrate + item.fat;
       const arrayOfProcentages = [
         { name: 'protein', procentage: (item.protein * 100) / sum, color: 'rgb(68,161,248)' },
@@ -231,9 +293,9 @@ export const getMealsByDateAction = date => (dispatch, getState) => nutritionsSe
       };
     });
     const { nutrition: { meals: mealsFromStore } } = getState();
-    console.log('meals', mealsFromStore);
     const withoutDuplicateMeals = uniq([...arrayWithProcentage, ...mealsFromStore], 'date_time');
-    dispatch({ type: GET_MEALS_BY_DATE, payload: withoutDuplicateMeals });
+    const sortMeals = withoutDuplicateMeals.sort((a, b) => new Date(a.date_time) - new Date(b.date_time));
+    dispatch({ type: GET_MEALS_BY_DATE, payload: sortMeals });
   })
   .catch((err) => {
     dispatch({ type: GET_MEALS_BY_DATE_FAILED, payload: err });
@@ -259,3 +321,112 @@ export const getCategories = (page, limit, offset) => (dispatch, getState) => nu
     // has more
     return results.length === limit;
   });
+
+export const createNewMealSpeach = (query, fromSentence, dateTime) => (dispatch, getState) => {
+  const { nutrition: { selectedMeal: mealFromStore } } = getState();
+  if (typeof mealFromStore.id !== 'undefined') {
+    return nutritionsService.addFood(mealFromStore.id, {}, query, fromSentence, dateTime)
+      .then(res => res)
+      .then(() => nutritionsService.getMeal(mealFromStore.id))
+      .then((getMealResult) => {
+        const selectedMeal = { ...getMealResult };
+        const selectedProducts = getMealResult.food_items.map(item => ({
+          ...item.food, measure: null, portion: item.portion, onServer: true, foodId: item.id
+        }));
+        const selectedProductsStats = {
+          carbohydrate: parseFloat(Math.round(getMealResult.carbohydrate * 100) / 100).toFixed(2),
+          fat: parseFloat(Math.round(getMealResult.fat * 100) / 100).toFixed(2),
+          proteins: parseFloat(Math.round(getMealResult.protein * 100) / 100).toFixed(2)
+        };
+        dispatch({
+          type: CREATED_NEW_MEAL,
+          payload: {
+            selectedMeal,
+            selectedProducts,
+            selectedProductsStats
+          }
+        });
+        const { nutrition: { meals } } = getState();
+        const newMealArray = meals.map((item2) => {
+          if (item2.date_time === getMealResult.date_time) {
+            return getMealResult;
+          }
+          return item2;
+        });
+        dispatch({ type: NEW_MEALS, payload: newMealArray });
+      })
+      .catch((err) => { throw err; });
+  }
+  nutritionsService
+    .createMeal({ date_time: dateTime, query, from_sentence: fromSentence })
+    .then(result => result)
+    .then(res => nutritionsService.getMeal(res.id))
+    .then((getMealResult) => {
+      const selectedMeal = { ...getMealResult };
+      const selectedProducts = getMealResult.food_items.map(item => ({
+        ...item.food, measure: null, portion: item.portion, onServer: true, foodId: item.id
+      }));
+      const selectedProductsStats = {
+        carbohydrate: parseFloat(Math.round(getMealResult.carbohydrate * 100) / 100).toFixed(2),
+        fat: parseFloat(Math.round(getMealResult.fat * 100) / 100).toFixed(2),
+        proteins: parseFloat(Math.round(getMealResult.protein * 100) / 100).toFixed(2)
+      };
+      dispatch({
+        type: CREATED_NEW_MEAL,
+        payload: {
+          selectedMeal,
+          selectedProducts,
+          selectedProductsStats
+        }
+      });
+      const { nutrition: { meals } } = getState();
+      const newMealArray = meals.map((item2) => {
+        if (item2.date_time === getMealResult.date_time) {
+          return getMealResult;
+        }
+        return item2;
+      });
+      dispatch({ type: NEW_MEALS, payload: newMealArray });
+    })
+    .catch(err => console.log('err', err));
+}
+
+export const logFood = () => (dispatch, getState) => {
+  const { nutrition: { selectedMeal, selectedProducts, meals } } = getState();
+  if (typeof selectedMeal.id === 'undefined') {
+    const arrayForServer = selectedProducts.map(item => ({
+      food_name: item.name,
+      item_id: item.id,
+      portion: item.portion
+    }));
+    return nutritionsService.createMeal({ date_time: selectedMeal.date_time, nix_food_items: arrayForServer })
+      .then(result => result)
+      .then(res => nutritionsService.getMeal(res.id))
+      .then((getMealResult) => {
+        const newMealArray = meals.map((item2) => {
+          if (item2.date_time === getMealResult.date_time) {
+            return getMealResult;
+          }
+          return item2;
+        });
+        dispatch({ type: NEW_MEALS, payload: newMealArray });
+      })
+      .catch((err) => { throw err; });
+  }
+  const itemsForAdd = selectedProducts.filter(item => !item.onServer);
+  if (itemsForAdd.length) {
+    return Promise.all(itemsForAdd.map(item => nutritionsService.addFood(selectedMeal.id, { nix_food_items: [{ food_name: item.name, portion: item.portion, item_id: item.id }] }, '', false, selectedMeal.date_time, item.id)))
+      .then(result => result)
+      .then(() => nutritionsService.getMeal(selectedMeal.id))
+      .then((getMealResult) => {
+        const newMealArray = meals.map((item2) => {
+          if (item2.date_time === getMealResult.date_time) {
+            return getMealResult;
+          }
+          return item2;
+        });
+        dispatch({ type: NEW_MEALS, payload: newMealArray });
+      })
+      .catch(err => console.log('aa', err))
+  }
+};

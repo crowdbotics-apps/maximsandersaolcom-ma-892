@@ -43,6 +43,7 @@ const renderItem = (
     protein: numberOfProtein,
     fat: numberOfFat,
     pieArray,
+    id
   },
   index,
   navigation,
@@ -66,6 +67,7 @@ const renderItem = (
   <MealItemNew
     clock={clock}
     mealItems={mealItems}
+    id={id}
     numberOfProtein={numberOfProtein}
     numberOfCarbs={numberOfCarbs}
     numberOfFat={numberOfFat}
@@ -118,7 +120,8 @@ const renderModalContentSwipe = (navigate, closeModal) => (
     />
     <ModalButton
       onPress={() => {
-        console.log('replace rest of program');
+        closeModal();
+        navigate(Routes.SwapExerciseScreen, { prevScreen: Routes.TodayScreen, restOfProgram: true });
       }}
       label={i18n.t('todayScreen.modal.buttons.restOfProgram')}
       buttonStyle={styles.buttonStyleModal}
