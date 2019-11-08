@@ -51,23 +51,25 @@ export default class SocialBar extends React.Component {
 
   onLikeButtonPressed = () => {
     this.props.addOrRemoveLike(this.props.feedId);
-    const defaultCount = SocialBar.data.likes;
-    this.setState(prevState => ({
-      likes:
-        this.state.likes === defaultCount ? this.state.likes + 1 : defaultCount,
-      liked: !prevState.liked
-    }));
+    // const defaultCount = SocialBar.data.likes;
+    // this.setState(prevState => ({
+    //   likes:
+    //     this.state.likes === defaultCount ? this.state.likes + 1 : defaultCount,
+    //   liked: !prevState.liked
+    // }));
   };
 
   render() {
     const { container, section, label } = styles;
-    const { likes, liked } = this.state;
-    const { onCommentButtonPressed, feedId, comments } = this.props;
+    // const { liked } = this.state;
+    const {
+      onCommentButtonPressed, feedId, comments, likes, isLiked
+    } = this.props;
     return (
       <View style={container}>
         <TouchableOpacity onPress={this.onLikeButtonPressed} style={section}>
           <Image
-            source={liked ? activeLike : inactiveLike}
+            source={isLiked ? activeLike : inactiveLike}
             style={{ width: 25, height: 25 }}
             resizeMode="contain"
           />
