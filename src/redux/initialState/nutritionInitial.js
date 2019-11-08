@@ -69,5 +69,7 @@ export default {
   },
   searchActive: false,
   searchStringState: '',
-  selectedMeal: {}
+  selectedMeal: {
+    isEmpty: true
+  }
 };

@@ -8,16 +8,18 @@ import {
   unsetSearchActive,
   removeSelectedProducts,
   editSelectedProducts,
-  removeAllSelectedProducts
+  removeAllSelectedProducts,
+  logFood
 } from '../../redux/modules/nutritionReducer';
-console.log(editSelectedProducts);
+
 const mainActions = {
   getProductsBySearchStringAction: getProductsBySearchString,
   setSelectedProductsAction: setSelectedProducts,
   unsetSearchActiveAction: unsetSearchActive,
   removeSelectedProductsAction: removeSelectedProducts,
   editSelectedProductsAction: editSelectedProducts,
-  removeAllSelectedProductsAction: removeAllSelectedProducts
+  removeAllSelectedProductsAction: removeAllSelectedProducts,
+  logFoodAction: logFood
 };
 
 const mapState = state => ({

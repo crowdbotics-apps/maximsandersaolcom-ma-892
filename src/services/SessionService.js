@@ -27,8 +27,8 @@ export default class SessionService {
       .catch((err) => { throw err; });
   }
 
-  swapExercises(workoutId, exerciseId) {
-    return this.api.fetch('POST', '/session/swap_exercise/', { data: { workout_id: workoutId, exercise_id: exerciseId }})
+  swapExercises(workoutId, exerciseId, rest_of_program = false) {
+    return this.api.fetch('POST', '/session/swap_exercise/', { data: { workout_id: workoutId, exercise_id: exerciseId, rest_of_program }})
       .then(response => ({
         data: response.data,
         status: response.status
@@ -44,6 +44,12 @@ export default class SessionService {
 
   resetSession() {
     return this.api.fetch('GET', '/session/?reset=true', {})
+      .then(res => res)
+      .catch((err) => { throw err; });
+  }
+
+  getFeedPosts() {
+    return this.api.fetch('GET', '/post/', {})
       .then(res => res)
       .catch((err) => { throw err; });
   }

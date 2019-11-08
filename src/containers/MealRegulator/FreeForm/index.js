@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   View,
   TextInput,
@@ -7,8 +7,11 @@ import {
   TouchableOpacity,
   StyleSheet
 } from 'react-native';
-import { withNavigation } from 'react-navigation';
 import Voice from 'react-native-voice';
+import { withNavigation } from 'react-navigation';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { createNewMealSpeach } from '../../../redux/modules/nutritionReducer';
 import Routes from '../../../Routes';
 import GradientButton from '../../../components/GradientButton';
 import Fonts from '../../../assets/fonts';
@@ -17,7 +20,11 @@ import i18n from '../../../i18n/i18n';
 const imageMicrophone = require('../../../assets/voice_microphone.png');
 
 const FreeFormContainer = ({
-  navigation
+  navigation,
+  isEmpty,
+  dateTime,
+  createNewMealSpeachAction,
+  // addFoodToMealAction
 }) => {
   const [freeFormText, setFreeFormText] = useState('');
   const [voiceStart, setVoiceStart] = useState(false);
@@ -51,7 +58,7 @@ const FreeFormContainer = ({
     // eslint-disable-next-line
     console.log('onSpeechResults: ', e, e.value);
     const [first] = e.value;
-    setFreeFormText(first)
+    setFreeFormText(first);
   };
 
   const onSpeechPartialResults = e => {
@@ -68,7 +75,6 @@ const FreeFormContainer = ({
     try {
       await Voice.start('en-US');
       setVoiceStart(true);
-      console.log('start');
     } catch (e) {
       //eslint-disable-next-line
       console.error(e);
@@ -77,8 +83,7 @@ const FreeFormContainer = ({
   const stopRecognizing = async () => {
     try {
       await Voice.stop();
-      console.log('stop');
-      setVoiceStart(false)
+      setVoiceStart(false);
     } catch (e) {
       console.error(e);
     }
@@ -127,6 +132,12 @@ const FreeFormContainer = ({
           buttonContainerTextStyle={styles.buttonContainerTextStyle}
           colorsGradient={['#3180BD', '#6EC2FA']}
           onPress={() => {
+            if (freeFormText !== '') {
+              createNewMealSpeachAction(freeFormText, true, dateTime);
+            }
+            if (voiceStart) {
+              stopRecognizing();
+            }
             const prevScreen = navigation.getParam('prevScreen', false);
             if (prevScreen === Routes.MealRegulatorNutritionScreen) {
               return navigation.navigate(Routes.LogFoodsNutritionScreen);
@@ -213,4 +224,17 @@ const styles = StyleSheet.create({
   },
 });
 
-export default withNavigation(FreeFormContainer);
+
+const mainActions = {
+  createNewMealSpeachAction: createNewMealSpeach,
+  // addFoodToMealAction: addFoodToMeal
+};
+
+const mapState = state => ({
+  isEmpty: state.nutrition && state.nutrition.selectedMeal.isEmpty,
+  dateTime: state.nutrition && state.nutrition.selectedMeal.date_time,
+});
+
+const mapActions = dispatch => bindActionCreators(mainActions, dispatch);
+
+export default connect(mapState, mapActions)(withNavigation(FreeFormContainer));

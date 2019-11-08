@@ -21,6 +21,7 @@ const MealItem = ({
   numberOfCarbs,
   numberOfFat,
   // pieArray,
+  id,
   index,
   titleContainerStyle,
   navigation,
@@ -59,6 +60,7 @@ const MealItem = ({
                 carbohydrate: numberOfCarbs,
                 protein: numberOfProtein,
                 fat: numberOfFat,
+                id
               });
               if (prevScreen === Routes.NutritionScreen) {
                 return navigation.navigate(Routes.MealRegulatorNutritionScreen, { prevScreen: Routes.MealRegulatorNutritionScreen });

@@ -31,6 +31,7 @@ class NutrationContainer extends Component {
       protein: numberOfProtein,
       fat: numberOfFat,
       pieArray,
+      id
     },
     index,
     navigation,
@@ -59,6 +60,7 @@ class NutrationContainer extends Component {
       numberOfCarbs={numberOfCarbs}
       numberOfFat={numberOfFat}
       pieArray={pieArray}
+      id={id}
       titleContainerStyle={{
         paddingTop: 0
       }}

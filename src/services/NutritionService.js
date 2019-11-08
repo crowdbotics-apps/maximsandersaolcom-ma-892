@@ -32,4 +32,46 @@ export default class NutritionService {
       .then(response => response.data)
       .catch((err) => { throw err; });
   }
+
+  createMeal(data) {
+    return this.api.fetch('POST', '/meal/', { data: { ...data } })
+      .then(response => response.data)
+      .catch((err) => { throw err; });
+  }
+
+  addFood(mealId, data, query = '', fromSentence = false, dateTime, foodId) {
+    return this.api.fetch('POST', `/meal/${mealId}/add_food/`, {
+      data: {
+        id: foodId,
+        date_time: dateTime,
+        query,
+        from_sentence: fromSentence,
+        ...data
+      }
+    })
+      .then(response => response.data)
+      .catch((err) => { throw err; });
+  }
+
+  deleteFood(foodId, mealId) {
+    return this.api.fetch('POST', '/meal/delete_food/', {
+      data: {
+        food_id: foodId,
+        id: mealId
+        // id: mealId,
+        // date_time: dateTime,
+        // nix_food_items: [
+        //   { food_name: foodName, portion }
+        // ]
+      },
+    })
+      .then(response => response.data)
+      .catch((err) => { throw err; });
+  }
+
+  getMeal(id) {
+    return this.api.fetch('GET', `meal/${id}/`, { })
+      .then(response => response.data)
+      .catch((err) => { throw err; });
+  }
 }

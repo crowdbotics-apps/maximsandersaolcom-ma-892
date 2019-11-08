@@ -14,15 +14,15 @@ const ProteinBar = ({
 }) => (
   <View style={[styles.contentWrapper, styleProps]}>
     <View style={styles.classWrapper}>
-      <Text style={styles.proteinLabel}>{`${numberOfProtein}g`}</Text>
+      <Text style={styles.proteinLabel}>{`${parseFloat(Math.round(numberOfProtein * 100) / 100).toFixed(1)}g`}</Text>
       <Text style={styles.classLabel}>Protein</Text>
     </View>
     <View style={styles.classWrapper}>
-      <Text style={styles.carbsLabel}>{`${numberOfCarbs}g`}</Text>
+      <Text style={styles.carbsLabel}>{`${parseFloat(Math.round(numberOfCarbs * 100) / 100).toFixed(1)}g`}</Text>
       <Text style={styles.classLabel}>Carbs</Text>
     </View>
     <View style={styles.classWrapper}>
-      <Text style={styles.fatLabel}>{`${numberOfFat}g`}</Text>
+      <Text style={styles.fatLabel}>{`${parseFloat(Math.round(numberOfFat * 100) / 100).toFixed(1)}g`}</Text>
       <Text style={styles.classLabel}>Fat</Text>
     </View>
   </View>

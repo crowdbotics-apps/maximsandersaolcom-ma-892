@@ -1,115 +1,187 @@
-import React, { Component } from 'react';
+import React from 'react';
 import SearchablePaginatedList from '../../components/SearchablePaginatedList/SearchablePaginatedList';
-import FeedItem from '../../components/FeedItem';
+import { View, Image, TextInput, TouchableOpacity } from 'react-native';
+import { Text, withStyles, Avatar } from 'react-native-ui-kitten';
+import moment from 'moment';
 
-const logo = require('../../assets/logo.png');
-const waterPicture = require('../../assets/water_picture.jpg');
-const stuffedPicture = require('../../assets/stuffed-peppers.jpg');
-const womanFitnessPicture = require('../../assets/woman-fitness-workout.jpeg');
-const lauraTransformation = require('../../assets/before-and-after.png');
-const cookingVideo = require('../../assets/video/Cooking.mp4');
+import SocialBar from '../../components/socialBar';
+import { data } from '../../data';
 
-const feeds = [
-  {
-    fullName: 'Demo user',
-    time: '1 month ago',
-    title: 'How Much Water Are You Consuming?',
-    likes: 10,
-    comments: 20,
-    id: 1,
-    image: waterPicture,
-    profileImage: logo,
-    video: false
-  },
-  {
-    fullName: 'Maxim Fitnes',
-    time: '2 month ago',
-    title: 'Low Carb Stuffed Peppers',
-    likes: 42,
-    comments: 12,
-    id: 2,
-    image: stuffedPicture,
-    profileImage: logo,
-    video: false
-  },
-  {
-    fullName: 'John Doe',
-    time: '4 month ago',
-    title: '10 Dynamic Stretches Before a Workout',
-    likes: 33,
-    comments: 7,
-    id: 3,
-    image: womanFitnessPicture,
-    profileImage: logo,
-    video: false
-  },
-  {
-    fullName: 'Pera Peric',
-    time: '8 month ago',
-    title: 'How To Food Prep',
-    likes: 2,
-    comments: 6,
-    id: 4,
-    image: '',
-    profileImage: logo,
-    video: true,
-    videoFile: cookingVideo
-  },
-  {
-    fullName: 'Nick Peric',
-    time: '8 month ago',
-    title: "Laura's Transformation",
-    likes: 97,
-    comments: 41,
-    id: 5,
-    image: lauraTransformation,
-    profileImage: logo,
-    video: false
-  },
-];
+const avatarIcon = require('../../assets/avatarIcon.png');
+const sendComment = require('../../assets/send_comment.png')
 
-export default class FeedContainer extends Component {
-  renderItem = ({
-    item: {
-      fullName,
-      time,
-      title,
-      likes,
-      comments,
-      id,
-      image,
-      profileImage,
-      video,
-      videoFile
-    },
-    index
-  }) => (
-    <FeedItem
-      fullName={fullName}
-      time={time}
-      title={title}
-      likes={likes}
-      comments={comments}
-      image={image}
-      profileImage={profileImage}
-      video={video}
-      videoFile={videoFile}
-      id={id}
-      index={index}
+
+class _Feed extends React.Component {
+  
+  state = {
+    comment: ''
+  }
+
+  extractItemKey = item => `${item.id}`;
+
+  renderItem = ({ item }) => {
+    return (
+      <View style={this.props.themedStyle.card}>
+        <View style={this.props.themedStyle.cardHeader}>
+          <Avatar
+            source={avatarIcon}
+            size="small"
+            style={this.props.themedStyle.avatar}
+          />
+          <View>
+            <Text
+              category="s1"
+              style={this.props.themedStyle.text}
+            >{`First and Last Name`}</Text>
+            <Text
+              category="c1"
+              appearance="hint"
+              style={this.props.themedStyle.textTime}
+            >
+              {/* {moment()
+                .add(item.time, "seconds")
+                .fromNow()} */}
+                {/* {moment()} */}
+                21 minutes
+            </Text>
+          </View>
+        </View>
+        <View style={this.props.themedStyle.cardImage}>
+          <Image
+            style={{ width: '100%', height: 200 }}
+            source={{ uri: item.image_url }}
+            resizeMode="cover"
+          />
+        </View>
+        <View style={this.props.themedStyle.cardContent}>
+          <Text category="s1" style={this.props.themedStyle.text}>
+            {item.title}
+          </Text>
+          <Text category="p1" style={this.props.themedStyle.text}>
+            {item.content}
+          </Text>
+        </View>
+        <View style={this.props.themedStyle.cardBottom}>
+          <SocialBar
+            onCommentButtonPressed={this.props.toggleCommentAction}
+            addOrRemoveLike={this.props.addOrRemoveLikeAction}
+            feedId={item.id}
+            likes={item.likes}
+            isLiked={item.liked}
+            comments={item.comments.length}
+          />
+        </View>
+        {
+          item.commentShow ? this.renderComments(item.comments) : null
+        }
+        {
+          item.commentShow ? (
+            <View
+              style={{
+                width: '100%',
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginBottom: 10,
+                flexDirection: 'row',
+              }}
+            >
+              <View style={{ width: '80%' }}>
+                <TextInput
+                  placeholder="Write your comment"
+                  onChangeText={value => this.setState({ [`comment${item.id}`]: value })}
+                  style={{
+                    backgroundColor: 'rgb(229,233,241)',
+                    borderRadius: 10,
+                    width: '100%',
+                    maxHeight: 100,
+                    padding: 10
+                  }}
+                  value={this.state[`comment${item.id}`]}
+                  multiline
+                />
+              </View>
+              <TouchableOpacity
+                style={{ width: '10%', justifyContent: 'center', alignItems: 'center', height: 30 }}
+                onPress={() => {
+                  this.props.addCommentAction(item.id, this.state[`comment${item.id}`]);
+                  this.setState({ [`comment${item.id}`]: '' });
+                }}
+              >
+                <Image source={sendComment} style={{ width: 20, height: 20 }} />
+              </TouchableOpacity>
+            </View>
+          ) : null
+        }
+      </View>
+    );
+  };
+
+  renderComments = comments => comments.map(comment => (
+    <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center', marginBottom: 10 }}>
+      <View style={{ backgroundColor: 'rgb(229,233,241)', width: '90%', borderRadius: 10, padding: 10 }}>
+        <Text style={{ color: 'black' }}>{comment.content}</Text>
+      </View>
+    </View>
+  ))
+
+  render = () => (
+    <SearchablePaginatedList
+      style={this.props.themedStyle.container}
+      contentContainerStyle={{ flexGrow: 1, paddingHorizontal: 5, backgroundColor: 'rgb(229,233,241)' }}
+      list={this.props.feeds}
+      fetchListAction={(search, categorySlug, page, limit, offset) => this.props.getFeedAction({
+        page,
+        limit,
+        offset
+      })}
+      renderItem={item => this.renderItem(item)}
+      search={''}
+      filter={''}
     />
   );
-
-  render() {
-    return (
-      <SearchablePaginatedList
-        style={{ flex: 1 }}
-        contentContainerStyle={{ flexGrow: 1, paddingHorizontal: 0, paddingVertical: 0 }}
-        list={feeds}
-        fetchListAction={() => {}}
-        renderItem={item => this.renderItem(item)}
-        search={''}
-        filter={''}
-      />
-    );
-  }
 }
+
+export default Feed = withStyles(_Feed, theme => ({
+  container: {
+    backgroundColor: theme["color-basic-400"],
+    paddingVertical: 8,
+    paddingHorizontal: 10,
+    // marginTop: 20
+  },
+  card: {
+    marginVertical: 8,
+    backgroundColor: theme["color-basic-100"]
+    //maxHeight: 520
+  },
+  cardHeader: {
+    padding: 10,
+    flexDirection: "row"
+  },
+  cardContent: {
+    padding: 10
+  },
+  cardBottom: {
+    padding: 10,
+    width: "100%",
+    Height: 100
+  },
+  avatar: {
+    marginRight: 16
+  },
+  text: {
+    color: theme["color-basic-1000"]
+  },
+  textTime: {
+    color: theme["color-basic-600"]
+    // marginTop: 5,
+  },
+  image: {
+    width: "100%",
+    // minHeight: 220,
+    maxHeight: 220
+  },
+  cardImage: {
+    maxHeight: 220,
+  },
+
+}));

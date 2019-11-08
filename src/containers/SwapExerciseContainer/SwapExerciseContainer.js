@@ -15,7 +15,8 @@ import Routes from '../../Routes';
 const SwapExerciseContainer = ({
   navigation,
   navigation: {
-    toggleDrawer
+    toggleDrawer,
+    getParam
   },
   selectedSwapObj,
   allExercises,
@@ -30,8 +31,8 @@ const SwapExerciseContainer = ({
   }, [allExercises]);
   useEffect(() => {
     if (exerciseSwapped) {
-      const { state: { params } } = navigation;
-      if (typeof params.prevScreen !== 'undefined' && params.prevScreen === 'TodayScreen') {
+      const prevScreen = getParam('prevScreen', false);
+      if (prevScreen === 'TodayScreen') {
         navigation.navigate(Routes.TodayScreen);
         return;
       }
@@ -59,9 +60,10 @@ const SwapExerciseContainer = ({
             renderItem={({ item }) => (
               <TouchableOpacity
                 onPress={() => {
-                  swapExercisesAction(selectedSwapObj.id, item.id);
+                  const restOfProgram = getParam('restOfProgram', false);
+                  swapExercisesAction(selectedSwapObj.id, item.id, restOfProgram);
                 }}
-                style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+                style={{ width: '50%', justifyContent: 'center', alignItems: 'center' }}
               >
                 <View>
                   <Image

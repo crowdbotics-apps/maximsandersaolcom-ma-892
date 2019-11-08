@@ -35,9 +35,10 @@ const LogFoodsContainer = ({
   },
   removeSelectedProductsAction,
   editSelectedProductsAction,
-  removeAllSelectedProductsAction
+  removeAllSelectedProductsAction,
+  logFoodAction
 }) => {
-  const dataSource = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+  const dataSource = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={{ zIndex: 1 }}>
@@ -83,9 +84,9 @@ const LogFoodsContainer = ({
           </View>
         </View>
         <View style={styles.tableColumnContainer}>
-          <TableColumn name="Proteins" value={proteins} />
-          <TableColumn name="Carbs" value={carbohydrate} middle />
-          <TableColumn name="Fat" value={fat} />
+          <TableColumn name="Proteins" value={parseFloat(Math.round(proteins * 100) / 100).toFixed(2)} />
+          <TableColumn name="Carbs" value={parseFloat(Math.round(carbohydrate * 100) / 100).toFixed(2)} middle />
+          <TableColumn name="Fat" value={parseFloat(Math.round(fat * 100) / 100).toFixed(2)} />
         </View>
       </View>
       <View style={styles.gradientButtonContainer}>
@@ -95,7 +96,9 @@ const LogFoodsContainer = ({
           buttonContainerTextStyle={styles.buttonContainerTextStyle}
           buttonContentContainerProp={{ paddingBottom: 0 }}
           colorsGradient={['#3180BD', '#6EC2FA']}
-          onPress={() => {}}
+          onPress={() => {
+            logFoodAction();
+          }}
         />
       </View>
       <TouchableDeleteAll removeAllSelectedProductsAction={removeAllSelectedProductsAction} />
@@ -177,7 +180,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'white'
   },
   mainSwipeContainer: {
-    minHeight: 200
+    minHeight: 200,
+    maxHeight: 400
   },
   swipeHeaderText: {
     fontSize: 14,
