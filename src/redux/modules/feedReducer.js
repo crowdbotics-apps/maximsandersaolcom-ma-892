@@ -102,7 +102,8 @@ export const addOrRemoveLike = feedId => (dispatch, getState) => feedService.add
       if (item.id === feedId) {
         const helper = {
           ...item,
-          liked: !item.liked
+          liked: !item.liked,
+          likes: item.liked ? item.likes - 1 : item.likes + 1
         };
         return helper;
       }
