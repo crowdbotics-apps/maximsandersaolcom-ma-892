@@ -77,7 +77,21 @@
       "overview": "Overview",
       "details": "Details"
     },
-    "startWorkoutButton": "Start Workout"
+    "startWorkoutButton": "Start Workout",
+    "finishModal": {
+      "title": "Finish Workout",
+      "buttons": {
+        "yes": "Yes",
+        "no": "No"
+      }
+    }
+  },
+  "selectSubscriptionScreen": {
+    "buttons": {
+      "continueProgram": "Continue Program",
+      "findClasses": "Find Classes",
+      "discoverMore": "Discover More"
+    }
   },
   "todayScreen": {
     "logFoods": "Log Foods",
@@ -97,5 +111,15 @@
     "descriptionPart1": "Type or speak freeform text in the box above.",
     "descriptionPart2": "Freeform is fueled by our state-of-the-art Natural\nLanguage Processing technology to accurately\ndetermine what you ate",
     "descriptionPart3": "After you add foods or products, you will have a\nchance to review the foods, change the time you\nate them, and change serving sizes before adding\nto your log"
+  },
+  "swipeScreen": {
+    "alernativeText": "Select Alternate Exercise",
+    "modal": {
+      "replaceTitle": "Replace Exercise",
+      "buttons": {
+        "thisDayOnly": "This day only",
+        "restOfProgram": "The rest of the program"
+      }
+    }
   }
 }

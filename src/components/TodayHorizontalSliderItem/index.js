@@ -7,7 +7,7 @@ import {
   StyleSheet
 } from 'react-native';
 
-const imagePlaceholder = 'https://via.placeholder.com/300x150.png?text=MAXIM+FITNESS';
+const defaultImage = require('../../assets/logoSplashScreen.png');
 
 const TodayHorizontalSliderItem = ({
   item,
@@ -22,8 +22,9 @@ const TodayHorizontalSliderItem = ({
   >
     <View style={styles.containerMain}>
       <Image
-        source={{ uri: item.exercise.pictures[0].image_url || imagePlaceholder }}
+        source={item.exercise.pictures[0] ? { uri: item.exercise.pictures[0].image_url } : defaultImage}
         style={styles.backgroundImageStyle}
+        resizeMode="center"
       />
     </View>
     <View style={styles.textContainer}>

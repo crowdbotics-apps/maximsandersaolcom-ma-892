@@ -21,5 +21,6 @@ export default {
   MealRegulatorScreen: 'MealRegulatorScreen',
   LogFoodsScreen: 'LogFoodsScreen',
   MealRegulatorNutritionScreen: 'MealRegulatorNutritionScreen',
-  LogFoodsNutritionScreen: 'LogFoodsNutritionScreen'
+  LogFoodsNutritionScreen: 'LogFoodsNutritionScreen',
+  SelectSubscriptionScreen: 'SelectSubscriptionScreen'
 };

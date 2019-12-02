@@ -6,10 +6,15 @@ import {
   StyleSheet
 } from 'react-native';
 
-const iconBurger = require('../../assets/hamburger.png');
+const defaultIconBurger = require('../../assets/hamburger.png');
 const logoMaxim = require('../../assets/logoSplashScreen.png');
 
-const HeaderForDrawer = ({ onDrawerButtonPress, headerNavProp, hideHamburger = false }) => (
+const HeaderForDrawer = ({
+  onDrawerButtonPress,
+  headerNavProp,
+  hideHamburger = false,
+  iconBurger = defaultIconBurger
+}) => (
   <View style={[styles.headerNav, headerNavProp]}>
     <View style={{ flex: 1 }}>
       {

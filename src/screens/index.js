@@ -19,3 +19,4 @@ export { default as ExerciseScreen } from './ExerciseScreen';
 export { default as SwapExerciseScreen } from './SwapExerciseScreen';
 export { default as MealRegulatorScreen } from './MealRegulatorScreen';
 export { default as LogFoodsScreen } from './LogFoodsScreen';
+export { default as SelectSubscriptionScreen } from './SelectSubscriptionScreen';
