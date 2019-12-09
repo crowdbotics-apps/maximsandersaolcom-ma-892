@@ -78,6 +78,7 @@
       "details": "Details"
     },
     "startWorkoutButton": "Start Workout",
+    "finishWorkoutButton": "Finish Workout",
     "finishModal": {
       "title": "Finish Workout",
       "buttons": {

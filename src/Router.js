@@ -36,7 +36,8 @@ import {
   SwapExerciseScreen,
   MealRegulatorScreen,
   LogFoodsScreen,
-  SelectSubscriptionScreen
+  SelectSubscriptionScreen,
+  WorkoutSummaryScreen
 } from './screens';
 import DrawerContent from './containers/DrawerContent';
 import regularHeaderStyle from './components/regularHeaderStyle';
@@ -240,6 +241,13 @@ const FeedTabStack = createStackNavigator({
 const ProgramsTabStack = createDrawerNavigator({
   [Routes.SelectSubscriptionScreen]: {
     screen: SelectSubscriptionScreen,
+    navigationOptions: () => ({
+      header: null,
+      drawerLabel: () => null,
+    })
+  },
+  [Routes.WorkoutSummaryScreen]: {
+    screen: WorkoutSummaryScreen,
     navigationOptions: () => ({
       header: null,
       drawerLabel: () => null,

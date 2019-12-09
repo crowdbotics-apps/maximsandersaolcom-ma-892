@@ -22,5 +22,6 @@ export default {
   LogFoodsScreen: 'LogFoodsScreen',
   MealRegulatorNutritionScreen: 'MealRegulatorNutritionScreen',
   LogFoodsNutritionScreen: 'LogFoodsNutritionScreen',
-  SelectSubscriptionScreen: 'SelectSubscriptionScreen'
+  SelectSubscriptionScreen: 'SelectSubscriptionScreen',
+  WorkoutSummaryScreen: 'WorkoutSummaryScreen'
 };

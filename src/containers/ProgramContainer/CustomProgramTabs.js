@@ -7,24 +7,19 @@ import {
   Image
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import Modal from 'react-native-modal';
 import SearchablePaginatedList from '../../components/SearchablePaginatedList/SearchablePaginatedList';
 import i18n from '../../i18n/i18n';
 import Fonts from '../../assets/fonts';
-import ModalButton from '../../components/ModalButton';
 
 const iconOverview = require('../../assets/icon_overview.png');
 const iconDetails = require('../../assets/icon_details.png');
 const iconDoneProgram = require('../../assets/icon_program_done.png');
 const defaultImage = require('../../assets/logoSplashScreen.png');
 
-const renderItem = (item, toggleModal) => (
+const renderItem = item => (
   <TouchableOpacity
     style={item.done ? styles.itemTouchableDone : styles.itemTouchable}
-    disabled={item.done}
-    onPress={() => {
-      toggleModal();
-    }}
+    disabled
   >
     <View
       style={styles.itemWrapper}
@@ -82,45 +77,10 @@ const emptyList = () => (
   </View>
 );
 
-const renderModal = (isVisible, closeModal) => (
-  <Modal
-    isVisible={isVisible}
-    animationOutTiming={1}
-    onBackdropPress={() => {
-      closeModal();
-    }}
-  >
-    <View style={styles.modalContent}>
-      <Text
-        style={styles.titleModal}
-      >
-        {i18n.t('programScreen.finishModal.title')}
-      </Text>
-      <ModalButton
-        onPress={() => {
-          closeModal();
-        }}
-        label={i18n.t('programScreen.finishModal.buttons.yes')}
-        buttonStyle={styles.buttonStyleModal}
-        labelStyle={styles.buttonModalLabelStyle}
-      />
-      <ModalButton
-        onPress={() => {
-          closeModal();
-        }}
-        label={i18n.t('programScreen.finishModal.buttons.no')}
-        buttonStyle={styles.buttonStyleModal}
-        labelStyle={styles.buttonModalLabelStyle}
-      />
-    </View>
-  </Modal>
-);
-
 const CustomProgramTabs = ({
   overviewData = {},
 }) => {
   const [activeTab, setActiveTab] = useState(1);
-  const [modalVisible, setModalVisible] = useState(false);
   return (
     <View style={{ flex: 1 }}>
       <View style={styles.mainContainer}>
@@ -176,7 +136,7 @@ const CustomProgramTabs = ({
           contentContainerStyle={styles.searchableContent}
           list={overviewData}
           fetchListAction={() => {}}
-          renderItem={({ item }) => renderItem(item, () => setModalVisible(prevState => ({ modalVisible: !prevState.modalVisible })))}
+          renderItem={({ item }) => renderItem(item)}
           search=""
           filter=""
           numColumns={1}
@@ -193,11 +153,6 @@ const CustomProgramTabs = ({
           <Text>Some text here!</Text>
         </View>
       )}
-      {
-        modalVisible
-          ? renderModal(modalVisible, () => setModalVisible(prevState => !prevState.modalVisible))
-          : null
-      }
     </View>
   );
 };
@@ -296,34 +251,6 @@ const styles = StyleSheet.create({
   categoryText: {
     color: 'white',
     fontFamily: Fonts.HELVETICA_BOLD
-  },
-  modalContent: {
-    backgroundColor: 'white',
-    padding: 22,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 15,
-    borderColor: 'rgba(0, 0, 0, 0.1)',
-  },
-  buttonStyleModal: {
-    width: '80%',
-    height: 60,
-    borderColor: 'rgb(230,230,230)',
-    borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderWidth: 1,
-    marginTop: 15
-  },
-  buttonModalLabelStyle: {
-    fontSize: 14,
-    fontFamily: Fonts.HELVETICA_MEDIUM
-  },
-  titleModal: {
-    fontSize: 20,
-    fontFamily: Fonts.HELVETICA_BOLD,
-    color: 'rgb(0,84,248)',
-    marginBottom: 5
   },
 });
 
