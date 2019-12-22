@@ -11,5 +11,7 @@ export default {
   emailErrorText: '',
   passwordErrorText: '',
   usernameError: false,
-  usernameErrorText: ''
+  usernameErrorText: '',
+  non_field_errorsError: false,
+  non_field_errorsErrorText: ''
 };

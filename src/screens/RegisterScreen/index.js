@@ -243,6 +243,9 @@ class RegisterScreen extends Component {
                       value={email}
                       error={emailErrorText}
                       placeholder={i18n.t('registerScreen.emailPlaceholder')}
+                      titleTextStyle={{
+                        fontSize: 10
+                      }}
                     />
                   </View>
                   <View style={{ width: '100%' }}>
@@ -253,6 +256,9 @@ class RegisterScreen extends Component {
                       value={password}
                       error={passwordErrorText}
                       placeholder={i18n.t('registerScreen.passwordPlaceholder')}
+                      titleTextStyle={{
+                        fontSize: 10
+                      }}
                     />
                   </View>
                   <CheckBox
