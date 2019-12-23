@@ -105,7 +105,8 @@ export const getRecipeByNameOrCategory = ({
         }
         // has more
         return recipes.length === limit;
-      });
+      })
+      .catch(err => console.log("err", err))
   };
 };
 

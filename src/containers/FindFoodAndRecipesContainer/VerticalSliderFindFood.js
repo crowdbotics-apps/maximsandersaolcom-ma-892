@@ -10,7 +10,7 @@ const VerticalSliderFindFood = ({
   allRecipes,
   navigation,
   selectOneRecipeAction,
-  getRecipeByNameOrCategoryAction,
+  getRecipeByNameOrCategoryAction = () => {},
   searchString,
   category
 }) => (

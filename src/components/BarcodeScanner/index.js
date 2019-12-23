@@ -21,13 +21,18 @@ export default class BarcodeScanner extends Component {
   }
 
   onBarCodeRead = async (e) => {
-    const { getProductWithBarcodeAction, navigation } = this.props;
+    const { getProductWithBarcodeAction, navigation, setSelectedProductsBarCode } = this.props;
     const { barcodes } = e;
     if (barcodes.length) {
       const [first] = barcodes;
       try {
         await getProductWithBarcodeAction(first.data);
         if (navigation.getParam('logFood', false)) {
+          await setSelectedProductsBarCode();
+          const prevScreen = navigation.getParam('prevScreen', false);
+          if (prevScreen === Routes.MealRegulatorNutritionScreen) {
+            return navigation.replace(Routes.LogFoodsNutritionScreen);
+          }
           return navigation.navigate(Routes.LogFoodsScreen);
         }
         return navigation.navigate(Routes.IngredientScreen);
