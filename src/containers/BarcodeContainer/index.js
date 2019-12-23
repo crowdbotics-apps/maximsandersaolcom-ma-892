@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getProductWithBarcodeAction } from '../../redux/modules/nutritionReducer';
+import { getProductWithBarcodeAction, setSelectedProductsBarCode } from '../../redux/modules/nutritionReducer';
 import BarcodeScanner from '../../components/BarcodeScanner';
 
 const mapState = state => ({
@@ -9,6 +9,7 @@ const mapState = state => ({
 
 const mainActions = {
   getProductWithBarcodeAction,
+  setSelectedProductsBarCode
 };
 
 export default connect(

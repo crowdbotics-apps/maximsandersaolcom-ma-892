@@ -248,7 +248,8 @@ export default class SearchableDropDown extends Component {
         <TouchableOpacity
           style={{ width: 35, height: 35, marginLeft: -40 }}
           onPress={() => {
-            navigation.navigate(Routes.BarCodeScreen, { logFood: true });
+            const prevScreen = navigation.getParam('prevScreen', false);
+            navigation.navigate(Routes.BarCodeScreen, { logFood: true, prevScreen });
           }}
         >
           <Image style={{ width: 35, height: 35 }} source={barcodeIcon} />

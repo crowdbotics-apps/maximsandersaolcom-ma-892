@@ -170,6 +170,15 @@ export const setSelectedProducts = selectedItem => (dispatch, getState) => {
   });
 };
 
+export const setSelectedProductsBarCode = () => (dispatch, getState) => {
+  const { nutrition: { selectedProducts, scannedProduct } } = getState();
+  const findSelectedItem = selectedProducts.find(item => item.id === scannedProduct.id);
+  return dispatch({
+    type: SET_SELECTED_PRODUCT,
+    payload: !findSelectedItem && [...selectedProducts, { ...scannedProduct, measure: null, portion: 0, onServer: false }] || selectedProducts,
+  });
+}
+
 export const removeSelectedProducts = itemForRemove => (dispatch, getState) => {
   const { nutrition: { selectedMeal, meals } } = getState();
   if (itemForRemove.onServer) {
@@ -357,7 +366,7 @@ export const createNewMealSpeach = (query, fromSentence, dateTime) => (dispatch,
       })
       .catch((err) => { throw err; });
   }
-  nutritionsService
+  return nutritionsService
     .createMeal({ date_time: dateTime, query, from_sentence: fromSentence })
     .then(result => result)
     .then(res => nutritionsService.getMeal(res.id))
@@ -389,7 +398,7 @@ export const createNewMealSpeach = (query, fromSentence, dateTime) => (dispatch,
       dispatch({ type: NEW_MEALS, payload: newMealArray });
     })
     .catch(err => console.log('err', err));
-}
+};
 
 export const logFood = () => (dispatch, getState) => {
   const { nutrition: { selectedMeal, selectedProducts, meals } } = getState();
@@ -397,7 +406,7 @@ export const logFood = () => (dispatch, getState) => {
     const arrayForServer = selectedProducts.map(item => ({
       food_name: item.name,
       item_id: item.id,
-      portion: item.portion
+      portion: typeof item.portion === 'undefined' ? 1 : item.portion
     }));
     return nutritionsService.createMeal({ date_time: selectedMeal.date_time, nix_food_items: arrayForServer })
       .then(result => result)
@@ -415,7 +424,7 @@ export const logFood = () => (dispatch, getState) => {
   }
   const itemsForAdd = selectedProducts.filter(item => !item.onServer);
   if (itemsForAdd.length) {
-    return Promise.all(itemsForAdd.map(item => nutritionsService.addFood(selectedMeal.id, { nix_food_items: [{ food_name: item.name, portion: item.portion, item_id: item.id }] }, '', false, selectedMeal.date_time, item.id)))
+    return Promise.all(itemsForAdd.map(item => nutritionsService.addFood(selectedMeal.id, { nix_food_items: [{ food_name: item.name, portion: typeof item.portion === 'undefined' ? 1 : item.portion, item_id: item.id }] }, '', false, selectedMeal.date_time, item.id)))
       .then(result => result)
       .then(() => nutritionsService.getMeal(selectedMeal.id))
       .then((getMealResult) => {
@@ -427,6 +436,6 @@ export const logFood = () => (dispatch, getState) => {
         });
         dispatch({ type: NEW_MEALS, payload: newMealArray });
       })
-      .catch(err => console.log('aa', err))
+      .catch(err => console.log('error', err))
   }
 };

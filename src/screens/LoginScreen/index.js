@@ -199,7 +199,8 @@ class LoginScreen extends Component {
     } = this.state;
     const {
       usernameErrorText,
-      passwordErrorText
+      passwordErrorText,
+      nonFieldErrorText
     } = this.props;
     return (
       <KeyboardAvoidingView
@@ -260,8 +261,11 @@ class LoginScreen extends Component {
                       keyboardType="email-address"
                       onChangeText={value => this.handleInputChange('email', value)}
                       value={email}
-                      error={usernameErrorText}
+                      error={usernameErrorText || nonFieldErrorText}
                       placeholder={i18n.t('loginScreen.emailPlaceholder')}
+                      titleTextStyle={{
+                        fontSize: 10
+                      }}
                     />
                   </View>
                   <View style={{ width: '100%' }}>
@@ -272,6 +276,9 @@ class LoginScreen extends Component {
                       value={password}
                       error={passwordErrorText}
                       placeholder={i18n.t('loginScreen.passwordPlaceholder')}
+                      titleTextStyle={{
+                        fontSize: 10
+                      }}
                     />
                   </View>
                 </View>
@@ -295,10 +302,20 @@ class LoginScreen extends Component {
 }
 
 export default connect(
-  ({ auth: { authenticated, usernameErrorText, passwordErrorText } }) => ({
+  ({
+    auth: {
+      authenticated,
+      usernameErrorText,
+      passwordErrorText,
+      non_field_errorsError: nonFieldError,
+      non_field_errorsErrorText: nonFieldErrorText
+    }
+  }) => ({
     authenticated,
     usernameErrorText,
-    passwordErrorText
+    passwordErrorText,
+    nonFieldError,
+    nonFieldErrorText
   }),
   dispatch => bindActionCreators(mainActions, dispatch)
 )(withNavigation(LoginScreen));

@@ -14,8 +14,7 @@ const learnIcon = require('../../assets/icon_learn.png');
 const settingsIcon = require('../../assets/icon_settings.png');
 
 const ProfileMenu = () => (
-  <View style={{ width: '100%', marginTop: 20, marginBottom: 300 }}>
-    <ScrollView>
+    <ScrollView contentContainerStyle={{ flex: 1 }} style={{ flex: 1 }}>
       <ProfileMenuItem
         menuIcon={findMyProgramIcon}
         menuText={i18n.t('profileScreen.profileMenuItems.findMyProgram')}
@@ -42,7 +41,6 @@ const ProfileMenu = () => (
         openDrawer
       />
     </ScrollView>
-  </View>
 );
 
 export default ProfileMenu;
