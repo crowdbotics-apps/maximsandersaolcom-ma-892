@@ -8,6 +8,7 @@ const VideoExercise = ({ videoUrl, containterStyle }) => (
       source={{ uri: videoUrl }}
       paused
       controls
+      repeat
       style={styles.videoStyle}
     />
   </View>

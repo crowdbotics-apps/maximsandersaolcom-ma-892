@@ -1,27 +1,70 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   SafeAreaView,
   StyleSheet,
+  Text
 } from 'react-native';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
+import Modal from 'react-native-modal';
 import HeaderForDrawer from '../../components/HeaderForDrawer';
 import GradientButton from '../../components/GradientButton';
 import ProgramTabHeader from '../../components/ProgramTabHeader';
 import CustomProgramTabs from './CustomProgramTabs';
 import i18n from '../../i18n/i18n';
 import Routes from '../../Routes';
+import ModalButton from '../../components/ModalButton';
+import Fonts from '../../assets/fonts';
+
+
+const renderModal = (isVisible, closeModal, navigate) => (
+  <Modal
+    isVisible={isVisible}
+    animationOutTiming={1}
+    onBackdropPress={() => {
+      closeModal();
+    }}
+  >
+    <View style={styles.modalContent}>
+      <Text
+        style={styles.titleModal}
+      >
+        {i18n.t('programScreen.finishModal.title')}
+      </Text>
+      <ModalButton
+        onPress={() => {
+          closeModal();
+          navigate(Routes.WorkoutSummaryScreen);
+        }}
+        label={i18n.t('programScreen.finishModal.buttons.yes')}
+        buttonStyle={styles.buttonStyleModal}
+        labelStyle={styles.buttonModalLabelStyle}
+      />
+      <ModalButton
+        onPress={() => {
+          closeModal();
+        }}
+        label={i18n.t('programScreen.finishModal.buttons.no')}
+        buttonStyle={styles.buttonStyleModal}
+        labelStyle={styles.buttonModalLabelStyle}
+      />
+    </View>
+  </Modal>
+);
+
 
 const ProgramContainer = ({
   navigation,
   navigation: {
-    toggleDrawer
+    toggleDrawer,
+    navigate
   },
   allSessions,
   getAllSessionsAction,
   pickSessionAction,
   exerciseSwapped
 }) => {
+  const [modalVisible, setModalVisible] = useState(false);
   useEffect(() => {
     getAllSessionsAction();
   }, [exerciseSwapped]);
@@ -48,8 +91,8 @@ const ProgramContainer = ({
                   style={styles.buttonContainer}
                 >
                   <GradientButton
-                    isDone={!itemWorkoutUndone}
-                    buttonContainerText={i18n.t('programScreen.startWorkoutButton')}
+                    // isDone={!itemWorkoutUndone}
+                    buttonContainerText={itemWorkoutUndone ? i18n.t('programScreen.startWorkoutButton') : i18n.t('programScreen.finishWorkoutButton')}
                     buttonContainerStyleProp={styles.findRecipesButtonContainer}
                     buttonContainerTextStyle={styles.buttonContainerTextStyle}
                     buttonContentContainerProp={{ paddingBottom: 0 }}
@@ -58,8 +101,9 @@ const ProgramContainer = ({
                     onPress={() => {
                       if (itemWorkoutUndone) {
                         pickSessionAction(itemWorkoutUndone, item.workouts, nextWorkout);
-                        navigation.navigate(Routes.ExerciseScreen);
+                        return navigate(Routes.ExerciseScreen);
                       }
+                      return setModalVisible(true);
                     }}
                   />
                 </View>
@@ -72,6 +116,11 @@ const ProgramContainer = ({
                     overviewData={item.workouts}
                     pickSession={pickSessionAction}
                   />
+                  {
+                    modalVisible
+                      ? renderModal(modalVisible, () => setModalVisible(false), navigate)
+                      : null
+                  }
                 </View>
               </View>
             );
@@ -113,6 +162,34 @@ const styles = StyleSheet.create({
     fontWeight: 'normal',
     textAlign: 'center',
     textAlignVertical: 'center'
+  },
+  modalContent: {
+    backgroundColor: 'white',
+    padding: 22,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 15,
+    borderColor: 'rgba(0, 0, 0, 0.1)',
+  },
+  buttonStyleModal: {
+    width: '80%',
+    height: 60,
+    borderColor: 'rgb(230,230,230)',
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    marginTop: 15
+  },
+  buttonModalLabelStyle: {
+    fontSize: 14,
+    fontFamily: Fonts.HELVETICA_MEDIUM
+  },
+  titleModal: {
+    fontSize: 20,
+    fontFamily: Fonts.HELVETICA_BOLD,
+    color: 'rgb(0,84,248)',
+    marginBottom: 5
   },
 });
 

@@ -6,30 +6,29 @@ import {
   StyleSheet,
   Image
 } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 import SearchablePaginatedList from '../../components/SearchablePaginatedList/SearchablePaginatedList';
 import i18n from '../../i18n/i18n';
-import Routes from '../../Routes';
+import Fonts from '../../assets/fonts';
 
 const iconOverview = require('../../assets/icon_overview.png');
 const iconDetails = require('../../assets/icon_details.png');
 const iconDoneProgram = require('../../assets/icon_program_done.png');
+const defaultImage = require('../../assets/logoSplashScreen.png');
 
-const renderItem = (item, index, navigation, pickSession, overviewData) => (
+const renderItem = item => (
   <TouchableOpacity
     style={item.done ? styles.itemTouchableDone : styles.itemTouchable}
-    disabled={item.done}
-    onPress={() => {
-      // pickSession(item, overviewData);
-      // navigation.navigate(Routes.ExerciseScreen);
-    }}
+    disabled
   >
     <View
       style={styles.itemWrapper}
     >
       <View style={styles.imageItemWrapper}>
         <Image
-          source={{ uri: item.exercise.pictures[0].image_url }}
-          style={{ width: 55, height: 50 }}
+          source={item.exercise.pictures[0] ? { uri: item.exercise.pictures[0].image_url } : defaultImage}
+          style={{ width: 100, height: 70 }}
+          resizeMode="center"
         />
       </View>
       <View style={styles.textItemWrapper}>
@@ -38,8 +37,23 @@ const renderItem = (item, index, navigation, pickSession, overviewData) => (
           ellipsizeMode="tail"
           style={styles.textItem}
         >
-          {`${index + 1}. ${item.exercise.name}`}
+          {item.exercise.name}
         </Text>
+        <View style={{ flexDirection: 'row', alignSelf: 'flex-end' }}>
+          <LinearGradient
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            colors={['#3180BD', '#6EC2FA']}
+            style={styles.lineraGradientWrapper}
+          >
+            <Text style={styles.categoryText}>{item.exercise.exercise_type.name}</Text>
+          </LinearGradient>
+          <View style={styles.categoryWrapper}>
+            <Text style={styles.categoryText}>
+              Barbell
+            </Text>
+          </View>
+        </View>
       </View>
       {
         item.done ? (
@@ -65,9 +79,6 @@ const emptyList = () => (
 
 const CustomProgramTabs = ({
   overviewData = {},
-  detailsData = {},
-  navigation,
-  pickSession
 }) => {
   const [activeTab, setActiveTab] = useState(1);
   return (
@@ -125,10 +136,10 @@ const CustomProgramTabs = ({
           contentContainerStyle={styles.searchableContent}
           list={overviewData}
           fetchListAction={() => {}}
-          renderItem={({ item, index }) => renderItem(item, index, navigation, pickSession, overviewData)}
-          search={''}
-          filter={''}
-          numColumns={2}
+          renderItem={({ item }) => renderItem(item)}
+          search=""
+          filter=""
+          numColumns={1}
         />
       ) : (
         <View
@@ -167,15 +178,15 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   itemTouchable: {
-    width: '50%',
-    paddingHorizontal: 10,
-    marginBottom: 20,
+    width: '100%',
+    borderBottomColor: 'rgb(158,158,158);',
+    borderBottomWidth: 1
   },
   itemTouchableDone: {
-    width: '50%',
-    paddingHorizontal: 10,
-    marginBottom: 20,
-    opacity: 0.4
+    width: '100%',
+    opacity: 0.4,
+    borderBottomColor: 'rgb(158,158,158);',
+    borderBottomWidth: 1
   },
   itemWrapper: {
     flex: 1,
@@ -191,13 +202,16 @@ const styles = StyleSheet.create({
     flexDirection: 'column'
   },
   textItemWrapper: {
-    flex: 1,
+    flex: 2,
     flexDirection: 'column',
-    justifyContent: 'center'
+    justifyContent: 'space-between',
+    height: 70
   },
   textItem: {
     textAlign: 'left',
-    fontSize: 13
+    fontSize: 16,
+    fontFamily: Fonts.HELVETICA_MEDIUM,
+    marginTop: 15
   },
   iconTabs: {
     width: 20,
@@ -206,8 +220,7 @@ const styles = StyleSheet.create({
   },
   searchableContent: {
     flexGrow: 1,
-    paddingVertical: 10,
-    backgroundColor: 'rgb(242,242,242)'
+    backgroundColor: 'white'
   },
   doneWrapperImage: {
     position: 'absolute',
@@ -222,7 +235,23 @@ const styles = StyleSheet.create({
   doneIcon: {
     width: 40,
     height: 40,
-  }
+  },
+  lineraGradientWrapper: {
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    paddingVertical: 3,
+    marginRight: 15
+  },
+  categoryWrapper: {
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    paddingVertical: 3,
+    backgroundColor: 'rgb(146,146,146);'
+  },
+  categoryText: {
+    color: 'white',
+    fontFamily: Fonts.HELVETICA_BOLD
+  },
 });
 
 export default CustomProgramTabs;

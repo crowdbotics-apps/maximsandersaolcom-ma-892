@@ -10,7 +10,7 @@ export const drawerConfiguration = {
 };
 
 export const drawerConfigurationForProgram = {
-  initialRouteName: 'ProgramScreen',
+  initialRouteName: 'SelectSubscriptionScreen',
   drawerPosition: 'right',
 };
 
@@ -19,5 +19,5 @@ export const TAB_ICONS_ENUM = {
   Nutrition: { true: nutrationIcon, false: nutrationIcon },
   Profile: { true: profileIcon, false: profileIcon },
   Feed: { true: feedIcon, false: feedIcon },
-  Programs: { true: programsIcon, false: programsIcon }
+  Exercise: { true: programsIcon, false: programsIcon }
 };

@@ -40,6 +40,7 @@ export default (state = { ...initialStateSession }, { type, payload }) => {
       return {
         ...state,
         todaySession: payload,
+        exerciseSwapped: false
       };
     }
     case GET_EXERCISES_ALL: {
@@ -113,9 +114,9 @@ export const pickExerciseObject = (exercisesObj, selectedSession) => ({
   }
 });
 
-export const swapExercises = (workoutId, exerciseId) => (dispatch) => {
+export const swapExercises = (workoutId, exerciseId, restOfProgram) => (dispatch) => {
   const sessionService = new SessionService();
-  return sessionService.swapExercises(workoutId, exerciseId)
+  return sessionService.swapExercises(workoutId, exerciseId, restOfProgram)
     .then((payload) => {
       if (payload.data === 'Exercise swapped' && payload.status === 200) {
         return dispatch({
