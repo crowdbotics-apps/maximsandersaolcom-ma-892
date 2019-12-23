@@ -16,10 +16,11 @@ const iconDetails = require('../../assets/icon_details.png');
 const iconDoneProgram = require('../../assets/icon_program_done.png');
 const defaultImage = require('../../assets/logoSplashScreen.png');
 
-const renderItem = item => (
+const renderItem = (item, pickSession) => (
   <TouchableOpacity
     style={item.done ? styles.itemTouchableDone : styles.itemTouchable}
-    disabled
+    disabled={item.done}
+    onPress={pickSession}
   >
     <View
       style={styles.itemWrapper}
@@ -79,6 +80,7 @@ const emptyList = () => (
 
 const CustomProgramTabs = ({
   overviewData = {},
+  pickSession
 }) => {
   const [activeTab, setActiveTab] = useState(1);
   return (
@@ -136,7 +138,7 @@ const CustomProgramTabs = ({
           contentContainerStyle={styles.searchableContent}
           list={overviewData}
           fetchListAction={() => {}}
-          renderItem={({ item }) => renderItem(item)}
+          renderItem={({ item }) => renderItem(item, pickSession)}
           search=""
           filter=""
           numColumns={1}

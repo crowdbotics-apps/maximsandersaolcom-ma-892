@@ -295,12 +295,19 @@ const ProgramsTabStack = createDrawerNavigator({
 }, {
   ...drawerConfigurationForProgram,
   contentComponent: props => <DrawerContent {...props} />,
-  unmountInactiveRoutes: true
+  unmountInactiveRoutes: true,
 });
 
-ProgramsTabStack.navigationOptions = () => ({
-  tabBarVisible: true
-});
+ProgramsTabStack.navigationOptions = ({ navigation }) => {
+  if (navigation.state.index === 1) { // hide for summary screen
+    return ({
+      tabBarVisible: false
+    });
+  }
+  return ({
+    tabBarVisible: true
+  });
+};
 
 NutritionTabStack.navigationOptions = ({ navigation }) => {
   if (navigation.state.routes.length
@@ -325,7 +332,6 @@ const BottomAppStack = createBottomTabNavigator(
   {
     navigationOptions: ({ navigation }) => {
       let tabBarVisible = true;
-
       if (navigation.state.index > 0) {
         tabBarVisible = false;
       }

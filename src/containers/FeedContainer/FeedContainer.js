@@ -38,11 +38,8 @@ class _Feed extends React.Component {
               appearance="hint"
               style={this.props.themedStyle.textTime}
             >
-              {/* {moment()
-                .add(item.time, "seconds")
-                .fromNow()} */}
-                {/* {moment()} */}
-                21 minutes
+              {moment(new Date(item.created_at))
+                .fromNow()}
             </Text>
           </View>
         </View>
@@ -117,8 +114,20 @@ class _Feed extends React.Component {
   };
 
   renderComments = comments => comments.map(comment => (
-    <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center', marginBottom: 10 }}>
-      <View style={{ backgroundColor: 'rgb(229,233,241)', width: '90%', borderRadius: 10, padding: 10 }}>
+    <View style={{ width: '100%', justifyContent: 'center', alignItems: 'center', marginBottom: 10, flexDirection: 'row', paddingHorizontal: 10 }}>
+      <View style={{ width: '15%', justifyContent: 'center', alignItems: 'center' }}>
+        <Image
+          source={{
+            uri: comment.user.profile_url
+          }}
+          style={{ 
+            width: 35,
+            height: 35,
+            borderRadius: 35 / 2
+          }}
+        />
+      </View>
+      <View style={{ backgroundColor: 'rgb(229,233,241)', width: '85%', borderRadius: 10, padding: 10 }}>
         <Text style={{ color: 'black' }}>{comment.content}</Text>
       </View>
     </View>

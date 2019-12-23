@@ -85,6 +85,7 @@ const ProgramContainer = ({
           allSessions && allSessions.map((item, index) => {
             const [itemWorkoutUndone, nextWorkout] = item.workouts
               .filter(workoutItem => !workoutItem.done);
+            const showFinishButton = item.workouts.filter(workoutitem => workoutitem.done);
             return (
               <View tabLabel={item} style={{ flex: 1 }}>
                 <View
@@ -92,14 +93,14 @@ const ProgramContainer = ({
                 >
                   <GradientButton
                     // isDone={!itemWorkoutUndone}
-                    buttonContainerText={itemWorkoutUndone ? i18n.t('programScreen.startWorkoutButton') : i18n.t('programScreen.finishWorkoutButton')}
+                    buttonContainerText={!showFinishButton.length ? i18n.t('programScreen.startWorkoutButton') : i18n.t('programScreen.finishWorkoutButton')}
                     buttonContainerStyleProp={styles.findRecipesButtonContainer}
                     buttonContainerTextStyle={styles.buttonContainerTextStyle}
                     buttonContentContainerProp={{ paddingBottom: 0 }}
                     colorsGradient={['#3180BD', '#6EC2FA']}
                     colorsGradientDisable={['#d3d3d3', '#838383']}
                     onPress={() => {
-                      if (itemWorkoutUndone) {
+                      if (!showFinishButton.length) {
                         pickSessionAction(itemWorkoutUndone, item.workouts, nextWorkout);
                         return navigate(Routes.ExerciseScreen);
                       }
@@ -114,7 +115,10 @@ const ProgramContainer = ({
                   <CustomProgramTabs
                     navigation={navigation}
                     overviewData={item.workouts}
-                    pickSession={pickSessionAction}
+                    pickSession={() => {
+                      pickSessionAction(itemWorkoutUndone, item.workouts, nextWorkout);
+                      return navigate(Routes.ExerciseScreen);
+                    }}
                   />
                   {
                     modalVisible

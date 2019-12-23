@@ -131,7 +131,7 @@ export const toggleComment = feedId => (dispatch, getState) => {
 export const addComment = (feedId, comment)=> (dispatch, getState) => {
   return feedService.addComment(feedId, comment)
     .then((res) => {
-      const { feeds: { feeds: feedsArray } } = getState();
+      const { feeds: { feeds: feedsArray }, auth: { profile: { imageUrl } } } = getState();
       const newFeedArray = feedsArray.map((item) => {
         if (item.id === feedId) {
           const helper = {
@@ -139,7 +139,10 @@ export const addComment = (feedId, comment)=> (dispatch, getState) => {
             comments: [
               ...item.comments,
               {
-                content: comment
+                content: comment,
+                user: {
+                  profile_url: imageUrl
+                }
               }
             ]
           };
