@@ -35,7 +35,8 @@ import {
   ExerciseScreen,
   SwapExerciseScreen,
   MealRegulatorScreen,
-  LogFoodsScreen
+  LogFoodsScreen,
+  SurveyScreen,
 } from './screens';
 import DrawerContent from './containers/DrawerContent';
 import regularHeaderStyle from './components/regularHeaderStyle';
@@ -362,6 +363,12 @@ const AuthStack = createStackNavigator({
     navigationOptions: {
       header: Platform.select({ ios: undefined, android: null }),
       headerStyle: regularHeaderStyle,
+    }
+  },
+  [Routes.SurveyScreen]: {
+    screen: SurveyScreen,
+    navigationOptions: {
+      header: null
     }
   },
   [Routes.RegisterScreen]: {

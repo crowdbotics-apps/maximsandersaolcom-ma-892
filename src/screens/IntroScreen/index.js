@@ -104,7 +104,8 @@ class IntroScreen extends React.Component {
               marginTop: isIphoneX() ? 45 : 25,
               marginRight: 25
             }}
-            onPress={() => navigate(Routes.LoginScreen)}
+            //onPress={() => navigate(Routes.LoginScreen)}
+            onPress={() => navigate(Routes.SurveyScreen)}
           >
             <Text style={styles.loginLabel}>{item.text}</Text>
           </TouchableOpacity>
