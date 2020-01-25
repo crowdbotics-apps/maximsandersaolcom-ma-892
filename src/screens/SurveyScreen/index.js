@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import {
   View, Text, SafeAreaView, Switch, ScrollView, KeyboardAvoidingView
@@ -46,6 +46,55 @@ const data = [
 
 
 const SurveyScreen = (props) => {
+  const [questions, setQuestions] = useState([]);
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [singleQuestion, setSingleQuestion] = useState({});
+
+  const [isDisabled, setIsDisabled] = useState(true);
+  console.log(questions);
+  console.log(singleQuestion);
+
+  const getQuestions = () => {
+    // get questions here, maybe ASYNC
+
+    // Data - dummy data
+    setQuestions(data);
+  };
+
+  useEffect(() => {
+    getQuestions();
+  }, []);
+
+
+  const setQuestion = () => {
+    setIsDisabled(true);
+
+    // questions from state
+    // setSingleQuestion({
+    //   type: questions[currentQuestion].type,
+    //   question: questions[currentQuestion].question,
+    //   description: questions[currentQuestion].description,
+    //   options: questions[currentQuestion].options
+    // });
+
+    // from dummy data
+    setSingleQuestion({
+      type: data[currentQuestion].type,
+      question: data[currentQuestion].question,
+      description: data[currentQuestion].description,
+      options: data[currentQuestion].options
+    });
+  };
+
+  const nextQuestion = () => {
+    setCurrentQuestion(prevState => prevState + 1);
+  };
+
+  useEffect(() => {
+    setQuestion();
+  }, [currentQuestion]);
+
+
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [termsAgree, setTermsAgree] = useState(false);
@@ -70,6 +119,16 @@ const SurveyScreen = (props) => {
         >
 
           <View style={{ width: '100%', maxWidth: 320 }}>
+            <Text onPress={() => nextQuestion()}>666</Text>
+
+
+            <Question
+                questions={questions}
+                singleQuestion={singleQuestion}
+                currentQuestion={currentQuestion}
+                nextQuestion={nextQuestion}
+                disabled={isDisabled}
+            />
 
             <View style={{ borderBottomWidth: 0.5, borderBottomColor: '#d3d3d3' }}>
               <SurveyQuestionText>What is your gender?</SurveyQuestionText>
@@ -78,7 +137,10 @@ const SurveyScreen = (props) => {
 
             <SurveyQuestionOption
               onPress={() => {
-              }}>Male</SurveyQuestionOption>
+              }}
+            >
+Male
+            </SurveyQuestionOption>
             <SurveyQuestionOption>Female</SurveyQuestionOption>
             <SurveyQuestionOption>Prefer not answer</SurveyQuestionOption>
 
