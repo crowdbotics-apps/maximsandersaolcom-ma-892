@@ -9,9 +9,43 @@ import SurveyInput from '../../components/Survey/SurveyInput';
 import SurveyButton from '../../components/Survey/SurveyButton';
 import SurveyTerms from '../../components/Survey/SurveyTerms';
 import SurveyHeader from '../../components/Survey/SurveyHeader';
+import SurveyQuestionText from '../../components/Survey/SurveyQuestionText';
+import SurveyQuestionDescription from '../../components/Survey/SurveyQuestionDescription';
+import SurveyQuestionOption from '../../components/Survey/SurveyQuestionOption';
 
 
-const SurveyScreen = props => {
+const data = [
+  {
+    type: 'input',
+    question: 'What is your weight?',
+    description: '',
+    options: []
+  },
+  {
+    type: 'multiple',
+    question: 'What is your gender?',
+    description: 'This answer has influence on how your program is designed',
+    options: [
+      { option: 'Male', optionDescritpion: '' },
+      { option: 'Female', optionDescritpion: '' },
+      { option: 'Prefer not answer', optionDescritpion: '' }
+    ],
+  },
+  {
+    type: 'multiple',
+    question: 'What is your level of excercise?',
+    description: '',
+    options: [
+      { option: 'Beginner', optionDescritpion: 'No excercise experience' },
+      { option: 'Intermediate', optionDescritpion: 'less than 2 years of training, off and on' },
+      { option: 'Advanced', optionDescritpion: 'more than 2 years of dedicated training' }
+    ],
+
+  },
+];
+
+
+const SurveyScreen = (props) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [termsAgree, setTermsAgree] = useState(false);
@@ -37,32 +71,46 @@ const SurveyScreen = props => {
 
           <View style={{ width: '100%', maxWidth: 320 }}>
 
-            <Text style={{ fontSize: 28, fontWeight: 'bold', marginBottom: 15 }}>What is your name?</Text>
-            <View style={{ marginBottom: 35 }}>
-              <SurveyInput
-                placeholder="First"
-                value={firstName}
-                onChangeText={setFirstName}
-              />
-              <SurveyInput
-                placeholder="Last"
-                value={lastName}
-                onChangeText={setLastName}
-              />
+            <View style={{ borderBottomWidth: 0.5, borderBottomColor: '#d3d3d3' }}>
+              <SurveyQuestionText>What is your gender?</SurveyQuestionText>
+              <SurveyQuestionDescription>This answer has influence on how your program is designed</SurveyQuestionDescription>
             </View>
 
-            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-              <View style={{ width: '40%' }}>
-                <Switch
-                  style={{ transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }] }}
-                  value={termsAgree}
-                  onValueChange={value => setTermsAgree(value)}
-                />
-              </View>
-              <View style={{ width: '60%' }}>
-                <SurveyTerms />
-              </View>
-            </View>
+            <SurveyQuestionOption
+              onPress={() => {
+              }}>Male</SurveyQuestionOption>
+            <SurveyQuestionOption>Female</SurveyQuestionOption>
+            <SurveyQuestionOption>Prefer not answer</SurveyQuestionOption>
+
+
+            {/* <SurveyQuestionText>What is your name?</SurveyQuestionText> */}
+            {/* <View style={{ marginBottom: 35 }}> */}
+            {/*  <SurveyInput */}
+            {/*    placeholder="First" */}
+            {/*    value={firstName} */}
+            {/*    onChangeText={setFirstName} */}
+            {/*  /> */}
+            {/*  <SurveyInput */}
+            {/*    placeholder="Last" */}
+            {/*    value={lastName} */}
+            {/*    onChangeText={setLastName} */}
+            {/*  /> */}
+            {/* </View> */}
+
+            {/* <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}> */}
+            {/*  <View style={{ width: '40%' }}> */}
+            {/*    <Switch */}
+            {/*      style={{ transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }] }} */}
+            {/*      value={termsAgree} */}
+            {/*      onValueChange={value => setTermsAgree(value)} */}
+            {/*    /> */}
+            {/*  </View> */}
+            {/*  <View style={{ width: '60%' }}> */}
+            {/*    <SurveyTerms /> */}
+            {/*  </View> */}
+            {/* </View> */}
+
+
           </View>
 
 

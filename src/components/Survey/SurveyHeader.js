@@ -2,7 +2,7 @@ import React from 'react';
 import {
   Image, View, StyleSheet, TouchableOpacity
 } from 'react-native';
-import Arrow from '../../assets/icon_chevron_left.png';
+import Arrow from '../../assets/icon_chevron_left_gray.png';
 import Logo from '../../assets/logoSplashScreen.png';
 
 
@@ -15,7 +15,7 @@ const SurveyHeader = props => (
       <Image
         style={styles.arrow}
         source={Arrow}
-        resizeMode="cover"
+        resizeMode="contain"
       />
     </TouchableOpacity>
     <View>
