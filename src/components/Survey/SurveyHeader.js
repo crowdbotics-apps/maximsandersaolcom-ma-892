@@ -2,7 +2,7 @@ import React from 'react';
 import {
   Image, View, StyleSheet, TouchableOpacity
 } from 'react-native';
-import Arrow from '../../assets/icon_chevron_left_gray.png';
+import Arrow from '../../assets/survey-chevron-left.png';
 import Logo from '../../assets/logoSplashScreen.png';
 
 

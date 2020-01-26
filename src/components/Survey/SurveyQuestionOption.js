@@ -3,7 +3,8 @@ import {
   Text, View, StyleSheet, Image, TouchableOpacity
 } from 'react-native';
 import SurveyRow from './SurveyRow';
-import Arrow from '../../assets/icon_chevron_left_gray.png';
+import Arrow from '../../assets/survey-chevron-left.png';
+import Fonts from "../../assets/fonts";
 
 const SurveyQuestionOption = props => (
   <TouchableOpacity onPress={props.onPress}>
@@ -30,6 +31,7 @@ const styles = StyleSheet.create({
   },
   option: {
     fontSize: 20,
+    fontFamily: Fonts.HELVETICA_MEDIUM,
   },
   arrow: {
     transform: [{ rotate: '180deg' }],

@@ -177,6 +177,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:16.0.7'
     implementation 'com.google.firebase:firebase-messaging:17.4.0' // FCM
     implementation 'com.google.android.gms:play-services-base:16.1.0'
+    // For animated GIF support
+    implementation 'com.facebook.fresco:animated-gif:1.12.0'
 }
 
 // Run this once to be able to run the application with BUCK
@@ -186,5 +188,5 @@ task copyDownloadableDepsToLibs(type: Copy) {
     into 'libs'
 }
 
-apply plugin: 'com.google.gms.google-services' 
+apply plugin: 'com.google.gms.google-services'
 com.google.gms.googleservices.GoogleServicesPlugin.config.disableVersionCheck = true

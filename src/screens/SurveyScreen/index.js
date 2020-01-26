@@ -13,6 +13,7 @@ import SurveyHeader from '../../components/Survey/SurveyHeader';
 import SurveyQuestionText from '../../components/Survey/SurveyQuestionText';
 import SurveyQuestionDescription from '../../components/Survey/SurveyQuestionDescription';
 import SurveyQuestionOption from '../../components/Survey/SurveyQuestionOption';
+import SurveyModal from "../../components/Survey/SurveyModal";
 
 
 const questions = [
@@ -56,8 +57,9 @@ const SurveyScreen = (props) => {
   const [userAnswer, setUserAnswer] = useState('');
 
   const [isDisabled, setIsDisabled] = useState(true);
-  console.log(questions);
-  console.log(singleQuestion);
+
+  const [isModalVisible, setIsModalVisible] = useState(true);
+  const [modalType, setModalType] = useState('firstModal'); // firstModal || secondModal || ''
 
   const getQuestions = () => {
     // get questions here, maybe ASYNC
@@ -115,6 +117,11 @@ const SurveyScreen = (props) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [termsAgree, setTermsAgree] = useState(false);
+
+
+  const closeModal = () => {
+    setIsModalVisible(false);
+  };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -181,6 +188,13 @@ const SurveyScreen = (props) => {
           disabled={isDisabled}
         />
       </KeyboardAvoidingView>
+
+      <SurveyModal
+        visible={isModalVisible}
+        contentType={modalType} // firstModal || secondModal
+          closeModal={closeModal}
+      />
+
     </SafeAreaView>
   );
 };
