@@ -1,14 +1,17 @@
 import React from 'react';
 import {
-  Text, StyleSheet, Image, TouchableOpacity
+  Text, View, StyleSheet, Image, TouchableOpacity
 } from 'react-native';
 import SurveyRow from './SurveyRow';
 import Arrow from '../../assets/icon_chevron_left_gray.png';
 
 const SurveyQuestionOption = props => (
   <TouchableOpacity onPress={props.onPress}>
-    <SurveyRow style={styles.row}>
-      <Text style={styles.option}>{props.children}</Text>
+    <SurveyRow style={[styles.row, props.isSelected && {backgroundColor: 'pink'}]}>
+      <View>
+        <Text style={[styles.option, props.description && styles.titleHasDescription]}>{props.children}</Text>
+        { props.description ? <Text>{props.description}</Text> : null}
+      </View>
       <Image
         style={styles.arrow}
         source={Arrow}
@@ -33,6 +36,10 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30
   },
+  titleHasDescription: {
+    fontWeight: 'bold',
+    marginBottom: 10
+  }
 });
 
 export default SurveyQuestionOption;
