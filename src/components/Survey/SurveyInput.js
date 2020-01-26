@@ -13,7 +13,6 @@ const SurveyInput = (props) => {
       <TextInput
         style={[styles.input, props.style, isFocus && { borderBottomColor: '#3180BD' }]}
         placeholder={props.placeholder}
-        placeholderTextColor=""
         autoCorrect={false}
         value={props.value}
         onChangeText={props.onChangeText}

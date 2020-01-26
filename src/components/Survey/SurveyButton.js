@@ -10,7 +10,7 @@ const SurveyButton = props => (
     position: 'absolute', left: 0, right: 0, bottom: 0, paddingBottom: 20, alignItems: 'center', justifyContent: 'center'
   }}
   >
-    <TouchableOpacity style={{ width: '100%', maxWidth: 320 }} onPress={props.onPress}>
+    <TouchableOpacity style={{ width: '100%', maxWidth: 320 }} disabled={props.disabled} onPress={props.onPress}>
       <LinearGradient
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 0 }}

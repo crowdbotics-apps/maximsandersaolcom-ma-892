@@ -6,26 +6,28 @@ import {
 import Routes from '../../Routes';
 import { withNavigation } from 'react-navigation';
 import Question from '../../components/Survey/Question';
-import SurveyInput from '../../components/Survey/SurveyInput';
 import SurveyButton from '../../components/Survey/SurveyButton';
-import SurveyTerms from '../../components/Survey/SurveyTerms';
 import SurveyHeader from '../../components/Survey/SurveyHeader';
-import SurveyQuestionText from '../../components/Survey/SurveyQuestionText';
-import SurveyQuestionDescription from '../../components/Survey/SurveyQuestionDescription';
-import SurveyQuestionOption from '../../components/Survey/SurveyQuestionOption';
 import SurveyModal from "../../components/Survey/SurveyModal";
 
 
 const questions = [
-  // {
-  //   id: 1,
-  //   type: 'input',
-  //   question: 'What is your weight?',
-  //   description: '',
-  //   options: []
-  // },
+  {
+    id: 1,
+    type: 'name',
+    question: 'What is your name?',
+    description: '',
+    options: []
+  },
   {
     id: 2,
+    type: 'birthday',
+    question: 'When were you born?',
+    description: '',
+    options: []
+  },
+  {
+    id: 3,
     type: 'multiple',
     question: 'What is your gender?',
     description: 'This answer has influence on how your program is designed',
@@ -36,7 +38,7 @@ const questions = [
     ],
   },
   {
-    id: 3,
+    id: 4,
     type: 'multiple',
     question: 'What is your level of excercise?',
     description: '',
@@ -56,9 +58,11 @@ const SurveyScreen = (props) => {
   const [singleQuestion, setSingleQuestion] = useState({});
   const [userAnswer, setUserAnswer] = useState('');
 
+  const [answers, setAnswers] = useState([]);
+console.log(answers);
   const [isDisabled, setIsDisabled] = useState(true);
 
-  const [isModalVisible, setIsModalVisible] = useState(true);
+  const [isModalVisible, setIsModalVisible] = useState(false); // TODO: add logic after answers compleated
   const [modalType, setModalType] = useState('firstModal'); // firstModal || secondModal || ''
 
   const getQuestions = () => {
@@ -96,6 +100,7 @@ const SurveyScreen = (props) => {
   };
 
   const prevQuestion = () => {
+    setIsDisabled(false);
     if (currentQuestion !== 0) {
       setCurrentQuestion(prevState => prevState - 1);
     } else {
@@ -106,6 +111,8 @@ const SurveyScreen = (props) => {
   const selectAnswer = answer => {
     setUserAnswer(answer);
     setIsDisabled(false);
+
+    setAnswers(prevState => [...prevState, answer]);
   };
 
 
@@ -114,14 +121,11 @@ const SurveyScreen = (props) => {
   }, [currentQuestion]);
 
 
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [termsAgree, setTermsAgree] = useState(false);
-
 
   const closeModal = () => {
     setIsModalVisible(false);
   };
+
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -149,43 +153,15 @@ const SurveyScreen = (props) => {
                 nextQuestion={nextQuestion}
                 selectAnswer={selectAnswer}
                 userAnswer={userAnswer}
+                isDisabled={isDisabled}
             />
-
-
-            {/* <SurveyQuestionText>What is your name?</SurveyQuestionText> */}
-            {/* <View style={{ marginBottom: 35 }}> */}
-            {/*  <SurveyInput */}
-            {/*    placeholder="First" */}
-            {/*    value={firstName} */}
-            {/*    onChangeText={setFirstName} */}
-            {/*  /> */}
-            {/*  <SurveyInput */}
-            {/*    placeholder="Last" */}
-            {/*    value={lastName} */}
-            {/*    onChangeText={setLastName} */}
-            {/*  /> */}
-            {/* </View> */}
-
-            {/* <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}> */}
-            {/*  <View style={{ width: '40%' }}> */}
-            {/*    <Switch */}
-            {/*      style={{ transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }] }} */}
-            {/*      value={termsAgree} */}
-            {/*      onValueChange={value => setTermsAgree(value)} */}
-            {/*    /> */}
-            {/*  </View> */}
-            {/*  <View style={{ width: '60%' }}> */}
-            {/*    <SurveyTerms /> */}
-            {/*  </View> */}
-            {/* </View> */}
-
 
           </View>
 
         </ScrollView>
         <SurveyButton
             onPress={nextQuestion}
-          disabled={isDisabled}
+            disabled={isDisabled}
         />
       </KeyboardAvoidingView>
 
