@@ -14,10 +14,17 @@ const SurveyInput = (props) => {
         style={[styles.input, props.style, isFocus && { borderBottomColor: '#3180BD' }]}
         placeholder={props.placeholder}
         autoCorrect={false}
+        keyboardType={props.keyboardType}
         value={props.value}
         onChangeText={props.onChangeText}
-        onFocus={() => setIsFocus(true)}
-        onBlur={() => !props.value.length && setIsFocus(false)}
+        onFocus={() => {
+          setIsFocus(true);
+          props.showPicker(true);
+        }}
+        onBlur={() => {
+          !props.value.length && setIsFocus(false);
+          props.showPicker(false);
+        }}
       />
 
       {props.value.length > 0

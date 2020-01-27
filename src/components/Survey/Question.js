@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  View, Text, StyleSheet, Switch
+  View, Text, Switch,
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import SurveyQuestionText from './SurveyQuestionText';
@@ -24,14 +24,16 @@ const Question = ({
   const [lastName, setLastName] = useState('');
   const [termsAgree, setTermsAgree] = useState(false);
 
-  const [birthday, setBirthday] = useState('');
+  const [birthday, setBirthday] = useState(new Date());
+  const [formatBirthday, setFormatBirthday] = useState('');
+  // const birthdayFormatted = birthday.toLocaleDateString();
+
   const [answerOption, setAnswerOption] = useState('');
 
-  const date = new Date();
-  console.log(date);
+  const [isPicker, setIsPicker] = useState(false);
+
 
   const handleAnswer = () => {
-
     if (type === 'name') {
       selectAnswer({ name: firstName, lastName });
     }
@@ -45,6 +47,17 @@ const Question = ({
     }
 
     nextQuestion();
+  };
+
+
+  const togglePicker = (value) => {
+    setIsPicker(value);
+  };
+
+  const setBirthdayData = (event, date) => {
+    setBirthday(date);
+    setFormatBirthday(date.toLocaleDateString());
+    setIsDisabled(false);
   };
 
   let questionType;
@@ -87,21 +100,23 @@ const Question = ({
 
     case 'birthday':
       questionType = (
-          <>
-        <SurveyInput
-          placeholder="Birthday"
-          value={birthday}
-          onChangeText={(value) => {
-            setBirthday(value);
-            setIsDisabled(false);
-          }}
-        />
-
-              <DateTimePicker value={date}
-                              //mode={mode}
-                              is24Hour={true}
-                              display="default"
-                              onChange={() => {}} />
+        <>
+          <SurveyInput
+            placeholder="Birthday"
+            value={formatBirthday}
+            showPicker={togglePicker}
+          />
+          {isPicker
+            && (
+            <DateTimePicker
+              value={birthday}
+              display="default"
+              onChange={setBirthdayData}
+              maximumDate={new Date()}
+              minimumDate={new Date(1940, 0, 1)}
+            />
+            )
+            }
         </>
       );
       break;
@@ -122,7 +137,8 @@ const Question = ({
       ));
       break;
 
-    default: break;
+    default:
+      break;
   }
 
 
@@ -141,6 +157,8 @@ const Question = ({
         }}
         disabled={isDisabled}
       />
+
+
     </>
   );
 };

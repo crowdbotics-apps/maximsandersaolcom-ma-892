@@ -12,13 +12,13 @@ import SurveyModal from "../../components/Survey/SurveyModal";
 
 
 const questions = [
-  {
-    id: 1,
-    type: 'name',
-    question: 'What is your name?',
-    description: '',
-    options: []
-  },
+  // {
+  //   id: 1,
+  //   type: 'name',
+  //   question: 'What is your name?',
+  //   description: '',
+  //   options: []
+  // },
   {
     id: 2,
     type: 'birthday',
