@@ -19,24 +19,24 @@ const questions = [
   //   description: '',
   //   options: []
   // },
-  {
-    id: 2,
-    type: 'birthday',
-    question: 'When were you born?',
-    description: '',
-    options: []
-  },
-  {
-    id: 3,
-    type: 'multiple',
-    question: 'What is your gender?',
-    description: 'This answer has influence on how your program is designed',
-    options: [
-      { option: 'Male', descritpion: '' },
-      { option: 'Female', descritpion: '' },
-      { option: 'Prefer not answer', descritpion: '' }
-    ],
-  },
+  // {
+  //   id: 2,
+  //   type: 'birthday',
+  //   question: 'When were you born?',
+  //   description: '',
+  //   options: []
+  // },
+  // {
+  //   id: 3,
+  //   type: 'multiple',
+  //   question: 'What is your gender?',
+  //   description: 'This answer has influence on how your program is designed',
+  //   options: [
+  //     { option: 'Male', descritpion: '' },
+  //     { option: 'Female', descritpion: '' },
+  //     { option: 'Prefer not answer', descritpion: '' }
+  //   ],
+  // },
   {
     id: 4,
     type: 'multiple',
@@ -47,8 +47,66 @@ const questions = [
       { option: 'Intermediate', descritpion: 'less than 2 years of training, off and on' },
       { option: 'Advanced', descritpion: 'more than 2 years of dedicated training' }
     ],
-
   },
+  {
+    id: 5,
+    type: 'multiple',
+    question: 'What is your activity level??',
+    description: '',
+    options: [
+      { option: 'Sedentary', descritpion: 'Office job, watches TV for extended periods, video gaming, minimal movement on a daily basis' },
+      { option: 'Low Activity', descritpion: '30-60 minutes per day of moderate intensity physical activity (210-240 minutes per week)' },
+      { option: 'Active', descritpion: 'At least 60 minutes per day of moderate intensity physical activity'},
+      { option: 'Very Active ', descritpion: '120 minutes per day of vigorous physical activity'}
+    ],
+  },
+  {
+    id: 6,
+    type: 'multiple',
+    question: 'Choose units of measurement',
+    description: '',
+    options: [
+      { option: 'Feet/Pounds', descritpion: '' },
+      { option: 'Meters/Kilograms', descritpion: '' },
+    ],
+  },
+  {
+    id: 7,
+    type: 'height',
+    question: 'What is your height?',
+    description: '',
+    options: [],
+  },
+  {
+    id: 8,
+    type: 'weight',
+    question: 'What is your weight?',
+    description: '',
+    options: [],
+  },
+  {
+    id: 9,
+    type: 'multiple',
+    question: 'What is your fitness goal?',
+    description: '',
+    options: [
+      { option: 'Fat loss', descritpion: 'weight loss, figure change, general wellness' },
+      { option: 'Strength and Hypertrophy', descritpion: 'powerlifting and bodybuilding' },
+      { option: 'Maintenance', descritpion: 'maintain current weight/figure'},
+    ],
+  },
+  {
+    id: 10,
+    type: 'multiple',
+    question: 'How many days a week do you want to train?',
+    description: '',
+    options: [
+      { option: '3 Days', descritpion: '' },
+      { option: '4 Days', descritpion: '' },
+      { option: '5 Days', descritpion: '' },
+    ],
+  },
+
 ];
 
 

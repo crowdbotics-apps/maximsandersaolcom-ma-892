@@ -144,7 +144,7 @@ const Question = ({
 
   return (
     <>
-      <View style={{ flex: 3, justifyContent: 'center' }}>
+      <View style={{ flex: 3 }}>
         <SurveyQuestionText>{question}</SurveyQuestionText>
         {description ? <SurveyQuestionDescription>{description}</SurveyQuestionDescription> : null}
 

@@ -6,12 +6,12 @@ import SurveyRow from './SurveyRow';
 import Arrow from '../../assets/survey-chevron-left.png';
 import Fonts from "../../assets/fonts";
 
-const SurveyQuestionOption = props => (
-  <TouchableOpacity onPress={props.onPress}>
-    <SurveyRow style={[styles.row, props.isSelected && {backgroundColor: 'pink'}]}>
-      <View>
-        <Text style={[styles.option, props.description && styles.titleHasDescription]}>{props.children}</Text>
-        { props.description ? <Text>{props.description}</Text> : null}
+const SurveyQuestionOption = ({onPress, isSelected, children ,description }) => (
+  <TouchableOpacity onPress={onPress}>
+    <SurveyRow style={[styles.row, isSelected ? {borderWidth: 0.5, borderColor: '#3180BD'} : { borderBottomColor: '#d3d3d3'}]}>
+      <View style={{maxWidth: '75%'}}>
+        <Text style={[styles.option, description && styles.titleHasDescription]}>{children}</Text>
+        { description ? <Text>{description}</Text> : null}
       </View>
       <Image
         style={styles.arrow}
@@ -27,7 +27,6 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     paddingHorizontal: 15,
     borderBottomWidth: 0.5,
-    borderBottomColor: '#d3d3d3'
   },
   option: {
     fontSize: 20,

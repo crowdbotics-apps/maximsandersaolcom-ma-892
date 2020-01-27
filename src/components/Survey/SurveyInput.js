@@ -19,11 +19,11 @@ const SurveyInput = (props) => {
         onChangeText={props.onChangeText}
         onFocus={() => {
           setIsFocus(true);
-          props.showPicker(true);
+          props.showPicker && props.showPicker(true);
         }}
         onBlur={() => {
           !props.value.length && setIsFocus(false);
-          props.showPicker(false);
+          props.showPicker && props.showPicker(false);
         }}
       />
 
