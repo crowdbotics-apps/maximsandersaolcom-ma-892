@@ -7,7 +7,7 @@ import LinearGradient from 'react-native-linear-gradient';
 
 const SurveyButton = props => (
   <View style={{
-    position: 'absolute', left: 0, right: 0, bottom: 0, paddingBottom: 20, alignItems: 'center', justifyContent: 'center'
+    flex: 2, paddingBottom: 20, alignItems: 'center', justifyContent: 'flex-end'
   }}
   >
     <TouchableOpacity style={{ width: '100%', maxWidth: 320 }} disabled={props.disabled} onPress={props.onPress}>

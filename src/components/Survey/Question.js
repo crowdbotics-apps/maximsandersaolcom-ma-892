@@ -8,22 +8,36 @@ import SurveyQuestionOption from './SurveyQuestionOption';
 import SurveyInput from './SurveyInput';
 import SurveyRow from './SurveyRow';
 import SurveyTerms from './SurveyTerms';
+import SurveyButton from './SurveyButton';
 
 
 const Question = ({
-  questions, singleQuestion, currentQuestion, nextQuestion, selectAnswer, userAnswer
+  questions, singleQuestion, currentQuestion, nextQuestion, selectAnswer, userAnswer, isDisabled, setIsDisabled
 }) => {
   const {
     type, question, description, options
   } = singleQuestion;
 
-  // send firstName, lastName on termsAgree as an {}
+
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [termsAgree, setTermsAgree] = useState(false);
 
   const [birthday, setBirthday] = useState('');
 
+  const handleAnswer = () => {
+    // Multiple is handled inside question type
+    if (type === 'name') {
+      selectAnswer({ name: firstName, lastName });
+    }
+
+    if (type === 'birthday') {
+      selectAnswer(birthday);
+      setIsDisabled(false);
+    }
+
+    nextQuestion();
+  };
 
   let questionType;
 
@@ -33,12 +47,12 @@ const Question = ({
         <>
           <View style={{ marginBottom: 35 }}>
             <SurveyInput
-              placeholder='First'
+              placeholder="First"
               value={firstName}
               onChangeText={setFirstName}
             />
             <SurveyInput
-              placeholder='Last'
+              placeholder="Last"
               value={lastName}
               onChangeText={setLastName}
             />
@@ -49,9 +63,9 @@ const Question = ({
               <Switch
                 style={{ transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }] }}
                 value={termsAgree}
-                onValueChange={value => {
-                    setTermsAgree(value);
-                    selectAnswer({name: firstName, lastName});
+                onValueChange={(value) => {
+                  setTermsAgree(value);
+                  setIsDisabled(false);
                 }}
               />
             </View>
@@ -63,45 +77,54 @@ const Question = ({
       );
       break;
 
-      case 'birthday':
-          questionType = (
-              <SurveyInput
-                  placeholder='Birthday'
-                  value={birthday}
-                  onChangeText={(value) => {
-                      setBirthday(value);
-                      //selectAnswer(birthday);
-                  }}
-              />
-          );
-          break;
+    case 'birthday':
+      questionType = (
+        <SurveyInput
+          placeholder="Birthday"
+          value={birthday}
+          onChangeText={(value) => {
+            setBirthday(value);
+            setIsDisabled(false);
+          }}
+        />
+      );
+      break;
 
-      case 'multiple':
-          questionType = options && options.map((answer, index) => (
-              <SurveyQuestionOption
-                  key={index}
-                  onPress={() => selectAnswer(answer.option)}
-                  description={answer.descritpion}
-                  isSelected={answer.option === userAnswer}
-              >
-                  {answer.option}
-              </SurveyQuestionOption>
-          ));
-          break;
+    case 'multiple':
+      questionType = options && options.map((answer, index) => (
+        <SurveyQuestionOption
+          key={index}
+          onPress={() => {
+              selectAnswer(answer.option);
+              setIsDisabled(false);
+          }}
+          description={answer.descritpion}
+          isSelected={answer.option === userAnswer}
+        >
+          {answer.option}
+        </SurveyQuestionOption>
+      ));
+      break;
 
-      default: break;
+    default: break;
   }
-
 
 
   return (
     <>
-      <View>
+      <View style={{ flex: 3, justifyContent: 'center' }}>
         <SurveyQuestionText>{question}</SurveyQuestionText>
         {description ? <SurveyQuestionDescription>{description}</SurveyQuestionDescription> : null}
-      </View>
 
-      {questionType}
+        {questionType}
+
+      </View>
+      <SurveyButton
+        onPress={() => {
+          handleAnswer();
+        }}
+        isDisabled={isDisabled}
+      />
     </>
   );
 };

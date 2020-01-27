@@ -144,7 +144,8 @@ console.log(answers);
             flex: 1, alignItems: 'center', justifyContent: 'center', position: 'relative'
           }}
         >
-          <View style={{ width: '100%', maxWidth: 320 }}>
+          <Text>Progress bar here</Text>
+          <View style={{ flex: 1, width: '100%', maxWidth: 320, }}>
 
             <Question
                 questions={questions}
@@ -159,10 +160,6 @@ console.log(answers);
           </View>
 
         </ScrollView>
-        <SurveyButton
-            onPress={nextQuestion}
-            disabled={isDisabled}
-        />
       </KeyboardAvoidingView>
 
       <SurveyModal
