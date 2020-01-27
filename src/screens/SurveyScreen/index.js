@@ -155,6 +155,7 @@ console.log(answers);
                 selectAnswer={selectAnswer}
                 userAnswer={userAnswer}
                 isDisabled={isDisabled}
+                setIsDisabled={setIsDisabled}
             />
 
           </View>

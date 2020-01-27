@@ -24,16 +24,20 @@ const Question = ({
   const [termsAgree, setTermsAgree] = useState(false);
 
   const [birthday, setBirthday] = useState('');
+  const [answerOption, setAnswerOption] = useState('');
 
   const handleAnswer = () => {
-    // Multiple is handled inside question type
+
     if (type === 'name') {
       selectAnswer({ name: firstName, lastName });
     }
 
     if (type === 'birthday') {
       selectAnswer(birthday);
-      setIsDisabled(false);
+    }
+
+    if (type === 'multiple') {
+      selectAnswer(answerOption);
     }
 
     nextQuestion();
@@ -95,11 +99,11 @@ const Question = ({
         <SurveyQuestionOption
           key={index}
           onPress={() => {
-              selectAnswer(answer.option);
-              setIsDisabled(false);
+            setAnswerOption(answer.option);
+            setIsDisabled(false);
           }}
           description={answer.descritpion}
-          isSelected={answer.option === userAnswer}
+          isSelected={answer.option === answerOption}
         >
           {answer.option}
         </SurveyQuestionOption>
@@ -123,7 +127,7 @@ const Question = ({
         onPress={() => {
           handleAnswer();
         }}
-        isDisabled={isDisabled}
+        disabled={isDisabled}
       />
     </>
   );
