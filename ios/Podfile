@@ -26,7 +26,7 @@ target 'maximsandersaolcom_ma_892' do
   pod 'FBSDKCoreKit', '~> 5.0.0'
   pod 'FBSDKLoginKit', '~> 5.0.0'
   pod 'FBSDKShareKit', '~> 5.0.0'
-  
+
   pod 'GoogleSignIn', '~> 4.4.0'
 
   pod 'RNGoogleSignin', :path => '../node_modules/react-native-google-signin'
@@ -41,7 +41,8 @@ target 'maximsandersaolcom_ma_892' do
 
   pod 'RNReanimated', :path => '../node_modules/react-native-reanimated'
   pod 'react-native-voice', :path => '../node_modules/react-native-voice'
-  
+  pod 'RNDateTimePicker', :path => '../node_modules/@react-native-community/datetimepicker/RNDateTimePicker.podspec'
+
   target 'maximsandersaolcom_ma_892Tests' do
     inherit! :search_paths
     # Pods for testing
@@ -54,12 +55,12 @@ target 'maximsandersaolcom_ma_892' do
 
 end
 
-# very important to have, unless you removed React dependencies for Libraries 
+# very important to have, unless you removed React dependencies for Libraries
 # and you rely on Cocoapods to manage it
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     targets_to_ignore = %w(React yoga)
-      
+
     if targets_to_ignore.include? target.name
       target.remove_from_project
     end

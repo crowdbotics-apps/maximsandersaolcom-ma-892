@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {
   View, Text, StyleSheet, Switch
 } from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import SurveyQuestionText from './SurveyQuestionText';
 import SurveyQuestionDescription from './SurveyQuestionDescription';
 import SurveyQuestionOption from './SurveyQuestionOption';
@@ -25,6 +26,9 @@ const Question = ({
 
   const [birthday, setBirthday] = useState('');
   const [answerOption, setAnswerOption] = useState('');
+
+  const date = new Date();
+  console.log(date);
 
   const handleAnswer = () => {
 
@@ -83,6 +87,7 @@ const Question = ({
 
     case 'birthday':
       questionType = (
+          <>
         <SurveyInput
           placeholder="Birthday"
           value={birthday}
@@ -91,6 +96,13 @@ const Question = ({
             setIsDisabled(false);
           }}
         />
+
+              <DateTimePicker value={date}
+                              //mode={mode}
+                              is24Hour={true}
+                              display="default"
+                              onChange={() => {}} />
+        </>
       );
       break;
 
