@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import {
-  View, Text, SafeAreaView, Switch, ScrollView, KeyboardAvoidingView
+  View, SafeAreaView, ScrollView, KeyboardAvoidingView
 } from 'react-native';
 import Routes from '../../Routes';
 import { withNavigation } from 'react-navigation';
@@ -9,6 +9,7 @@ import Question from '../../components/Survey/Question';
 import SurveyButton from '../../components/Survey/SurveyButton';
 import SurveyHeader from '../../components/Survey/SurveyHeader';
 import SurveyModal from "../../components/Survey/SurveyModal";
+import ProgressBar from "../../components/Survey/ProgressBar";
 
 
 const questions = [
@@ -157,12 +158,16 @@ const SurveyScreen = (props) => {
   const [userAnswer, setUserAnswer] = useState('');
 
   const [answers, setAnswers] = useState([]);
+
 console.log(answers);
 
   const [isDisabled, setIsDisabled] = useState(true);
 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [modalType, setModalType] = useState(''); // firstModal || secondModal || thirdModal
+
+  const [percentage, setPercentage] = useState(0);
+  console.log(percentage);
 
   const getQuestions = () => {
     // get questions here, maybe ASYNC
@@ -198,6 +203,8 @@ console.log(answers);
       setCurrentQuestion(prevState => prevState + 1);
     }
 
+    setPercentage(((currentQuestion + 1) / questions.length) * 100);
+
     if(currentQuestion === 2) {
       setIsModalVisible(true);
       setModalType('firstModal');
@@ -208,10 +215,7 @@ console.log(answers);
       setModalType('secondModal');
     }
 
-    // if(currentQuestion === questions.length) {
-    //   setIsModalVisible(true);
-    //   setModalType('thirdModal');
-    // }
+
   };
 
   const prevQuestion = () => {
@@ -259,7 +263,9 @@ console.log(answers);
             flex: 1, alignItems: 'center', justifyContent: 'center', position: 'relative'
           }}
         >
-          <Text>Progress bar here</Text>
+         <ProgressBar
+             percentage={percentage}
+         />
           <View style={{ flex: 1, width: '100%', maxWidth: 320, }}>
 
             <Question
