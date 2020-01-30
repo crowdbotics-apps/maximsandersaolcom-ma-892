@@ -12,31 +12,31 @@ import SurveyModal from "../../components/Survey/SurveyModal";
 
 
 const questions = [
-  // {
-  //   id: 1,
-  //   type: 'name',
-  //   question: 'What is your name?',
-  //   description: '',
-  //   options: []
-  // },
-  // {
-  //   id: 2,
-  //   type: 'birthday',
-  //   question: 'When were you born?',
-  //   description: '',
-  //   options: []
-  // },
-  // {
-  //   id: 3,
-  //   type: 'multiple',
-  //   question: 'What is your gender?',
-  //   description: 'This answer has influence on how your program is designed',
-  //   options: [
-  //     { option: 'Male', descritpion: '' },
-  //     { option: 'Female', descritpion: '' },
-  //     { option: 'Prefer not answer', descritpion: '' }
-  //   ],
-  // },
+  {
+    id: 1,
+    type: 'name',
+    question: 'What is your name?',
+    description: '',
+    options: []
+  },
+  {
+    id: 2,
+    type: 'birthday',
+    question: 'When were you born?',
+    description: '',
+    options: []
+  },
+  {
+    id: 3,
+    type: 'multiple',
+    question: 'What is your gender?',
+    description: 'This answer has influence on how your program is designed',
+    options: [
+      { option: 'Male', descritpion: '' },
+      { option: 'Female', descritpion: '' },
+      { option: 'Prefer not answer', descritpion: '' }
+    ],
+  },
   {
     id: 4,
     type: 'multiple',
@@ -72,18 +72,58 @@ const questions = [
   },
   {
     id: 7,
-    type: 'height',
-    question: 'What is your height?',
+    type: 'multiple',
+    question: 'Choose units of measurement',
     description: '',
-    options: [],
+    options: [
+      { option: 'Feet/Pounds', descritpion: '' },
+      { option: 'Meters/Kilograms', descritpion: '' },
+    ],
   },
   {
     id: 8,
-    type: 'weight',
-    question: 'What is your weight?',
+    type: 'multiple',
+    question: 'Choose units of measurement',
     description: '',
-    options: [],
+    options: [
+      { option: 'Feet/Pounds', descritpion: '' },
+      { option: 'Meters/Kilograms', descritpion: '' },
+    ],
   },
+  {
+    id: 6,
+    type: 'multiple',
+    question: 'Choose units of measurement',
+    description: '',
+    options: [
+      { option: 'Feet/Pounds', descritpion: '' },
+      { option: 'Meters/Kilograms', descritpion: '' },
+    ],
+  },
+  {
+    id: 6,
+    type: 'multiple',
+    question: 'Choose units of measurement',
+    description: '',
+    options: [
+      { option: 'Feet/Pounds', descritpion: '' },
+      { option: 'Meters/Kilograms', descritpion: '' },
+    ],
+  },
+  // {
+  //   id: 7,
+  //   type: 'height',
+  //   question: 'What is your height?',
+  //   description: '',
+  //   options: [],
+  // },
+  // {
+  //   id: 8,
+  //   type: 'weight',
+  //   question: 'What is your weight?',
+  //   description: '',
+  //   options: [],
+  // },
   {
     id: 9,
     type: 'multiple',
@@ -120,7 +160,7 @@ const SurveyScreen = (props) => {
 console.log(answers);
   const [isDisabled, setIsDisabled] = useState(true);
 
-  const [isModalVisible, setIsModalVisible] = useState(false); // TODO: add logic after answers compleated
+  const [isModalVisible, setIsModalVisible] = useState(true); // TODO: add logic after answers compleated
   const [modalType, setModalType] = useState('firstModal'); // firstModal || secondModal || ''
 
   const getQuestions = () => {
@@ -154,6 +194,16 @@ console.log(answers);
       props.navigation.navigate(Routes.IntroScreen); // remove this line
     } else {
       setCurrentQuestion(prevState => prevState + 1);
+    }
+
+    if(currentQuestion === 2) {
+      setIsModalVisible(true);
+      setModalType('firstModal');
+    }
+
+    if(currentQuestion === 9) {
+      setIsModalVisible(true);
+      setModalType('secondModal');
     }
   };
 

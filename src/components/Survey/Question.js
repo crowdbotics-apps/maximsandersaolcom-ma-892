@@ -144,12 +144,10 @@ const Question = ({
 
   return (
     <>
-      <View style={{ flex: 3 }}>
+      <View style={{ flex: 3, justifyContent: 'center' }}>
         <SurveyQuestionText>{question}</SurveyQuestionText>
         {description ? <SurveyQuestionDescription>{description}</SurveyQuestionDescription> : null}
-
         {questionType}
-
       </View>
       <SurveyButton
         onPress={() => {
@@ -157,8 +155,6 @@ const Question = ({
         }}
         disabled={isDisabled}
       />
-
-
     </>
   );
 };

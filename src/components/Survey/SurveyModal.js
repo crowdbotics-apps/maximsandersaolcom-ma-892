@@ -6,13 +6,12 @@ import SurveyButton from './SurveyButton';
 import SurveyRow from './SurveyRow';
 import Logo from '../../assets/survey-modal-logo.png';
 import DoneIcon from '../../assets/icon-survey-done.png';
-import Fonts from "../../assets/fonts";
+import Fonts from '../../assets/fonts';
 
 
-const SurveyModal = (props) => {
-
+const SurveyModal = ({contentType, visible, closeModal}) => {
   let modalContent;
-  switch (props.contentType) {
+  switch (contentType) {
     case 'firstModal':
       modalContent = (
         <>
@@ -22,9 +21,6 @@ Next, we are going to ask you
                     questions regarding your exercise
                     goals then nutrition preferences
           </Text>
-          <SurveyButton
-            onPress={props.closeModal}
-          />
         </>
       );
       break;
@@ -32,67 +28,74 @@ Next, we are going to ask you
       modalContent = (
         <>
           <Text style={styles.title}>Almost Done!</Text>
-          <Text style={styles.subTitle}>Our AI is customizing your exercise</Text>
-          <Text style={styles.subTitle}>and nutrition program</Text>
-            <SurveyButton
-                onPress={props.closeModal}
-            />
+          <Text style={styles.subTitle}>Let’s talk about your food and nutrition preferences</Text>
         </>
       );
       break;
 
-    default: modalContent = (
-      <>
-        <Text style={styles.title}>Thanks UserName !</Text>
-        <Text style={styles.subTitle}>
-Our AI is customizing your exercise
-              and nutrition program
-        </Text>
-
+    case 'thirdModal':
+      modalContent = (
+        <>
+          <Text style={styles.title}>Thanks UserName !</Text>
+          <Text style={styles.subTitle}>
+                      Our AI is customizing your exercise
+                      and nutrition program
+          </Text>
 
 
           <Text style={styles.title}>Almost Done!</Text>
-        <SurveyRow style={styles.programItem}>
-          <Text style={styles.subTitle}>Exercise program</Text>
-          <Image
-            style={styles.icon}
-            source={DoneIcon}
-            resizeMode="contain"
-          />
-        </SurveyRow>
-        <SurveyRow style={styles.programItem}>
-          <Text style={styles.subTitle}>Nutrition program</Text>
-          <Image
+          <SurveyRow style={styles.programItem}>
+            <Text style={styles.subTitle}>Exercise program</Text>
+            <Image
               style={styles.icon}
-            source={DoneIcon}
-            resizeMode="contain"
-          />
-        </SurveyRow>
+              source={DoneIcon}
+              resizeMode="contain"
+            />
+          </SurveyRow>
+          <SurveyRow style={styles.programItem}>
+            <Text style={styles.subTitle}>Nutrition program</Text>
+            <Image
+              style={styles.icon}
+              source={DoneIcon}
+              resizeMode="contain"
+            />
+          </SurveyRow>
 
           <Image
-              style={{ width: 50, height: 50 }}
-              source={{ uri: 'http://www.clicktorelease.com/code/gif/1.gif' }}
-              resizeMode="contain"
+            style={{ width: 50, height: 50 }}
+            source={{ uri: 'http://www.clicktorelease.com/code/gif/1.gif' }}
+            resizeMode="contain"
           />
-      </>
-    );
+        </>
+      );
+      break;
+
+    default:
       break;
   }
 
   return (
     <Modal
-      visible={props.visible}
+      visible={visible}
       transparent
     >
       <View style={styles.modalWrapper}>
         <View style={styles.modalContent}>
-            <Image
-                style={{ width: 150, height: 135, marginBottom: 25 }}
-                source={Logo}
-                resizeMode="contain"
-            />
+          <Image
+            style={{ width: 150, height: 135, marginBottom: 25 }}
+            source={Logo}
+            resizeMode="contain"
+          />
           {modalContent}
         </View>
+
+        {contentType !== 'thirdModal'
+          && (
+          <SurveyButton
+            onPress={closeModal}
+          />
+          )
+          }
       </View>
 
     </Modal>
@@ -108,33 +111,33 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     position: 'relative',
-    flex: 1,
+    flex: 3,
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%'
   },
   title: {
     fontSize: 23,
-      fontFamily: Fonts.HELVETICA_BOLD,
+    fontFamily: Fonts.HELVETICA_BOLD,
     textAlign: 'center',
     marginBottom: 25,
     color: '#fff'
   },
   subTitle: {
     fontSize: 18,
-      fontFamily: Fonts.HELVETICA_MEDIUM,
+    fontFamily: Fonts.HELVETICA_MEDIUM,
     textAlign: 'center',
     maxWidth: 280,
     color: '#fff'
   },
-    icon: {
-      width: 25,
-        height: 25
+  icon: {
+    width: 25,
+    height: 25
   },
-    programItem: {
-      maxWidth: 195,
-        width: '100%',
-        marginBottom: 15
+  programItem: {
+    maxWidth: 195,
+    width: '100%',
+    marginBottom: 15
   }
 });
 
