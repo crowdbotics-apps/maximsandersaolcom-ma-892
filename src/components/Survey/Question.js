@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  View, Text, Switch,
+  View, Text, Switch, ScrollView
 } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import SurveyQuestionText from './SurveyQuestionText';
@@ -144,10 +144,12 @@ const Question = ({
 
   return (
     <>
-      <View style={{ flex: 3, justifyContent: 'center' }}>
-        <SurveyQuestionText>{question}</SurveyQuestionText>
-        {description ? <SurveyQuestionDescription>{description}</SurveyQuestionDescription> : null}
-        {questionType}
+      <View style={{ flex: 6, justifyContent: 'center' }}>
+        <ScrollView style={{flex: 1}}>
+          <SurveyQuestionText>{question}</SurveyQuestionText>
+          {description ? <SurveyQuestionDescription>{description}</SurveyQuestionDescription> : null}
+          {questionType}
+        </ScrollView>
       </View>
       <SurveyButton
         onPress={() => {

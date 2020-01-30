@@ -12,42 +12,42 @@ import SurveyModal from "../../components/Survey/SurveyModal";
 
 
 const questions = [
-  {
-    id: 1,
-    type: 'name',
-    question: 'What is your name?',
-    description: '',
-    options: []
-  },
-  {
-    id: 2,
-    type: 'birthday',
-    question: 'When were you born?',
-    description: '',
-    options: []
-  },
-  {
-    id: 3,
-    type: 'multiple',
-    question: 'What is your gender?',
-    description: 'This answer has influence on how your program is designed',
-    options: [
-      { option: 'Male', descritpion: '' },
-      { option: 'Female', descritpion: '' },
-      { option: 'Prefer not answer', descritpion: '' }
-    ],
-  },
-  {
-    id: 4,
-    type: 'multiple',
-    question: 'What is your level of excercise?',
-    description: '',
-    options: [
-      { option: 'Beginner', descritpion: 'No excercise experience' },
-      { option: 'Intermediate', descritpion: 'less than 2 years of training, off and on' },
-      { option: 'Advanced', descritpion: 'more than 2 years of dedicated training' }
-    ],
-  },
+  // {
+  //   id: 1,
+  //   type: 'name',
+  //   question: 'What is your name?',
+  //   description: '',
+  //   options: []
+  // },
+  // {
+  //   id: 2,
+  //   type: 'birthday',
+  //   question: 'When were you born?',
+  //   description: '',
+  //   options: []
+  // },
+  // {
+  //   id: 3,
+  //   type: 'multiple',
+  //   question: 'What is your gender?',
+  //   description: 'This answer has influence on how your program is designed',
+  //   options: [
+  //     { option: 'Male', descritpion: '' },
+  //     { option: 'Female', descritpion: '' },
+  //     { option: 'Prefer not answer', descritpion: '' }
+  //   ],
+  // },
+  // {
+  //   id: 4,
+  //   type: 'multiple',
+  //   question: 'What is your level of excercise?',
+  //   description: '',
+  //   options: [
+  //     { option: 'Beginner', descritpion: 'No excercise experience' },
+  //     { option: 'Intermediate', descritpion: 'less than 2 years of training, off and on' },
+  //     { option: 'Advanced', descritpion: 'more than 2 years of dedicated training' }
+  //   ],
+  // },
   {
     id: 5,
     type: 'multiple',
@@ -158,10 +158,11 @@ const SurveyScreen = (props) => {
 
   const [answers, setAnswers] = useState([]);
 console.log(answers);
+
   const [isDisabled, setIsDisabled] = useState(true);
 
-  const [isModalVisible, setIsModalVisible] = useState(true); // TODO: add logic after answers compleated
-  const [modalType, setModalType] = useState('firstModal'); // firstModal || secondModal || ''
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [modalType, setModalType] = useState(''); // firstModal || secondModal || thirdModal
 
   const getQuestions = () => {
     // get questions here, maybe ASYNC
@@ -190,8 +191,9 @@ console.log(answers);
 
   const nextQuestion = () => {
     if (currentQuestion === questions.length - 1) {
-      //open modal + send info
-      props.navigation.navigate(Routes.IntroScreen); // remove this line
+      setIsModalVisible(true);
+      setModalType('thirdModal');
+      //props.navigation.navigate(Routes.IntroScreen); // remove this line
     } else {
       setCurrentQuestion(prevState => prevState + 1);
     }
@@ -205,6 +207,11 @@ console.log(answers);
       setIsModalVisible(true);
       setModalType('secondModal');
     }
+
+    // if(currentQuestion === questions.length) {
+    //   setIsModalVisible(true);
+    //   setModalType('thirdModal');
+    // }
   };
 
   const prevQuestion = () => {
