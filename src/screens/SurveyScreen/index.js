@@ -12,7 +12,7 @@ import SurveyModal from "../../components/Survey/SurveyModal";
 import ProgressBar from "../../components/Survey/ProgressBar";
 
 
-const questions = [
+const questionsData = [
   {
     id: 1,
     type: 'name',
@@ -112,7 +112,7 @@ const questions = [
 
 
 const SurveyScreen = (props) => {
-  //const [questions, setQuestions] = useState([]);
+  const [questions, setQuestions] = useState(questionsData);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [singleQuestion, setSingleQuestion] = useState({});
   const [userAnswer, setUserAnswer] = useState('');
@@ -120,6 +120,7 @@ const SurveyScreen = (props) => {
   const [answers, setAnswers] = useState([]);
 
 console.log(answers);
+
 
   const [isDisabled, setIsDisabled] = useState(true);
 
@@ -146,6 +147,7 @@ console.log(answers);
 
     // questions from state
     setSingleQuestion({
+      id: questions[currentQuestion].id,
       type: questions[currentQuestion].type,
       question: questions[currentQuestion].question,
       description: questions[currentQuestion].description,
@@ -190,7 +192,9 @@ console.log(answers);
     setUserAnswer(answer);
     setIsDisabled(false);
 
-    setAnswers(prevState => [...prevState, answer]);
+    singleQuestion.answer = answer;
+
+    setAnswers(prevState => [...prevState, singleQuestion]);
   };
 
 

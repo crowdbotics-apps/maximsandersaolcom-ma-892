@@ -10,15 +10,16 @@ import SurveyInput from './SurveyInput';
 import SurveyRow from './SurveyRow';
 import SurveyTerms from './SurveyTerms';
 import SurveyButton from './SurveyButton';
+import SurveyGhostInput from "./SurveyGhostInput";
 
 
 const Question = ({
   questions, singleQuestion, currentQuestion, nextQuestion, selectAnswer, userAnswer, isDisabled, setIsDisabled, getFirstName
 }) => {
   const {
-    type, question, description, options
+    id, type, question, description, options
   } = singleQuestion;
-
+console.log('Single question ',singleQuestion);
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -38,28 +39,28 @@ const Question = ({
 
   const handleAnswer = () => {
     if (type === 'name') {
-      selectAnswer({ name: firstName, lastName });
+      selectAnswer({ name: firstName, lastName }, id);
     }
 
     if (type === 'birthday') {
-      selectAnswer(birthday);
+      selectAnswer(birthday, id);
     }
 
     if (type === 'multiple') {
-      selectAnswer(answerOption);
+      selectAnswer(answerOption, id);
     }
 
     if (type === 'units') {
-      selectAnswer(answerOption);
+      selectAnswer(answerOption, id);
       setUnits(answerOption);
     }
 
     if (type === 'height') {
-      selectAnswer(height);
+      selectAnswer(height, id);
     }
 
     if (type === 'weight') {
-      selectAnswer(weight);
+      selectAnswer(weight, id);
     }
 
     nextQuestion();
@@ -120,10 +121,15 @@ const Question = ({
     case 'birthday':
       questionType = (
         <>
-          <SurveyInput
-            placeholder="Birthday"
-            value={formatBirthday}
-            showPicker={togglePicker}
+          {/*<SurveyInput*/}
+          {/*  placeholder="Birthday"*/}
+          {/*  value={formatBirthday}*/}
+          {/*  showPicker={togglePicker}*/}
+          {/*/>*/}
+          <SurveyGhostInput
+              placeholder="Birthday"
+              value={formatBirthday}
+              onPress={togglePicker}
           />
           {isPicker
                     && (
