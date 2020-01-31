@@ -10,7 +10,7 @@ import DoneIcon from '../../assets/icon-survey-done.png';
 import Fonts from '../../assets/fonts';
 
 
-const SurveyModal = ({ contentType, visible, closeModal }) => {
+const SurveyModal = ({ contentType, visible, closeModal, userName }) => {
   const [isExcercise, setIsExcercise] = useState(false);
   const [isNutrition, setIsNutrition] = useState(false);
 
@@ -57,7 +57,7 @@ const SurveyModal = ({ contentType, visible, closeModal }) => {
     case 'firstModal':
       modalContent = (
         <>
-          <Text style={styles.title}>Welcome to Orum Training, UserName !</Text>
+          <Text style={styles.title}>Welcome to Orum Training, {userName} !</Text>
           <Text style={styles.subTitle}>
 Next, we are going to ask you
                     questions regarding your exercise
@@ -78,7 +78,7 @@ Next, we are going to ask you
     case 'thirdModal':
       modalContent = (
         <>
-          <Text style={styles.title}>Thanks UserName !</Text>
+          <Text style={styles.title}>Thanks {userName} !</Text>
           <Text style={styles.subTitle}>
                       Our AI is customizing your exercise
                       and nutrition program

@@ -13,42 +13,42 @@ import ProgressBar from "../../components/Survey/ProgressBar";
 
 
 const questions = [
-  // {
-  //   id: 1,
-  //   type: 'name',
-  //   question: 'What is your name?',
-  //   description: '',
-  //   options: []
-  // },
-  // {
-  //   id: 2,
-  //   type: 'birthday',
-  //   question: 'When were you born?',
-  //   description: '',
-  //   options: []
-  // },
-  // {
-  //   id: 3,
-  //   type: 'multiple',
-  //   question: 'What is your gender?',
-  //   description: 'This answer has influence on how your program is designed',
-  //   options: [
-  //     { option: 'Male', descritpion: '' },
-  //     { option: 'Female', descritpion: '' },
-  //     { option: 'Prefer not answer', descritpion: '' }
-  //   ],
-  // },
-  // {
-  //   id: 4,
-  //   type: 'multiple',
-  //   question: 'What is your level of excercise?',
-  //   description: '',
-  //   options: [
-  //     { option: 'Beginner', descritpion: 'No excercise experience' },
-  //     { option: 'Intermediate', descritpion: 'less than 2 years of training, off and on' },
-  //     { option: 'Advanced', descritpion: 'more than 2 years of dedicated training' }
-  //   ],
-  // },
+  {
+    id: 1,
+    type: 'name',
+    question: 'What is your name?',
+    description: '',
+    options: []
+  },
+  {
+    id: 2,
+    type: 'birthday',
+    question: 'When were you born?',
+    description: '',
+    options: []
+  },
+  {
+    id: 3,
+    type: 'multiple',
+    question: 'What is your gender?',
+    description: 'This answer has influence on how your program is designed',
+    options: [
+      { option: 'Male', descritpion: '' },
+      { option: 'Female', descritpion: '' },
+      { option: 'Prefer not answer', descritpion: '' }
+    ],
+  },
+  {
+    id: 4,
+    type: 'multiple',
+    question: 'What is your level of excercise?',
+    description: '',
+    options: [
+      { option: 'Beginner', descritpion: 'No excercise experience' },
+      { option: 'Intermediate', descritpion: 'less than 2 years of training, off and on' },
+      { option: 'Advanced', descritpion: 'more than 2 years of dedicated training' }
+    ],
+  },
   {
     id: 5,
     type: 'multiple',
@@ -63,7 +63,7 @@ const questions = [
   },
   {
     id: 6,
-    type: 'multiple',
+    type: 'units',
     question: 'Choose units of measurement',
     description: '',
     options: [
@@ -73,58 +73,18 @@ const questions = [
   },
   {
     id: 7,
-    type: 'multiple',
-    question: 'Choose units of measurement',
+    type: 'height',
+    question: 'What is your height?',
     description: '',
-    options: [
-      { option: 'Feet/Pounds', descritpion: '' },
-      { option: 'Meters/Kilograms', descritpion: '' },
-    ],
+    options: [],
   },
   {
     id: 8,
-    type: 'multiple',
-    question: 'Choose units of measurement',
+    type: 'weight',
+    question: 'What is your weight?',
     description: '',
-    options: [
-      { option: 'Feet/Pounds', descritpion: '' },
-      { option: 'Meters/Kilograms', descritpion: '' },
-    ],
+    options: [],
   },
-  {
-    id: 6,
-    type: 'multiple',
-    question: 'Choose units of measurement',
-    description: '',
-    options: [
-      { option: 'Feet/Pounds', descritpion: '' },
-      { option: 'Meters/Kilograms', descritpion: '' },
-    ],
-  },
-  {
-    id: 6,
-    type: 'multiple',
-    question: 'Choose units of measurement',
-    description: '',
-    options: [
-      { option: 'Feet/Pounds', descritpion: '' },
-      { option: 'Meters/Kilograms', descritpion: '' },
-    ],
-  },
-  // {
-  //   id: 7,
-  //   type: 'height',
-  //   question: 'What is your height?',
-  //   description: '',
-  //   options: [],
-  // },
-  // {
-  //   id: 8,
-  //   type: 'weight',
-  //   question: 'What is your weight?',
-  //   description: '',
-  //   options: [],
-  // },
   {
     id: 9,
     type: 'multiple',
@@ -167,7 +127,7 @@ console.log(answers);
   const [modalType, setModalType] = useState(''); // firstModal || secondModal || thirdModal
 
   const [percentage, setPercentage] = useState(0);
-  console.log(percentage);
+  const [userName, setUserName] = useState('');
 
   const getQuestions = () => {
     // get questions here, maybe ASYNC
@@ -203,6 +163,7 @@ console.log(answers);
       setCurrentQuestion(prevState => prevState + 1);
     }
 
+    // Increase progress bar
     setPercentage(((currentQuestion + 1) / questions.length) * 100);
 
     if(currentQuestion === 2) {
@@ -214,8 +175,6 @@ console.log(answers);
       setIsModalVisible(true);
       setModalType('secondModal');
     }
-
-
   };
 
   const prevQuestion = () => {
@@ -223,7 +182,7 @@ console.log(answers);
     if (currentQuestion !== 0) {
       setCurrentQuestion(prevState => prevState - 1);
     } else {
-      props.navigation.navigate(Routes.IntroScreen); //TODO: hide maybe back arrow on 1st question instead
+      props.navigation.navigate(Routes.IntroScreen);
     }
   };
 
@@ -243,6 +202,10 @@ console.log(answers);
 
   const closeModal = () => {
     setIsModalVisible(false);
+  };
+
+  const getFirstName = name => {
+    setUserName(name);
   };
 
 
@@ -277,6 +240,7 @@ console.log(answers);
                 userAnswer={userAnswer}
                 isDisabled={isDisabled}
                 setIsDisabled={setIsDisabled}
+                getFirstName={getFirstName}
             />
 
           </View>
@@ -287,7 +251,8 @@ console.log(answers);
       <SurveyModal
         visible={isModalVisible}
         contentType={modalType} // firstModal || secondModal
-          closeModal={closeModal}
+        closeModal={closeModal}
+        userName={userName}
       />
 
     </SafeAreaView>
