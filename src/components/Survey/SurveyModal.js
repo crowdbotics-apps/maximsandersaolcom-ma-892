@@ -2,15 +2,19 @@ import React, { useState, useEffect } from 'react';
 import {
   Text, Modal, View, StyleSheet, Image, Animated, Easing
 } from 'react-native';
+import { withNavigation } from 'react-navigation';
 import SurveyButton from './SurveyButton';
 import SurveyRow from './SurveyRow';
 import Logo from '../../assets/survey-modal-logo.png';
 import Loader from '../../assets/survey-loader.png';
 import DoneIcon from '../../assets/icon-survey-done.png';
 import Fonts from '../../assets/fonts';
+import Routes from "../../Routes";
 
 
-const SurveyModal = ({ contentType, visible, closeModal, userName }) => {
+const SurveyModal = ({
+  contentType, visible, closeModal, userName, navigation
+}) => {
   const [isExcercise, setIsExcercise] = useState(false);
   const [isNutrition, setIsNutrition] = useState(false);
 
@@ -29,6 +33,8 @@ const SurveyModal = ({ contentType, visible, closeModal, userName }) => {
         setIsNutrition(true);
       }, 1500);
     }, 1500);
+
+      //navigation.navigate(Routes.IntroScreen);
   };
 
 
@@ -57,7 +63,9 @@ const SurveyModal = ({ contentType, visible, closeModal, userName }) => {
     case 'firstModal':
       modalContent = (
         <>
-          <Text style={styles.title}>Welcome to Orum Training, {userName} !</Text>
+          <Text style={styles.title}>
+Welcome to Orum Training, {userName}!
+          </Text>
           <Text style={styles.subTitle}>
 Next, we are going to ask you
                     questions regarding your exercise
@@ -78,8 +86,10 @@ Next, we are going to ask you
     case 'thirdModal':
       modalContent = (
         <>
-          <Text style={styles.title}>Thanks {userName} !</Text>
-          <Text style={styles.subTitle}>
+          <Text style={styles.title}>
+            Thanks {userName}!
+          </Text>
+          <Text style={[styles.subTitle, {marginBottom: 25}]}>
                       Our AI is customizing your exercise
                       and nutrition program
           </Text>
@@ -114,7 +124,9 @@ Next, we are going to ask you
             }
 
           <Animated.Image
-            style={{ width: 50, height: 50, marginTop: 30, transform: [{ rotate: spin }] }}
+            style={{
+              width: 50, height: 50, marginTop: 30, transform: [{ rotate: spin }]
+            }}
             source={Loader}
             resizeMode="contain"
           />
@@ -172,7 +184,8 @@ const styles = StyleSheet.create({
     fontSize: 23,
     fontFamily: Fonts.HELVETICA_BOLD,
     textAlign: 'center',
-    marginBottom: 25,
+      marginBottom: 25,
+
     color: '#fff'
   },
   subTitle: {
@@ -193,4 +206,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default SurveyModal;
+export default withNavigation(SurveyModal);

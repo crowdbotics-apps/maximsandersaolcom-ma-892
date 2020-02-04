@@ -3,13 +3,12 @@ import React, { useState, useEffect } from 'react';
 import {
   View, SafeAreaView, ScrollView, KeyboardAvoidingView
 } from 'react-native';
-import Routes from '../../Routes';
 import { withNavigation } from 'react-navigation';
+import Routes from '../../Routes';
 import Question from '../../components/Survey/Question';
-import SurveyButton from '../../components/Survey/SurveyButton';
 import SurveyHeader from '../../components/Survey/SurveyHeader';
-import SurveyModal from "../../components/Survey/SurveyModal";
-import ProgressBar from "../../components/Survey/ProgressBar";
+import SurveyModal from '../../components/Survey/SurveyModal';
+import ProgressBar from '../../components/Survey/ProgressBar';
 
 
 const questionsData = [
@@ -18,14 +17,16 @@ const questionsData = [
     type: 'name',
     question: 'What is your name?',
     description: '',
-    options: []
+    options: [],
+    answer: ''
   },
   {
     id: 2,
     type: 'birthday',
     question: 'When were you born?',
     description: '',
-    options: []
+    options: [],
+    answer: ''
   },
   {
     id: 3,
@@ -37,6 +38,7 @@ const questionsData = [
       { option: 'Female', descritpion: '' },
       { option: 'Prefer not answer', descritpion: '' }
     ],
+    answer: ''
   },
   {
     id: 4,
@@ -48,6 +50,7 @@ const questionsData = [
       { option: 'Intermediate', descritpion: 'less than 2 years of training, off and on' },
       { option: 'Advanced', descritpion: 'more than 2 years of dedicated training' }
     ],
+    answer: ''
   },
   {
     id: 5,
@@ -55,11 +58,18 @@ const questionsData = [
     question: 'What is your activity level??',
     description: '',
     options: [
-      { option: 'Sedentary', descritpion: 'Office job, watches TV for extended periods, video gaming, minimal movement on a daily basis' },
-      { option: 'Low Activity', descritpion: '30-60 minutes per day of moderate intensity physical activity (210-240 minutes per week)' },
-      { option: 'Active', descritpion: 'At least 60 minutes per day of moderate intensity physical activity'},
-      { option: 'Very Active ', descritpion: '120 minutes per day of vigorous physical activity'}
+      {
+        option: 'Sedentary',
+        descritpion: 'Office job, watches TV for extended periods, video gaming, minimal movement on a daily basis'
+      },
+      {
+        option: 'Low Activity',
+        descritpion: '30-60 minutes per day of moderate intensity physical activity (210-240 minutes per week)'
+      },
+      { option: 'Active', descritpion: 'At least 60 minutes per day of moderate intensity physical activity' },
+      { option: 'Very Active ', descritpion: '120 minutes per day of vigorous physical activity' }
     ],
+    answer: ''
   },
   {
     id: 6,
@@ -70,6 +80,7 @@ const questionsData = [
       { option: 'Feet/Pounds', descritpion: '' },
       { option: 'Meters/Kilograms', descritpion: '' },
     ],
+    answer: ''
   },
   {
     id: 7,
@@ -77,6 +88,7 @@ const questionsData = [
     question: 'What is your height?',
     description: '',
     options: [],
+    answer: ''
   },
   {
     id: 8,
@@ -84,6 +96,7 @@ const questionsData = [
     question: 'What is your weight?',
     description: '',
     options: [],
+    answer: ''
   },
   {
     id: 9,
@@ -93,8 +106,9 @@ const questionsData = [
     options: [
       { option: 'Fat loss', descritpion: 'weight loss, figure change, general wellness' },
       { option: 'Strength and Hypertrophy', descritpion: 'powerlifting and bodybuilding' },
-      { option: 'Maintenance', descritpion: 'maintain current weight/figure'},
+      { option: 'Maintenance', descritpion: 'maintain current weight/figure' },
     ],
+    answer: ''
   },
   {
     id: 10,
@@ -106,8 +120,44 @@ const questionsData = [
       { option: '4 Days', descritpion: '' },
       { option: '5 Days', descritpion: '' },
     ],
+    answer: ''
   },
-
+  {
+    id: 11,
+    type: 'multiple',
+    question: 'How many meals do you prefer to eat in one day?',
+    description: '',
+    options: [
+      { option: '4 meals', descritpion: '' },
+      { option: '5 meals', descritpion: '' },
+      { option: '6 meals', descritpion: '' },
+    ],
+    answer: ''
+  },
+  {
+    id: 12,
+    type: 'multiple',
+    question: 'What times do you want to eat?', // Modify the logic
+    description: '',
+    options: [
+      { option: '4 meals', descritpion: '' },
+      { option: '5 meals', descritpion: '' },
+      { option: '6 meals', descritpion: '' },
+    ],
+    answer: ''
+  },
+  {
+    id: 13,
+    type: 'multiple',
+    question: 'What is your level of understanding nutrition?',
+    description: '',
+    options: [
+      { option: 'Beginner', descritpion: 'No real understanding of nutrition' },
+      { option: 'Intermediate', descritpion: 'I have tried diets before, and had mediocre results' },
+      { option: 'Advanced', descritpion: 'I am educated in nutrition' },
+    ],
+    answer: ''
+  },
 ];
 
 
@@ -119,7 +169,7 @@ const SurveyScreen = (props) => {
 
   const [answers, setAnswers] = useState([]);
 
-console.log(answers);
+  console.log('With answers ', answers);
 
 
   const [isDisabled, setIsDisabled] = useState(true);
@@ -134,7 +184,7 @@ console.log(answers);
     // get questions here, maybe ASYNC
 
     // Data - dummy data
-    //setQuestions(questions);
+    // setQuestions(questions);
   };
 
   useEffect(() => {
@@ -153,14 +203,13 @@ console.log(answers);
       description: questions[currentQuestion].description,
       options: questions[currentQuestion].options
     });
-
   };
 
   const nextQuestion = () => {
     if (currentQuestion === questions.length - 1) {
       setIsModalVisible(true);
       setModalType('thirdModal');
-      //props.navigation.navigate(Routes.IntroScreen); // remove this line
+      // props.navigation.navigate(Routes.IntroScreen); // remove this line
     } else {
       setCurrentQuestion(prevState => prevState + 1);
     }
@@ -168,12 +217,12 @@ console.log(answers);
     // Increase progress bar
     setPercentage(((currentQuestion + 1) / questions.length) * 100);
 
-    if(currentQuestion === 2) {
+    if (currentQuestion === 2) {
       setIsModalVisible(true);
       setModalType('firstModal');
     }
 
-    if(currentQuestion === 9) {
+    if (currentQuestion === 9) {
       setIsModalVisible(true);
       setModalType('secondModal');
     }
@@ -188,13 +237,18 @@ console.log(answers);
     }
   };
 
-  const selectAnswer = answer => {
+  const selectAnswer = (answer) => {
     setUserAnswer(answer);
     setIsDisabled(false);
 
     singleQuestion.answer = answer;
+    //
+    // setAnswers(prevState => [...prevState, singleQuestion]);
 
-    setAnswers(prevState => [...prevState, singleQuestion]);
+    setAnswers(prevState => {
+      const questions = prevState.filter(item => item.id !== singleQuestion.id);
+      return [...questions, singleQuestion]
+    });
   };
 
 
@@ -203,12 +257,11 @@ console.log(answers);
   }, [currentQuestion]);
 
 
-
   const closeModal = () => {
     setIsModalVisible(false);
   };
 
-  const getFirstName = name => {
+  const getFirstName = (name) => {
     setUserName(name);
   };
 
@@ -230,21 +283,21 @@ console.log(answers);
             flex: 1, alignItems: 'center', justifyContent: 'center', position: 'relative'
           }}
         >
-         <ProgressBar
-             percentage={percentage}
-         />
+          <ProgressBar
+            percentage={percentage}
+          />
           <View style={{ flex: 1, width: '100%', maxWidth: 320, }}>
 
             <Question
-                questions={questions}
-                singleQuestion={singleQuestion}
-                currentQuestion={currentQuestion}
-                nextQuestion={nextQuestion}
-                selectAnswer={selectAnswer}
-                userAnswer={userAnswer}
-                isDisabled={isDisabled}
-                setIsDisabled={setIsDisabled}
-                getFirstName={getFirstName}
+              questions={questions}
+              singleQuestion={singleQuestion}
+              currentQuestion={currentQuestion}
+              nextQuestion={nextQuestion}
+              selectAnswer={selectAnswer}
+              userAnswer={userAnswer}
+              isDisabled={isDisabled}
+              setIsDisabled={setIsDisabled}
+              getFirstName={getFirstName}
             />
 
           </View>
