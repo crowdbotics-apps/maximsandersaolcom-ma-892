@@ -184,9 +184,10 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.HELVETICA_BOLD
   },
   titleWrapper: {
-    flex: 2.5,
+    //flex: 2.5,
     paddingHorizontal: 10,
-    paddingTop: 20
+    paddingTop: 20,
+    marginBottom: 20
   },
   text: {
     fontSize: 20,

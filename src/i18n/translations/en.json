@@ -52,7 +52,8 @@
       "myFavorites": "My Favorites",
       "myProgressAndData": "My Progress and Data",
       "learn": "Learn",
-      "settings": "Settings"
+      "settings": "Settings",
+      "logout": "Logout"
     },
     "profileStats": {
       "friends": "Friends",
