@@ -86,7 +86,7 @@ class ProfileContainer extends Component {
   setCurrentTab = currentTab => this.setState({ currentTab });
 
   renderOverview = () => (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, marginTop: 10 }}>
       <ProfileMenu />
     </View>
   )
@@ -94,14 +94,15 @@ class ProfileContainer extends Component {
   render() {
     const { fullName, currentTab } = this.state;
     const { profile: { imageUrl } } = this.props;
-    const routes = [
-      { key: 'overview', title: 'Overview' },
-      { key: 'myProfile', title: 'My Profile' },
-    ];
-    const mapSceneObject = {
-      overview: () => this.renderOverview(),
-      myProfile: () => <View style={{ backgroundColor: 'white', flex: 1 }}></View>,
-    };
+    // const routes = [
+    //   { key: 'overview', title: 'Overview' },
+    //   { key: 'myProfile', title: 'My Profile' },
+    // ];
+    // const mapSceneObject = {
+    //   overview: () => this.renderOverview(),
+    //   myProfile: () => <View style={{ backgroundColor: 'white', flex: 1 }}></View>,
+    // };
+
     return (
       <View style={styles.containerCenter}>
         <ProfileHeader
@@ -111,25 +112,28 @@ class ProfileContainer extends Component {
           changeFullNameFuc={this.changeFullName}
         />
         <ProfileStats followers={0} following={0} friends={0} />
-        <TabView
-          renderTabBar={props => (
-            <TabBar
-              {...props}
-              indicatorStyle={styles.indicatorStyle}
-              style={styles.tabContainerStyle}
-              activeColor="black"
-              inactiveColor="darkgray"
-              tabStyle={styles.tabStyle}
-              getLabelText={({ route }) => route.title}
-              labelStyle={styles.labelStyle}
-            />
-          )}
-          navigationState={{ index: currentTab, routes }}
-          renderScene={SceneMap(mapSceneObject)}
-          onIndexChange={index => this.setCurrentTab(index)}
-          initialLayout={{ width: Dimensions.get('window').width, flex: 1 }}
-          contentContainerStyle={{ flex: 1 }}
-        />
+        {/*<TabView*/}
+        {/*  renderTabBar={props => (*/}
+        {/*    <TabBar*/}
+        {/*      {...props}*/}
+        {/*      indicatorStyle={styles.indicatorStyle}*/}
+        {/*      style={styles.tabContainerStyle}*/}
+        {/*      activeColor="black"*/}
+        {/*      inactiveColor="darkgray"*/}
+        {/*      tabStyle={styles.tabStyle}*/}
+        {/*      getLabelText={({ route }) => route.title}*/}
+        {/*      labelStyle={styles.labelStyle}*/}
+        {/*    />*/}
+        {/*  )}*/}
+        {/*  navigationState={{ index: currentTab, routes }}*/}
+        {/*  renderScene={SceneMap(mapSceneObject)}*/}
+        {/*  onIndexChange={index => this.setCurrentTab(index)}*/}
+        {/*  initialLayout={{ width: Dimensions.get('window').width, flex: 1 }}*/}
+        {/*  contentContainerStyle={{ flex: 1 }}*/}
+        {/*/>*/}
+
+        {this.renderOverview()}
+
         {/* <ProfileMenu /> */}
       </View>
     );

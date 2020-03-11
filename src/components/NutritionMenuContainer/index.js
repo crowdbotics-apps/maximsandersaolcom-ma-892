@@ -10,7 +10,7 @@ const findFoodIcon = require('../../assets/findFoodIcon.png');
 const barcodeIcon = require('../../assets/barcode.png');
 
 const NutritionMenuContainer = ({ navigation: { navigate } }) => (
-  <View style={{ flex: 1, justifyContent: 'space-between' }}>
+  <>
     <MenuItemButton
       onPress={() => navigate(Routes.FindFoodAndRecipesScreen)}
       linkText="Find Foods and Recipes"
@@ -21,7 +21,7 @@ const NutritionMenuContainer = ({ navigation: { navigate } }) => (
       linkText="Scan Barcode"
       icon={barcodeIcon}
     />
-  </View>
+</>
 );
 
 MenuItemButton.defaultProps = {

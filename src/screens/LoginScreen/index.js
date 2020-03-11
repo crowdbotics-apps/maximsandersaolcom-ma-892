@@ -26,6 +26,7 @@ import {
   setError
 } from '../../redux/modules/authReducer';
 import AuthService from '../../services/AuthService';
+import SurveyButton from "../../components/Survey/SurveyButton";
 
 const mainActions = {
   loginActionViaFacebookAction: loginActionViaFacebook,
@@ -68,6 +69,7 @@ const styles = StyleSheet.create({
     height: 40,
     borderColor: 'gray',
     borderWidth: 1,
+    borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center'
   },
@@ -224,28 +226,48 @@ class LoginScreen extends Component {
               </View>
               <View style={[styles.containerCenter, styles.paddingHor]}>
                 <View style={{ width: '100%', marginBottom: 10 }}>
-                  <TouchableOpacity
-                    style={styles.buttonLoginFb}
-                    onPress={this.handleLoginViaFacebook}
+
+                  <SurveyButton
+                      notSurvey
+                      style={{paddingBottom: 0}}
+                      gradientStyle={{paddingVertical: 15}}
+                      onPress={() => this.handleLoginViaFacebook()}
                   >
-                    <Text
-                      style={styles.buttonLoginTextStyle}
-                    >
-                      {i18n.t('loginScreen.facebookButton')}
-                    </Text>
-                  </TouchableOpacity>
+                    Log in via Facebook
+                  </SurveyButton>
+
+                  {/*<TouchableOpacity*/}
+                  {/*  style={styles.buttonLoginFb}*/}
+                  {/*  onPress={this.handleLoginViaFacebook}*/}
+                  {/*>*/}
+                  {/*  <Text*/}
+                  {/*    style={styles.buttonLoginTextStyle}*/}
+                  {/*  >*/}
+                  {/*    {i18n.t('loginScreen.facebookButton')}*/}
+                  {/*  </Text>*/}
+                  {/*</TouchableOpacity>*/}
                 </View>
                 <View style={{ width: '100%' }}>
-                  <TouchableOpacity
-                    style={styles.buttonLoginFb}
-                    onPress={() => this.signInGoogle()}
+
+                  <SurveyButton
+                      notSurvey
+                      style={{paddingBottom: 0}}
+                      gradientStyle={{paddingVertical: 15}}
+                      onPress={() => this.signInGoogle()}
                   >
-                    <Text
-                      style={styles.buttonLoginTextStyle}
-                    >
-                      {i18n.t('loginScreen.googleButton')}
-                    </Text>
-                  </TouchableOpacity>
+                    Log in via Google
+                  </SurveyButton>
+
+                  {/*<TouchableOpacity*/}
+                  {/*  style={styles.buttonLoginFb}*/}
+                  {/*  onPress={() => this.signInGoogle()}*/}
+                  {/*>*/}
+                  {/*  <Text*/}
+                  {/*    style={styles.buttonLoginTextStyle}*/}
+                  {/*  >*/}
+                  {/*    {i18n.t('loginScreen.googleButton')}*/}
+                  {/*  </Text>*/}
+                  {/*</TouchableOpacity>*/}
                 </View>
               </View>
             </View>

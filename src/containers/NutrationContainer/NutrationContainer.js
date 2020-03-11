@@ -95,9 +95,9 @@ class NutrationContainer extends Component {
             numberOfProtein={meals.reduce((total, current) => total + current.protein, 0)}
           />
         </View>
-        <View style={{ flex: 1, marginTop: 5 }}>
+        {/*<View style={{ flex: 1, marginTop: 5 }}>*/}
           <NutritionMenuContainer navigation={navigation} />
-        </View>
+        {/*</View>*/}
         <View style={styles.lastContainer}>
           <SearchablePaginatedList
             style={{ flex: 1 }}
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
   },
   lastContainer: {
     flex: 6,
-    marginTop: 15,
+    marginTop: 10,
     borderTopWidth: 1,
     borderTopColor: 'gray',
   },

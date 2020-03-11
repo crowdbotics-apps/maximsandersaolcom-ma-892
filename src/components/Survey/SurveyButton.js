@@ -6,16 +6,20 @@ import LinearGradient from 'react-native-linear-gradient';
 
 
 const SurveyButton = props => (
-  <View style={styles.container}>
-    <TouchableOpacity style={{ width: '100%', maxWidth: 320 }} disabled={props.disabled} onPress={props.onPress}>
+  <View style={[styles.container, props.style]}>
+    <TouchableOpacity
+        style={props.notSurvey ? {width: '100%', maxWidth: 320, height: 49} : { width: '100%', maxWidth: 320 }}
+        disabled={props.disabled}
+        onPress={props.onPress}
+    >
       <LinearGradient
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 0 }}
         colors={props.disabled ? ['#d3d3d3', '#d3d3d3'] : ['#3180BD', '#6EC2FA']}
-        style={styles.linearGradient}
+        style={[styles.linearGradient, props.gradientStyle]}
       >
 
-        <Text style={styles.buttonText}>Next</Text>
+        <Text style={props.notSurvey ? styles.notSurveyText : styles.buttonText}>{props.notSurvey ? props.children : 'Next' }</Text>
       </LinearGradient>
     </TouchableOpacity>
   </View>
@@ -41,6 +45,11 @@ const styles = StyleSheet.create({
     lineHeight: 28,
     fontWeight: '600',
     color: '#fff'
+  },
+  notSurveyText: {
+    color: 'white',
+    fontSize: 15,
+    fontWeight: '500'
   }
 });
 

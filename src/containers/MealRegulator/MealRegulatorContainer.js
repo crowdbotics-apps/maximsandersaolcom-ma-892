@@ -12,20 +12,20 @@ import Fonts from '../../assets/fonts';
 
 const routes = [
   { key: 'freeForm', title: 'Free Form' },
-  { key: 'restaurants', title: 'Restaurants' },
-  { key: 'grocery', title: 'Grocery' },
-  { key: 'history', title: 'History' },
+  // { key: 'restaurants', title: 'Restaurants' },
+  // { key: 'grocery', title: 'Grocery' },
+  // { key: 'history', title: 'History' },
 ];
 
-const Restaurants = () => (
-  <View style={{ flex: 1, backgroundColor: '#673ab7' }} />
-);
-const Grocery = () => (
-  <View style={{ flex: 1, backgroundColor: '#32ff12' }} />
-);
-const History = () => (
-  <View style={{ flex: 1, backgroundColor: '#ff4500' }} />
-);
+// const Restaurants = () => (
+//   <View style={{ flex: 1, backgroundColor: '#673ab7' }} />
+// );
+// const Grocery = () => (
+//   <View style={{ flex: 1, backgroundColor: '#32ff12' }} />
+// );
+// const History = () => (
+//   <View style={{ flex: 1, backgroundColor: '#ff4500' }} />
+// );
 
 const MealRegulatorContainer = ({
   getProductsBySearchStringAction,
@@ -38,9 +38,9 @@ const MealRegulatorContainer = ({
 }) => {
   const mapSceneObject = {
     freeForm: FreeForm,
-    restaurants: Restaurants,
-    grocery: Grocery,
-    history: History
+    // restaurants: Restaurants,
+    // grocery: Grocery,
+    // history: History
   };
 
   const [tabViewIndex, setTabViewIndex] = React.useState(0);
