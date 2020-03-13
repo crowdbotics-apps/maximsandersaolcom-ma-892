@@ -103,7 +103,7 @@ class IngredientContainer extends Component {
                   getRecipeByCodeAction(code);
                   navigation.navigate(Routes.IngredientRecipeScreen);
                 }}
-                buttonContainerText="Find Recipes"
+                buttonContainerText="add to meal"
                 buttonContainerStyleProp={styles.findRecipesButton}
                 colorsGradient={['#3180BD', '#6EC2FA']}
               />

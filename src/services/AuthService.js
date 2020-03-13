@@ -42,7 +42,7 @@ export default class AuthService {
 
     getProfile() {
       return this.api.fetch('GET', '/profile/')
-        .then(res => res)
+        .then(res => console.log(res))
         .catch((err) => { throw err; });
     }
 }
