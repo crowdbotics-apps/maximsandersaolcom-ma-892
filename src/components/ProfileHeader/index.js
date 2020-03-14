@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
   },
   profileImageContainer: {
     borderColor: '#000',
+    backgroundColor: '#fff',
     borderWidth: 2,
     borderRadius: 110 / 2,
     width: 110,

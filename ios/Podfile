@@ -45,6 +45,9 @@ target 'maximsandersaolcom_ma_892' do
 
   pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-community/async-storage'
 
+
+  pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
+
   target 'maximsandersaolcom_ma_892Tests' do
     inherit! :search_paths
     # Pods for testing

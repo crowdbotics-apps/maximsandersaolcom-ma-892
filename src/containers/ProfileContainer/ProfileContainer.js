@@ -8,9 +8,8 @@ import ProfileStats from '../../components/ProfileStats';
 import ProfileMenu from '../../components/ProfileMenu';
 import WeekHelper from '../../utils/WeekHelper';
 import Fonts from '../../assets/fonts';
-import mapStateToProps from "react-redux/lib/connect/mapStateToProps";
-import mapDispatchToProps from "react-redux/lib/connect/mapDispatchToProps";
 import * as profileActions from '../../redux/actions/profile';
+import ImagePicker from 'react-native-image-picker';
 
 
 const styles = StyleSheet.create({
@@ -47,7 +46,8 @@ class ProfileContainer extends Component {
     super(props);
     this.state = {
       fullName: '',
-      currentTab: 0
+      currentTab: 0,
+      backgroundImage: '',
     };
     const { profile: { email, id } } = props;
     this.weekHelper = new WeekHelper(id, email, this.onAppChangeCheckWeekNumber);
@@ -122,14 +122,36 @@ class ProfileContainer extends Component {
   //   setImage(image.uri);
   // };
 
-
-  changeBg = () => {
+  uploadImage = async(url, filename, type) => {
+    if(this.state.backgroundImage) {
+      this.props.changeBackgroundImage(url, filename, type)
+    }
 
   };
 
+  changeBg = () => {
+    const options = {
+      noData: true
+    };
+    ImagePicker.launchImageLibrary(options, response => {
+      console.log(response);
+      if(response.uri) {
+        this.setState({backgroundImage: response});
+
+        const fileName = response.uri.split('/').pop();
+        let match = /\.(\w+)$/.exec(fileName);
+        let type = match ? `image/${match[1]}` : `image`;
+
+        //console.log('HEY ', response.uri, fileName, type)
+        this.uploadImage(response.uri, fileName, type);
+      }
+    });
+  };
+
+
   render() {
     const { fullName, currentTab } = this.state;
-    const { profile: { imageUrl }, profileData } = this.props;
+    const { profile: { imageUrl } } = this.props;
     // const routes = [
     //   { key: 'overview', title: 'Overview' },
     //   { key: 'myProfile', title: 'My Profile' },
@@ -143,10 +165,10 @@ class ProfileContainer extends Component {
       <View style={styles.containerCenter}>
         <ProfileHeader
           imageUrl={imageUrl}
-          backgroundUrl="" // empty string set default image
+          backgroundUrl={this.state.backgroundImage.uri} // empty string set default image
           fullName={fullName}
           changeFullNameFuc={this.changeFullName}
-          changeBackground={() => {}}
+          changeBackground={this.changeBg}
         />
         <ProfileStats followers={0} following={0} friends={0} />
         {/*<TabView*/}
@@ -191,13 +213,13 @@ ProfileContainer.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    profileData: state.state.profile.profile,
+    profileData: state.profile.profile,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    changeBackgroundImage: () => dispatch(profileActions.changeBackgroundImage()),
+    changeBackgroundImage: (url, filename, type) => dispatch(profileActions.changeBackgroundImage(url, filename, type)),
     changeAvatarImage: () => dispatch(profileActions.changeAvatarImage())
   };
 };
