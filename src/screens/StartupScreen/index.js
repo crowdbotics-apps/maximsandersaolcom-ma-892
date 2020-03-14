@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import AsyncStorage from "@react-native-community/async-storage";
 import { View, ActivityIndicator, StyleSheet } from "react-native";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { withNavigation } from 'react-navigation';
 import Routes from "../../Routes";
 
@@ -9,6 +9,9 @@ import Routes from "../../Routes";
 const StartupScreen = props => {
 
     const dispatch = useDispatch();
+
+const store = useSelector(state => state);
+console.log('666 ', store);
 
     useEffect(() => {
         const tryLogin = async () => {
@@ -18,17 +21,6 @@ const StartupScreen = props => {
                 props.navigation.navigate(Routes.IntroScreen);
                 return;
             }
-
-            // if (userData) {
-            //     const transformedData = JSON.parse(userData);
-            //     const { token } = transformedData;
-            //
-            //
-            //     if (typeof token !== 'string') {
-            //         props.navigation.navigate(Routes.IntroScreen);
-            //         return;
-            //     }
-            // }
 
             props.navigation.navigate(Routes.ProfileScreen);
         };

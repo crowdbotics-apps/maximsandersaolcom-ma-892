@@ -13,6 +13,8 @@ const styles = StyleSheet.create({
 const ProfileScreen = () => {
 
   const dispatch = useDispatch();
+   const profile = useSelector(state => state.profile.profile);
+   console.log('profile from state: ', profile);
 
   const getProfile = async () => {
     try {

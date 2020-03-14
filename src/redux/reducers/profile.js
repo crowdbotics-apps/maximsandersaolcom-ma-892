@@ -9,7 +9,7 @@ export default (state = initialState, action) => {
         case GET_PROFILE_INFO:
             return {
                 ...state,
-                //profile: action.userData,
+                profile: action.data,
             };
 
         // case UPDATE_SETTINGS:

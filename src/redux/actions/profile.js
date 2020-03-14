@@ -1,12 +1,20 @@
 import React from 'react';
 import Api from '../../api';
+import {GET_PROFILE_INFO} from '../constants'
 
 
 const api = Api.getInstance();
 
 export const getProfile = () => {
-    return api.fetch('GET', `/profile/`)
-        .then(response =>  console.log('PROFILE RESPONSE', response))
+    return (dispatch) => api.fetch('GET', `/profile/`)
+        .then(response =>  {
+
+            dispatch({
+                type: GET_PROFILE_INFO,
+                data: response.data.results[0]
+            });
+            console.log('PROFILE RESPONSE', response)
+        })
         .catch((err) => { throw err; });
 };
 

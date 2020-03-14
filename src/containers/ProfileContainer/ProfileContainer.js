@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Dimensions } from 'react-native';
+import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import ProfileHeader from '../../components/ProfileHeader';
@@ -7,6 +8,10 @@ import ProfileStats from '../../components/ProfileStats';
 import ProfileMenu from '../../components/ProfileMenu';
 import WeekHelper from '../../utils/WeekHelper';
 import Fonts from '../../assets/fonts';
+import mapStateToProps from "react-redux/lib/connect/mapStateToProps";
+import mapDispatchToProps from "react-redux/lib/connect/mapDispatchToProps";
+import * as profileActions from '../../redux/actions/profile';
+
 
 const styles = StyleSheet.create({
   containerCenter: {
@@ -79,7 +84,7 @@ class ProfileContainer extends Component {
           return calculateWeekNumberAction(isExisting);
         });
     }
-  }
+  };
 
   changeFullName = value => this.setState({ fullName: value })
 
@@ -89,11 +94,42 @@ class ProfileContainer extends Component {
     <View style={{ flex: 1, marginTop: 10 }}>
       <ProfileMenu />
     </View>
-  )
+  );
+
+  // verifyPermissions = async () => {
+  //   const result = await Permissions.askAsync(Permissions.CAMERA, Permissions.CAMERA_ROLL);
+  //
+  //   if (result.status !== 'granted') {
+  //     Alert.alert('Grant permissions', null, [{ text: 'Okay' }]);
+  //     return false;
+  //   }
+  //   return true;
+  // };
+  //
+  // pickImage = async () => {
+  //   const hasPermission = await verifyPermissions();
+  //
+  //   if (!hasPermission) {
+  //     return
+  //   }
+  //
+  //   const image = await ImagePicker.launchImageLibraryAsync({
+  //     allowsEditing: true,
+  //     aspect: [1, 1],
+  //     mediaTypes: 'Images',
+  //   });
+  //
+  //   setImage(image.uri);
+  // };
+
+
+  changeBg = () => {
+
+  };
 
   render() {
     const { fullName, currentTab } = this.state;
-    const { profile: { imageUrl } } = this.props;
+    const { profile: { imageUrl }, profileData } = this.props;
     // const routes = [
     //   { key: 'overview', title: 'Overview' },
     //   { key: 'myProfile', title: 'My Profile' },
@@ -153,4 +189,17 @@ ProfileContainer.propTypes = {
   }),
 };
 
-export default ProfileContainer;
+const mapStateToProps = state => {
+  return {
+    profileData: state.state.profile.profile,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    changeBackgroundImage: () => dispatch(profileActions.changeBackgroundImage()),
+    changeAvatarImage: () => dispatch(profileActions.changeAvatarImage())
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileContainer);

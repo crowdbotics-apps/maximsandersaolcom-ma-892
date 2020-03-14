@@ -8,14 +8,9 @@ import Routes from '../../Routes';
 import i18n from '../../i18n/i18n';
 import {useDispatch} from "react-redux";
 import {withNavigation} from 'react-navigation';
-
 import {
     logOut
 } from '../../redux/modules/authReducer';
-
-// const mainActions = {
-//     logOutAction: logOut
-// };
 
 const findMyProgramIcon = require('../../assets/icon_find_my_program.png');
 const myFavoritesIcon = require('../../assets/icon_my_favorites.png');
@@ -65,18 +60,10 @@ const ProfileMenu = (props) => {
             <ProfileMenuItem
                 menuIcon={logoutIcon}
                 menuText={i18n.t('profileScreen.profileMenuItems.logout')}
-                //route={Routes.IntroScreen}
                 onPress={() => {
                     signOut();
                     props.navigation.navigate(Routes.IntroScreen);
                 }}
-
-                // Logout Action was left empty by prev developer
-                // TODO: rewrite some day to work properly
-                // onPress={() => {
-                //     navigate(Routes.IntroScreen);
-                //     logOutAction();
-                // }}
             />
         </ScrollView>
     );
