@@ -1,4 +1,5 @@
 export default {
+  StartupScreen: 'StartupScreen',
   IntroScreen: 'IntroScreen',
   TestScreen: 'TestScreen',
   LoginScreen: 'LoginScreen',

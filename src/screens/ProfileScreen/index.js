@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import { View, StyleSheet } from 'react-native';
-////import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ProfileContainer from '../../containers/ProfileContainer';
 import * as profileActions from '../../redux/actions/profile';
 
@@ -12,17 +12,17 @@ const styles = StyleSheet.create({
 });
 const ProfileScreen = () => {
 
-  // const dispatch = useDispatch();
-  //
-  // const getProfile = async () => {
-  //   try {
-  //     await dispatch(profileActions.getProfile())
-  //   } catch(err) {console.log(err)}
-  // };
-  //
-  // useEffect(() => {
-  //   getProfile();
-  // }, []);
+  const dispatch = useDispatch();
+
+  const getProfile = async () => {
+    try {
+      await dispatch(profileActions.getProfile())
+    } catch(err) {console.log(err)}
+  };
+
+  useEffect(() => {
+    getProfile();
+  }, []);
 
 
   return (

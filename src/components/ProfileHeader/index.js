@@ -67,7 +67,8 @@ const ProfileHeader = ({
   imageUrl,
   backgroundUrl,
   fullName,
-  changeFullNameFuc
+  changeFullNameFuc,
+  changeBackground
 }) => (
   <View style={{ width: '100%' }}>
     <View style={{ width: '100%', height: 150 }}>
@@ -80,6 +81,7 @@ const ProfileHeader = ({
       >
         <TouchableOpacity
           style={styles.changeBackgroundButton}
+          onPress={changeBackground}
         >
           <Text
             style={styles.changeBackgroundText}

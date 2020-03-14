@@ -1,15 +1,25 @@
 import React from 'react';
-import axios from 'axios';
-import {API_URL} from "../../constants";
+import Api from '../../api';
 
+
+const api = Api.getInstance();
 
 export const getProfile = () => {
-    return async dispatch => {
-
-        try {
-            const response = await axios.get(API_URL + '/profile/');
-            console.log('PROFILE RESPONSE', response);
-        } catch (err) {console.log(err)}
-
-    }
+    return api.fetch('GET', `/profile/`)
+        .then(response =>  console.log('PROFILE RESPONSE', response))
+        .catch((err) => { throw err; });
 };
+
+export const changeAvatarImage = () => {
+    return api.fetch('POST', `/profile/set_profile_picture/`)
+        .then(response =>  console.log('PROFILE RESPONSE', response))
+        .catch((err) => { throw err; });
+};
+
+export const changeBackgroundImage = () => {
+    return api.fetch('POST', `/profile/set_background_picture/`)
+        .then(response =>  console.log('PROFILE RESPONSE', response))
+        .catch((err) => { throw err; });
+};
+
+

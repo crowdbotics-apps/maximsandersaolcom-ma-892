@@ -110,6 +110,7 @@ class ProfileContainer extends Component {
           backgroundUrl="" // empty string set default image
           fullName={fullName}
           changeFullNameFuc={this.changeFullName}
+          changeBackground={() => {}}
         />
         <ProfileStats followers={0} following={0} friends={0} />
         {/*<TabView*/}

@@ -15,6 +15,7 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 
 import Routes from './Routes';
 import {
+  StartupScreen,
   IntroScreen,
   TestScreen,
   LoginScreen,
@@ -352,6 +353,12 @@ const BottomAppStack = createBottomTabNavigator(
 );
 
 const AuthStack = createStackNavigator({
+  [Routes.StartupScreen]: {
+    screen: StartupScreen,
+    navigationOptions: {
+      header: null
+    }
+  },
   [Routes.IntroScreen]: {
     screen: IntroScreen,
     navigationOptions: {
@@ -380,14 +387,16 @@ const AuthStack = createStackNavigator({
   }
 },
 {
-  initialRouteName: 'IntroScreen',
+  //initialRouteName: 'IntroScreen',
+  initialRouteName: 'StartupScreen',
   cardStyle: {
     backgroundColor: 'white',
   },
 });
 
 export default createAppContainer(createSwitchNavigator({
-  [Routes.IntroScreen]: IntroScreen,
+  [Routes.StartupScreen]: StartupScreen,
+  // [Routes.IntroScreen]: IntroScreen,
   AuthStack,
   BottomAppStack
 },
@@ -401,5 +410,6 @@ export default createAppContainer(createSwitchNavigator({
       headerVisible: false,
     }
   }),
-  initialRouteName: 'IntroScreen',
+  //initialRouteName: 'IntroScreen',
+  initialRouteName: 'StartupScreen',
 }));

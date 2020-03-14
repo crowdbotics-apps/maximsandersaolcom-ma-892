@@ -24,6 +24,7 @@ import cl.json.ShareApplication;
 import com.BV.LinearGradient.LinearGradientPackage;
 import com.wenkesj.voice.VoicePackage; // <------ Add this!
 import com.reactcommunity.rndatetimepicker.RNDateTimePickerPackage;
+import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -60,7 +61,8 @@ public class MainApplication extends Application implements ReactApplication {
             new LinearGradientPackage(),
             new VoicePackage(),
             new ReanimatedPackage(),
-            new RNDateTimePickerPackage()
+            new RNDateTimePickerPackage(),
+            new AsyncStoragePackage()
       );
     }
 

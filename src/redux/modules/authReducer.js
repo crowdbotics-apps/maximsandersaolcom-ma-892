@@ -6,6 +6,7 @@ import { GoogleSignin } from 'react-native-google-signin';
 import initialAuthState from '../initialState/authInitial';
 import AuthService from '../../services/AuthService';
 import Api from '../../api';
+import AsyncStorage from "@react-native-community/async-storage";
 
 export const LOGIN_SUCCESS = 'auth/LOGIN_SUCCESS';
 export const LOGOUT_SUCCESS = 'auth/LOGOUT_SUCCESS';
@@ -57,6 +58,7 @@ export default (state = { ...initialAuthState }, { type, payload }) => {
 
 export const logOut = () => async (dispatch) => {
   const api = Api.getInstance();
+  AsyncStorage.removeItem('userData');
   api.removeToken();
   try {
     await GoogleSignin.signOut();

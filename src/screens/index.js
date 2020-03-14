@@ -1,3 +1,4 @@
+export { default as StartupScreen } from './StartupScreen';
 export { default as IntroScreen } from './IntroScreen';
 export { default as TestScreen } from './TestScreen';
 export { default as LoginScreen } from './LoginScreen';
