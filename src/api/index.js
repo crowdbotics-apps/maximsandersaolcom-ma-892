@@ -73,43 +73,52 @@ class Api {
         });
     }
 
-    addToken(token, refreshToken) {
+     //addToken = async (token, refreshToken) => {
+         addToken = async () => {
+        const userData = await AsyncStorage.getItem('userData');
+        const transformedData = JSON.parse(userData);
+        const { token } = transformedData;
+
       this.token = `Token ${token}`;
-      this.refreshToken = refreshToken;
-    }
+      //this.refreshToken = refreshToken;
+    };
 
     removeToken() {
       this.token = null;
     }
 
-    _refreshToken(refreshToken, { method, url, options }) {
-      const data = {
-        grant_type: 'refresh_token',
-        audience: Config.OAUTH_AUDIENCE,
-        scope: 'offline_access',
-        client_id: Config.OAUTH_CLIENT_ID,
-        refresh_token: refreshToken
-      };
-
-      return this.fetch('POST', `${Config.OAUTH_DOMAIN}/oauth/token`, { data })
-        .then((response) => {
-          const auth = {
-            token: response.data.access_token,
-            refreshToken,
-            tokenType: response.data.token_type,
-            scopeList: response.data.scope.split(' ')
-          };
-
-          this.addToken(`${auth.tokenType} ${auth.token}`, auth.refreshToken);
-
-          AsyncStorage.setItem('auth', JSON.stringify(data));
-
-          //reduxStore.dispatch({ type: 'AUTH_REFRESH', payload: auth });
-
-          return this.fetch(method, url, options);
-        });
-      // .catch({}) //@todo Missing CATCH?!
-    }
+    // _refreshToken(refreshToken, { method, url, options }) {
+    //   const data = {
+    //     grant_type: 'refresh_token',
+    //     audience: Config.OAUTH_AUDIENCE,
+    //     scope: 'offline_access',
+    //     client_id: Config.OAUTH_CLIENT_ID,
+    //     refresh_token: refreshToken
+    //   };
+    //
+    //   return this.fetch('POST', `${Config.OAUTH_DOMAIN}/oauth/token`, { data })
+    //     .then((response) => {
+    //       const auth = {
+    //         token: response.data.access_token,
+    //           refreshToken,
+    //         tokenType: response.data.token_type,
+    //         scopeList: response.data.scope.split(' ')
+    //       };
+    //
+    //       this.addToken(`${auth.tokenType} ${auth.token}`,
+    //           auth.refreshToken
+    //       );
+    //
+    //         //this.addToken();
+    //
+    //       AsyncStorage.setItem('auth', JSON.stringify(data));
+    //
+    //       //reduxStore.dispatch({ type: 'AUTH_REFRESH', payload: auth });
+    //
+    //       return this.fetch(method, url, options);
+    //     });
+    //   // .catch({}) //@todo Missing CATCH?!
+    // }
 }
 
 let instance = null;

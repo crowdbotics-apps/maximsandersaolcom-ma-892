@@ -16,7 +16,7 @@ console.log('666 ', store);
     useEffect(() => {
         const tryLogin = async () => {
             const userData = await AsyncStorage.getItem('userData');
-            console.log('TOKEN INSIDE STARTUp ', userData)
+            console.log('TOKEN INSIDE STARTUP ', userData)
             if (!userData) {
                 props.navigation.navigate(Routes.IntroScreen);
                 return;

@@ -48,13 +48,16 @@ class ProfileContainer extends Component {
       fullName: '',
       currentTab: 0,
       backgroundImage: '',
+      avatar: '',
+      uploadBgImage: '',
+      uploadAvatar: '',
     };
     const { profile: { email, id } } = props;
     this.weekHelper = new WeekHelper(id, email, this.onAppChangeCheckWeekNumber);
   }
 
   componentDidMount() {
-    const { profile: { name: fullName, id, email }, calculateWeekNumberAction } = this.props;
+    const { profile: { name: fullName, id, email, profile_picture_url, background_picture_url }, calculateWeekNumberAction } = this.props;
     this.weekHelper.checkIsExisting(id)
       .then((isExisting) => {
         if (!isExisting) {
@@ -64,7 +67,9 @@ class ProfileContainer extends Component {
         return calculateWeekNumberAction(isExisting);
       });
     this.setState({
-      fullName
+      fullName,
+      avatar: profile_picture_url,
+      backgroundImage: background_picture_url
     });
   }
 
@@ -122,28 +127,41 @@ class ProfileContainer extends Component {
   //   setImage(image.uri);
   // };
 
-  uploadImage = async(url, filename, type) => {
-    if(this.state.backgroundImage) {
-      this.props.changeBackgroundImage(url, filename, type)
+  uploadAvatar = async() => {
+    if(this.state.uploadAvatar) {
+      this.props.changeAvatarImage(this.state.uploadAvatar);
     }
+  };
 
+  uploadBgImage = async() => {
+    if(this.state.uploadBgImage) {
+      this.props.changeBackgroundImage(this.state.uploadBgImage);
+    }
   };
 
   changeBg = () => {
     const options = {
-      noData: true
+      quality: 0
     };
     ImagePicker.launchImageLibrary(options, response => {
       console.log(response);
       if(response.uri) {
-        this.setState({backgroundImage: response});
+        this.setState({uploadBgImage: response});
+        this.uploadBgImage(response);
+      }
+    });
+  };
 
-        const fileName = response.uri.split('/').pop();
-        let match = /\.(\w+)$/.exec(fileName);
-        let type = match ? `image/${match[1]}` : `image`;
+  onAvatarChange = () => {
+    const options = {
+      quality: 0
+    };
+    ImagePicker.launchImageLibrary(options, response => {
+      console.log(response);
+      if(response.uri) {
+        this.setState({uploadAvatar: response});
 
-        //console.log('HEY ', response.uri, fileName, type)
-        this.uploadImage(response.uri, fileName, type);
+        this.uploadAvatar(response);
       }
     });
   };
@@ -151,7 +169,11 @@ class ProfileContainer extends Component {
 
   render() {
     const { fullName, currentTab } = this.state;
-    const { profile: { imageUrl } } = this.props;
+    //const { profile: { imageUrl } } = this.props;
+
+    const avatar = this.state.avatar !== null ? this.state.avatar : '';
+    const bgImage = this.state.backgroundImage !== null ? this.state.backgroundImage : '';
+
     // const routes = [
     //   { key: 'overview', title: 'Overview' },
     //   { key: 'myProfile', title: 'My Profile' },
@@ -164,11 +186,12 @@ class ProfileContainer extends Component {
     return (
       <View style={styles.containerCenter}>
         <ProfileHeader
-          imageUrl={imageUrl}
-          backgroundUrl={this.state.backgroundImage.uri} // empty string set default image
+          imageUrl={this.state.uploadAvatar ? this.state.uploadAvatar.uri : avatar}
+          backgroundUrl={this.state.uploadBgImage ? this.state.uploadBgImage.uri : bgImage} // empty string set default image //
           fullName={fullName}
           changeFullNameFuc={this.changeFullName}
           changeBackground={this.changeBg}
+          onAvatarChange={this.onAvatarChange}
         />
         <ProfileStats followers={0} following={0} friends={0} />
         {/*<TabView*/}
@@ -219,8 +242,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    changeBackgroundImage: (url, filename, type) => dispatch(profileActions.changeBackgroundImage(url, filename, type)),
-    changeAvatarImage: () => dispatch(profileActions.changeAvatarImage())
+    changeBackgroundImage: (resp) => dispatch(profileActions.changeBackgroundImage(resp)),
+    changeAvatarImage: (resp) => dispatch(profileActions.changeAvatarImage(resp))
   };
 };
 

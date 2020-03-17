@@ -4,6 +4,7 @@ import {
   Image,
   Text,
   TouchableOpacity,
+    TouchableWithoutFeedback,
   StyleSheet,
   TextInput
 } from 'react-native';
@@ -11,6 +12,73 @@ import PropTypes from 'prop-types';
 import i18n from '../../i18n/i18n';
 
 const backgroundImageDefault = require('../../assets/defaultBackgoundOnProfilePage.png');
+
+
+
+const ProfileHeader = ({
+  imageUrl,
+  backgroundUrl,
+  fullName,
+  changeFullNameFuc,
+  changeBackground,
+  onAvatarChange
+}) => (
+  <View style={{ width: '100%' }}>
+    <View style={{ width: '100%', height: 150 }}>
+      <Image
+        style={styles.backgroundImage}
+        source={backgroundUrl !== '' ? { uri: backgroundUrl } : backgroundImageDefault}
+      />
+      <View
+        style={styles.changeBackgroundContainer}
+      >
+        <TouchableOpacity
+          style={styles.changeBackgroundButton}
+          onPress={changeBackground}
+        >
+          <Text
+            style={styles.changeBackgroundText}
+          >
+            {i18n.t('profileScreen.profileHeader.changeBackground')}
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+    <View
+      style={styles.profileWrapper}
+    >
+      <TouchableWithoutFeedback onPress={onAvatarChange}>
+      <View
+        style={styles.profileImageContainer}
+      >
+        <Image
+          style={styles.profileImage}
+          source={{ uri: imageUrl }}
+        />
+      </View>
+      </TouchableWithoutFeedback>
+      <TextInput
+        style={styles.inputStyle}
+        value={fullName}
+        onChangeText={changeFullNameFuc}
+      />
+    </View>
+  </View>
+);
+
+ProfileHeader.defaultProps = {
+  imageUrl: '',
+  backgroundUrl: '',
+  fullName: '',
+  changeFullNameFuc: () => {}
+};
+
+ProfileHeader.propTypes = {
+  imageUrl: PropTypes.string,
+  backgroundUrl: PropTypes.string,
+  fullName: PropTypes.string,
+  changeFullNameFuc: PropTypes.func
+};
 
 const styles = StyleSheet.create({
   backgroundImage: {
@@ -63,67 +131,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   }
 });
-
-const ProfileHeader = ({
-  imageUrl,
-  backgroundUrl,
-  fullName,
-  changeFullNameFuc,
-  changeBackground
-}) => (
-  <View style={{ width: '100%' }}>
-    <View style={{ width: '100%', height: 150 }}>
-      <Image
-        style={styles.backgroundImage}
-        source={backgroundUrl !== '' ? { uri: backgroundUrl } : backgroundImageDefault}
-      />
-      <View
-        style={styles.changeBackgroundContainer}
-      >
-        <TouchableOpacity
-          style={styles.changeBackgroundButton}
-          onPress={changeBackground}
-        >
-          <Text
-            style={styles.changeBackgroundText}
-          >
-            {i18n.t('profileScreen.profileHeader.changeBackground')}
-          </Text>
-        </TouchableOpacity>
-      </View>
-    </View>
-    <View
-      style={styles.profileWrapper}
-    >
-      <View
-        style={styles.profileImageContainer}
-      >
-        <Image
-          style={styles.profileImage}
-          source={{ uri: imageUrl }}
-        />
-      </View>
-      <TextInput
-        style={styles.inputStyle}
-        value={fullName}
-        onChangeText={changeFullNameFuc}
-      />
-    </View>
-  </View>
-);
-
-ProfileHeader.defaultProps = {
-  imageUrl: '',
-  backgroundUrl: '',
-  fullName: '',
-  changeFullNameFuc: () => {}
-};
-
-ProfileHeader.propTypes = {
-  imageUrl: PropTypes.string,
-  backgroundUrl: PropTypes.string,
-  fullName: PropTypes.string,
-  changeFullNameFuc: PropTypes.func
-};
 
 export default ProfileHeader;
