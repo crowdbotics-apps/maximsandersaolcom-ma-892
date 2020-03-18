@@ -12,35 +12,6 @@ import * as profileActions from '../../redux/actions/profile';
 import ImagePicker from 'react-native-image-picker';
 
 
-const styles = StyleSheet.create({
-  containerCenter: {
-    flex: 1,
-    width: '100%'
-  },
-  labelStyle: {
-    fontSize: 14,
-    textTransform: 'none',
-    fontFamily: Fonts.HELVETICA_MEDIUM
-  },
-  indicatorStyle: {
-    backgroundColor: 'rgb(1, 62, 245)',
-    fontSize: 14,
-    textTransform: 'none'
-  },
-  tabContainerStyle: {
-    backgroundColor: 'white',
-    color: 'black',
-    fontSize: 14,
-    textTransform: 'none',
-    zIndex: 0
-  },
-  tabStyle: {
-    padding: 5,
-    minHeight: 38,
-    height: 38
-  }
-});
-
 class ProfileContainer extends Component {
   constructor(props) {
     super(props);
@@ -57,7 +28,9 @@ class ProfileContainer extends Component {
   }
 
   componentDidMount() {
-    const { profile: { name: fullName, id, email, profile_picture_url, background_picture_url }, calculateWeekNumberAction } = this.props;
+    const { profile: { name: fullName, id, email }, calculateWeekNumberAction } = this.props;
+
+
     this.weekHelper.checkIsExisting(id)
       .then((isExisting) => {
         if (!isExisting) {
@@ -66,11 +39,6 @@ class ProfileContainer extends Component {
         }
         return calculateWeekNumberAction(isExisting);
       });
-    this.setState({
-      fullName,
-      avatar: profile_picture_url,
-      backgroundImage: background_picture_url
-    });
   }
 
   componentWillUnmount() {
@@ -171,8 +139,12 @@ class ProfileContainer extends Component {
     const { fullName, currentTab } = this.state;
     //const { profile: { imageUrl } } = this.props;
 
-    const avatar = this.state.avatar !== null ? this.state.avatar : '';
-    const bgImage = this.state.backgroundImage !== null ? this.state.backgroundImage : '';
+
+    const {profile_picture_url, background_picture_url} = this.props.profileData;
+    const avatar = profile_picture_url ? profile_picture_url : this.state.uploadAvatar;
+    const bgImage = background_picture_url !== null ? background_picture_url : this.state.uploadBgImage;
+
+
 
     // const routes = [
     //   { key: 'overview', title: 'Overview' },
@@ -236,7 +208,7 @@ ProfileContainer.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    profileData: state.profile.profile,
+    profileData: state.profile.profileData,
   };
 };
 
@@ -246,5 +218,35 @@ const mapDispatchToProps = dispatch => {
     changeAvatarImage: (resp) => dispatch(profileActions.changeAvatarImage(resp))
   };
 };
+
+
+const styles = StyleSheet.create({
+  containerCenter: {
+    flex: 1,
+    width: '100%'
+  },
+  labelStyle: {
+    fontSize: 14,
+    textTransform: 'none',
+    fontFamily: Fonts.HELVETICA_MEDIUM
+  },
+  indicatorStyle: {
+    backgroundColor: 'rgb(1, 62, 245)',
+    fontSize: 14,
+    textTransform: 'none'
+  },
+  tabContainerStyle: {
+    backgroundColor: 'white',
+    color: 'black',
+    fontSize: 14,
+    textTransform: 'none',
+    zIndex: 0
+  },
+  tabStyle: {
+    padding: 5,
+    minHeight: 38,
+    height: 38
+  }
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileContainer);

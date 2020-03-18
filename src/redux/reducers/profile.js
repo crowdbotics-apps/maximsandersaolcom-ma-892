@@ -1,7 +1,7 @@
 import {GET_PROFILE_INFO} from "../constants";
 
 const initialState = {
-    profile: {},
+    profileData: {},
 };
 
 export default (state = initialState, action) => {
@@ -9,7 +9,7 @@ export default (state = initialState, action) => {
         case GET_PROFILE_INFO:
             return {
                 ...state,
-                profile: action.data,
+                profileData: action.data,
             };
 
         // case UPDATE_SETTINGS:

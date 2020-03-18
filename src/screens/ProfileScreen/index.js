@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import { View, StyleSheet } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import ProfileContainer from '../../containers/ProfileContainer';
 import * as profileActions from '../../redux/actions/profile';
 
@@ -13,8 +13,6 @@ const styles = StyleSheet.create({
 const ProfileScreen = () => {
 
   const dispatch = useDispatch();
-   const profile = useSelector(state => state.profile.profile);
-   console.log('profile from state: ', profile);
 
   const getProfile = async () => {
     try {

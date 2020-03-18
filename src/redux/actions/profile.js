@@ -2,22 +2,35 @@ import React from 'react';
 import Api from '../../api';
 import {API_URL, GET_PROFILE_INFO} from '../constants'
 import AsyncStorage from "@react-native-community/async-storage";
-import axios from 'axios';
 
-
-const api = Api.getInstance();
 
 export const getProfile = () => {
-    return (dispatch) => api.fetch('GET', `/profile/`)
-        .then(response =>  {
+    return async (dispatch) => {
+
+        const userData = await AsyncStorage.getItem('userData');
+        const transformedData = JSON.parse(userData);
+        const { token } = transformedData;
+
+        try {
+            const response = await fetch(`${API_URL}/profile/`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Token ${token}`,
+                },
+            });
+
+            const resData = await response.json();
+            console.log('PROFILE RESPONSE JSON ', resData);
 
             dispatch({
                 type: GET_PROFILE_INFO,
-                data: response.data.results[0]
+                data: resData.results[0]
             });
-            console.log('PROFILE RESPONSE', response)
-        })
-        .catch((err) => { throw err; });
+
+        } catch (err) {
+            console.log(err)
+        }
+    }
 };
 
 export const changeAvatarImage = (resp) => {
@@ -43,7 +56,6 @@ export const changeAvatarImage = (resp) => {
 
                 body: JSON.stringify(data)
             });
-
 
             const resData = await response.json();
             console.log('RESPONSE AVATAR', response);
