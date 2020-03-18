@@ -4,6 +4,7 @@ import { View, ActivityIndicator, StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { withNavigation } from 'react-navigation';
 import Routes from "../../Routes";
+import Api from "../../api";
 
 
 const StartupScreen = props => {
@@ -12,6 +13,7 @@ const StartupScreen = props => {
 
 const store = useSelector(state => state);
 console.log('666 ', store);
+    const api = Api.getInstance();
 
     useEffect(() => {
         const tryLogin = async () => {
@@ -22,6 +24,16 @@ console.log('666 ', store);
                 return;
             }
 
+            const transformedData = JSON.parse(userData);
+            const { token } = transformedData;
+
+            if(!token) {
+                api.removeToken();
+                props.navigation.navigate(Routes.IntroScreen);
+                return;
+            }
+
+            api.addToken(token, '');
             props.navigation.navigate(Routes.ProfileScreen);
         };
 
