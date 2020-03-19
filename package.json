@@ -23,7 +23,7 @@
     "react-native-chart-kit": "3.2.1",
     "react-native-check-box": "^2.1.7",
     "react-native-collapsible": "^1.5.1",
-    "react-native-fbsdk": "^0.10.1",
+    "react-native-fbsdk": "https://github.com/facebook/react-native-fbsdk.git#0.10.0-stable",
     "react-native-firebase": "5.1.0",
     "react-native-gesture-handler": "^1.4.1",
     "react-native-google-signin": "^2.0.0",

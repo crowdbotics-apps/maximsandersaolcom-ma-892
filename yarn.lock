@@ -5784,10 +5784,9 @@ react-native-collapsible@^1.5.1:
   dependencies:
     prop-types "^15.6.2"
 
-react-native-fbsdk@^0.10.1:
-  version "0.10.1"
-  resolved "https://registry.yarnpkg.com/react-native-fbsdk/-/react-native-fbsdk-0.10.1.tgz#b3ed4237b1322956f2260c716d49c2ce08514741"
-  integrity sha512-/TfpiT7wLdP1ABWk46DhpadbOSXdizWEvrNhLABe+9jK8/ljaCL7nwHj+Xp0Yd6KBnW88in67ukAy2kbfbfZ+A==
+"react-native-fbsdk@https://github.com/facebook/react-native-fbsdk.git#0.10.0-stable":
+  version "0.10.3"
+  resolved "https://github.com/facebook/react-native-fbsdk.git#0851a049b8e65cb930743954e6fdc6092e377478"
 
 react-native-firebase@5.1.0:
   version "5.1.0"
