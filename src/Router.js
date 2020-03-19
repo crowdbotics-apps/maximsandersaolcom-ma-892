@@ -65,6 +65,12 @@ const ProfileTabStack = createDrawerNavigator({
       drawerLabel: () => null,
     })
   },
+  [Routes.SurveyScreen]: {
+    screen: SurveyScreen,
+    navigationOptions: () => ({
+      drawerLabel: () => null,
+    })
+  },
   [Routes.EditProfileScreen]: {
     screen: EditProfileScreen,
     navigationOptions: () => ({

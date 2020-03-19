@@ -4,11 +4,13 @@ import {
   View, SafeAreaView, ScrollView, KeyboardAvoidingView
 } from 'react-native';
 import { withNavigation } from 'react-navigation';
+import {useDispatch, useSelector} from "react-redux";
 import Routes from '../../Routes';
 import Question from '../../components/Survey/Question';
 import SurveyHeader from '../../components/Survey/SurveyHeader';
 import SurveyModal from '../../components/Survey/SurveyModal';
 import ProgressBar from '../../components/Survey/ProgressBar';
+import * as surveyActions from '../../redux/actions/survey'
 
 
 const questionsData = [
@@ -162,6 +164,11 @@ const questionsData = [
 
 
 const SurveyScreen = (props) => {
+
+const dispatch = useDispatch();
+
+
+
   const [questions, setQuestions] = useState(questionsData);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [singleQuestion, setSingleQuestion] = useState({});
@@ -180,6 +187,20 @@ const SurveyScreen = (props) => {
   const [percentage, setPercentage] = useState(0);
   const [userName, setUserName] = useState('');
 
+
+  useEffect(() => {
+    const getInitialSurvey = async () => {
+      try {
+        await dispatch(surveyActions.getInitialSurveyForm());
+      }catch(err) {console.log(err)}
+    };
+
+    getInitialSurvey();
+
+  }, []);
+
+
+
   const getQuestions = () => {
     // get questions here, maybe ASYNC
 
@@ -187,9 +208,11 @@ const SurveyScreen = (props) => {
     // setQuestions(questions);
   };
 
-  useEffect(() => {
-    getQuestions();
-  }, []);
+
+
+  // useEffect(() => {
+  //   getQuestions();
+  // }, []);
 
 
   const setQuestion = () => {
