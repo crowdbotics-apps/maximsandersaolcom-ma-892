@@ -6,5 +6,6 @@ export default {
   searchCategories: [],
   recipeSelected: null,
   recipesByIngredient: [],
-  allRecipesObj: {}
+  allRecipesObj: {},
+  favoriteRecipes: []
 };

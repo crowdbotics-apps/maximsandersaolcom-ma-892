@@ -16,7 +16,8 @@ const ProfileScreen = () => {
 
   const getProfile = async () => {
     try {
-      await dispatch(profileActions.getProfile())
+      await dispatch(profileActions.getProfile());
+      await dispatch(profileActions.getFavorites());
     } catch(err) {console.log(err)}
   };
 

@@ -11,6 +11,8 @@ import Routes from '../../Routes';
 
 const imagePlaceholder = 'https://via.placeholder.com/300x150.png?text=MAXIM+FITNESS';
 const addToFav = require('../../assets/icon_my_favorites.png');
+const inactiveLike = require('../../assets/likeInactive.png');
+const activeLike = require('../../assets/like.png');
 
 const HorizontalSliderItem = ({
   addToFavorites,
@@ -33,7 +35,10 @@ const HorizontalSliderItem = ({
         style={styles.backgroundImageStyle}
       >
         <TouchableOpacity onPress={addToFavorites}>
-          <Image source={addToFav} style={styles.iconStyle} />
+          <Image
+              source={addToFav}
+              //source={isLiked ? activeLike : inactiveLike}
+              style={styles.iconStyle} />
         </TouchableOpacity>
       </ImageBackground>
     </View>

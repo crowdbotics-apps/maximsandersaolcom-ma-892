@@ -7,7 +7,8 @@ const HorizontalSliderFindFood = ({
   recipesByCategory,
   navigation,
   selectOneRecipeAction,
-  getCategoriesAction
+  getCategoriesAction,
+  addRemoveFavoritesAction
 }) => {
   if (recipesByCategory && recipesByCategory.length) {
     return (
@@ -28,7 +29,7 @@ const HorizontalSliderFindFood = ({
             containerStyle={{ paddingTop: 15 }}
             data={item.recipes}
             slug={item.slug}
-            addToFavorites={() => {}}
+            addToFavorites={addRemoveFavoritesAction}
             buttonContainerText={item.categoryName}
             buttonContainerStyleProp={{ backgroundColor: 'rgb(68, 161, 248)', marginLeft: 10 }}
           />

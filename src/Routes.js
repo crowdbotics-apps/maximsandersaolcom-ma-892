@@ -23,5 +23,6 @@ export default {
   LogFoodsScreen: 'LogFoodsScreen',
   MealRegulatorNutritionScreen: 'MealRegulatorNutritionScreen',
   LogFoodsNutritionScreen: 'LogFoodsNutritionScreen',
-  SurveyScreen: 'SurveyScreen'
+  SurveyScreen: 'SurveyScreen',
+  FavoritesScreen: 'FavoritesScreen'
 };

@@ -39,10 +39,13 @@ const CategoryHorizontalSlider = ({
       fetchListAction={(search, categorySlug, page, limit, offset) => console.log('aa', categorySlug, page, limit, offset)}
       renderItem={({ item }) => (
         <HorizontalSliderItem
-          onClick={() => onSelectItem(item)}
+          onClick={() => {
+            onSelectItem(item);
+            console.log('RECIPE ITEM', item)
+          }}
           navigation={navigation}
           item={item}
-          addToFavorites={() => addToFavorites()}
+          addToFavorites={() => addToFavorites(item.id)}
         />
       )}
       search={''}

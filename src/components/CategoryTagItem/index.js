@@ -7,14 +7,14 @@ import {
 
 const CategoryTagItem = ({
   onPresFunc,
-  key,
+  index,
   tagText,
   tagTextStyle = {},
   tagTextContainerStyle = {},
   touchableContainerStyle,
 }) => (
   <TouchableOpacity
-    key={key}
+    key={index}
     onPress={() => onPresFunc()}
     style={touchableContainerStyle}
   >

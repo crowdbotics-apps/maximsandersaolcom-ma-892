@@ -17,9 +17,9 @@ export const getInitialSurveyForm = () => {
                 },
             });
 
-            //const resData = await response.json();
+            const resData = await response.json();
             console.log('SURVEY RESP', response);
-            //console.log('SURVEY JSON RESP ', resData);
+            console.log('SURVEY JSON RESP ', resData);
 
 
         } catch (err) {

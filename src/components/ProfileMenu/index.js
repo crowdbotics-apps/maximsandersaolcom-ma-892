@@ -39,7 +39,7 @@ const ProfileMenu = (props) => {
             <ProfileMenuItem
                 menuIcon={myFavoritesIcon}
                 menuText={i18n.t('profileScreen.profileMenuItems.myFavorites')}
-                route={Routes.TestScreen}
+                route={Routes.FavoritesScreen}
             />
             <ProfileMenuItem
                 menuIcon={myProgressAndDataIcon}

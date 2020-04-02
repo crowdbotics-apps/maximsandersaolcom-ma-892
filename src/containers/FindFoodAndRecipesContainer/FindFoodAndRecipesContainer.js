@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import {useDispatch} from "react-redux";
 import { View } from 'react-native';
 import Search from '../../components/Search';
 import HorizontalScrollView from '../../components/HorizontalScrollView';
@@ -14,11 +15,14 @@ const FindFoodAndRecipesContainer = ({
   allCategories,
   getRecipesByCategoryAction,
   recipesByCategory,
-  getRecipeByNameOrCategoryAction
+  getRecipeByNameOrCategoryAction,
+  addRemoveFavoritesAction
 }) => {
   const [searchString, setSearchString] = useState('');
   const [selectedCategoryProp, setSelectedCategoryProp] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState([]);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (allCategories.length) {
@@ -53,6 +57,7 @@ const FindFoodAndRecipesContainer = ({
               }}
               selectedCategory={selectedCategory}
               key={key} // eslint-disable-line
+              index={key}
               tagText={item.name}
               tagTextContainerStyle={[
                 {
@@ -70,6 +75,7 @@ const FindFoodAndRecipesContainer = ({
           selectOneRecipeAction={selectOneRecipeAction}
           recipesByCategory={recipesByCategory}
           getCategoriesAction={getCategoriesAction}
+          addRemoveFavoritesAction={addRemoveFavoritesAction}
         />
       ) : <View />}
       {(searchString.length || selectedCategory.length) ? (

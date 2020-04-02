@@ -38,6 +38,7 @@ import {
   MealRegulatorScreen,
   LogFoodsScreen,
   SurveyScreen,
+  FavoritesScreen
 } from './screens';
 import DrawerContent from './containers/DrawerContent';
 import regularHeaderStyle from './components/regularHeaderStyle';
@@ -65,6 +66,7 @@ const ProfileTabStack = createDrawerNavigator({
       drawerLabel: () => null,
     })
   },
+
   [Routes.SurveyScreen]: {
     screen: SurveyScreen,
     navigationOptions: () => ({
@@ -89,6 +91,7 @@ const ProfileTabStack = createDrawerNavigator({
       drawerLabel: () => i18n.t('drawerNavigation.savedPrograms')
     })
   },
+
 }, {
   ...drawerConfiguration,
   contentComponent: props => <DrawerContent {...props} />
@@ -144,6 +147,36 @@ const NutritionTabStack = createStackNavigator({
       }),
     })
   },
+      [Routes.FavoritesScreen]: {
+        screen: FavoritesScreen,
+        navigationOptions: () => ({
+          drawerLabel: () => null,
+          headerTitle: (
+              <Text
+                  style={{
+                    fontFamily: Fonts.NOTE_NORMAL,
+                    fontSize: 28,
+                    textShadowColor: 'rgba(0, 0, 0, 0.50)',
+                    textShadowOffset: { width: 1, height: 1 },
+                    textShadowRadius: 4,
+                    textAlignVertical: 'center'
+                  }}
+              >
+                My Favorites
+              </Text>
+          ),
+          headerStyle: Platform.select({
+            ios: {
+              borderBottomWidth: 0,
+              shadowOpacity: 0,
+            },
+            android: {
+              elevation: 0,
+              backgroundColor: '#fff',
+            }
+          }),
+        })
+      },
   [Routes.FindFoodAndRecipesScreen]: {
     screen: FindFoodAndRecipesScreen,
     navigationOptions: () => ({

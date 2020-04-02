@@ -1,7 +1,8 @@
-import {GET_PROFILE_INFO} from "../constants";
+import { GET_FAV_RECIPES, GET_PROFILE_INFO } from "../constants";
 
 const initialState = {
     profileData: {},
+    favoriteRecipes: []
 };
 
 export default (state = initialState, action) => {
@@ -10,6 +11,12 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 profileData: action.data,
+            };
+
+        case GET_FAV_RECIPES:
+            return {
+                ...state,
+                favoriteRecipes: action.favoriteRecipes
             };
 
         // case UPDATE_SETTINGS:

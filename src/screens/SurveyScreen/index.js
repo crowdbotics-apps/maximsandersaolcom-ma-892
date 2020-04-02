@@ -57,7 +57,7 @@ const questionsData = [
   {
     id: 5,
     type: 'multiple',
-    question: 'What is your activity level??',
+    question: 'What is your activity level?',
     description: '',
     options: [
       {

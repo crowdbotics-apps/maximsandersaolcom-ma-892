@@ -1,6 +1,6 @@
 import React from 'react';
 import Api from '../../api';
-import {API_URL, GET_PROFILE_INFO} from '../constants'
+import {API_URL, GET_PROFILE_INFO, GET_FAV_RECIPES} from '../constants'
 import AsyncStorage from "@react-native-community/async-storage";
 
 
@@ -131,3 +131,32 @@ export const changeBackgroundImage = resp => {
 };
 
 
+
+export const getFavorites = () => {
+    return async (dispatch) => {
+
+        const userData = await AsyncStorage.getItem('userData');
+        const transformedData = JSON.parse(userData);
+        const { token } = transformedData;
+
+        try {
+            const response = await fetch(`${API_URL}/profile/get_fav_recipes/`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Token ${token}`,
+                },
+            });
+
+            const resData = await response.json();
+            console.log('FAVORITES RESPONSE JSON ', resData);
+
+            dispatch({
+                type: GET_FAV_RECIPES,
+                favoriteRecipes: resData
+            });
+
+        } catch (err) {
+            console.log(err)
+        }
+    }
+};
