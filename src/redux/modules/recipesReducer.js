@@ -2,6 +2,7 @@ import initialRecipesState from '../initialState/recipesInitial';
 import RecipesService from '../../services/RecipesService';
 import uniq from '../../utils/removeDuplicateInArray';
 import { TOGGLE_LIKE } from "./feedReducer";
+import AsyncStorage from "@react-native-community/async-storage";
 
 export const GET_RECIPES_ALL = 'recipes/GET_RECIPES_ALL';
 export const GET_ONE_RECIPE = 'recipes/GET_ONE_RECIPE';
@@ -134,7 +135,6 @@ export const addRemoveFavorites = recipeId => (dispatch, getState) => recipesSer
     .then((res) => {
 
       console.log('RESPONSE FROM ADD TO FAV' ,res)
-
       // const { feeds: { feeds: feedsArray } } = getState();  //TODO: change here
       // const newFeedArray = feedsArray.map((item) => {
       //   if (item.id === recipeId) {

@@ -103,8 +103,6 @@ export const changeBackgroundImage = resp => {
             image: `data:${resp.type};base64, ${resp.data}` // data:image/jpeg;base64
         };
 
-        console.log('DATA BEFORE SENT ', data);
-
         try {
             const response = await fetch(`${API_URL}/profile/set_background_picture/`, {
                 method: 'POST',
@@ -119,9 +117,6 @@ export const changeBackgroundImage = resp => {
 
 
            const resData = await response.json();
-            console.log('RESPONSE BG', response);
-            console.log('BG UPLOAD RESPONSE ', resData);
-
 
         } catch (err) {
             console.log(err)
@@ -148,12 +143,41 @@ export const getFavorites = () => {
             });
 
             const resData = await response.json();
-            console.log('FAVORITES RESPONSE JSON ', resData);
 
             dispatch({
                 type: GET_FAV_RECIPES,
                 favoriteRecipes: resData
             });
+
+        } catch (err) {
+            console.log(err)
+        }
+    }
+};
+
+
+export const getProgressAndData = () => {
+    return async (dispatch) => {
+
+        const userData = await AsyncStorage.getItem('userData');
+        const transformedData = JSON.parse(userData);
+        const { token } = transformedData;
+
+        try {
+            const response = await fetch(`${API_URL}/report/get_by_date/?date=2020-04-04`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Token ${token}`,
+                },
+            });
+
+            const resData = await response.json();
+            console.log('REPORT RESPONSE JSON ', resData);
+
+            // dispatch({
+            //     type: GET_FAV_RECIPES,
+            //     favoriteRecipes: resData
+            // });
 
         } catch (err) {
             console.log(err)

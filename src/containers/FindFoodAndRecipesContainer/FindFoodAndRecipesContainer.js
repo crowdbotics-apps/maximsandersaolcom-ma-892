@@ -6,6 +6,7 @@ import HorizontalScrollView from '../../components/HorizontalScrollView';
 import CategoryTagItem from '../../components/CategoryTagItem';
 import HorizontalSliderFindFood from './HorizontalSliderFindFood';
 import VerticalSliderFindFood from './VerticalSliderFindFood';
+import * as profileActions from "../../redux/actions/profile";
 
 const FindFoodAndRecipesContainer = ({
   navigation,
@@ -24,6 +25,12 @@ const FindFoodAndRecipesContainer = ({
 
   const dispatch = useDispatch();
 
+  const getFavorites = async () => {
+    try {
+      await dispatch(profileActions.getFavorites())
+    } catch(err) {console.log(err)}
+  };
+
   useEffect(() => {
     if (allCategories.length) {
       getRecipesByCategoryAction(allCategories);
@@ -31,6 +38,7 @@ const FindFoodAndRecipesContainer = ({
   }, [allCategories]);
 
   useEffect(() => {
+    getFavorites();
     getCategoriesAction();
   }, []);
 

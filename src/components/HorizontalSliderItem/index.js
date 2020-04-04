@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   TouchableOpacity,
   View,
@@ -11,47 +11,63 @@ import Routes from '../../Routes';
 
 const imagePlaceholder = 'https://via.placeholder.com/300x150.png?text=MAXIM+FITNESS';
 const addToFav = require('../../assets/icon_my_favorites.png');
-const inactiveLike = require('../../assets/likeInactive.png');
 const activeLike = require('../../assets/like.png');
 
 const HorizontalSliderItem = ({
   addToFavorites,
+  favorites,
   item,
   navigation: {
     navigate
   },
+  isLiked,
   onClick
-}) => (
-  <TouchableOpacity
-    onPress={() => {
-      navigate(Routes.IndividualRecipeScreen);
-      onClick();
-    }}
-    style={{ paddingHorizontal: 5 }}
-  >
-    <View style={styles.containerMain}>
-      <ImageBackground
-        source={{ uri: item.image_url || imagePlaceholder }}
-        style={styles.backgroundImageStyle}
+}) => {
+
+  const [isFav, setIsFav]= useState(isLiked);
+
+  const fav = favorites && favorites.find((fav, index) => {
+    return fav.id === item.id
+  });
+
+  return (
+      <TouchableOpacity
+          onPress={() => {
+            navigate(Routes.IndividualRecipeScreen);
+            onClick();
+          }}
+          style={{ paddingHorizontal: 5 }}
       >
-        <TouchableOpacity onPress={addToFavorites}>
-          <Image
-              source={addToFav}
-              //source={isLiked ? activeLike : inactiveLike}
-              style={styles.iconStyle} />
-        </TouchableOpacity>
-      </ImageBackground>
-    </View>
-    <View style={styles.textContainer}>
-      <View>
-        <Text style={styles.itemTitleStyle}>{item.name}</Text>
-      </View>
-      <View style={{ paddingRight: 5 }}>
-        <Text>{`${item.time_to_prepare} min`}</Text>
-      </View>
-    </View>
-  </TouchableOpacity>
-);
+        <View style={styles.containerMain}>
+          <ImageBackground
+              source={{ uri: item.image_url || imagePlaceholder }}
+              style={styles.backgroundImageStyle}
+          >
+            <TouchableOpacity onPress={() => {
+              if(isLiked) {
+                setIsFav(false);
+              } else {
+                setIsFav(!isFav);
+              }
+              addToFavorites();
+            }}>
+              <Image
+                  source={isFav || fav ? activeLike : addToFav}
+                  style={styles.iconStyle} />
+            </TouchableOpacity>
+          </ImageBackground>
+        </View>
+        <View style={styles.textContainer}>
+          <View>
+            <Text style={styles.itemTitleStyle}>{item.name}</Text>
+          </View>
+          <View style={{ paddingRight: 5 }}>
+            <Text>{`${item.time_to_prepare} min`}</Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+  );
+}
 
 const styles = StyleSheet.create({
   containerMain: {
