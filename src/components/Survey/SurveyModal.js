@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import {
   Text, Modal, View, StyleSheet, Image, Animated, Easing
-} from 'react-native';
+} from 'react-native'
+import AsyncStorage from "@react-native-community/async-storage";
 import { withNavigation } from 'react-navigation';
 import SurveyButton from './SurveyButton';
 import SurveyRow from './SurveyRow';
@@ -11,6 +12,12 @@ import DoneIcon from '../../assets/icon-survey-done.png';
 import Fonts from '../../assets/fonts';
 import Routes from "../../Routes";
 
+
+const saveSurveyPassedToStorage = bool => {
+    AsyncStorage.setItem('isSurvey', JSON.stringify({
+        isPassed: bool,
+    }))
+};
 
 const SurveyModal = ({
   contentType, visible, closeModal, userName, navigation
@@ -34,6 +41,7 @@ const SurveyModal = ({
 
           setTimeout(() => {
               closeModal();
+              saveSurveyPassedToStorage(true);
               navigation.navigate(Routes.FeedScreen);
           }, 1500);
 

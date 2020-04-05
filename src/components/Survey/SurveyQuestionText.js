@@ -8,9 +8,8 @@ const SurveyQuestionText = props => (
 
 const styles = StyleSheet.create({
   questionText: {
-    fontSize: 28,
+    fontSize: 25,
     fontFamily: Fonts.HELVETICA_BOLD,
-    // fontWeight: 'bold',
     marginBottom: 15
   }
 });

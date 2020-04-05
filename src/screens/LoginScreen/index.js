@@ -27,6 +27,7 @@ import {
 } from '../../redux/modules/authReducer';
 import AuthService from '../../services/AuthService';
 import SurveyButton from "../../components/Survey/SurveyButton";
+import AsyncStorage from "@react-native-community/async-storage";
 
 const mainActions = {
   loginActionViaFacebookAction: loginActionViaFacebook,
@@ -116,12 +117,30 @@ class LoginScreen extends Component {
       resetErrorsAction,
       setErrorAction
     } = this.props;
+
+    const userData = await AsyncStorage.getItem('isSurvey');
+
+
     try {
       const authService = new AuthService();
       const data = await authService.login({ username: email, password });
       const { user, token } = data;
       regularLoginAction(user, token);
-      navigation.navigate(Routes.ProfileScreen);
+
+      if (!userData) {
+        navigation.navigate(Routes.SurveyScreen)
+      }
+
+
+      const transformedData = JSON.parse(userData);
+      const { isPassed } = transformedData;
+
+      if(isPassed) {
+        navigation.navigate(Routes.FeedScreen)
+      } else {
+        navigation.navigate(Routes.SurveyScreen)
+      }
+
     } catch (err) {
       resetErrorsAction();
       const arrayErrors = Object.entries(err.data);

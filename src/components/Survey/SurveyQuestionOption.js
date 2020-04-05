@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0.5,
   },
   option: {
-    fontSize: 20,
+    fontSize: 18,
     fontFamily: Fonts.HELVETICA_MEDIUM,
   },
   arrow: {
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   },
   titleHasDescription: {
     fontWeight: 'bold',
-    marginBottom: 10
+    marginBottom: 8
   }
 });
 
