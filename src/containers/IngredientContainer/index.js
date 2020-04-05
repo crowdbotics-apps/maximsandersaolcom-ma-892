@@ -80,22 +80,22 @@ class IngredientContainer extends Component {
           </View>
           <View style={styles.buttonWrapper}>
             <View style={styles.buttonWrapperSub}>
-              <TagButton
-                buttonContainerText={categoriesNames[0]}
-                buttonContainerStyleProp={{ marginRight: 5, marginBottom: 0, marginTop: 0 }}
-                buttonContainerTextStyle={{
-                  color: 'black',
-                  fontFamily: Fonts.HELVETICA_MEDIUM
-                }}
-              />
-              <TagButton
-                buttonContainerText={categoriesNames[1]}
-                buttonContainerStyleProp={{ marginBottom: 0, marginTop: 0, marginRight: 0 }}
-                buttonContainerTextStyle={{
-                  color: 'black',
-                  fontFamily: Fonts.HELVETICA_MEDIUM
-                }}
-              />
+              {/*<TagButton*/}
+              {/*  buttonContainerText={categoriesNames[0]}*/}
+              {/*  buttonContainerStyleProp={{ marginRight: 5, marginBottom: 0, marginTop: 0 }}*/}
+              {/*  buttonContainerTextStyle={{*/}
+              {/*    color: 'black',*/}
+              {/*    fontFamily: Fonts.HELVETICA_MEDIUM*/}
+              {/*  }}*/}
+              {/*/>*/}
+              {/*<TagButton*/}
+              {/*  buttonContainerText={categoriesNames[1]}*/}
+              {/*  buttonContainerStyleProp={{ marginBottom: 0, marginTop: 0, marginRight: 0 }}*/}
+              {/*  buttonContainerTextStyle={{*/}
+              {/*    color: 'black',*/}
+              {/*    fontFamily: Fonts.HELVETICA_MEDIUM*/}
+              {/*  }}*/}
+              {/*/>*/}
             </View>
             <View style={styles.findRecipesButtonContainer}>
               <GradientButton

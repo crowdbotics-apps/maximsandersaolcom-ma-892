@@ -12,7 +12,7 @@ const StartupScreen = props => {
     const dispatch = useDispatch();
 
 const store = useSelector(state => state);
-console.log('666 ', store);
+console.log('STORE ', store);
     const api = Api.getInstance();
 
     useEffect(() => {
@@ -34,7 +34,7 @@ console.log('666 ', store);
             }
 
             api.addToken(token, '');
-            props.navigation.navigate(Routes.ProfileScreen);
+            props.navigation.navigate(Routes.FeedScreen);
         };
 
         tryLogin();

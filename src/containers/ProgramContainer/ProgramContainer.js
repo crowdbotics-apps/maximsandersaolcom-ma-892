@@ -106,7 +106,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    marginVertical: 5
   },
   findRecipesButtonContainer: {
     width: '90%',
