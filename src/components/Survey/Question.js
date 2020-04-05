@@ -195,7 +195,7 @@ const Question = ({
                             value={birthday}
                             display="default"
                             onChange={setBirthdayData}
-                            maximumDate={new Date()}
+                            //maximumDate={new Date()}
                             minimumDate={new Date(1940, 0, 1)}
                         />)
                     }
@@ -311,7 +311,6 @@ const Question = ({
                     {questionItems}
                 </View>
             );
-
             break;
 
         default:

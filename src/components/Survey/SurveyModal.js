@@ -31,10 +31,15 @@ const SurveyModal = ({
 
       setTimeout(() => {
         setIsNutrition(true);
-      }, 1500);
-    }, 1500);
 
-      //navigation.navigate(Routes.IntroScreen);
+          setTimeout(() => {
+              closeModal();
+              navigation.navigate(Routes.FeedScreen);
+          }, 1500);
+
+      }, 1500);
+
+    }, 1500);
   };
 
 
