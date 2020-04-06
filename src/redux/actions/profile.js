@@ -1,6 +1,6 @@
 import React from 'react';
 import Api from '../../api';
-import {API_URL, GET_PROFILE_INFO, GET_FAV_RECIPES} from '../constants'
+import {API_URL, GET_PROFILE_INFO, GET_FAV_RECIPES, GET_PROGRESS_DATA} from '../constants'
 import AsyncStorage from "@react-native-community/async-storage";
 
 
@@ -174,10 +174,10 @@ export const getProgressAndData = () => {
             const resData = await response.json();
             console.log('REPORT RESPONSE JSON ', resData);
 
-            // dispatch({
-            //     type: GET_FAV_RECIPES,
-            //     favoriteRecipes: resData
-            // });
+            dispatch({
+                type: GET_PROGRESS_DATA,
+                progressData: resData
+            });
 
         } catch (err) {
             console.log(err)
@@ -187,11 +187,13 @@ export const getProgressAndData = () => {
 
 
 export const sendSurveyData = answers => {
-    return async dispatch => {
+    return async (dispatch, getState) => {
 
         const userData = await AsyncStorage.getItem('userData');
         const transformedData = JSON.parse(userData);
         const { token } = transformedData;
+
+        const userId = getState().profile.profileData.id;
 
         const birthday = answers[1].answer.toISOString().slice(0,10);
 
@@ -211,7 +213,7 @@ export const sendSurveyData = answers => {
 
 
         try {
-            const response = await fetch(`${API_URL}/profile/`, {
+            const response = await fetch(`${API_URL}/profile/${userId}/`, {
                 method: 'PATCH',
                 headers: {
                     'Authorization': `Token ${token}`,

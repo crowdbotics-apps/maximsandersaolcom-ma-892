@@ -1,8 +1,9 @@
-import { GET_FAV_RECIPES, GET_PROFILE_INFO } from "../constants";
+import { GET_FAV_RECIPES, GET_PROFILE_INFO, GET_PROGRESS_DATA } from "../constants";
 
 const initialState = {
     profileData: {},
-    favoriteRecipes: []
+    favoriteRecipes: [],
+    progressData: []
 };
 
 export default (state = initialState, action) => {
@@ -17,6 +18,12 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 favoriteRecipes: action.favoriteRecipes
+            };
+
+        case GET_PROGRESS_DATA:
+            return {
+                ...state,
+                progressData: action.progressData
             };
 
         // case UPDATE_SETTINGS:

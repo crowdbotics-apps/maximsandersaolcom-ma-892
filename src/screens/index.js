@@ -22,3 +22,4 @@ export { default as MealRegulatorScreen } from './MealRegulatorScreen';
 export { default as LogFoodsScreen } from './LogFoodsScreen';
 export { default as SurveyScreen } from './SurveyScreen';
 export { default as FavoritesScreen } from './FavoritesScreen'
+export { default as MyProgressAndData } from './MyProgressAndData'

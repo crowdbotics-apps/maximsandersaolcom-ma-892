@@ -21,7 +21,6 @@ const Question = ({
     const {
         id, type, question, description, options
     } = singleQuestion;
-    console.log('Single question ', singleQuestion);
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');

@@ -44,7 +44,7 @@ const ProfileMenu = (props) => {
             <ProfileMenuItem
                 menuIcon={myProgressAndDataIcon}
                 menuText={i18n.t('profileScreen.profileMenuItems.myProgressAndData')}
-                route={Routes.TestScreen}
+                route={Routes.MyProgressAndData}
             />
             {/*<ProfileMenuItem*/}
             {/*  menuIcon={learnIcon}*/}

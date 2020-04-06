@@ -109,15 +109,15 @@ class IntroScreen extends React.Component {
             <Text style={styles.loginLabel}>{item.text}</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity
-              style={{
-                marginTop: isIphoneX() ? 45 : 25,
-                marginRight: 25
-              }}
-              onPress={() => navigate(Routes.SurveyScreen)}
-          >
-            <Text style={styles.loginLabel}>Survey Test</Text>
-          </TouchableOpacity>
+          {/*<TouchableOpacity*/}
+          {/*    style={{*/}
+          {/*      marginTop: isIphoneX() ? 45 : 25,*/}
+          {/*      marginRight: 25*/}
+          {/*    }}*/}
+          {/*    onPress={() => navigate(Routes.SurveyScreen)}*/}
+          {/*>*/}
+          {/*  <Text style={styles.loginLabel}>Survey Test</Text>*/}
+          {/*</TouchableOpacity>*/}
 
         </View>
         <View style={styles.logoContainer}>

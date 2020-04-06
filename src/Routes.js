@@ -24,5 +24,6 @@ export default {
   MealRegulatorNutritionScreen: 'MealRegulatorNutritionScreen',
   LogFoodsNutritionScreen: 'LogFoodsNutritionScreen',
   SurveyScreen: 'SurveyScreen',
-  FavoritesScreen: 'FavoritesScreen'
+  FavoritesScreen: 'FavoritesScreen',
+  MyProgressAndData: 'MyProgressAndData'
 };
