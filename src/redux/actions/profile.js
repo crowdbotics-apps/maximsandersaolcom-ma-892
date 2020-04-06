@@ -164,7 +164,7 @@ export const getProgressAndData = () => {
         const { token } = transformedData;
 
         try {
-            const response = await fetch(`${API_URL}/report/get_by_date/?date=2020-04-04`, {
+            const response = await fetch(`${API_URL}/report/get_weekly_report/`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Token ${token}`,
@@ -182,5 +182,65 @@ export const getProgressAndData = () => {
         } catch (err) {
             console.log(err)
         }
+    }
+};
+
+
+export const sendSurveyData = answers => {
+    return async dispatch => {
+
+        const userData = await AsyncStorage.getItem('userData');
+        const transformedData = JSON.parse(userData);
+        const { token } = transformedData;
+
+        const birthday = answers[1].answer.toISOString().slice(0,10);
+
+        const data = {
+            gender: answers[2].answer,
+            dob: birthday,
+            height: answers[6].answer,
+            weight: answers[7].answer,
+            unit: answers[5].answer,
+            exercise_level: answers[3].answer,
+            activity_level: answers[4].answer,
+            understanding_level: answers[12].answer,
+            number_of_meal: answers[10].answer,
+            number_of_training_days: answers[9].answer,
+            fitness_goal: answers[8].answer
+        };
+
+
+        try {
+            const response = await fetch(`${API_URL}/profile/`, {
+                method: 'PATCH',
+                headers: {
+                    'Authorization': `Token ${token}`,
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+
+                body: JSON.stringify(data)
+            });
+
+            const resData = await response.json();
+            console.log('Survey response ',response);
+            console.log('Survey respData ',resData);
+
+
+            const assignResp = await fetch(`${API_URL}/form/set_program/`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Token ${token}`,
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                }
+            });
+
+            console.log('Assign program resp  ',assignResp);
+
+        } catch (err) {
+            console.log(err)
+        }
+
     }
 };

@@ -172,7 +172,6 @@ const dispatch = useDispatch();
 
   console.log('With answers ', answers);
 
-
   const [isDisabled, setIsDisabled] = useState(true);
 
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -180,33 +179,6 @@ const dispatch = useDispatch();
 
   const [percentage, setPercentage] = useState(0);
   const [userName, setUserName] = useState('');
-
-
-  // useEffect(() => {
-  //   const getInitialSurvey = async () => {
-  //     try {
-  //       await dispatch(surveyActions.getInitialSurveyForm());
-  //     }catch(err) {console.log(err)}
-  //   };
-  //
-  //   getInitialSurvey();
-  //
-  // }, []);
-
-
-
-  const getQuestions = () => {
-    // get questions here, maybe ASYNC
-
-    // Data - dummy data
-    // setQuestions(questions);
-  };
-
-
-
-  // useEffect(() => {
-  //   getQuestions();
-  // }, []);
 
 
   const setQuestion = () => {
@@ -326,6 +298,7 @@ const dispatch = useDispatch();
         contentType={modalType} // firstModal || secondModal
         closeModal={closeModal}
         userName={userName}
+        answers={answers}
       />
     </SafeAreaView>
   );

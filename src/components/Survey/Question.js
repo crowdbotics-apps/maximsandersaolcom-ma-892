@@ -36,6 +36,7 @@ const Question = ({
     const [mealsQty, setMealsQty] = useState('');
 
     const [answerOption, setAnswerOption] = useState('');
+    const [answerOptionValue, setAnswerOptionValue] = useState('');
     const [isSelected, setIsSelected] = useState('');
     const [isPicker, setIsPicker] = useState(false);
     const [mealTimes, setMealTimes] = useState([]);
@@ -49,11 +50,11 @@ const Question = ({
         }
 
         if (type === 'birthday') {
-            selectAnswer(formatBirthday, id);
+            selectAnswer(birthday, id);
         }
 
         if (type === 'multiple') {
-            selectAnswer(answerOption, id);
+            selectAnswer(answerOptionValue, id);
 
             if (id === 11) {
                 const qty = answerOption.split(' ');
@@ -111,7 +112,7 @@ const Question = ({
         // ageAt year is before month and day of birth year
         return (ageAtDate.getFullYear()) - birthDate.getFullYear()
             - ((_m < 0 || (_m === 0 && ageAtDate.getDate() < birthDate.getDate())) ? 1 : 0)
-    }
+    };
 
 
     const setBirthdayData = (event, date) => {
@@ -224,7 +225,10 @@ const Question = ({
                 <SurveyQuestionOption
                     key={index}
                     onPress={() => {
-                        setAnswerOption(answer.option);
+                         setAnswerOption(answer.option);
+
+                        // Server requires Index of question instead of Text Answer that was above
+                        setAnswerOptionValue(index + 1);
                         setIsDisabled(false);
                     }}
                     description={answer.descritpion}
@@ -238,7 +242,7 @@ const Question = ({
         case 'height':
             questionType = (
                 <SurveyInput
-                    placeholder={units === 'Feet/Pounds' ? 'Feet' : 'Centimeters'}
+                    placeholder={units === 'Feet/Pounds' ? `Feet'inches` : 'Centimeters'}
                     value={height}
                     onChangeText={(value) => {
                         setHeight(value);

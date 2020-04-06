@@ -11,6 +11,9 @@ import Loader from '../../assets/survey-loader.png';
 import DoneIcon from '../../assets/icon-survey-done.png';
 import Fonts from '../../assets/fonts';
 import Routes from "../../Routes";
+import * as profileActions from '../../redux/actions/profile'
+import { useDispatch } from "react-redux";
+import { sendSurveyData } from "../../redux/actions/profile";
 
 
 const saveSurveyPassedToStorage = bool => {
@@ -20,8 +23,10 @@ const saveSurveyPassedToStorage = bool => {
 };
 
 const SurveyModal = ({
-  contentType, visible, closeModal, userName, navigation
+  contentType, visible, closeModal, userName, navigation, answers
 }) => {
+
+  const dispatch = useDispatch();
   const [isExcercise, setIsExcercise] = useState(false);
   const [isNutrition, setIsNutrition] = useState(false);
 
@@ -31,6 +36,13 @@ const SurveyModal = ({
     }
     return () => clearTimeout(showProgress);
   }, [contentType]);
+
+
+  const sendAnswers = async (answersObj) => {
+      try {
+        await dispatch(profileActions.sendSurveyData(answersObj))
+      }catch(err) {console.log(err)}
+  };
 
   const showProgress = () => {
     setTimeout(() => {
@@ -46,6 +58,8 @@ const SurveyModal = ({
           }, 1500);
 
       }, 1500);
+
+      sendAnswers(answers);
 
     }, 1500);
   };
