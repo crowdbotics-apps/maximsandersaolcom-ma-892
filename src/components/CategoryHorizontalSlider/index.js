@@ -46,7 +46,6 @@ const CategoryHorizontalSlider = ({
                     <HorizontalSliderItem
                         onClick={() => {
                             onSelectItem(item);
-                            console.log('RECIPE ITEM', item)
                         }}
                         navigation={navigation}
                         item={item}

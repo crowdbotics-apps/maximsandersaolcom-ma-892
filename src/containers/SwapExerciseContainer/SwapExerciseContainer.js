@@ -67,7 +67,7 @@ const SwapExerciseContainer = ({
               >
                 <View>
                   <Image
-                    source={{ uri: item.pictures[0].image_url }}
+                    source={{ uri: item.pictures[0] ? item.pictures[0].image_url : '' }}
                     style={{ width: 100, height: 100 }}
                   />
                 </View>

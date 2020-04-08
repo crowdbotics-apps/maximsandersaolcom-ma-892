@@ -28,7 +28,7 @@ const renderItem = (item, index, navigation, pickSession, overviewData) => (
     >
       <View style={styles.imageItemWrapper}>
         <Image
-          source={{ uri: item.exercise.pictures[0].image_url }}
+          source={{ uri: item.exercise.pictures[0] ? item.exercise.pictures[0].image_url : '' }}
           style={{ width: 55, height: 50 }}
         />
       </View>

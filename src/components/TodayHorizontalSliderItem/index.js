@@ -22,7 +22,7 @@ const TodayHorizontalSliderItem = ({
   >
     <View style={styles.containerMain}>
       <Image
-        source={{ uri: item.exercise.pictures[0].image_url || imagePlaceholder }}
+        source={{ uri: item.exercise.pictures[0] && item.exercise.pictures[0].image_url || imagePlaceholder }}
         style={styles.backgroundImageStyle}
       />
     </View>

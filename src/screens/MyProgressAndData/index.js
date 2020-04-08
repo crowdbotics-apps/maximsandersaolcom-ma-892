@@ -25,16 +25,18 @@ const MyProgressAndData = props => {
     }, []);
 
     const progressData = useSelector(state => state.profile.progressData);
-    console.log('State Profile', progressData);
+    //console.log('State Profile', progressData);
     const {meal, workout} = progressData && progressData;
-console.log('666 ', workout)
+    console.log('workout before transform ', workout)
 
 
-     const mealsData = meal && Object.values(meal);
+    const mealsData = meal && Object.values(meal);
+
     const workoutData = workout && Object.values(workout);
-    console.log('data ', workoutData)
+    console.log('workout after transorm data ', workoutData)
      const calories = workoutData && Object.values(workoutData[1]);
-    // const excercises = workoutData[1];
+
+
 
     if (isLoading || !mealsData || !workoutData) {
         return <Loading/>
@@ -84,6 +86,7 @@ console.log('666 ', workout)
                             <Text style={styles.classLabel}>Protein</Text>
                         </View>
                     </View>
+
 
 
                 </View>
