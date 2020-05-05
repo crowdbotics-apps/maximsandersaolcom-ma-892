@@ -77,6 +77,7 @@ export const loginActionViaFacebook = token => (dispatch) => {
   return authService.loginOrRegisterViaSocialFacebook(token)
     .then(({ key }) => {
       tokenForLogin = key;
+      AsyncStorage.setItem('userData', JSON.stringify({ token: tokenForLogin }));
       return authService.getProfile();
     })
     .then(({ data }) => {
@@ -109,6 +110,7 @@ export const loginActionViaGmail = token => (dispatch) => {
   return authService.loginOrRegisterViaSocialGoogle(token)
     .then(({ key }) => {
       tokenForLogin = key;
+      AsyncStorage.setItem('userData', JSON.stringify({ token: tokenForLogin }));
       return authService.getProfile();
     })
     .then(({ data }) => {

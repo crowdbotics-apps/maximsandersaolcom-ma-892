@@ -50,7 +50,7 @@ export default class AuthService {
 
     getProfile() {
       return this.api.fetch('GET', '/profile/')
-        .then(res => console.log('GET PROFILE RESPONSE ', res))
+        .then(res => res)
         .catch((err) => { throw err; });
     }
 }

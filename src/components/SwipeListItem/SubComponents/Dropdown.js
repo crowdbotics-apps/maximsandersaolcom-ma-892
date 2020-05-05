@@ -4,12 +4,10 @@ import ModalDropdown from 'react-native-modal-dropdown';
 
 const dropdownIcon = require('../../../assets/dropdownTriangle.png');
 
-const DEMO_OPTIONS_1 = ['Large', 'Cup', 'TBSP'];
-
-const SubDropDown = ({ onSelect, measure, item }) => (
+const SubDropDown = ({ onSelect, measure, item, options }) => (
     <ModalDropdown
     style={styles.dropdownContainer}
-    options={DEMO_OPTIONS_1}
+    options={options.map((item) => item.name)}
     dropdownStyle={styles.dropdownStyle}
     dropdownTextStyle={styles.dropdownTextStyle}
     onSelect={(idx, value) => {
