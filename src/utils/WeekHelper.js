@@ -1,6 +1,7 @@
 import React from 'react';
-import { AsyncStorage, AppState } from 'react-native';
+import { AppState } from 'react-native';
 import moment from 'moment';
+import AsyncStorage from "@react-native-community/async-storage";
 
 export default class WeekHelper {
   constructor(id, userEmail, callbackAppChange) {

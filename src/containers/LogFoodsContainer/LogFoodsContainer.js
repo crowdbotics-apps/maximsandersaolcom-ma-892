@@ -4,7 +4,6 @@ import {
   SafeAreaView,
   Text,
   StyleSheet,
-  ListView
 } from 'react-native';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import SwipeListItem from '../../components/SwipeListItem';
@@ -14,7 +13,7 @@ import i18n from '../../i18n/i18n';
 import EmptyListComponent from './EmptyListComponent';
 import TableColumn from './TableColumn';
 import TouchableDeleteAll from './TouchableDeleteAll';
-
+import ListView from 'deprecated-react-native-listview';
 
 import HeaderWithSearch from '../../components/HeaderWithSearch';
 import Fonts from '../../assets/fonts';

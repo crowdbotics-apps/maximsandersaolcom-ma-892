@@ -165,6 +165,7 @@ const IngredientRecipeContainer = ({
   },
   setSelectedMealAction
 }) => {
+  console.log('today seesion', todaySession)
   const [selectedObject, setSelectedObject] = useState({
     isModalVisble: false,
     isSwipeModalVisible: false
