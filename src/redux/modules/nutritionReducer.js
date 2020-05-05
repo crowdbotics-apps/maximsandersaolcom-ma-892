@@ -406,7 +406,8 @@ export const logFood = () => (dispatch, getState) => {
     const arrayForServer = selectedProducts.map(item => ({
       food_name: item.name,
       item_id: item.id,
-      portion: typeof item.portion === 'undefined' ? 1 : item.portion
+      portion: typeof item.portion === 'undefined' ? 1 : item.portion,
+      unit: item.measure
     }));
     return nutritionsService.createMeal({ date_time: selectedMeal.date_time, nix_food_items: arrayForServer })
       .then(result => result)

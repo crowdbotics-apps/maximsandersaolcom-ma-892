@@ -11,10 +11,16 @@ import TagButton from '../../components/TagButton';
 import ImageContainer from '../../components/ImageContainer';
 import NutritionInfo from '../../components/NutritionInfo';
 import ImageTitle from '../../components/ImageTitle';
+import {connect} from "react-redux";
+import * as profileActions from "../../redux/actions/profile";
+import {addRemoveFavorites} from "../../redux/modules/recipesReducer";
 
 const imagePlaceholder = 'https://via.placeholder.com/300x150.png?text=MAXIM+FITNESS';
-const iconMyFav = require('../../assets/icon_favorites_white.png');
 const iconShare = require('../../assets/icon_share.png');
+
+const iconMyFav = require('../../assets/icon_favorites_white.png');
+const addToFav = require('../../assets/icon_my_favorites.png');
+const activeLike = require('../../assets/like.png');
 
 const categoriesNames = ['HIGH PROTEIN', 'LOW CARB'];
 
@@ -42,8 +48,14 @@ class IndividualRecipeContainer extends Component {
     super(props);
     this.state = {
       isCollapsed: true,
+      isFav: null,
     };
   }
+
+  componentDidMount() {
+    this.props.getfavorites();
+  }
+
 
   collapseList = () => {
     const { isCollapsed } = this.state;
@@ -64,9 +76,10 @@ class IndividualRecipeContainer extends Component {
   }
 
   render() {
-    const { isCollapsed } = this.state;
+    const { isCollapsed, isFav } = this.state;
     const { navigation, recipeSelected } = this.props;
     const {
+      id,
       calories,
       image_url: imageUrl,
       image,
@@ -78,18 +91,33 @@ class IndividualRecipeContainer extends Component {
       carbohydrate,
       category
     } = recipeSelected;
+
+
+    const fav = this.props.favorites.find((fav) => {
+      return fav.id === id
+    });
+
     return (
       <View style={{ flex: 1, backgroundColor: 'white' }}>
         <ScrollView>
           <View>
             <ImageContainer
               imageBackgroundUri={(image && imageUrl) || imagePlaceholder}
-              leftIcon={iconMyFav}
+              leftIcon={ isFav || fav ? activeLike : iconMyFav}
               rightIcon={iconShare}
               rightIconFunc={() => {
                 this.shareOnSocialMedia(name, name, imageUrl);
               }}
-              leftIconFunc={() => {}}
+              leftIconFunc={() => {
+                this.props.addRemoveFavorites(id);
+                if(!fav) {
+                  this.setState({isFav: true})
+                }
+                if(fav) {
+                  this.setState({isFav: !this.state.isFav})
+                }
+
+              }}
               goBack
               navigation={navigation}
             />
@@ -126,6 +154,19 @@ class IndividualRecipeContainer extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    favorites: state.profile.favoriteRecipes
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getfavorites: () => dispatch(profileActions.getFavorites()),
+    addRemoveFavorites: id => dispatch(addRemoveFavorites(id))
+  };
+};
 
 const styles = StyleSheet.create({
   directionsTitle: {
@@ -170,4 +211,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default IndividualRecipeContainer;
+export default connect(mapStateToProps, mapDispatchToProps)(IndividualRecipeContainer);

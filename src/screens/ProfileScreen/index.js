@@ -1,6 +1,8 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { View, StyleSheet } from 'react-native';
+import { useDispatch } from 'react-redux';
 import ProfileContainer from '../../containers/ProfileContainer';
+import * as profileActions from '../../redux/actions/profile';
 
 const styles = StyleSheet.create({
   container: {
@@ -8,9 +10,27 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   }
 });
-const ProfileScreen = () => (
-  <View style={styles.container}>
-    <ProfileContainer />
-  </View>
-);
+const ProfileScreen = () => {
+
+  const dispatch = useDispatch();
+
+  const getProfile = async () => {
+    try {
+      await dispatch(profileActions.getProfile());
+      await dispatch(profileActions.getFavorites());
+    } catch(err) {console.log(err)}
+  };
+
+  useEffect(() => {
+    getProfile();
+  }, []);
+
+
+  return (
+      <View style={styles.container}>
+        <ProfileContainer />
+      </View>
+  );
+};
+
 export default ProfileScreen;

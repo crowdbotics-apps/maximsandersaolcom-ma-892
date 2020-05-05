@@ -4,7 +4,8 @@ import { withNavigation } from 'react-navigation';
 import {
   selectOneRecipe,
   getRecipesByCategory,
-  getRecipeByNameOrCategory
+  getRecipeByNameOrCategory,
+  addRemoveFavorites
 } from '../../redux/modules/recipesReducer';
 import { getCategories } from '../../redux/modules/nutritionReducer';
 import FindFoodAndRecipesContainer from './FindFoodAndRecipesContainer';
@@ -13,7 +14,8 @@ const mainActions = {
   selectOneRecipeAction: selectOneRecipe,
   getCategoriesAction: getCategories,
   getRecipesByCategoryAction: getRecipesByCategory,
-  getRecipeByNameOrCategoryAction: getRecipeByNameOrCategory
+  getRecipeByNameOrCategoryAction: getRecipeByNameOrCategory,
+  addRemoveFavoritesAction: addRemoveFavorites
 };
 
 const mapState = state => ({

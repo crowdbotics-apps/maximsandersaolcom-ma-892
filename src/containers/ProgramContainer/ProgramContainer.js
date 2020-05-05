@@ -11,6 +11,8 @@ import ProgramTabHeader from '../../components/ProgramTabHeader';
 import CustomProgramTabs from './CustomProgramTabs';
 import i18n from '../../i18n/i18n';
 import Routes from '../../Routes';
+import * as profileActions from '../../redux/actions/profile'
+import {useDispatch} from "react-redux";
 
 const ProgramContainer = ({
   navigation,
@@ -22,9 +24,22 @@ const ProgramContainer = ({
   pickSessionAction,
   exerciseSwapped
 }) => {
+
+  const dispatch = useDispatch();
+
+  // const getReports = async() => {
+  //   try{
+  //     await dispatch(profileActions.getProgressAndData())
+  //   }catch (err) { console.log(err) }
+  // };
+
   useEffect(() => {
+    //getReports();
     getAllSessionsAction();
   }, [exerciseSwapped]);
+
+
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
       <HeaderForDrawer
@@ -91,7 +106,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    marginVertical: 5
   },
   findRecipesButtonContainer: {
     width: '90%',

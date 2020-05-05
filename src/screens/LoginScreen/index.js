@@ -26,6 +26,8 @@ import {
   setError
 } from '../../redux/modules/authReducer';
 import AuthService from '../../services/AuthService';
+import SurveyButton from "../../components/Survey/SurveyButton";
+import AsyncStorage from "@react-native-community/async-storage";
 
 const mainActions = {
   loginActionViaFacebookAction: loginActionViaFacebook,
@@ -37,68 +39,7 @@ const mainActions = {
 
 const logoImage = require('../../assets/logoSplashScreen.png');
 
-const styles = StyleSheet.create({
-  logo: {
-    width: 300,
-    height: 100,
-    resizeMode: 'contain'
-  },
-  containerCenter: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%'
-  },
-  paddingHor: {
-    paddingHorizontal: 20,
-  },
-  buttonLoginFb: {
-    width: '100%',
-    height: 48,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#3b5998',
-  },
-  input: {
-    width: '100%',
-    paddingLeft: 5
-  },
-  letsStartButton: {
-    width: 250,
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  imageContainer: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'flex-end',
-  },
-  loginContainer: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    width: '100%'
-  },
-  orContainer: {
-    flex: 1,
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    width: '100%'
-  },
-  orText: {
-    fontSize: 17,
-    color: '#000',
-    fontWeight: '500'
-  },
-  buttonLoginTextStyle: {
-    color: 'white',
-    fontSize: 15,
-    fontWeight: '500'
-  }
-});
+
 
 class LoginScreen extends Component {
   constructor(props) {
@@ -129,6 +70,7 @@ class LoginScreen extends Component {
     const { loginActionViaFacebookAction, navigation } = this.props;
     try {
       const result = await LoginManager.logInWithPermissions(['email', 'public_profile']);
+
       if (result.isCancelled) {
         console.log('Login cancelled', result);
       } else {
@@ -175,12 +117,30 @@ class LoginScreen extends Component {
       resetErrorsAction,
       setErrorAction
     } = this.props;
+
+    const userData = await AsyncStorage.getItem('isSurvey');
+
+
     try {
       const authService = new AuthService();
       const data = await authService.login({ username: email, password });
       const { user, token } = data;
       regularLoginAction(user, token);
-      navigation.navigate(Routes.ProfileScreen);
+
+      if (!userData) {
+        navigation.navigate(Routes.SurveyScreen)
+      }
+
+
+      const transformedData = JSON.parse(userData);
+      const { isPassed } = transformedData;
+
+      if(isPassed) {
+        navigation.navigate(Routes.FeedScreen)
+      } else {
+        navigation.navigate(Routes.SurveyScreen)
+      }
+
     } catch (err) {
       resetErrorsAction();
       const arrayErrors = Object.entries(err.data);
@@ -224,28 +184,48 @@ class LoginScreen extends Component {
               </View>
               <View style={[styles.containerCenter, styles.paddingHor]}>
                 <View style={{ width: '100%', marginBottom: 10 }}>
-                  <TouchableOpacity
-                    style={styles.buttonLoginFb}
-                    onPress={this.handleLoginViaFacebook}
+
+                  <SurveyButton
+                      notSurvey
+                      style={{paddingBottom: 0}}
+                      gradientStyle={{paddingVertical: 15}}
+                      onPress={() => this.handleLoginViaFacebook()}
                   >
-                    <Text
-                      style={styles.buttonLoginTextStyle}
-                    >
-                      {i18n.t('loginScreen.facebookButton')}
-                    </Text>
-                  </TouchableOpacity>
+                    Log in via Facebook
+                  </SurveyButton>
+
+                  {/*<TouchableOpacity*/}
+                  {/*  style={styles.buttonLoginFb}*/}
+                  {/*  onPress={this.handleLoginViaFacebook}*/}
+                  {/*>*/}
+                  {/*  <Text*/}
+                  {/*    style={styles.buttonLoginTextStyle}*/}
+                  {/*  >*/}
+                  {/*    {i18n.t('loginScreen.facebookButton')}*/}
+                  {/*  </Text>*/}
+                  {/*</TouchableOpacity>*/}
                 </View>
                 <View style={{ width: '100%' }}>
-                  <TouchableOpacity
-                    style={styles.buttonLoginFb}
-                    onPress={() => this.signInGoogle()}
+
+                  <SurveyButton
+                      notSurvey
+                      style={{paddingBottom: 0}}
+                      gradientStyle={{paddingVertical: 15}}
+                      onPress={() => this.signInGoogle()}
                   >
-                    <Text
-                      style={styles.buttonLoginTextStyle}
-                    >
-                      {i18n.t('loginScreen.googleButton')}
-                    </Text>
-                  </TouchableOpacity>
+                    Log in via Google
+                  </SurveyButton>
+
+                  {/*<TouchableOpacity*/}
+                  {/*  style={styles.buttonLoginFb}*/}
+                  {/*  onPress={() => this.signInGoogle()}*/}
+                  {/*>*/}
+                  {/*  <Text*/}
+                  {/*    style={styles.buttonLoginTextStyle}*/}
+                  {/*  >*/}
+                  {/*    {i18n.t('loginScreen.googleButton')}*/}
+                  {/*  </Text>*/}
+                  {/*</TouchableOpacity>*/}
                 </View>
               </View>
             </View>
@@ -300,6 +280,70 @@ class LoginScreen extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  logo: {
+    width: 300,
+    height: 100,
+    resizeMode: 'contain'
+  },
+  containerCenter: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%'
+  },
+  paddingHor: {
+    paddingHorizontal: 20,
+  },
+  buttonLoginFb: {
+    width: '100%',
+    height: 48,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#3b5998',
+  },
+  input: {
+    width: '100%',
+    paddingLeft: 5
+  },
+  letsStartButton: {
+    width: 250,
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  imageContainer: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+  },
+  loginContainer: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    width: '100%'
+  },
+  orContainer: {
+    flex: 1,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%'
+  },
+  orText: {
+    fontSize: 17,
+    color: '#000',
+    fontWeight: '500'
+  },
+  buttonLoginTextStyle: {
+    color: 'white',
+    fontSize: 15,
+    fontWeight: '500'
+  }
+});
 
 export default connect(
   ({

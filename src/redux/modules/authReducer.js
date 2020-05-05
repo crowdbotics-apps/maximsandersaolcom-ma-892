@@ -6,6 +6,7 @@ import { GoogleSignin } from 'react-native-google-signin';
 import initialAuthState from '../initialState/authInitial';
 import AuthService from '../../services/AuthService';
 import Api from '../../api';
+import AsyncStorage from "@react-native-community/async-storage";
 
 export const LOGIN_SUCCESS = 'auth/LOGIN_SUCCESS';
 export const LOGOUT_SUCCESS = 'auth/LOGOUT_SUCCESS';
@@ -57,6 +58,7 @@ export default (state = { ...initialAuthState }, { type, payload }) => {
 
 export const logOut = () => async (dispatch) => {
   const api = Api.getInstance();
+  AsyncStorage.removeItem('userData');
   api.removeToken();
   try {
     await GoogleSignin.signOut();
@@ -75,6 +77,7 @@ export const loginActionViaFacebook = token => (dispatch) => {
   return authService.loginOrRegisterViaSocialFacebook(token)
     .then(({ key }) => {
       tokenForLogin = key;
+      AsyncStorage.setItem('userData', JSON.stringify({ token: tokenForLogin }));
       return authService.getProfile();
     })
     .then(({ data }) => {
@@ -107,6 +110,7 @@ export const loginActionViaGmail = token => (dispatch) => {
   return authService.loginOrRegisterViaSocialGoogle(token)
     .then(({ key }) => {
       tokenForLogin = key;
+      AsyncStorage.setItem('userData', JSON.stringify({ token: tokenForLogin }));
       return authService.getProfile();
     })
     .then(({ data }) => {

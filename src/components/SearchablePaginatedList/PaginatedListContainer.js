@@ -46,7 +46,7 @@ const PaginatedListContainer = ({
         { refreshing ? <Loader /> : <View style={{ height: hasMore ? 40 : 8 }} /> }
       </View>
     )}
-    keyExtractor={item => item.id}
+    keyExtractor={item => `${item.id}`}
     onEndReachedThreshold={0.5}
     ListEmptyComponent={ListEmptyComponent}
     horizontal={horizontal}

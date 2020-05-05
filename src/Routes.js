@@ -1,4 +1,5 @@
 export default {
+  StartupScreen: 'StartupScreen',
   IntroScreen: 'IntroScreen',
   TestScreen: 'TestScreen',
   LoginScreen: 'LoginScreen',
@@ -21,5 +22,8 @@ export default {
   MealRegulatorScreen: 'MealRegulatorScreen',
   LogFoodsScreen: 'LogFoodsScreen',
   MealRegulatorNutritionScreen: 'MealRegulatorNutritionScreen',
-  LogFoodsNutritionScreen: 'LogFoodsNutritionScreen'
+  LogFoodsNutritionScreen: 'LogFoodsNutritionScreen',
+  SurveyScreen: 'SurveyScreen',
+  FavoritesScreen: 'FavoritesScreen',
+  MyProgressAndData: 'MyProgressAndData'
 };

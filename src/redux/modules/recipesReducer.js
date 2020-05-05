@@ -1,6 +1,8 @@
 import initialRecipesState from '../initialState/recipesInitial';
 import RecipesService from '../../services/RecipesService';
 import uniq from '../../utils/removeDuplicateInArray';
+import { TOGGLE_LIKE } from "./feedReducer";
+import AsyncStorage from "@react-native-community/async-storage";
 
 export const GET_RECIPES_ALL = 'recipes/GET_RECIPES_ALL';
 export const GET_ONE_RECIPE = 'recipes/GET_ONE_RECIPE';
@@ -8,6 +10,8 @@ export const START_FETCH_RECIPES = 'recipes/START_FETCH_RECIPES';
 export const FETCH_RECIPES_BY_CATEGORIE = 'recipes/FETCH_RECIPES_BY_CATEGORIE';
 export const GET_RECIPES_BY_INGREDIENT = 'recipes/GET_RECIPES_BY_INGREDIENT';
 export const APPEND_RECIPES = 'recipes/APPEND_RECIPES';
+export const TOGGLE_FAVORITE_RECIPE = 'recipes/TOGGLE_FAVORITE_RECIPE';
+
 
 export default (state = { ...initialRecipesState }, { type, payload }) => {
   switch (type) {
@@ -50,6 +54,12 @@ export default (state = { ...initialRecipesState }, { type, payload }) => {
         allRecipes: payload.recipes,
         recipesObj: payload.recipes,
         loading: false
+      };
+    }
+    case TOGGLE_FAVORITE_RECIPE: {
+      return {
+        ...state,
+        favoriteRecipes: payload
       };
     }
     default: {
@@ -118,3 +128,26 @@ export const getRecipeByCode = (code) => {
       .then(payload => dispatch({ type: GET_RECIPES_BY_INGREDIENT, payload }));
   };
 };
+
+const recipesService = new RecipesService();
+
+export const addRemoveFavorites = recipeId => (dispatch, getState) => recipesService.addRemoveFavorites(recipeId)
+    .then((res) => {
+
+      console.log('RESPONSE FROM ADD TO FAV' ,res)
+      // const { feeds: { feeds: feedsArray } } = getState();  //TODO: change here
+      // const newFeedArray = feedsArray.map((item) => {
+      //   if (item.id === recipeId) {
+      //     const helper = {
+      //       ...item,
+      //       liked: !item.liked,
+      //       likes: item.liked ? item.likes - 1 : item.likes + 1
+      //     };
+      //     return helper;
+      //   }
+      //   return item;
+      // });
+      // dispatch({ type: TOGGLE_FAVORITE_RECIPE, payload: newFeedArray });
+    })
+    .catch((err) => { throw err; });
+

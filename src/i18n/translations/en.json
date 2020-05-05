@@ -29,7 +29,7 @@
     "or": "OR",
     "facebookButton": "Register via Facebook",
     "googleButton": "Register via Google Account",
-    "termsAndCond": "I accept T&C"
+    "termsAndCond": "I accept Terms & Conditions"
   },
   "drawerNavigation": {
     "editProfile": "Edit Profile",
@@ -52,7 +52,8 @@
       "myFavorites": "My Favorites",
       "myProgressAndData": "My Progress and Data",
       "learn": "Learn",
-      "settings": "Settings"
+      "settings": "Settings",
+      "logout": "Logout"
     },
     "profileStats": {
       "friends": "Friends",

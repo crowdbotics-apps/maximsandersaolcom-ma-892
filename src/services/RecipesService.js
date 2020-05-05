@@ -40,4 +40,11 @@ export default class NutritionService {
       .then(response => response.data)
       .catch((err) => { throw err; });
   }
+
+  addRemoveFavorites(recipeId) {
+        return this.api.fetch('GET', `/recipe/${recipeId}/toggle_fav/`, { })
+            .then(response => response)
+            .catch((err) => { throw err; });
+  }
+
 }

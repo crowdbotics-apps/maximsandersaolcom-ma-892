@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import {useDispatch} from "react-redux";
 import { View } from 'react-native';
 import Search from '../../components/Search';
 import HorizontalScrollView from '../../components/HorizontalScrollView';
 import CategoryTagItem from '../../components/CategoryTagItem';
 import HorizontalSliderFindFood from './HorizontalSliderFindFood';
 import VerticalSliderFindFood from './VerticalSliderFindFood';
+import * as profileActions from "../../redux/actions/profile";
 
 const FindFoodAndRecipesContainer = ({
   navigation,
@@ -14,11 +16,20 @@ const FindFoodAndRecipesContainer = ({
   allCategories,
   getRecipesByCategoryAction,
   recipesByCategory,
-  getRecipeByNameOrCategoryAction
+  getRecipeByNameOrCategoryAction,
+  addRemoveFavoritesAction
 }) => {
   const [searchString, setSearchString] = useState('');
   const [selectedCategoryProp, setSelectedCategoryProp] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState([]);
+
+  const dispatch = useDispatch();
+
+  const getFavorites = async () => {
+    try {
+      await dispatch(profileActions.getFavorites())
+    } catch(err) {console.log(err)}
+  };
 
   useEffect(() => {
     if (allCategories.length) {
@@ -27,6 +38,7 @@ const FindFoodAndRecipesContainer = ({
   }, [allCategories]);
 
   useEffect(() => {
+    getFavorites();
     getCategoriesAction();
   }, []);
 
@@ -53,6 +65,7 @@ const FindFoodAndRecipesContainer = ({
               }}
               selectedCategory={selectedCategory}
               key={key} // eslint-disable-line
+              index={key}
               tagText={item.name}
               tagTextContainerStyle={[
                 {
@@ -70,6 +83,7 @@ const FindFoodAndRecipesContainer = ({
           selectOneRecipeAction={selectOneRecipeAction}
           recipesByCategory={recipesByCategory}
           getCategoriesAction={getCategoriesAction}
+          addRemoveFavoritesAction={addRemoveFavoritesAction}
         />
       ) : <View />}
       {(searchString.length || selectedCategory.length) ? (

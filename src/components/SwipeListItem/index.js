@@ -26,7 +26,12 @@ const SwipeListItem = ({ item, editSelectedProductsAction, index }) => {
             />
           </View>
           <View>
-            <Dropdown onSelect={editSelectedProductsAction} measure={item.measure} item={item} />
+            <Dropdown
+              onSelect={editSelectedProductsAction}
+              measure={item.measure}
+              item={item}
+              options={item.units}
+            />
           </View>
           <View style={styles.infoContainer}>
             <Image source={infoOtlineIcon} style={styles.infoIconStyle} />

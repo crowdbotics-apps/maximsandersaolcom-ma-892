@@ -23,17 +23,20 @@ import cl.json.RNSharePackage;
 import cl.json.ShareApplication;
 import com.BV.LinearGradient.LinearGradientPackage;
 import com.wenkesj.voice.VoicePackage; // <------ Add this!
+import com.reactcommunity.rndatetimepicker.RNDateTimePickerPackage;
+import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
+import com.imagepicker.ImagePickerPackage;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class MainApplication extends Application implements ReactApplication {
   private static CallbackManager mCallbackManager = CallbackManager.Factory.create();
-  
+
   protected static CallbackManager getCallbackManager() {
         return mCallbackManager;
     }
-  
+
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
     @Override
@@ -58,7 +61,10 @@ public class MainApplication extends Application implements ReactApplication {
             new RNSharePackage(),
             new LinearGradientPackage(),
             new VoicePackage(),
-            new ReanimatedPackage()
+            new ReanimatedPackage(),
+            new RNDateTimePickerPackage(),
+            new AsyncStoragePackage(),
+            new ImagePickerPackage(),
       );
     }
 

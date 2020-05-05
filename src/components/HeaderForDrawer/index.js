@@ -9,7 +9,7 @@ import {
 const iconBurger = require('../../assets/hamburger.png');
 const logoMaxim = require('../../assets/logoSplashScreen.png');
 
-const HeaderForDrawer = ({ onDrawerButtonPress, headerNavProp, hideHamburger = false }) => (
+const HeaderForDrawer = ({ onDrawerButtonPress, headerNavProp, hideHamburger = true }) => (
   <View style={[styles.headerNav, headerNavProp]}>
     <View style={{ flex: 1 }}>
       {

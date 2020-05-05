@@ -92,6 +92,7 @@ const ExerciseTabHeader = ({
         {
           tabs.map((item, index) => (
             <ExcerciseTabHeaderItem
+               key={index}
               setElemetForParent={setElementForScrollHelp}
               item={item}
               index={index}

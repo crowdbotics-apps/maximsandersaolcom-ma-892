@@ -1,3 +1,4 @@
+export { default as StartupScreen } from './StartupScreen';
 export { default as IntroScreen } from './IntroScreen';
 export { default as TestScreen } from './TestScreen';
 export { default as LoginScreen } from './LoginScreen';
@@ -19,3 +20,6 @@ export { default as ExerciseScreen } from './ExerciseScreen';
 export { default as SwapExerciseScreen } from './SwapExerciseScreen';
 export { default as MealRegulatorScreen } from './MealRegulatorScreen';
 export { default as LogFoodsScreen } from './LogFoodsScreen';
+export { default as SurveyScreen } from './SurveyScreen';
+export { default as FavoritesScreen } from './FavoritesScreen'
+export { default as MyProgressAndData } from './MyProgressAndData'

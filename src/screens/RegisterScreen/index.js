@@ -25,6 +25,7 @@ import {
   register,
   resetErrors,
 } from '../../redux/modules/authReducer';
+import SurveyButton from "../../components/Survey/SurveyButton";
 
 const mainActions = {
   loginActionViaFacebookAction: loginActionViaFacebook,
@@ -35,68 +36,7 @@ const mainActions = {
 
 const logoImage = require('../../assets/logoSplashScreen.png');
 
-const styles = StyleSheet.create({
-  logo: {
-    width: 300,
-    height: 100,
-    resizeMode: 'contain'
-  },
-  containerCenter: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%'
-  },
-  paddingHor: {
-    paddingHorizontal: 20,
-  },
-  buttonLoginFb: {
-    width: '100%',
-    height: 48,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#3b5998',
-  },
-  input: {
-    width: '100%',
-    paddingLeft: 5
-  },
-  letsStartButton: {
-    width: 250,
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  imageContainer: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'flex-end',
-  },
-  loginContainer: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    width: '100%'
-  },
-  orContainer: {
-    flex: 1,
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    width: '100%'
-  },
-  orText: {
-    fontSize: 17,
-    color: '#000',
-    fontWeight: '500'
-  },
-  buttonLoginTextStyle: {
-    color: 'white',
-    fontSize: 15,
-    fontWeight: '500'
-  }
-});
+
 
 class RegisterScreen extends Component {
   constructor(props) {
@@ -204,28 +144,48 @@ class RegisterScreen extends Component {
               </View>
               <View style={[styles.containerCenter, styles.paddingHor]}>
                 <View style={{ width: '100%', marginBottom: 10 }}>
-                  <TouchableOpacity
-                    style={styles.buttonLoginFb}
-                    onPress={this.handleLoginViaFacebook}
+
+                  <SurveyButton
+                      notSurvey
+                      style={{paddingBottom: 0}}
+                      gradientStyle={{paddingVertical: 15}}
+                      onPress={() => this.handleLoginViaFacebook()}
                   >
-                    <Text
-                      style={styles.buttonLoginTextStyle}
-                    >
-                      {i18n.t('registerScreen.facebookButton')}
-                    </Text>
-                  </TouchableOpacity>
+                    Register via Facebook
+                  </SurveyButton>
+
+                  {/*<TouchableOpacity*/}
+                  {/*  style={styles.buttonLoginFb}*/}
+                  {/*  onPress={this.handleLoginViaFacebook}*/}
+                  {/*>*/}
+                  {/*  <Text*/}
+                  {/*    style={styles.buttonLoginTextStyle}*/}
+                  {/*  >*/}
+                  {/*    {i18n.t('registerScreen.facebookButton')}*/}
+                  {/*  </Text>*/}
+                  {/*</TouchableOpacity>*/}
                 </View>
                 <View style={{ width: '100%' }}>
-                  <TouchableOpacity
-                    style={styles.buttonLoginFb}
-                    onPress={() => this.signInGoogle()}
+
+                  <SurveyButton
+                      notSurvey
+                      style={{paddingBottom: 0}}
+                      gradientStyle={{paddingVertical: 15}}
+                      onPress={() => this.signInGoogle()}
                   >
-                    <Text
-                      style={styles.buttonLoginTextStyle}
-                    >
-                      {i18n.t('registerScreen.googleButton')}
-                    </Text>
-                  </TouchableOpacity>
+                   Register via Google Account
+                  </SurveyButton>
+
+                  {/*<TouchableOpacity*/}
+                  {/*  style={styles.buttonLoginFb}*/}
+                  {/*  onPress={() => this.signInGoogle()}*/}
+                  {/*>*/}
+                  {/*  <Text*/}
+                  {/*    style={styles.buttonLoginTextStyle}*/}
+                  {/*  >*/}
+                  {/*    {i18n.t('registerScreen.googleButton')}*/}
+                  {/*  </Text>*/}
+                  {/*</TouchableOpacity>*/}
                 </View>
               </View>
             </View>
@@ -293,6 +253,70 @@ class RegisterScreen extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  logo: {
+    width: 300,
+    height: 100,
+    resizeMode: 'contain'
+  },
+  containerCenter: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%'
+  },
+  paddingHor: {
+    paddingHorizontal: 20,
+  },
+  buttonLoginFb: {
+    width: '100%',
+    height: 48,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#3b5998',
+  },
+  input: {
+    width: '100%',
+    paddingLeft: 5
+  },
+  letsStartButton: {
+    width: 250,
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  imageContainer: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+  },
+  loginContainer: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    width: '100%'
+  },
+  orContainer: {
+    flex: 1,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%'
+  },
+  orText: {
+    fontSize: 17,
+    color: '#000',
+    fontWeight: '500'
+  },
+  buttonLoginTextStyle: {
+    color: 'white',
+    fontSize: 15,
+    fontWeight: '500'
+  }
+});
 
 export default connect(
   ({ auth: { authenticated, emailErrorText, passwordErrorText } }) => ({

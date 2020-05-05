@@ -108,6 +108,17 @@ class IntroScreen extends React.Component {
           >
             <Text style={styles.loginLabel}>{item.text}</Text>
           </TouchableOpacity>
+
+          {/*<TouchableOpacity*/}
+          {/*    style={{*/}
+          {/*      marginTop: isIphoneX() ? 45 : 25,*/}
+          {/*      marginRight: 25*/}
+          {/*    }}*/}
+          {/*    onPress={() => navigate(Routes.SurveyScreen)}*/}
+          {/*>*/}
+          {/*  <Text style={styles.loginLabel}>Survey Test</Text>*/}
+          {/*</TouchableOpacity>*/}
+
         </View>
         <View style={styles.logoContainer}>
           <Image
@@ -173,9 +184,10 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.HELVETICA_BOLD
   },
   titleWrapper: {
-    flex: 2.5,
+    //flex: 2.5,
     paddingHorizontal: 10,
-    paddingTop: 20
+    paddingTop: 20,
+    marginBottom: 20
   },
   text: {
     fontSize: 20,

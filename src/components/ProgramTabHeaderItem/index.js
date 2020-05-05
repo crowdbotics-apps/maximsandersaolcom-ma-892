@@ -64,20 +64,6 @@ const ProgramTabHeader = ({
           <View>
             <Text style={{ color: 'black', fontSize: 14 }}>{`Day ${index + 1}.`}</Text>
           </View>
-          <View style={styles.iconContainer}>
-            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-              <Image
-                source={iconLearn}
-                style={{ width: 15, height: 15 }}
-              />
-            </View>
-            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-              <Image
-                source={iconLearn}
-                style={{ width: 15, height: 15 }}
-              />
-            </View>
-          </View>
         </View>
       </TouchableOpacity>
     </View>

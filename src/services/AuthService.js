@@ -1,5 +1,12 @@
 import Api from '../api';
+import AsyncStorage from "@react-native-community/async-storage";
 
+
+const saveDataToStorage = token => {
+    AsyncStorage.setItem('userData', JSON.stringify({
+        token: token,
+    }))
+};
 
 export default class AuthService {
     api = Api.getInstance();
@@ -28,6 +35,7 @@ export default class AuthService {
       return this.api.fetch('POST', '/login/', { data })
         .then((response) => {
           const { data: { token } } = response;
+          saveDataToStorage(token);
           this.api.addToken(token, '');
           return response.data;
         })

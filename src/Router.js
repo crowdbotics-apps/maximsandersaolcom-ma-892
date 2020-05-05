@@ -15,6 +15,7 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 
 import Routes from './Routes';
 import {
+  StartupScreen,
   IntroScreen,
   TestScreen,
   LoginScreen,
@@ -35,7 +36,10 @@ import {
   ExerciseScreen,
   SwapExerciseScreen,
   MealRegulatorScreen,
-  LogFoodsScreen
+  LogFoodsScreen,
+  SurveyScreen,
+  FavoritesScreen,
+  MyProgressAndData
 } from './screens';
 import DrawerContent from './containers/DrawerContent';
 import regularHeaderStyle from './components/regularHeaderStyle';
@@ -63,6 +67,13 @@ const ProfileTabStack = createDrawerNavigator({
       drawerLabel: () => null,
     })
   },
+
+  [Routes.SurveyScreen]: {
+    screen: SurveyScreen,
+    navigationOptions: () => ({
+      drawerLabel: () => null,
+    })
+  },
   [Routes.EditProfileScreen]: {
     screen: EditProfileScreen,
     navigationOptions: () => ({
@@ -81,6 +92,7 @@ const ProfileTabStack = createDrawerNavigator({
       drawerLabel: () => i18n.t('drawerNavigation.savedPrograms')
     })
   },
+
 }, {
   ...drawerConfiguration,
   contentComponent: props => <DrawerContent {...props} />
@@ -92,6 +104,36 @@ const TodayTabStack = createStackNavigator({
     navigationOptions: () => ({
       header: null,
       drawerLabel: () => null,
+    })
+  },
+  [Routes.MyProgressAndData]: {
+    screen: MyProgressAndData,
+    navigationOptions: () => ({
+      drawerLabel: () => null,
+      headerTitle: (
+          <Text
+              style={{
+                fontFamily: Fonts.NOTE_NORMAL,
+                fontSize: 28,
+                textShadowColor: 'rgba(0, 0, 0, 0.50)',
+                textShadowOffset: { width: 1, height: 1 },
+                textShadowRadius: 4,
+                textAlignVertical: 'center'
+              }}
+          >
+            My progress
+          </Text>
+      ),
+      headerStyle: Platform.select({
+        ios: {
+          borderBottomWidth: 0,
+          shadowOpacity: 0,
+        },
+        android: {
+          elevation: 0,
+          backgroundColor: '#fff',
+        }
+      }),
     })
   },
   [Routes.MealRegulatorScreen]: {
@@ -136,6 +178,36 @@ const NutritionTabStack = createStackNavigator({
       }),
     })
   },
+      [Routes.FavoritesScreen]: {
+        screen: FavoritesScreen,
+        navigationOptions: () => ({
+          drawerLabel: () => null,
+          headerTitle: (
+              <Text
+                  style={{
+                    fontFamily: Fonts.NOTE_NORMAL,
+                    fontSize: 28,
+                    textShadowColor: 'rgba(0, 0, 0, 0.50)',
+                    textShadowOffset: { width: 1, height: 1 },
+                    textShadowRadius: 4,
+                    textAlignVertical: 'center'
+                  }}
+              >
+                My Favorites
+              </Text>
+          ),
+          headerStyle: Platform.select({
+            ios: {
+              borderBottomWidth: 0,
+              shadowOpacity: 0,
+            },
+            android: {
+              elevation: 0,
+              backgroundColor: '#fff',
+            }
+          }),
+        })
+      },
   [Routes.FindFoodAndRecipesScreen]: {
     screen: FindFoodAndRecipesScreen,
     navigationOptions: () => ({
@@ -351,6 +423,12 @@ const BottomAppStack = createBottomTabNavigator(
 );
 
 const AuthStack = createStackNavigator({
+  [Routes.StartupScreen]: {
+    screen: StartupScreen,
+    navigationOptions: {
+      header: null
+    }
+  },
   [Routes.IntroScreen]: {
     screen: IntroScreen,
     navigationOptions: {
@@ -364,6 +442,12 @@ const AuthStack = createStackNavigator({
       headerStyle: regularHeaderStyle,
     }
   },
+  [Routes.SurveyScreen]: {
+    screen: SurveyScreen,
+    navigationOptions: {
+      header: null
+    }
+  },
   [Routes.RegisterScreen]: {
     screen: RegisterScreen,
     navigationOptions: {
@@ -373,14 +457,16 @@ const AuthStack = createStackNavigator({
   }
 },
 {
-  initialRouteName: 'IntroScreen',
+  //initialRouteName: 'IntroScreen',
+  initialRouteName: 'StartupScreen',
   cardStyle: {
     backgroundColor: 'white',
   },
 });
 
 export default createAppContainer(createSwitchNavigator({
-  [Routes.IntroScreen]: IntroScreen,
+  [Routes.StartupScreen]: StartupScreen,
+  // [Routes.IntroScreen]: IntroScreen,
   AuthStack,
   BottomAppStack
 },
@@ -394,5 +480,6 @@ export default createAppContainer(createSwitchNavigator({
       headerVisible: false,
     }
   }),
-  initialRouteName: 'IntroScreen',
+  //initialRouteName: 'IntroScreen',
+  initialRouteName: 'StartupScreen',
 }));

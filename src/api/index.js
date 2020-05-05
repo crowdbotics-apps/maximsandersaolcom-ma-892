@@ -1,4 +1,4 @@
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from "@react-native-community/async-storage";
 
 /* Packages */
 import axios from 'axios';
@@ -104,11 +104,11 @@ class Api {
 
           AsyncStorage.setItem('auth', JSON.stringify(data));
 
-          //reduxStore.dispatch({ type: 'AUTH_REFRESH', payload: auth });
+          reduxStore.dispatch({ type: 'AUTH_REFRESH', payload: auth });
 
           return this.fetch(method, url, options);
-        });
-      // .catch({}) //@todo Missing CATCH?!
+        })
+       .catch(err => console.log(err));
     }
 }
 
