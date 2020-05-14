@@ -14,6 +14,7 @@
     "@eva-design/eva": "^1.2.0",
     "@react-native-community/async-storage": "^1.8.1",
     "@react-native-community/datetimepicker": "^2.1.0",
+    "@react-native-community/google-signin": "^4.0.0",
     "axios": "^0.19.0",
     "i18n-js": "^3.3.0",
     "moment": "^2.24.0",
@@ -28,9 +29,9 @@
     "react-native-fbsdk": "^1.1.2",
     "react-native-firebase": "5.1.0",
     "react-native-gesture-handler": "^1.6.1",
-    "react-native-google-signin": "^2.0.0",
     "react-native-image-picker": "^2.3.1",
     "react-native-linear-gradient": "^2.5.6",
+    "react-native-material-dropdown": "^0.11.1",
     "react-native-material-textfield": "^0.16.0",
     "react-native-modal": "^11.4.0",
     "react-native-modal-dropdown": "git+https://git@github.com/siemiatj/react-native-modal-dropdown.git",
@@ -60,6 +61,7 @@
     "@react-native-community/eslint-config": "^0.0.5",
     "babel-eslint": "^10.0.2",
     "babel-jest": "^24.9.0",
+    "deprecated-react-native-listview": "0.0.6",
     "eslint": "^6.5.1",
     "eslint-config-airbnb": "^17.1.1",
     "eslint-plugin-import": "^2.18.0",
@@ -69,8 +71,7 @@
     "jetifier": "^1.6.4",
     "metro-react-native-babel-preset": "^0.58.0",
     "patch-package": "^6.0.5",
-    "react-test-renderer": "16.11.0",
-    "deprecated-react-native-listview": "0.0.6"
+    "react-test-renderer": "16.11.0"
   },
   "resolutions": {
     "deprecated-react-native-listview": "0.0.6"

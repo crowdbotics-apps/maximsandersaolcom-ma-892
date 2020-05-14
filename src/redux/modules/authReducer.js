@@ -2,7 +2,7 @@ import {
   Alert
 } from 'react-native';
 import { LoginManager } from 'react-native-fbsdk';
-import { GoogleSignin } from 'react-native-google-signin';
+import { GoogleSignin } from '@react-native-community/google-signin';
 import initialAuthState from '../initialState/authInitial';
 import AuthService from '../../services/AuthService';
 import Api from '../../api';

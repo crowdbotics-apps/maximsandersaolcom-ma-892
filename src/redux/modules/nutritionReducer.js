@@ -141,8 +141,21 @@ export default (state = { ...initialNutrition }, { type, payload }) => {
 export const setSelectedMeal = selectedMeal => (dispatch) => {
   const { food_items: foodItems } = selectedMeal;
   const getProductsFromMeal = foodItems.map(item => ({
-    portion: item.portion, ...item.food, measure: null, foodId: item.id
+    portion: item.portion,
+    ...item.food,
+    measure: item.unit,
+    foodId: item.id,
   }));
+  const initForReduce = { calories: 0, proteins: 0, fat: 0, carbohydrate: 0 };
+  const selectedProductsStats = getProductsFromMeal.reduce(
+    (prevVal, currVal) => ({
+      calories: prevVal.calories + calculateMeasure(currVal, 'calories'),
+      proteins: prevVal.proteins + calculateMeasure(currVal, 'proteins'),
+      fat: prevVal.fat + calculateMeasure(currVal, 'fat'),
+      carbohydrate: prevVal.carbohydrate + calculateMeasure(currVal, 'carbohydrate'),
+    }),
+    initForReduce,
+  );
   dispatch({
     type: SET_SELECTED_MEAL,
     payload: {
@@ -151,13 +164,8 @@ export const setSelectedMeal = selectedMeal => (dispatch) => {
         isEmpty: !!foodItems.length,
       },
       selectedProducts: getProductsFromMeal.map(item => ({ ...item, onServer: true })),
-      selectedProductsStats: {
-        calories: selectedMeal.calories,
-        carbohydrate: selectedMeal.carbohydrate,
-        fat: selectedMeal.fat,
-        proteins: selectedMeal.protein
-      },
-    }
+      selectedProductsStats,
+    },
   });
 };
 
@@ -231,7 +239,7 @@ export const removeAllSelectedProducts = () => (dispatch, getState) => {
 };
 
 export const editSelectedProducts = (itemForEdit, fieldForEdit, value) => (dispatch, getState) => {
-  const { nutrition: { selectedProducts, selectedProductsStats } } = getState();
+  const {nutrition: { selectedProducts, selectedProductsStats } } = getState();
   const initForReduce = { calories: 0, proteins: 0, fat: 0, carbohydrate: 0 };
   let selectedProductsClone = JSON.parse(JSON.stringify(selectedProducts));
   const itemForEditIndex = selectedProductsClone.findIndex(item => item.id === itemForEdit.id);
@@ -241,21 +249,43 @@ export const editSelectedProducts = (itemForEdit, fieldForEdit, value) => (dispa
     // eslint-disable-next-line radix
     [fieldForEdit]: fieldForEdit === 'portion' ? parseInt(value) : value,
   };
-  
-  const selectedStatsChanged = selectedProductsClone.reduce((prevVal, currVal) => ({
-    calories: (prevVal.calories) + (currVal.calories * currVal.portion),
-    proteins: prevVal.proteins + (currVal.proteins * currVal.portion),
-    fat: prevVal.fat + (currVal.fat * currVal.portion),
-    carbohydrate: prevVal.carbohydrate + (currVal.carbohydrate * currVal.portion),
-  }), initForReduce);
+
+  const selectedStatsChanged = selectedProductsClone.reduce(
+    (prevVal, currVal) => ({
+      calories: prevVal.calories + calculateMeasure(currVal, 'calories'),
+      proteins: prevVal.proteins + calculateMeasure(currVal, 'proteins'),
+      fat: prevVal.fat + calculateMeasure(currVal, 'fat'),
+      carbohydrate: prevVal.carbohydrate + calculateMeasure(currVal, 'carbohydrate'),
+    }),
+    initForReduce,
+  );
 
   return dispatch({
     type: EDIT_SELECTED_PRODUCT,
     payload: {
       selectedProducts: selectedProductsClone,
-      selectedProductsStats: selectedStatsChanged
+      selectedProductsStats: selectedStatsChanged,
     },
   });
+};
+
+const getNumber = value => {
+  if (value > 0) {
+    return value;
+  }
+  return 1;
+};
+
+const calculateMeasure = (currVal, type) => {
+  if (currVal.measure === null) {
+    return currVal[type] * currVal.portion;
+  }
+  return (
+    // eslint-disable-next-line radix
+    (getNumber(parseInt(currVal.weight)) / getNumber(currVal.measure.weight)) *
+    currVal[type] *
+    currVal.portion
+  );
 };
 
 export const unsetSearchActive = () => ({ type: UNSET_SEARCH_ACTIVE });
@@ -340,19 +370,24 @@ export const createNewMealSpeach = (query, fromSentence, dateTime) => (dispatch,
       .then((getMealResult) => {
         const selectedMeal = { ...getMealResult };
         const selectedProducts = getMealResult.food_items.map(item => ({
-          ...item.food, measure: null, portion: item.portion, onServer: true, foodId: item.id
+          ...item.food, measure: item.unit, portion: item.portion, onServer: true, foodId: item.id
         }));
-        const selectedProductsStats = {
-          carbohydrate: parseFloat(Math.round(getMealResult.carbohydrate * 100) / 100).toFixed(2),
-          fat: parseFloat(Math.round(getMealResult.fat * 100) / 100).toFixed(2),
-          proteins: parseFloat(Math.round(getMealResult.protein * 100) / 100).toFixed(2)
-        };
+        const initForReduce = { calories: 0, proteins: 0, fat: 0, carbohydrate: 0 };
+        const selectedProductsStats = selectedProducts.reduce(
+          (prevVal, currVal) => ({
+            calories: prevVal.calories + calculateMeasure(currVal, 'calories'),
+            proteins: prevVal.proteins + calculateMeasure(currVal, 'proteins'),
+            fat: prevVal.fat + calculateMeasure(currVal, 'fat'),
+            carbohydrate: prevVal.carbohydrate + calculateMeasure(currVal, 'carbohydrate'),
+          }),
+          initForReduce,
+        );
         dispatch({
           type: CREATED_NEW_MEAL,
           payload: {
             selectedMeal,
             selectedProducts,
-            selectedProductsStats
+            selectedProductsStats,
           }
         });
         const { nutrition: { meals } } = getState();
@@ -373,19 +408,24 @@ export const createNewMealSpeach = (query, fromSentence, dateTime) => (dispatch,
     .then((getMealResult) => {
       const selectedMeal = { ...getMealResult };
       const selectedProducts = getMealResult.food_items.map(item => ({
-        ...item.food, measure: null, portion: item.portion, onServer: true, foodId: item.id
+        ...item.food, measure: item.unit, portion: item.portion, onServer: true, foodId: item.id
       }));
-      const selectedProductsStats = {
-        carbohydrate: parseFloat(Math.round(getMealResult.carbohydrate * 100) / 100).toFixed(2),
-        fat: parseFloat(Math.round(getMealResult.fat * 100) / 100).toFixed(2),
-        proteins: parseFloat(Math.round(getMealResult.protein * 100) / 100).toFixed(2)
-      };
+      const initForReduce = { calories: 0, proteins: 0, fat: 0, carbohydrate: 0 };
+      const selectedProductsStats = selectedProducts.reduce(
+        (prevVal, currVal) => ({
+          calories: prevVal.calories + calculateMeasure(currVal, 'calories'),
+          proteins: prevVal.proteins + calculateMeasure(currVal, 'proteins'),
+          fat: prevVal.fat + calculateMeasure(currVal, 'fat'),
+          carbohydrate: prevVal.carbohydrate + calculateMeasure(currVal, 'carbohydrate'),
+        }),
+        initForReduce,
+      );
       dispatch({
         type: CREATED_NEW_MEAL,
         payload: {
           selectedMeal,
           selectedProducts,
-          selectedProductsStats
+          selectedProductsStats,
         }
       });
       const { nutrition: { meals } } = getState();
@@ -407,7 +447,7 @@ export const logFood = () => (dispatch, getState) => {
       food_name: item.name,
       item_id: item.id,
       portion: typeof item.portion === 'undefined' ? 1 : item.portion,
-      unit: item.measure
+      unit: item.measure === null ? null : item.measure.id,
     }));
     return nutritionsService.createMeal({ date_time: selectedMeal.date_time, nix_food_items: arrayForServer })
       .then(result => result)

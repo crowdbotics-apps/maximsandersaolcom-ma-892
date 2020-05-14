@@ -11,7 +11,7 @@ import {
   Platform,
 } from 'react-native';
 import { LoginManager, AccessToken } from 'react-native-fbsdk';
-import { GoogleSignin, statusCodes } from 'react-native-google-signin';
+import { GoogleSignin, statusCodes } from '@react-native-community/google-signin';
 import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';

@@ -1,31 +1,27 @@
-import React from 'react'
-import { View, Text, Image, StyleSheet } from 'react-native'
-import ModalDropdown from 'react-native-modal-dropdown';
+import React from 'react';
+import {View, Image, StyleSheet} from 'react-native';
+import {Dropdown} from 'react-native-material-dropdown';
 
 const dropdownIcon = require('../../../assets/dropdownTriangle.png');
 
-const SubDropDown = ({ onSelect, measure, item, options }) => (
-    <ModalDropdown
-    style={styles.dropdownContainer}
-    options={options.map((item) => item.name)}
-    dropdownStyle={styles.dropdownStyle}
-    dropdownTextStyle={styles.dropdownTextStyle}
-    onSelect={(idx, value) => {
-      onSelect(item, 'measure', value)
-    }}
-  >
-    <View style={styles.modalButtonStyle}>
-      <View style={{ flex: 3 }}>
-        <Text style={styles.dropdownButtonText} numberOfLines={1}>
-          {measure || 'Choose...'}
-        </Text>
-      </View>
-      <View style={{ flex: 1 }}>
-        <Image source={dropdownIcon} style={styles.dropdownImage}/>
-      </View>
-      
-    </View>
-  </ModalDropdown>
+const SubDropDown = ({onSelect, measure, item, options }) => (
+  <View style={{flex: 1, justifyContent: 'center'}}>
+    <Dropdown
+      renderAccessory={() => (
+        <Image source={dropdownIcon} style={styles.dropdownImage} />
+      )}
+      containerStyle={{width: 100}}
+      inputContainerStyle={{ borderBottomColor: 'transparent' }}
+      labelExtractor={({name}) => name}
+      valueExtractor={({name}) => name}
+      value={item.measure === null ? '' : item.measure.name}
+      label="Choose..."
+      data={options}
+      onChangeText={(args, index, data) => {
+        onSelect(item, 'measure', data[index]);
+      }}
+    />
+  </View>
 );
 
 const styles = StyleSheet.create({
@@ -55,10 +51,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   dropdownContainer: {
-    width: 110,
-    maxWidth: 110,
-    borderColor: 'gray',
-    borderWidth: 1,
+    // paddingTop: 40,
+    // alignItems: "center",
+    // width: 100,
   },
 });
 

@@ -14,7 +14,6 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
-		24E112EF32D80E1F874CC2B9 /* libPods-maximsandersaolcom_ma_892.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F3414E37E602A98F2B4B47B /* libPods-maximsandersaolcom_ma_892.a */; };
 		252D722F22DA650B007C65C7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 252D720422DA650B007C65C7 /* GoogleService-Info.plist */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -30,6 +29,7 @@
 		2DCD954D1E0B4F2C00145EB5 /* maximsandersaolcom_ma_892Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* maximsandersaolcom_ma_892Tests.m */; };
 		2DF0FFEE2056DD460020B375 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA31DF850E9000B6D8A /* libReact.a */; };
 		358C22C4FE4832231EF55A12 /* libPods-maximsandersaolcom_ma_892-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EB8300A5C292CC7B1589E9B /* libPods-maximsandersaolcom_ma_892-tvOSTests.a */; };
+		47A72C29F2E163BF33CB3EEF /* libPods-maximsandersaolcom_ma_892.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F3414E37E602A98F2B4B47B /* libPods-maximsandersaolcom_ma_892.a */; };
 		8466B0C524612B6100C726BD /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8466B0C424612B6100C726BD /* File.swift */; };
 		A18FECC9290E795C99448B50 /* libPods-maximsandersaolcom_ma_892-maximsandersaolcom_ma_892Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8518EF52B91BB238571EE6F8 /* libPods-maximsandersaolcom_ma_892-maximsandersaolcom_ma_892Tests.a */; };
 		EF357D43E8C6C2FA2A288DE5 /* libPods-maximsandersaolcom_ma_892-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 444D9ECC91BE28A9C93A7BE2 /* libPods-maximsandersaolcom_ma_892-tvOS.a */; };
@@ -349,7 +349,7 @@
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		844A484EEFA93D66B26444A4 /* Pods-maximsandersaolcom_ma_892-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-maximsandersaolcom_ma_892-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-maximsandersaolcom_ma_892-tvOSTests/Pods-maximsandersaolcom_ma_892-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		8466B0C424612B6100C726BD /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
-		84959CC82461112F00CC0174 /* maximsandersaolcom_ma_892-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "maximsandersaolcom_ma_892-Bridging-Header.h"; sourceTree = "<group>"; };
+		84EDD4F124625AAF00E1B39C /* maximsandersaolcom_ma_892-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "maximsandersaolcom_ma_892-Bridging-Header.h"; sourceTree = "<group>"; };
 		8518EF52B91BB238571EE6F8 /* libPods-maximsandersaolcom_ma_892-maximsandersaolcom_ma_892Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-maximsandersaolcom_ma_892-maximsandersaolcom_ma_892Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C6505B6098D91B952E3BFE1 /* Pods-maximsandersaolcom_ma_892.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-maximsandersaolcom_ma_892.release.xcconfig"; path = "Target Support Files/Pods-maximsandersaolcom_ma_892/Pods-maximsandersaolcom_ma_892.release.xcconfig"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
@@ -373,7 +373,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				24E112EF32D80E1F874CC2B9 /* libPods-maximsandersaolcom_ma_892.a in Frameworks */,
+				47A72C29F2E163BF33CB3EEF /* libPods-maximsandersaolcom_ma_892.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -492,12 +492,12 @@
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				8466B0C424612B6100C726BD /* File.swift */,
+				84EDD4F124625AAF00E1B39C /* maximsandersaolcom_ma_892-Bridging-Header.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
-				84959CC82461112F00CC0174 /* maximsandersaolcom_ma_892-Bridging-Header.h */,
 			);
 			name = maximsandersaolcom_ma_892;
 			sourceTree = "<group>";
@@ -1498,7 +1498,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 33;
+				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 6YKR59QXKM;
 				HEADER_SEARCH_PATHS = (
@@ -1509,6 +1509,7 @@
 				);
 				INFOPLIST_FILE = maximsandersaolcom_ma_892/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.1;
 				OTHER_CFLAGS = (
 					"$(inherited)",
 					"-DFB_SONARKIT_ENABLED=1",
@@ -1536,7 +1537,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 33;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6YKR59QXKM;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1546,6 +1547,7 @@
 				);
 				INFOPLIST_FILE = maximsandersaolcom_ma_892/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.1;
 				OTHER_CFLAGS = (
 					"$(inherited)",
 					"-DFB_SONARKIT_ENABLED=1",
@@ -1849,6 +1851,7 @@
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

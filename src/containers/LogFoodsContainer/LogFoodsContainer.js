@@ -79,7 +79,7 @@ const LogFoodsContainer = ({
             </Text>
           </View>
           <View style={styles.tableHeadSub}>
-            <Text style={styles.tableHeadRightText}>{calories || 0}</Text>
+            <Text style={styles.tableHeadRightText}>{parseFloat(calories).toFixed(2) || 0}</Text>
           </View>
         </View>
         <View style={styles.tableColumnContainer}>
