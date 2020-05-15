@@ -73,10 +73,10 @@ export default (state = { ...initialNutrition }, { type, payload }) => {
         searchActive: false,
         selectedProducts: state.selectedProducts.filter(item => item.id !== payload.id),
         selectedProductsStats: {
-          calories: state.selectedProductsStats.calories - (payload.calories * payload.portion),
-          proteins: state.selectedProductsStats.proteins - (payload.proteins * payload.portion),
-          carbohydrate: state.selectedProductsStats.carbohydrate - (payload.carbohydrate * payload.portion),
-          fat: state.selectedProductsStats.fat - (payload.fat * payload.portion)
+          calories: state.selectedProductsStats.calories - calculateMeasure(payload, 'calories'),
+          proteins: state.selectedProductsStats.proteins - calculateMeasure(payload, 'proteins'),
+          carbohydrate: state.selectedProductsStats.carbohydrate - calculateMeasure(payload, 'carbohydrate'),
+          fat: state.selectedProductsStats.fat - calculateMeasure(payload, 'fat'),
         },
       };
     }
@@ -282,7 +282,7 @@ const calculateMeasure = (currVal, type) => {
   }
   return (
     // eslint-disable-next-line radix
-    (getNumber(parseInt(currVal.weight)) / getNumber(currVal.measure.weight)) *
+    (getNumber(currVal.measure.weight) / getNumber(parseInt(currVal.weight))) *
     currVal[type] *
     currVal.portion
   );
