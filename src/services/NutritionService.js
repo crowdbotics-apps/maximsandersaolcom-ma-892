@@ -9,8 +9,8 @@ export default class NutritionService {
       .catch((err) => { throw err; });
   }
 
-  getProductsBySearchString(searchString) {
-    return this.api.fetch('GET', `/products/?name=${searchString}`, { })
+  getProductsBySearchString(searchString = '') {
+    return this.api.fetch('GET', `/food/search/?query=${searchString}`, { })
       .then(response => response.data)
       .catch((err) => { throw err; });
   }
@@ -71,6 +71,12 @@ export default class NutritionService {
 
   getMeal(id) {
     return this.api.fetch('GET', `meal/${id}/`, { })
+      .then(response => response.data)
+      .catch((err) => { throw err; });
+  }
+
+  getOrCreate(obj) {
+    return this.api.fetch('POST', '/products/get_or_create/', { data: obj })
       .then(response => response.data)
       .catch((err) => { throw err; });
   }

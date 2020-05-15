@@ -64,7 +64,7 @@ export default class SearchableDropDown extends Component {
     let setSort = this.props.setSort;
     if (!setSort && typeof setSort !== "function") {
       setSort = (item, searchedText) => {
-        return item.name.toLowerCase().indexOf(searchedText.toLowerCase()) > -1;
+        return item.food_name.toLowerCase().indexOf(searchedText.toLowerCase()) > -1;
       };
     }
     var ac = this.props.items.filter(item => {

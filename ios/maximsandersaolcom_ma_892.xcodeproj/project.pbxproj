@@ -348,8 +348,8 @@
 		79CECF5DA6FD4D2D817AA7CE /* libRCTVideo.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTVideo.a; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		844A484EEFA93D66B26444A4 /* Pods-maximsandersaolcom_ma_892-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-maximsandersaolcom_ma_892-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-maximsandersaolcom_ma_892-tvOSTests/Pods-maximsandersaolcom_ma_892-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		845501AB246D8689001ACDD3 /* maximsandersaolcom_ma_892-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "maximsandersaolcom_ma_892-Bridging-Header.h"; sourceTree = "<group>"; };
 		8466B0C424612B6100C726BD /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
-		84EDD4F124625AAF00E1B39C /* maximsandersaolcom_ma_892-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "maximsandersaolcom_ma_892-Bridging-Header.h"; sourceTree = "<group>"; };
 		8518EF52B91BB238571EE6F8 /* libPods-maximsandersaolcom_ma_892-maximsandersaolcom_ma_892Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-maximsandersaolcom_ma_892-maximsandersaolcom_ma_892Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C6505B6098D91B952E3BFE1 /* Pods-maximsandersaolcom_ma_892.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-maximsandersaolcom_ma_892.release.xcconfig"; path = "Target Support Files/Pods-maximsandersaolcom_ma_892/Pods-maximsandersaolcom_ma_892.release.xcconfig"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
@@ -492,12 +492,12 @@
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				8466B0C424612B6100C726BD /* File.swift */,
-				84EDD4F124625AAF00E1B39C /* maximsandersaolcom_ma_892-Bridging-Header.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				845501AB246D8689001ACDD3 /* maximsandersaolcom_ma_892-Bridging-Header.h */,
 			);
 			name = maximsandersaolcom_ma_892;
 			sourceTree = "<group>";
@@ -1498,7 +1498,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 6YKR59QXKM;
 				HEADER_SEARCH_PATHS = (
@@ -1508,6 +1508,7 @@
 					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
 				);
 				INFOPLIST_FILE = maximsandersaolcom_ma_892/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 1.1;
 				OTHER_CFLAGS = (
@@ -1537,7 +1538,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = 6YKR59QXKM;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1546,6 +1547,7 @@
 					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
 				);
 				INFOPLIST_FILE = maximsandersaolcom_ma_892/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 1.1;
 				OTHER_CFLAGS = (

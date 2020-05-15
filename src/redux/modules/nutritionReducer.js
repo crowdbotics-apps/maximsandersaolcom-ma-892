@@ -35,6 +35,7 @@ export default (state = { ...initialNutrition }, { type, payload }) => {
       return {
         ...state,
         searchStringState: payload,
+        searchActive: true,
       };
     }
     case PRODUCTS_WITH_SEARCH: {
@@ -84,6 +85,7 @@ export default (state = { ...initialNutrition }, { type, payload }) => {
       return {
         ...state,
         searchActive: false,
+        products: [],
       };
     }
     case GET_MEALS_BY_DATE: {
@@ -170,11 +172,31 @@ export const setSelectedMeal = selectedMeal => (dispatch) => {
 };
 
 export const setSelectedProducts = selectedItem => (dispatch, getState) => {
-  const { nutrition: { selectedProducts } } = getState();
-  const findSelectedItem = selectedProducts.find(item => item.id === selectedItem.id);
-  return dispatch({
+  const {
+    nutrition: {selectedProducts},
+  } = getState();
+  const findSelectedItem = selectedProducts.find(
+    item => item.id === selectedItem.id,
+  );
+  if (!findSelectedItem) {
+    return nutritionsService.getOrCreate(selectedItem).then(res => {
+      return dispatch({
+        type: SET_SELECTED_PRODUCT,
+        payload: [
+          ...selectedProducts,
+          {
+            ...res,
+            measure: null,
+            portion: 0,
+            onServer: false,
+          },
+        ],
+      });
+    });
+  }
+  dispatch({
     type: SET_SELECTED_PRODUCT,
-    payload: !findSelectedItem && [...selectedProducts, { ...selectedItem, measure: null, portion: 0, onServer: false }] || selectedProducts,
+    payload: selectedProducts,
   });
 };
 
@@ -282,7 +304,7 @@ const calculateMeasure = (currVal, type) => {
   }
   return (
     // eslint-disable-next-line radix
-    (getNumber(currVal.measure.weight) / getNumber(parseInt(currVal.weight))) *
+    (getNumber(currVal.measure.weight) / getNumber(parseFloat(currVal.weight))) *
     currVal[type] *
     currVal.portion
   );
@@ -301,18 +323,24 @@ export const getProductWithBarcodeAction = barCode => dispatch => nutritionsServ
     throw err;
   });
 
-export const getProductsBySearchString = searchString => (dispatch) => {
+export const getProductsBySearchString = searchString => (dispatch, getState) => {
   dispatch({ type: SET_SEARCH_STRING, payload: searchString });
-  return nutritionsService
-    .getProductsBySearchString(searchString)
-    .then((payload) => {
-      dispatch({ type: PRODUCTS_WITH_SEARCH, payload: { results: payload.results, searchString } });
-      return true;
-    })
-    .catch((err) => {
-      console.error('error', err);
-      throw err;
-    });
+  if (searchString.length) {
+    return nutritionsService
+      .getProductsBySearchString(searchString)
+      .then((payload) => {
+        const { nutrition: { searchActive } } = getState();
+        if (searchActive) {
+          dispatch({ type: PRODUCTS_WITH_SEARCH, payload: { results: payload.common, searchString } });
+          return true;
+        }
+      })
+      .catch((err) => {
+        console.error('error', err);
+        throw err;
+      });
+  }
+  dispatch({ type: UNSET_SEARCH_ACTIVE });
 };
 
 export const getMealsByDateAction = date => (dispatch, getState) => nutritionsService

@@ -58,10 +58,10 @@ const MealRegultorSearchWithIcon = ({
         >
           <View style={{ backgroundColor: 'white', flexDirection: 'row', padding: 5, height: 45 }}>
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-              <Image source={{ uri: item.thumb }} style={{ width: 35, height: 35 }} />
+              <Image source={{ uri: item.photo.thumb }} style={{ width: 35, height: 35 }} />
             </View>
             <View style={{ flex: 3, alignItems: 'flex-start', justifyContent: 'center' }}>
-              <Text>{item.name}</Text>
+              <Text>{item.food_name}</Text>
             </View>
           </View>
         </TouchableOpacity>

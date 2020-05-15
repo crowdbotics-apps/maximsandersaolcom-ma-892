@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Image,
@@ -19,34 +19,48 @@ const HeaderWithSearch = ({
   unsetSearchActive,
   searchStringState,
   navigation
-}) => (
-  <View style={[styles.headerNav, headerNavProp]}>
-    <View style={styles.navIconStyle}>
-      <TouchableOpacity
-        style={styles.iconStyle}
-        onPress={() => navigation.goBack()}
-      >
-        <Image
+}) => {
+  const [searchString, setSearchStringState] = useState('');
+  useEffect(() => {
+    if (searchString.length) {
+      setSearchString(searchString);
+    }
+  }, [searchString, setSearchString]);
+  useEffect(() => {
+    if (!searchString.length) {
+      unsetSearchActive();
+    }
+  }, [searchString, unsetSearchActive]);
+
+  return (
+    <View style={[styles.headerNav, headerNavProp]}>
+      <View style={styles.navIconStyle}>
+        <TouchableOpacity
           style={styles.iconStyle}
-          source={iconArrowLeft}
-        />
-      </TouchableOpacity>
-    </View>
-    <View style={styles.searchContainer}>
-      <View>
-        <MealRegulatorSearchWithIcon
-          searchStringState={searchStringState}
-          productItems={productItems}
-          searchForProducts={searchString => setSearchString(searchString)}
-          setSelectedItems={item => setSelectedItems(item)}
-          unsetSearchActive={unsetSearchActive}
-          resetValue={resetValue}
-          navigation={navigation}
-        />
+          onPress={() => navigation.goBack()}
+        >
+          <Image
+            style={styles.iconStyle}
+            source={iconArrowLeft}
+          />
+        </TouchableOpacity>
+      </View>
+      <View style={styles.searchContainer}>
+        <View>
+          <MealRegulatorSearchWithIcon
+            searchStringState={searchString}
+            productItems={productItems}
+            searchForProducts={text => setSearchStringState(text)}
+            setSelectedItems={item => setSelectedItems(item)}
+            unsetSearchActive={unsetSearchActive}
+            resetValue={resetValue}
+            navigation={navigation}
+          />
+        </View>
       </View>
     </View>
-  </View>
-);
+  );
+  }
 
 const styles = StyleSheet.create({
   searchContainer: {
