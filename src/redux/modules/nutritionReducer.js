@@ -147,7 +147,9 @@ export const setSelectedMeal = selectedMeal => (dispatch) => {
     ...item.food,
     measure: item.unit,
     foodId: item.id,
+    food: item.food,
   }));
+  console.log('aa',getProductsFromMeal)
   const initForReduce = { calories: 0, proteins: 0, fat: 0, carbohydrate: 0 };
   const selectedProductsStats = getProductsFromMeal.reduce(
     (prevVal, currVal) => ({
@@ -291,14 +293,14 @@ export const editSelectedProducts = (itemForEdit, fieldForEdit, value) => (dispa
   });
 };
 
-const getNumber = value => {
+export const getNumber = value => {
   if (value > 0) {
     return value;
   }
   return 1;
 };
 
-const calculateMeasure = (currVal, type) => {
+export const calculateMeasure = (currVal, type) => {
   if (currVal.measure === null) {
     return currVal[type] * currVal.portion;
   }
@@ -493,7 +495,7 @@ export const logFood = () => (dispatch, getState) => {
   }
   const itemsForAdd = selectedProducts.filter(item => !item.onServer);
   if (itemsForAdd.length) {
-    return Promise.all(itemsForAdd.map(item => nutritionsService.addFood(selectedMeal.id, { nix_food_items: [{ food_name: item.name, portion: typeof item.portion === 'undefined' ? 1 : item.portion, item_id: item.id }] }, '', false, selectedMeal.date_time, item.id)))
+    return Promise.all(itemsForAdd.map(item => nutritionsService.addFood(selectedMeal.id, { nix_food_items: [{ food_name: item.name, portion: typeof item.portion === 'undefined' ? 1 : item.portion, item_id: item.id, unit: item.measure === null ? null : item.measure.id }]  }, '', false, selectedMeal.date_time, item.id)))
       .then(result => result)
       .then(() => nutritionsService.getMeal(selectedMeal.id))
       .then((getMealResult) => {

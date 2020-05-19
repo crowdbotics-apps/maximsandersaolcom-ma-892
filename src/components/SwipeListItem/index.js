@@ -2,10 +2,32 @@ import React from 'react'
 import { View, Text, StyleSheet, Image, TextInput } from 'react-native'
 import Font from '../../assets/fonts';
 import Dropdown from './SubComponents/Dropdown';
+import { getNumber } from '../../redux/modules/nutritionReducer'
 
 const infoOtlineIcon = require('../../assets/infoOutlineIcon.png');
 
+const recalculateMeasureCalories = item => {
+  if (item.measure === null) {
+    return item.calories * item.portion;
+  }
+  if (item.food) {
+    return (
+      // eslint-disable-next-line radix
+      (getNumber(item.measure.weight) / getNumber(parseFloat(item.food.weight))) *
+      item.food.calories *
+      item.portion
+    );
+  }
+  return (
+    // eslint-disable-next-line radix
+    (getNumber(item.measure.weight) / getNumber(parseFloat(item.weight))) *
+    item.calories *
+    item.portion
+  );
+}
+
 const SwipeListItem = ({ item, editSelectedProductsAction, index }) => {
+  console.log("item", item);
   const parseValToFixed = e => parseFloat(e).toFixed(1);
   const isEventValueNum = e => !isNaN(parseValToFixed(e)) && parseValToFixed(e) || 0;
   return (
@@ -45,7 +67,7 @@ const SwipeListItem = ({ item, editSelectedProductsAction, index }) => {
       </View>
       <View style={styles.caloriesContainer}>
         <View>
-          <Text style={styles.caloriesText}>{item.calories}</Text>
+        <Text style={styles.caloriesText}>{parseFloat(Math.round(recalculateMeasureCalories(item) * 100) / 100).toFixed(1)}</Text>
         </View>
         <View>
           <Text style={styles.caloriesTextStatic}>Cal</Text>
