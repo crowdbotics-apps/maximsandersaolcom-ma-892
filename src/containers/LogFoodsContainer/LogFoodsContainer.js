@@ -79,13 +79,13 @@ const LogFoodsContainer = ({
             </Text>
           </View>
           <View style={styles.tableHeadSub}>
-            <Text style={styles.tableHeadRightText}>{parseFloat(calories).toFixed(2) || 0}</Text>
+            <Text style={styles.tableHeadRightText}>{Math.round(calories) || 0}</Text>
           </View>
         </View>
         <View style={styles.tableColumnContainer}>
-          <TableColumn name="Proteins" value={parseFloat(Math.round(proteins * 100) / 100).toFixed(2)} />
-          <TableColumn name="Carbs" value={parseFloat(Math.round(carbohydrate * 100) / 100).toFixed(2)} middle />
-          <TableColumn name="Fat" value={parseFloat(Math.round(fat * 100) / 100).toFixed(2)} />
+          <TableColumn name="Proteins" value={Math.round(proteins)} />
+          <TableColumn name="Carbs" value={Math.round(carbohydrate)} middle />
+          <TableColumn name="Fat" value={Math.round(fat)} />
         </View>
       </View>
       <View style={styles.gradientButtonContainer}>

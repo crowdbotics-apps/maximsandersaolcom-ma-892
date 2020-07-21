@@ -2,7 +2,6 @@ import AsyncStorage from "@react-native-community/async-storage";
 
 /* Packages */
 import axios from 'axios';
-import i18n from 'i18n-js';
 
 // import { reduxStore } from '../Root';
 

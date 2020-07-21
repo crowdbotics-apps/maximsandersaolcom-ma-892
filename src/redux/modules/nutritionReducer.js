@@ -308,7 +308,7 @@ export const calculateMeasure = (currVal, type) => {
     // eslint-disable-next-line radix
     (getNumber(currVal.measure.weight) / getNumber(parseFloat(currVal.weight))) *
     currVal[type] *
-    currVal.portion
+    (currVal.portion / getNumber(currVal.measure.quantity))
   );
 };
 
@@ -333,7 +333,7 @@ export const getProductsBySearchString = searchString => (dispatch, getState) =>
       .then((payload) => {
         const { nutrition: { searchActive } } = getState();
         if (searchActive) {
-          dispatch({ type: PRODUCTS_WITH_SEARCH, payload: { results: payload.common, searchString } });
+          dispatch({ type: PRODUCTS_WITH_SEARCH, payload: { results: [...payload.common, ...payload.branded], searchString } });
           return true;
         }
       })
@@ -473,12 +473,21 @@ export const createNewMealSpeach = (query, fromSentence, dateTime) => (dispatch,
 export const logFood = () => (dispatch, getState) => {
   const { nutrition: { selectedMeal, selectedProducts, meals } } = getState();
   if (typeof selectedMeal.id === 'undefined') {
-    const arrayForServer = selectedProducts.map(item => ({
-      food_name: item.name,
-      item_id: item.id,
-      portion: typeof item.portion === 'undefined' ? 1 : item.portion,
-      unit: item.measure === null ? null : item.measure.id,
-    }));
+    const arrayForServer = selectedProducts.map(item => {
+      if (item.measure === null) {
+        return {
+          food_name: item.name,
+          item_id: item.id,
+          portion: typeof item.portion === 'undefined' ? 1 : item.portion,
+        };
+      }
+      return {
+        food_name: item.name,
+        item_id: item.id,
+        portion: typeof item.portion === 'undefined' ? 1 : item.portion,
+        unit: item.measure === null ? null : item.measure.id,
+      };
+    });
     return nutritionsService.createMeal({ date_time: selectedMeal.date_time, nix_food_items: arrayForServer })
       .then(result => result)
       .then(res => nutritionsService.getMeal(res.id))
