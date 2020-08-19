@@ -25,5 +25,6 @@ export default {
   LogFoodsNutritionScreen: 'LogFoodsNutritionScreen',
   SurveyScreen: 'SurveyScreen',
   FavoritesScreen: 'FavoritesScreen',
-  MyProgressAndData: 'MyProgressAndData'
+  MyProgressAndData: 'MyProgressAndData',
+  SubscriptionScreen: 'SubscriptionScreen',
 };

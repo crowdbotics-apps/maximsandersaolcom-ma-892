@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   View,
   StyleSheet,
@@ -10,11 +10,11 @@ import {
   TouchableOpacity,
   Platform,
 } from 'react-native';
-import { LoginManager, AccessToken } from 'react-native-fbsdk';
-import { GoogleSignin, statusCodes } from '@react-native-community/google-signin';
-import { withNavigation } from 'react-navigation';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import {LoginManager, AccessToken} from 'react-native-fbsdk';
+import {GoogleSignin, statusCodes} from '@react-native-community/google-signin';
+import {withNavigation} from 'react-navigation';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 import i18n from '../../i18n/i18n';
 import Input from '../../components/Input';
 import Routes from '../../Routes';
@@ -23,87 +23,97 @@ import {
   loginActionViaGmail,
   regularLogin,
   resetErrors,
-  setError
+  setError,
 } from '../../redux/modules/authReducer';
 import AuthService from '../../services/AuthService';
-import SurveyButton from "../../components/Survey/SurveyButton";
-import AsyncStorage from "@react-native-community/async-storage";
+import SurveyButton from '../../components/Survey/SurveyButton';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const mainActions = {
   loginActionViaFacebookAction: loginActionViaFacebook,
   loginActionViaGmailAction: loginActionViaGmail,
   regularLoginAction: regularLogin,
   resetErrorsAction: resetErrors,
-  setErrorAction: setError
+  setErrorAction: setError,
 };
 
 const logoImage = require('../../assets/logoSplashScreen.png');
-
-
 
 class LoginScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
       email: '',
-      password: ''
+      password: '',
     };
   }
 
   componentDidMount() {
-    const { resetErrorsAction } = this.props;
+    const {resetErrorsAction} = this.props;
     resetErrorsAction();
     GoogleSignin.configure({
       scopes: ['https://www.googleapis.com/auth/userinfo.profile'],
       forceConsentPrompt: true,
-      webClientId: '122090316140-er5oevo3ek39e8hvq6egc2f6brrvme1b.apps.googleusercontent.com',
+      webClientId:
+        '122090316140-er5oevo3ek39e8hvq6egc2f6brrvme1b.apps.googleusercontent.com',
     });
   }
 
   handleInputChange = (fieldName, value) => {
     this.setState({
-      [fieldName]: value
+      [fieldName]: value,
     });
-  }
+  };
 
   handleLoginViaFacebook = async () => {
-    const { loginActionViaFacebookAction, navigation } = this.props;
+    const {loginActionViaFacebookAction, navigation} = this.props;
     try {
-      const result = await LoginManager.logInWithPermissions(['email', 'public_profile']);
+      const result = await LoginManager.logInWithPermissions([
+        'email',
+        'public_profile',
+      ]);
 
       if (result.isCancelled) {
         console.log('Login cancelled', result);
       } else {
-        const data = await AccessToken.getCurrentAccessToken();
-        await loginActionViaFacebookAction(data.accessToken.toString());
-        navigation.navigate(Routes.ProfileScreen);
+        if (true) {
+          navigation.navigate(Routes.SubscriptionScreen);
+        } else {
+          const data = await AccessToken.getCurrentAccessToken();
+          await loginActionViaFacebookAction(data.accessToken.toString());
+          navigation.navigate(Routes.ProfileScreen);
+        }
       }
     } catch (err) {
       console.log('error on login via facebook', err);
       throw err;
     }
-  }
+  };
 
   signInGoogle = async () => {
-    const { navigation, loginActionViaGmailAction } = this.props;
+    const {navigation, loginActionViaGmailAction} = this.props;
     try {
       await GoogleSignin.hasPlayServices();
       await GoogleSignin.signIn();
-      const { accessToken } = await GoogleSignin.getTokens(); // to get tokens
+      const {accessToken} = await GoogleSignin.getTokens(); // to get tokens
       await loginActionViaGmailAction(accessToken);
-      navigation.navigate(Routes.ProfileScreen);
+      if (true) {
+        navigation.navigate(Routes.SubscriptionScreen);
+      } else {
+        navigation.navigate(Routes.ProfileScreen);
+      }
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        console.log("SIGN IN CANCEL ", error);
+        console.log('SIGN IN CANCEL ', error);
         // user cancelled the login flow
       } else if (error.code === statusCodes.IN_PROGRESS) {
-        console.log("SIGN IN IN PROGRESS ", error);
+        console.log('SIGN IN IN PROGRESS ', error);
         // operation (f.e. sign in) is in progress already
       } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        console.log("SIGN IN IN NOT AVAILABLE ", error);
+        console.log('SIGN IN IN NOT AVAILABLE ', error);
         // play services not available or outdated
       } else {
-        console.log("OTHER ERROR ", error);
+        console.log('OTHER ERROR ', error);
         // some other error happened
       }
       throw error;
@@ -115,32 +125,29 @@ class LoginScreen extends Component {
       regularLoginAction,
       navigation,
       resetErrorsAction,
-      setErrorAction
+      setErrorAction,
     } = this.props;
 
     const userData = await AsyncStorage.getItem('isSurvey');
 
-
     try {
       const authService = new AuthService();
-      const data = await authService.login({ username: email, password });
-      const { user, token } = data;
+      const data = await authService.login({username: email, password});
+      const {user, token} = data;
       regularLoginAction(user, token);
 
       if (!userData) {
-        navigation.navigate(Routes.SurveyScreen)
+        navigation.navigate(Routes.SurveyScreen);
       }
-
 
       const transformedData = JSON.parse(userData);
-      const { isPassed } = transformedData;
+      const {isPassed} = transformedData;
 
-      if(isPassed) {
-        navigation.navigate(Routes.FeedScreen)
+      if (isPassed) {
+        navigation.navigate(Routes.FeedScreen);
       } else {
-        navigation.navigate(Routes.SurveyScreen)
+        navigation.navigate(Routes.SurveyScreen);
       }
-
     } catch (err) {
       resetErrorsAction();
       const arrayErrors = Object.entries(err.data);
@@ -148,49 +155,41 @@ class LoginScreen extends Component {
         field: `${item[0]}`,
         message: item[1].toString(),
       }));
-      arrayWithMessages.map(item => setErrorAction({ field: item.field, message: item.message }));
+      arrayWithMessages.map(item =>
+        setErrorAction({field: item.field, message: item.message}),
+      );
     }
-  }
+  };
 
   render() {
-    const {
-      email,
-      password
-    } = this.state;
+    const {email, password} = this.state;
     const {
       usernameErrorText,
       passwordErrorText,
-      nonFieldErrorText
+      nonFieldErrorText,
     } = this.props;
     return (
       <KeyboardAvoidingView
-        style={{ flex: 1 }}
-        behavior={Platform.select({ ios: 'padding' })}
-      >
+        style={{flex: 1}}
+        behavior={Platform.select({ios: 'padding'})}>
         <ScrollView
-          style={{ flex: 1 }}
-          contentContainerStyle={{ flexGrow: 1 }}
+          style={{flex: 1}}
+          contentContainerStyle={{flexGrow: 1}}
           keyboardDismissMode="interactive"
-          keyboardShouldPersistTaps="handled"
-        >
+          keyboardShouldPersistTaps="handled">
           <View style={styles.containerCenter}>
-            <SafeAreaView style={{ backgroundColor: 'white' }} />
+            <SafeAreaView style={{backgroundColor: 'white'}} />
             <View style={styles.containerCenter}>
               <View style={styles.imageContainer}>
-                <Image
-                  source={logoImage}
-                  style={styles.logo}
-                />
+                <Image source={logoImage} style={styles.logo} />
               </View>
               <View style={[styles.containerCenter, styles.paddingHor]}>
-                <View style={{ width: '100%', marginBottom: 10 }}>
-
+                <View style={{width: '100%', marginBottom: 10}}>
                   <SurveyButton
-                      notSurvey
-                      style={{paddingBottom: 0}}
-                      gradientStyle={{paddingVertical: 15}}
-                      onPress={() => this.handleLoginViaFacebook()}
-                  >
+                    notSurvey
+                    style={{paddingBottom: 0}}
+                    gradientStyle={{paddingVertical: 15}}
+                    onPress={() => this.handleLoginViaFacebook()}>
                     Log in via Facebook
                   </SurveyButton>
 
@@ -205,15 +204,13 @@ class LoginScreen extends Component {
                   {/*  </Text>*/}
                   {/*</TouchableOpacity>*/}
                 </View>
-                <View style={{ width: '100%' }}>
-
+                <View style={{width: '100%'}}>
                   <SurveyButton
-                      notSurvey
-                      style={{paddingBottom: 0}}
-                      gradientStyle={{paddingVertical: 15}}
-                      onPress={() => this.signInGoogle()}
-                  >
-                    Log in via Google
+                    notSurvey
+                    style={{paddingBottom: 0}}
+                    gradientStyle={{paddingVertical: 15}}
+                    onPress={() => this.signInGoogle()}>
+                    Log in via Googlee
                   </SurveyButton>
 
                   {/*<TouchableOpacity*/}
@@ -235,29 +232,33 @@ class LoginScreen extends Component {
                   <Text style={styles.orText}>{i18n.t('loginScreen.or')}</Text>
                 </View>
                 <View style={[styles.containerCenter, styles.paddingHor]}>
-                  <View style={{ width: '100%' }}>
+                  <View style={{width: '100%'}}>
                     <Input
                       inputStyle={styles.input}
                       keyboardType="email-address"
-                      onChangeText={value => this.handleInputChange('email', value)}
+                      onChangeText={value =>
+                        this.handleInputChange('email', value)
+                      }
                       value={email}
                       error={usernameErrorText || nonFieldErrorText}
                       placeholder={i18n.t('loginScreen.emailPlaceholder')}
                       titleTextStyle={{
-                        fontSize: 10
+                        fontSize: 10,
                       }}
                     />
                   </View>
-                  <View style={{ width: '100%' }}>
+                  <View style={{width: '100%'}}>
                     <Input
                       inputStyle={styles.input}
                       secureTextEntry
-                      onChangeText={value => this.handleInputChange('password', value)}
+                      onChangeText={value =>
+                        this.handleInputChange('password', value)
+                      }
                       value={password}
                       error={passwordErrorText}
                       placeholder={i18n.t('loginScreen.passwordPlaceholder')}
                       titleTextStyle={{
-                        fontSize: 10
+                        fontSize: 10,
                       }}
                     />
                   </View>
@@ -266,9 +267,8 @@ class LoginScreen extends Component {
               <View style={styles.containerCenter}>
                 <TouchableOpacity
                   onPress={() => this.regularLogin(email, password)}
-                  style={styles.letsStartButton}
-                >
-                  <Text style={{ fontSize: 15 }}>
+                  style={styles.letsStartButton}>
+                  <Text style={{fontSize: 15}}>
                     {i18n.t('loginScreen.loginButton')}
                   </Text>
                 </TouchableOpacity>
@@ -285,13 +285,13 @@ const styles = StyleSheet.create({
   logo: {
     width: 300,
     height: 100,
-    resizeMode: 'contain'
+    resizeMode: 'contain',
   },
   containerCenter: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    width: '100%'
+    width: '100%',
   },
   paddingHor: {
     paddingHorizontal: 20,
@@ -305,7 +305,7 @@ const styles = StyleSheet.create({
   },
   input: {
     width: '100%',
-    paddingLeft: 5
+    paddingLeft: 5,
   },
   letsStartButton: {
     width: 250,
@@ -314,7 +314,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   imageContainer: {
     flex: 1,
@@ -325,24 +325,24 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
-    width: '100%'
+    width: '100%',
   },
   orContainer: {
     flex: 1,
     justifyContent: 'space-between',
     alignItems: 'center',
-    width: '100%'
+    width: '100%',
   },
   orText: {
     fontSize: 17,
     color: '#000',
-    fontWeight: '500'
+    fontWeight: '500',
   },
   buttonLoginTextStyle: {
     color: 'white',
     fontSize: 15,
-    fontWeight: '500'
-  }
+    fontWeight: '500',
+  },
 });
 
 export default connect(
@@ -352,14 +352,14 @@ export default connect(
       usernameErrorText,
       passwordErrorText,
       non_field_errorsError: nonFieldError,
-      non_field_errorsErrorText: nonFieldErrorText
-    }
+      non_field_errorsErrorText: nonFieldErrorText,
+    },
   }) => ({
     authenticated,
     usernameErrorText,
     passwordErrorText,
     nonFieldError,
-    nonFieldErrorText
+    nonFieldErrorText,
   }),
-  dispatch => bindActionCreators(mainActions, dispatch)
+  dispatch => bindActionCreators(mainActions, dispatch),
 )(withNavigation(LoginScreen));
