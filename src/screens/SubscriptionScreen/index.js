@@ -7,6 +7,7 @@ import ScrollableTabView, {
   DefaultTabBar,
 } from 'react-native-scrollable-tab-view';
 import SubscriptionContainer from '../../components/SubscriptionContainer';
+import Routes from '../../Routes';
 
 const styles = StyleSheet.create({
   container: {
@@ -14,7 +15,9 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
 });
-const SubscriptionScreen = () => {
+const SubscriptionScreen = props => {
+  const {navigation} = props;
+
   return (
     <View style={styles.container}>
       <ScrollableTabView
@@ -29,17 +32,29 @@ const SubscriptionScreen = () => {
             ]}
             price={9.99}
             gradient={['#6ecfff', '#2b60ff']}
+            onClick={() =>
+              navigation.navigate(Routes.PaymentScreen, {
+                planName: 'Diet',
+                planPrice: 9.99,
+              })
+            }
           />
         </View>
         <View tabLabel="Exercise" style={{borderWidth: 0}}>
           <SubscriptionContainer
             gradient={['#de2121', '#3042b8']}
-            price={9.99}
+            price={12.99}
             benefitList={[
               'Customized Exercise Program',
               'Dynamic social feed',
               'Data and analytics',
             ]}
+            onClick={() =>
+              navigation.navigate(Routes.PaymentScreen, {
+                planName: 'Exercise',
+                planPrice: 12.99,
+              })
+            }
           />
         </View>
         <View tabLabel="Pro" style={{borderWidth: 0}}>
@@ -51,6 +66,12 @@ const SubscriptionScreen = () => {
               'Dynamic social feed',
               'Data and analytics',
             ]}
+            onClick={() =>
+              navigation.navigate(Routes.PaymentScreen, {
+                planName: 'Pro',
+                planPrice: 14.99,
+              })
+            }
           />
         </View>
       </ScrollableTabView>

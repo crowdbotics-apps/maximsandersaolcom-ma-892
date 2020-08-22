@@ -33,7 +33,11 @@ const SubscriptionContainer = ({
                     <Text style={styles.modalTitle}>Yes</Text>
                   </View>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => setModal(false)}>
+                <TouchableOpacity
+                  onPress={() => {
+                    setModal(false);
+                    onClick();
+                  }}>
                   <View style={styles.modalButton}>
                     <Text style={styles.modalTitle}>No</Text>
                   </View>

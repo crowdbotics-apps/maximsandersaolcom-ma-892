@@ -24,3 +24,4 @@ export {default as SurveyScreen} from './SurveyScreen';
 export {default as FavoritesScreen} from './FavoritesScreen';
 export {default as MyProgressAndData} from './MyProgressAndData';
 export {default as SubscriptionScreen} from './SubscriptionScreen';
+export {default as PaymentScreen} from './PaymentScreen';

@@ -33,6 +33,7 @@ import {
   FavoritesScreen,
   MyProgressAndData,
   SubscriptionScreen,
+  PaymentScreen,
 } from './screens';
 import DrawerContent from './containers/DrawerContent';
 import regularHeaderStyle from './components/regularHeaderStyle';
@@ -451,6 +452,13 @@ const AuthStack = createStackNavigator(
         headerStyle: regularHeaderStyle,
         headerLeft: () => null,
       }),
+    },
+    [Routes.PaymentScreen]: {
+      screen: PaymentScreen,
+      navigationOptions: {
+        header: Platform.select({ios: undefined, android: null}),
+        headerStyle: regularHeaderStyle,
+      },
     },
     [Routes.SurveyScreen]: {
       screen: SurveyScreen,
