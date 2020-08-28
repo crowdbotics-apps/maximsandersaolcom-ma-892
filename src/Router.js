@@ -1,7 +1,7 @@
 import React from 'react';
 import {TouchableOpacity, Image, Platform, Text} from 'react-native';
 import {createSwitchNavigator, createAppContainer} from 'react-navigation';
-import {createStackNavigator} from 'react-navigation-stack';
+import {createStackNavigator, HeaderBackButton} from 'react-navigation-stack';
 import {createDrawerNavigator} from 'react-navigation-drawer';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
 
@@ -46,6 +46,7 @@ import {
   drawerConfigurationForProgram,
 } from './routerConfig';
 import Fonts from './assets/fonts';
+import { BaseButton } from 'react-native-gesture-handler';
 
 const ProfileTabStack = createDrawerNavigator(
   {
@@ -450,7 +451,14 @@ const AuthStack = createStackNavigator(
       navigationOptions: navigator => ({
         header: Platform.select({ios: undefined, android: null}),
         headerStyle: regularHeaderStyle,
-        headerLeft: () => null,
+        headerLeft: (props) => (
+          <HeaderBackButton
+            {...props}
+            onPress={() => {
+              navigator.navigation.navigate(Routes.ProfileScreen);
+            }}
+          />
+        ),
       }),
     },
     [Routes.PaymentScreen]: {

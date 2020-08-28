@@ -97,7 +97,8 @@ export const loginActionViaFacebook = token => (dispatch) => {
         id,
         token: tokenForLogin
       };
-      return dispatch({ type: LOGIN_SUCCESS, payload });
+      dispatch({ type: LOGIN_SUCCESS, payload });
+      return tokenForLogin;
     })
     .catch((err) => {
       throw err;
@@ -130,7 +131,8 @@ export const loginActionViaGmail = token => (dispatch) => {
         id,
         token: tokenForLogin
       };
-      return dispatch({ type: LOGIN_SUCCESS, payload });
+      dispatch({ type: LOGIN_SUCCESS, payload });
+      return tokenForLogin;
     })
     .catch((err) => { throw err; });
 };

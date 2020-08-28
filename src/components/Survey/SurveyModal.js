@@ -54,7 +54,7 @@ const SurveyModal = ({
           setTimeout(() => {
               closeModal();
               saveSurveyPassedToStorage(true);
-              navigation.navigate(Routes.FeedScreen);
+              navigation.navigate(Routes.SubscriptionScreen);
           }, 1500);
 
       }, 1500);
