@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {PureComponent} from 'react';
 import {
   KeyboardAvoidingView,
@@ -10,12 +11,8 @@ import {
 import {CreditCardInput} from 'react-native-credit-card-input';
 import Api from '../../api';
 import Routes from '../../Routes';
+import AsyncStorage from '@react-native-community/async-storage';
 
-export function testID(id) {
-  return Platform.OS === 'android'
-    ? {accessible: true, accessibilityLabel: id}
-    : {testID: id};
-}
 const ContainerView = Platform.select({
   ios: KeyboardAvoidingView,
   android: View,
@@ -59,11 +56,18 @@ export default class CardTextFieldScreen extends PureComponent {
       const createSubscription = await api.fetch('POST', '/payment/create_subscription/', { data: { plan_id: planId } });
       console.log('created subscription', createSubscription)
       if (createSubscription) {
-        this.props.navigation.navigate(Routes.ProfileScreen);
+        const userData = await AsyncStorage.getItem('isSurvey');
+        const transformedData = JSON.parse(userData);
+        const {isPassed} = transformedData;
+        if (isPassed) {
+          this.props.navigation.navigate(Routes.ProfileScreen);
+        } else {
+          this.props.navigation.navigate(Routes.SurveyScreen);
+        }
       }
     } catch (err) {
       this.setState({
-        error: true
+        error: true,
       });
     }
   };
@@ -78,10 +82,22 @@ export default class CardTextFieldScreen extends PureComponent {
       <ContainerView
         behavior="padding"
         style={styles.container}
-        contentContainerStyle={{ flex: 1 }}
+        contentContainerStyle={{flex: 1}}
         onStartShouldSetResponder={() => true}>
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
-          <Text style={{fontWeight: '500', fontSize: 30, marginBottom: 20, textAlign: 'center'}}>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexDirection: 'column',
+          }}>
+          <Text
+            style={{
+              fontWeight: '500',
+              fontSize: 30,
+              marginBottom: 20,
+              textAlign: 'center',
+            }}>
             {planName}
           </Text>
           <Text
@@ -95,10 +111,16 @@ export default class CardTextFieldScreen extends PureComponent {
             <Text style={{fontSize: 14}}> /month</Text>
           </Text>
         </View>
-        <View style={{ flex: 3, justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+        <View
+          style={{
+            flex: 3,
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexDirection: 'column',
+          }}>
           <CreditCardInput
             requiresName
-            onChange={(cardData) => this.setState({ cardData })}
+            onChange={cardData => this.setState({cardData})}
           />
         </View>
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
@@ -107,7 +129,11 @@ export default class CardTextFieldScreen extends PureComponent {
               <Text style={{ color: 'red', fontSize: 15 }}>Unable to process payment</Text>
             )
           }
-          <TouchableOpacity disabled={!valid} onPress={() => this.createCreditCardToken(this.state.cardData, planId)}>
+          <TouchableOpacity
+            disabled={!valid}
+            onPress={() =>
+              this.createCreditCardToken(this.state.cardData, planId)
+            }>
             <View style={styles.button}>
               <Text style={styles.buttonTitle}>BUY NOW</Text>
             </View>

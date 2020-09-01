@@ -105,7 +105,7 @@ const TodayTabStack = createStackNavigator(
     },
     [Routes.MyProgressAndData]: {
       screen: MyProgressAndData,
-      navigationOptions: () => ({
+      navigationOptions: (navigator) => ({
         drawerLabel: () => null,
         headerTitle: (
           <Text
@@ -119,6 +119,14 @@ const TodayTabStack = createStackNavigator(
             }}>
             My progress
           </Text>
+        ),
+        headerLeft: props => (
+          <HeaderBackButton
+            {...props}
+            onPress={() => {
+              navigator.navigation.navigate(Routes.ProfileScreen);
+            }}
+          />
         ),
         headerStyle: Platform.select({
           ios: {
