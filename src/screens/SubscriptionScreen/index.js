@@ -70,7 +70,7 @@ const SubscriptionScreen = props => {
         setLoading(false);
         setPlansAndProducts(allInOne);
       } catch (err) {
-        console.log('err', err);
+        console.log('err allInOne', err);
       }
     };
     getPlansAndProducts();

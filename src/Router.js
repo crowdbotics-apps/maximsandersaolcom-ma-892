@@ -435,12 +435,12 @@ const BottomAppStack = createBottomTabNavigator(
 
 const AuthStack = createStackNavigator(
   {
-    [Routes.StartupScreen]: {
-      screen: StartupScreen,
-      navigationOptions: {
-        header: null,
-      },
-    },
+    // [Routes.StartupScreen]: {
+    //   screen: StartupScreen,
+    //   navigationOptions: {
+    //     header: null,
+    //   },
+    // },
     [Routes.IntroScreen]: {
       screen: IntroScreen,
       navigationOptions: {
@@ -491,8 +491,8 @@ const AuthStack = createStackNavigator(
     },
   },
   {
-    //initialRouteName: 'IntroScreen',
-    initialRouteName: 'StartupScreen',
+    initialRouteName: 'IntroScreen',
+    // initialRouteName: 'StartupScreen',
     cardStyle: {
       backgroundColor: 'white',
     },

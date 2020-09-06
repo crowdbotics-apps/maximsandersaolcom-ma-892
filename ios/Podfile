@@ -104,3 +104,7 @@ target 'maximsandersaolcom_ma_892-tvOS' do
     # Pods for testing
   end
 end
+
+target 'OneSignalNotificationServiceExtension' do
+  pod 'OneSignal', '>= 2.9.3', '< 3.0'
+end
