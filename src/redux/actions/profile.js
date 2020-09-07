@@ -2,6 +2,7 @@ import React from 'react';
 import Api from '../../api';
 import {API_URL, GET_PROFILE_INFO, GET_FAV_RECIPES, GET_PROGRESS_DATA} from '../constants'
 import AsyncStorage from "@react-native-community/async-storage";
+import OneSignal from 'react-native-onesignal';
 
 
 export const getProfile = () => {
@@ -21,6 +22,24 @@ export const getProfile = () => {
 
             const resData = await response.json();
             console.log('PROFILE RESPONSE JSON ', resData);
+            OneSignal.setExternalUserId(`${resData.results[0].id}`, (results) => {
+                // The results will contain push and email success statuses
+                console.log('Results of setting external user id');
+                console.log(results);
+                
+                // Push can be expected in almost every situation with a success status, but
+                // as a pre-caution its good to verify it exists
+                if (results.push && results.push.success) {
+                  console.log('Results of setting external user id push status:');
+                  console.log(results.push.success);
+                }
+                
+                // Verify the email is set or check that the results have an email success status
+                if (results.email && results.email.success) {
+                  console.log('Results of setting external user id email status:');
+                  console.log(results.email.success);
+                }
+              });
 
             dispatch({
                 type: GET_PROFILE_INFO,
