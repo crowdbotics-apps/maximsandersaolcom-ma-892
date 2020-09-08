@@ -75,7 +75,7 @@ class RegisterScreen extends Component {
       } else {
         const data = await AccessToken.getCurrentAccessToken();
         await loginActionViaFacebookAction(data.accessToken.toString());
-        navigation.navigate(Routes.ProfileScreen);
+        navigation.navigate(Routes.SubscriptionScreen);
       }
     } catch (err) {
       console.log('error on login via facebook', err);
@@ -92,7 +92,7 @@ class RegisterScreen extends Component {
       await GoogleSignin.signIn();
       const { accessToken } = await GoogleSignin.getTokens(); // to get tokens
       await loginActionViaGmailAction(accessToken);
-      navigation.navigate(Routes.ProfileScreen);
+      navigation.navigate(Routes.SubscriptionScreen);
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         console.log("SIGN IN CANCEL ", error);

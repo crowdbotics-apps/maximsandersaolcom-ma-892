@@ -5,6 +5,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {withNavigation} from 'react-navigation';
 import Routes from '../../Routes';
 import Api from '../../api';
+import moment from 'moment';
 
 const StartupScreen = props => {
   const dispatch = useDispatch();
@@ -12,6 +13,18 @@ const StartupScreen = props => {
   const store = useSelector(state => state);
   console.log('STORE ', store);
   const api = Api.getInstance();
+
+  const fetchBE = async () => {
+    try {
+      const fetchGetSubscriptions = await api.fetch(
+        'GET',
+        '/payment/get_subs/',
+      );
+      return fetchGetSubscriptions;
+    } catch (err) {
+      console.log('err', err);
+    }
+  };
 
   useEffect(() => {
     const tryLogin = async () => {
@@ -30,12 +43,22 @@ const StartupScreen = props => {
         props.navigation.navigate(Routes.IntroScreen);
         return;
       } else {
-        if (false) {
-          api.addToken(token, '');
+        api.addToken(token, '');
+        const subsctiptions = await fetchBE();
+        console.log('subsctiptions', subsctiptions);
+        if (!subsctiptions.data.data.length) {
           props.navigation.navigate(Routes.SubscriptionScreen);
         } else {
-          api.addToken(token, '');
-          props.navigation.navigate(Routes.FeedScreen);
+          const {
+            data: {
+              data: {current_period_end},
+            },
+          } = subsctiptions;
+          if (moment().unix() > current_period_end) {
+            props.navigation.navigate(Routes.SubscriptionScreen);
+            return;
+          }
+          props.navigation.navigate(Routes.ProfileScreen);
         }
       }
     };

@@ -28,6 +28,10 @@ import {
 import AuthService from '../../services/AuthService';
 import SurveyButton from '../../components/Survey/SurveyButton';
 import AsyncStorage from '@react-native-community/async-storage';
+import moment from 'moment';
+import Api from '../../api';
+
+const api = Api.getInstance();
 
 const mainActions = {
   loginActionViaFacebookAction: loginActionViaFacebook,
@@ -76,17 +80,39 @@ class LoginScreen extends Component {
       if (result.isCancelled) {
         console.log('Login cancelled', result);
       } else {
-        if (false) {
-          navigation.navigate(Routes.SubscriptionScreen);
+        const data = await AccessToken.getCurrentAccessToken();
+        await loginActionViaFacebookAction(data.accessToken.toString());
+        const subsctiption = await this.getSubscriptions();
+        if (subsctiption.data.data.length) {
+          const {
+            data: {
+              data: {current_period_end},
+            },
+          } = subsctiption;
+          if (moment().unix() > current_period_end) {
+            navigation.navigate(Routes.SubscriptionScreen);
+          } else {
+            navigation.navigate(Routes.ProfileScreen);
+          }
         } else {
-          const data = await AccessToken.getCurrentAccessToken();
-          await loginActionViaFacebookAction(data.accessToken.toString());
-          navigation.navigate(Routes.ProfileScreen);
+          navigation.navigate(Routes.SubscriptionScreen);
         }
       }
     } catch (err) {
       console.log('error on login via facebook', err);
       throw err;
+    }
+  };
+
+  getSubscriptions = async () => {
+    try {
+      const fetchGetSubscriptions = await api.fetch(
+        'GET',
+        '/payment/get_subs/',
+      );
+      return fetchGetSubscriptions;
+    } catch (err) {
+      console.log('err', err);
     }
   };
 
@@ -96,11 +122,21 @@ class LoginScreen extends Component {
       await GoogleSignin.hasPlayServices();
       await GoogleSignin.signIn();
       const {accessToken} = await GoogleSignin.getTokens(); // to get tokens
-      await loginActionViaGmailAction(accessToken);
-      if (false) {
-        navigation.navigate(Routes.SubscriptionScreen);
+      const tokenForLogin = await loginActionViaGmailAction(accessToken);
+      const subsctiption = await this.getSubscriptions();
+      if (subsctiption.data.data.length) {
+        const {
+          data: {
+            data: {current_period_end},
+          },
+        } = subsctiption;
+        if (moment().unix() > current_period_end) {
+          navigation.navigate(Routes.SubscriptionScreen);
+        } else {
+          navigation.navigate(Routes.ProfileScreen);
+        }
       } else {
-        navigation.navigate(Routes.ProfileScreen);
+        navigation.navigate(Routes.SubscriptionScreen);
       }
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
@@ -144,7 +180,21 @@ class LoginScreen extends Component {
       const {isPassed} = transformedData;
 
       if (isPassed) {
-        navigation.navigate(Routes.FeedScreen);
+        const subsctiption = await this.getSubscriptions();
+        if (subsctiption.data.data.length) {
+          const {
+            data: {
+              data: {current_period_end},
+            },
+          } = subsctiption;
+          if (moment().unix() > current_period_end) {
+            navigation.navigate(Routes.SubscriptionScreen);
+          } else {
+            navigation.navigate(Routes.ProfileScreen);
+          }
+        } else {
+          navigation.navigate(Routes.SubscriptionScreen);
+        }
       } else {
         navigation.navigate(Routes.SurveyScreen);
       }
