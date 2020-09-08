@@ -76,7 +76,7 @@ class LoginScreen extends Component {
       if (result.isCancelled) {
         console.log('Login cancelled', result);
       } else {
-        if (true) {
+        if (false) {
           navigation.navigate(Routes.SubscriptionScreen);
         } else {
           const data = await AccessToken.getCurrentAccessToken();
@@ -97,7 +97,7 @@ class LoginScreen extends Component {
       await GoogleSignin.signIn();
       const {accessToken} = await GoogleSignin.getTokens(); // to get tokens
       await loginActionViaGmailAction(accessToken);
-      if (true) {
+      if (false) {
         navigation.navigate(Routes.SubscriptionScreen);
       } else {
         navigation.navigate(Routes.ProfileScreen);

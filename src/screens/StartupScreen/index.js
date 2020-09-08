@@ -30,7 +30,7 @@ const StartupScreen = props => {
         props.navigation.navigate(Routes.IntroScreen);
         return;
       } else {
-        if (true) {
+        if (false) {
           api.addToken(token, '');
           props.navigation.navigate(Routes.SubscriptionScreen);
         } else {

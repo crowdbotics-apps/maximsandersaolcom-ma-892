@@ -18,6 +18,7 @@ export default {
   TodayScreen: 'TodayScreen',
   ProgramScreen: 'ProgramScreen',
   ExerciseScreen: 'ExerciseScreen',
+  CircularExerciseScreen: 'CircularExerciseScreen',
   SwapExerciseScreen: 'SwapExerciseScreen',
   MealRegulatorScreen: 'MealRegulatorScreen',
   LogFoodsScreen: 'LogFoodsScreen',

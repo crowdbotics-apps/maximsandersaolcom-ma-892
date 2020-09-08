@@ -26,6 +26,7 @@ import {
   TodayScreen,
   ProgramScreen,
   ExerciseScreen,
+  CircularExerciseScreen,
   SwapExerciseScreen,
   MealRegulatorScreen,
   LogFoodsScreen,
@@ -333,6 +334,13 @@ const ProgramsTabStack = createDrawerNavigator(
     },
     [Routes.ExerciseScreen]: {
       screen: ExerciseScreen,
+      navigationOptions: () => ({
+        header: null,
+        drawerLabel: () => null,
+      }),
+    },
+    [Routes.CircularExerciseScreen]: {
+      screen: CircularExerciseScreen,
       navigationOptions: () => ({
         header: null,
         drawerLabel: () => null,
