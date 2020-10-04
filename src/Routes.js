@@ -18,6 +18,7 @@ export default {
   TodayScreen: 'TodayScreen',
   ProgramScreen: 'ProgramScreen',
   ExerciseScreen: 'ExerciseScreen',
+  CircularExerciseScreen: 'CircularExerciseScreen',
   SwapExerciseScreen: 'SwapExerciseScreen',
   MealRegulatorScreen: 'MealRegulatorScreen',
   LogFoodsScreen: 'LogFoodsScreen',
@@ -25,5 +26,7 @@ export default {
   LogFoodsNutritionScreen: 'LogFoodsNutritionScreen',
   SurveyScreen: 'SurveyScreen',
   FavoritesScreen: 'FavoritesScreen',
-  MyProgressAndData: 'MyProgressAndData'
+  MyProgressAndData: 'MyProgressAndData',
+  SubscriptionScreen: 'SubscriptionScreen',
+  PaymentScreen: 'PaymentScreen',
 };

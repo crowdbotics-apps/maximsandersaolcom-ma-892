@@ -1,8 +1,8 @@
 import AsyncStorage from "@react-native-community/async-storage";
-
+import * as NavigationService from '../services/navigationService';
 /* Packages */
 import axios from 'axios';
-import i18n from 'i18n-js';
+import Routes from "../Routes";
 
 // import { reduxStore } from '../Root';
 
@@ -58,6 +58,10 @@ class Api {
           }
           if (error.response.status === 401) {
             return this.refreshToken(this.refreshToken, { method, url, options });
+          }
+          console.log("AJDE SISO ", error.response.data.detail)
+          if (error.response.status === 403 && error.response.data.detail === "You do not have permission to perform this action.") {
+            NavigationService.navigate(Routes.SubscriptionScreen);
           }
           if (error.response.status > 401
               || error.response.status === 400

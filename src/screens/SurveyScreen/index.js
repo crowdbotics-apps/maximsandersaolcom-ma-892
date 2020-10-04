@@ -222,7 +222,7 @@ const dispatch = useDispatch();
     if (currentQuestion !== 0) {
       setCurrentQuestion(prevState => prevState - 1);
     } else {
-      props.navigation.navigate(Routes.IntroScreen);
+      props.navigation.navigate(Routes.StartupScreen);
     }
   };
 

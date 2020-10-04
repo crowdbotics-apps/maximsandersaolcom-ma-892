@@ -2,16 +2,38 @@ import React from 'react'
 import { View, Text, StyleSheet, Image, TextInput } from 'react-native'
 import Font from '../../assets/fonts';
 import Dropdown from './SubComponents/Dropdown';
+import { getNumber } from '../../redux/modules/nutritionReducer'
 
 const infoOtlineIcon = require('../../assets/infoOutlineIcon.png');
 
+const recalculateMeasureCalories = item => {
+  if (item.measure === null) {
+    return item.calories * item.portion;
+  }
+  if (item.food) {
+    return (
+      // eslint-disable-next-line radix
+      (getNumber(item.measure.weight) / getNumber(parseFloat(item.food.weight))) *
+      item.food.calories *
+      (item.portion / getNumber(item.measure.quantity))
+    );
+  }
+  return (
+    // eslint-disable-next-line radix
+    (getNumber(item.measure.weight) / getNumber(parseFloat(item.weight))) *
+    item.calories *
+    (item.portion / getNumber(item.measure.quantity))
+  );
+}
+
 const SwipeListItem = ({ item, editSelectedProductsAction, index }) => {
+  console.log("item", item);
   const parseValToFixed = e => parseFloat(e).toFixed(1);
   const isEventValueNum = e => !isNaN(parseValToFixed(e)) && parseValToFixed(e) || 0;
   return (
     <View style={styles.containerSwipeItem} key={index}>
       <View style={styles.imageSwipeItem}>
-        <Image style={styles.imageSwipe} source={{ uri: item.thumb }}/>
+        <Image style={styles.imageSwipe} source={{ uri: item.thumb }} resizeMode="center"/>
       </View>
       <View style={styles.mainSwipeContainer}>
         <View style={styles.mainUpperContainer}>
@@ -39,13 +61,13 @@ const SwipeListItem = ({ item, editSelectedProductsAction, index }) => {
         </View>
         <View style={styles.nameContainer}>
           <Text style={styles.nameText}>
-            {item.name}
+            {item.name.charAt(0).toUpperCase() + item.name.slice(1)}
           </Text>
         </View>
       </View>
       <View style={styles.caloriesContainer}>
         <View>
-          <Text style={styles.caloriesText}>{item.calories}</Text>
+        <Text style={styles.caloriesText}>{Math.round(recalculateMeasureCalories(item))}</Text>
         </View>
         <View>
           <Text style={styles.caloriesTextStatic}>Cal</Text>
@@ -58,7 +80,8 @@ const SwipeListItem = ({ item, editSelectedProductsAction, index }) => {
 const styles = StyleSheet.create({
   infoIconStyle: {
     width: 30,
-    height: 30
+    height: 30,
+    marginTop: 15
   },
   infoContainer: {
     justifyContent: 'center',
@@ -77,7 +100,8 @@ const styles = StyleSheet.create({
   caloriesText: {
     fontFamily: Font.HELVETICA_MEDIUM,
     color: 'rgb(68, 161, 250)',
-    fontSize: 14
+    fontSize: 14,
+    fontWeight: '500'
   },
   modalButtonStyle: {
     justifyContent: 'center',
@@ -159,9 +183,9 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   imageSwipe: {
-    width: 40,
-    height: 40
-  }
+    width: 50,
+    height: 50,
+  },
 });
 
 export default SwipeListItem

@@ -79,31 +79,13 @@ class IngredientContainer extends Component {
             />
           </View>
           <View style={styles.buttonWrapper}>
-            <View style={styles.buttonWrapperSub}>
-              {/*<TagButton*/}
-              {/*  buttonContainerText={categoriesNames[0]}*/}
-              {/*  buttonContainerStyleProp={{ marginRight: 5, marginBottom: 0, marginTop: 0 }}*/}
-              {/*  buttonContainerTextStyle={{*/}
-              {/*    color: 'black',*/}
-              {/*    fontFamily: Fonts.HELVETICA_MEDIUM*/}
-              {/*  }}*/}
-              {/*/>*/}
-              {/*<TagButton*/}
-              {/*  buttonContainerText={categoriesNames[1]}*/}
-              {/*  buttonContainerStyleProp={{ marginBottom: 0, marginTop: 0, marginRight: 0 }}*/}
-              {/*  buttonContainerTextStyle={{*/}
-              {/*    color: 'black',*/}
-              {/*    fontFamily: Fonts.HELVETICA_MEDIUM*/}
-              {/*  }}*/}
-              {/*/>*/}
-            </View>
             <View style={styles.findRecipesButtonContainer}>
               <GradientButton
                 onPress={() => {
                   getRecipeByCodeAction(code);
                   navigation.navigate(Routes.IngredientRecipeScreen);
                 }}
-                buttonContainerText="add to meal"
+                buttonContainerText="Add to meal"
                 buttonContainerStyleProp={styles.findRecipesButton}
                 colorsGradient={['#3180BD', '#6EC2FA']}
               />
@@ -129,22 +111,23 @@ const styles = StyleSheet.create({
   findRecipesButton: {
     marginRight: 0,
     marginBottom: 0,
-    backgroundColor: 'rgb(48, 124, 186)',
+    backgroundColor: 'white',
     paddingVertical: 15,
     borderRadius: 10,
+    width: '100%',
   },
   findRecipesButtonContainer: {
-    width: '30%',
+    width: '90%',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 10,
-    marginTop: 0
+    marginTop: 0,
   },
   buttonWrapper: {
     width: '100%',
     flexWrap: 'wrap',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 15
   },

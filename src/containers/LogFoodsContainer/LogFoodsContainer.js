@@ -4,7 +4,6 @@ import {
   SafeAreaView,
   Text,
   StyleSheet,
-  ListView
 } from 'react-native';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import SwipeListItem from '../../components/SwipeListItem';
@@ -14,7 +13,7 @@ import i18n from '../../i18n/i18n';
 import EmptyListComponent from './EmptyListComponent';
 import TableColumn from './TableColumn';
 import TouchableDeleteAll from './TouchableDeleteAll';
-
+import ListView from 'deprecated-react-native-listview';
 
 import HeaderWithSearch from '../../components/HeaderWithSearch';
 import Fonts from '../../assets/fonts';
@@ -80,13 +79,13 @@ const LogFoodsContainer = ({
             </Text>
           </View>
           <View style={styles.tableHeadSub}>
-            <Text style={styles.tableHeadRightText}>{calories || 0}</Text>
+            <Text style={styles.tableHeadRightText}>{Math.round(calories) || 0}</Text>
           </View>
         </View>
         <View style={styles.tableColumnContainer}>
-          <TableColumn name="Proteins" value={parseFloat(Math.round(proteins * 100) / 100).toFixed(2)} />
-          <TableColumn name="Carbs" value={parseFloat(Math.round(carbohydrate * 100) / 100).toFixed(2)} middle />
-          <TableColumn name="Fat" value={parseFloat(Math.round(fat * 100) / 100).toFixed(2)} />
+          <TableColumn name="Proteins" value={Math.round(proteins)} />
+          <TableColumn name="Carbs" value={Math.round(carbohydrate)} middle />
+          <TableColumn name="Fat" value={Math.round(fat)} />
         </View>
       </View>
       <View style={styles.gradientButtonContainer}>
