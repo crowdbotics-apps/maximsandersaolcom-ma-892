@@ -54,7 +54,7 @@ class RegisterScreen extends Component {
     GoogleSignin.configure({
       scopes: ['https://www.googleapis.com/auth/userinfo.profile'],
       forceConsentPrompt: true,
-      webClientId: '122090316140-er5oevo3ek39e8hvq6egc2f6brrvme1b.apps.googleusercontent.com',
+      webClientId: '714097048015-u29varu4ad7u5stuf5e8nl3vsgcvif5k.apps.googleusercontent.com',
     });
   }
 
@@ -87,10 +87,35 @@ class RegisterScreen extends Component {
     const { termsAndConditions } = this.state;
     if (!termsAndConditions) return;
     const { navigation, loginActionViaGmailAction } = this.props;
+    // try {
+    //   await GoogleSignin.hasPlayServices();
+    //   const {accessToken, idToken} = await GoogleSignin.signIn();
+    //   console.log('---------------Google Login-------------');
+    //   console.log(accessToken);
+    //   console.log(idToken);
+    // } catch (error) {
+    //   console.log('Google login error');
+    //   console.log(error);
+    //   if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+    //     // user cancelled the login flow
+    //     alert('Cancel');
+    //   } else if (error.code === statusCodes.IN_PROGRESS) {
+    //     alert('Signin in progress');
+    //     // operation (f.e. sign in) is in progress already
+    //   } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+    //     alert('PLAY_SERVICES_NOT_AVAILABLE');
+    //     // play services not available or outdated
+    //   } else {
+    //     // some other error happened
+    //   }
+    // }
     try {
+      console.log('_________Google Signin__________0',);
       await GoogleSignin.hasPlayServices();
-      await GoogleSignin.signIn();
+      let res = await GoogleSignin.signIn();
+      console.log('_________Google Signin1__________', res);
       const { accessToken } = await GoogleSignin.getTokens(); // to get tokens
+      console.log('_________Google Signin2__________', res, accessToken);
       await loginActionViaGmailAction(accessToken);
       navigation.navigate(Routes.ProfileScreen);
     } catch (error) {

@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>122090316140-7bpfde4jepjr1ibmiof1tu2ffr32g4l5.apps.googleusercontent.com</string>
+	<string>714097048015-u29varu4ad7u5stuf5e8nl3vsgcvif5k.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.122090316140-7bpfde4jepjr1ibmiof1tu2ffr32g4l5</string>
+	<string>com.googleusercontent.apps.714097048015-u29varu4ad7u5stuf5e8nl3vsgcvif5k</string>
 	<key>API_KEY</key>
-	<string>AIzaSyB9RPR9ufhk6dQ3xVIH-L3oFc_ryq2o2XI</string>
+	<string>AIzaSyDTY8yI6rEUSQPLwx75TxJxeVlE9EuPNck</string>
 	<key>GCM_SENDER_ID</key>
-	<string>122090316140</string>
+	<string>714097048015</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.crowdbotics.maximfitness5250</string>
 	<key>PROJECT_ID</key>
-	<string>maxim-fitness</string>
+	<string>orum-training</string>
 	<key>STORAGE_BUCKET</key>
-	<string>maxim-fitness.appspot.com</string>
+	<string>orum-training.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,8 +29,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:122090316140:ios:0d9a2b0487915cc7</string>
+	<string>1:714097048015:ios:5e939cc9621f8bbcc37aba</string>
 	<key>DATABASE_URL</key>
-	<string>https://maxim-fitness.firebaseio.com</string>
+	<string>https://orum-training.firebaseio.com</string>
 </dict>
 </plist>

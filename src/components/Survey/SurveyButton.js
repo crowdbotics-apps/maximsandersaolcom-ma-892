@@ -18,7 +18,6 @@ const SurveyButton = props => (
         colors={props.disabled ? ['#d3d3d3', '#d3d3d3'] : ['#3180BD', '#6EC2FA']}
         style={[styles.linearGradient, props.gradientStyle]}
       >
-
         <Text style={props.notSurvey ? styles.notSurveyText : styles.buttonText}>{props.notSurvey ? props.children : 'Next' }</Text>
       </LinearGradient>
     </TouchableOpacity>
