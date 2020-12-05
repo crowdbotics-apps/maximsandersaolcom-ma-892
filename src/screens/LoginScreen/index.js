@@ -76,7 +76,7 @@ class LoginScreen extends Component {
       } else {
         const data = await AccessToken.getCurrentAccessToken();
         console.log("fb login data - - > ",data)
-        // await loginActionViaFacebookAction(data.accessToken.toString());
+        await loginActionViaFacebookAction(data.accessToken.toString());
         // navigation.navigate(Routes.ProfileScreen);
       }
     } catch (err) {
