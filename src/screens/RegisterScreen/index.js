@@ -64,18 +64,38 @@ class RegisterScreen extends Component {
     });
   }
 
+  // handleLoginViaFacebook = async () => {
+  //   const { termsAndConditions } = this.state;
+  //   const { loginActionViaFacebookAction, navigation } = this.props;
+  //   if (!termsAndConditions) return;
+  //   try {
+  //     const result = await LoginManager.logInWithPermissions(['email', 'public_profile']);
+  //     if (result.isCancelled) {
+  //       console.log('Login cancelled');
+  //     } else {
+  //       const data = await AccessToken.getCurrentAccessToken();
+  //       await loginActionViaFacebookAction(data.accessToken.toString());
+  //       navigation.navigate(Routes.ProfileScreen);
+  //     }
+  //   } catch (err) {
+  //     console.log('error on login via facebook', err);
+  //     throw err;
+  //   }
+  // }
+
+
   handleLoginViaFacebook = async () => {
-    const { termsAndConditions } = this.state;
     const { loginActionViaFacebookAction, navigation } = this.props;
-    if (!termsAndConditions) return;
     try {
       const result = await LoginManager.logInWithPermissions(['email', 'public_profile']);
+
       if (result.isCancelled) {
-        console.log('Login cancelled');
+        console.log('Login cancelled', result);
       } else {
         const data = await AccessToken.getCurrentAccessToken();
-        await loginActionViaFacebookAction(data.accessToken.toString());
-        navigation.navigate(Routes.ProfileScreen);
+        console.log("fb login data - - > ",data)
+        // await loginActionViaFacebookAction(data.accessToken.toString());
+        // navigation.navigate(Routes.ProfileScreen);
       }
     } catch (err) {
       console.log('error on login via facebook', err);

@@ -24,6 +24,7 @@ class Api {
       }
       return axios(data)
         .then((response) => {
+          console.log("response from axios - > ",response)
           if (__DEV__ && console && typeof console.groupCollapsed === 'function' && !url.includes('/!url')) { // eslint-disable-line
             console.groupCollapsed(`%c API --> ${url}`, 'color: green');
             console.log('data: ', data);
@@ -40,6 +41,7 @@ class Api {
           return response.data;
         })
         .catch((error) => { // eslint-disable-line
+          console.log(" this error -  -- --   ",error)
           if (process.env.NODE_ENV === 'development' && console && typeof console.groupCollapsed === 'function' && !url.includes('/!url')) {
             console.groupCollapsed(`%c API --> ${url}`, 'color: red');
             console.log('data: ', data);

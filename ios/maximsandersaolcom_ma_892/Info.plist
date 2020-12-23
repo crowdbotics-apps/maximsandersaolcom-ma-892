@@ -37,7 +37,7 @@
 			<string>facebook</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb2330406860512882</string>
+				<string>fb900074517198255</string>
 			</array>
 		</dict>
 		<dict>
@@ -54,16 +54,31 @@
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>FacebookAppID</key>
-	<string>2330406860512882</string>
+	<string>900074517198255</string>
 	<key>FacebookDisplayName</key>
 	<string>Maxim Fitness</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
-		<string>instagram</string>
-		<string>facebook</string>
-		<string>twitter</string>
+     <string>fbapi</string>
+     <string>fbapi20130214</string>
+     <string>fbapi20130410</string>
+     <string>fbapi20130702</string>
+     <string>fbapi20131010</string>
+     <string>fbapi20131219</string>
+     <string>fbapi20140410</string>
+     <string>fbapi20140116</string>
+     <string>fbapi20150313</string>
+     <string>fbapi20150629</string>
+     <string>fbapi20160328</string>
+     <string>fbauth</string>
+     <string>fb-messenger-share-api</string>
+     <string>fbauth2</string>
+     <string>fbshareextension</string>
+		 <string>instagram</string>
+		 <string>facebook</string>
+		 <string>twitter</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>

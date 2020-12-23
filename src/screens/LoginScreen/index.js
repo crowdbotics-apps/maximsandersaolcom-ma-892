@@ -75,8 +75,9 @@ class LoginScreen extends Component {
         console.log('Login cancelled', result);
       } else {
         const data = await AccessToken.getCurrentAccessToken();
+        console.log("fb login data - - > ",data)
         await loginActionViaFacebookAction(data.accessToken.toString());
-        navigation.navigate(Routes.ProfileScreen);
+        // navigation.navigate(Routes.ProfileScreen);
       }
     } catch (err) {
       console.log('error on login via facebook', err);

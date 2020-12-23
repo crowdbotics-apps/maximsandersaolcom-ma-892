@@ -22,8 +22,11 @@ export default class AuthService {
     }
 
     loginOrRegisterViaSocialFacebook(token) {
+
+      console.log("token - - - > ", token);
       return this.api.fetch('POST', '/login/facebook/', { data: { access_token: token } })
         .then((response) => {
+          console.log("Login API response is here - - > ", response)
           const { data: { key } } = response;
           this.api.addToken(key, '');
           return response.data;
