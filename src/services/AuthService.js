@@ -1,11 +1,11 @@
+import AsyncStorage from '@react-native-community/async-storage';
 import Api from '../api';
-import AsyncStorage from "@react-native-community/async-storage";
 
 
-const saveDataToStorage = token => {
-    AsyncStorage.setItem('userData', JSON.stringify({
-        token: token,
-    }))
+const saveDataToStorage = (token) => {
+  AsyncStorage.setItem('userData', JSON.stringify({
+    token,
+  }));
 };
 
 export default class AuthService {
@@ -22,11 +22,10 @@ export default class AuthService {
     }
 
     loginOrRegisterViaSocialFacebook(token) {
-
-      console.log("token - - - > ", token);
-      return this.api.fetch('POST', '/login/facebook/', { data: { access_token: token } })
+      console.log('token - - - > ', token);
+      return this.api.fetch('POST', '/oauth/facebook/signin/', { data: { access_token: token, timezone: 'UTC', ref: 'fb' } })
         .then((response) => {
-          console.log("Login API response is here - - > ", response)
+          console.log('Login API response is here - - > facebook ', response);
           const { data: { key } } = response;
           this.api.addToken(key, '');
           return response.data;

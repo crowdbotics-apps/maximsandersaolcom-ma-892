@@ -16,7 +16,7 @@ class Api {
 
       data.url = url;
       data.method = method;
-      data.baseURL = 'http://maximfitness-admin-p-6116.botics.co/api/v1';
+      data.baseURL = 'https://trackapi.nutritionix.com/v2';
       data.headers = data.headers || {};
 
       if (this.token !== null) {
