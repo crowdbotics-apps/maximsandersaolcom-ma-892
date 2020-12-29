@@ -64,26 +64,6 @@ class RegisterScreen extends Component {
     });
   }
 
-  // handleLoginViaFacebook = async () => {
-  //   const { termsAndConditions } = this.state;
-  //   const { loginActionViaFacebookAction, navigation } = this.props;
-  //   if (!termsAndConditions) return;
-  //   try {
-  //     const result = await LoginManager.logInWithPermissions(['email', 'public_profile']);
-  //     if (result.isCancelled) {
-  //       console.log('Login cancelled');
-  //     } else {
-  //       const data = await AccessToken.getCurrentAccessToken();
-  //       await loginActionViaFacebookAction(data.accessToken.toString());
-  //       navigation.navigate(Routes.ProfileScreen);
-  //     }
-  //   } catch (err) {
-  //     console.log('error on login via facebook', err);
-  //     throw err;
-  //   }
-  // }
-
-
   handleLoginViaFacebook = async () => {
     const { loginActionViaFacebookAction, navigation } = this.props;
     try {
@@ -94,8 +74,8 @@ class RegisterScreen extends Component {
       } else {
         const data = await AccessToken.getCurrentAccessToken();
         console.log("fb login data - - > ",data)
-        // await loginActionViaFacebookAction(data.accessToken.toString());
-        // navigation.navigate(Routes.ProfileScreen);
+        await loginActionViaFacebookAction(data.accessToken.toString());
+        navigation.navigate(Routes.ProfileScreen);
       }
     } catch (err) {
       console.log('error on login via facebook', err);
@@ -107,28 +87,6 @@ class RegisterScreen extends Component {
     const { termsAndConditions } = this.state;
     if (!termsAndConditions) return;
     const { navigation, loginActionViaGmailAction } = this.props;
-    // try {
-    //   await GoogleSignin.hasPlayServices();
-    //   const {accessToken, idToken} = await GoogleSignin.signIn();
-    //   console.log('---------------Google Login-------------');
-    //   console.log(accessToken);
-    //   console.log(idToken);
-    // } catch (error) {
-    //   console.log('Google login error');
-    //   console.log(error);
-    //   if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-    //     // user cancelled the login flow
-    //     alert('Cancel');
-    //   } else if (error.code === statusCodes.IN_PROGRESS) {
-    //     alert('Signin in progress');
-    //     // operation (f.e. sign in) is in progress already
-    //   } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-    //     alert('PLAY_SERVICES_NOT_AVAILABLE');
-    //     // play services not available or outdated
-    //   } else {
-    //     // some other error happened
-    //   }
-    // }
     try {
       console.log('_________Google Signin__________0',);
       await GoogleSignin.hasPlayServices();

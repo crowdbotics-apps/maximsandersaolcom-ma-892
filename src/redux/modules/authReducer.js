@@ -76,12 +76,14 @@ export const loginActionViaFacebook = token => (dispatch) => {
   let tokenForLogin = '';
   return authService.loginOrRegisterViaSocialFacebook(token)
     .then(({ key }) => {
+      console.log('result1',key);
       tokenForLogin = key;
       AsyncStorage.setItem('userData', JSON.stringify({ token: tokenForLogin }));
       return authService.getProfile();
     })
     .then(({ data }) => {
       const { results } = data;
+      console.log('result2', results);
       const [first] = results;
       const {
         email,
