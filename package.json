@@ -17,7 +17,7 @@
     "moment": "^2.24.0",
     "prop-types": "^15.6.2",
     "react": "16.8.3",
-    "react-native": "0.59.5",
+    "react-native": "0.62.3",
     "react-native-blur": "^3.2.2",
     "react-native-camera": "^2.11.1",
     "react-native-chart-kit": "3.2.1",
